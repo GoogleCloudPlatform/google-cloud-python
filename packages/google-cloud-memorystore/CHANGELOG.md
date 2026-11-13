@@ -4,6 +4,27 @@
 
 [1]: https://pypi.org/project/google-cloud-memorystore/#history
 
+## [0.5.9](https://github.com/googleapis/google-cloud-python/compare/google-cloud-memorystore-v0.5.8...google-cloud-memorystore-v0.5.9) (2026-11-12)
+
+
+### Features
+
+* update API sources and regenerate ([#19036](https://github.com/googleapis/google-cloud-python/issues/19036)) ([b64a9e5](https://github.com/googleapis/google-cloud-python/commit/b64a9e51a22810d4e3b4c44b13847eb96c604628))
+
+## [0.5.8](https://github.com/googleapis/google-cloud-python/compare/google-cloud-memorystore-v0.5.7...google-cloud-memorystore-v0.5.8) (2026-11-05)
+
+
+### Features
+
+* update API sources and regenerate ([#18986](https://github.com/googleapis/google-cloud-python/issues/18986)) ([8c0f333](https://github.com/googleapis/google-cloud-python/commit/8c0f3331260667eb64c70db80a7ab5c52b8ccf36))
+
+## [0.5.7](https://github.com/googleapis/google-cloud-python/compare/google-cloud-memorystore-v0.5.6...google-cloud-memorystore-v0.5.7) (2026-10-29)
+
+
+### Features
+
+* update API sources and regenerate ([#18889](https://github.com/googleapis/google-cloud-python/issues/18889)) ([8705243](https://github.com/googleapis/google-cloud-python/commit/870524380c52ea234235e0c449f5c9aee2945283))
+
 ## [0.5.6](https://github.com/googleapis/google-cloud-python/compare/google-cloud-memorystore-v0.5.5...google-cloud-memorystore-v0.5.6) (2026-10-15)
 
 

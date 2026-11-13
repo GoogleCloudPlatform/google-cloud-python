@@ -345,7 +345,7 @@ class ControlServiceAsyncClient:
                 control.boost_action.filter = "filter_value"
                 control.boost_action.data_store = "data_store_value"
                 control.display_name = "display_name_value"
-                control.solution_type = "SOLUTION_TYPE_GENERATIVE_CHAT"
+                control.solution_type = "SOLUTION_TYPE_AI_MODE"
 
                 request = discoveryengine_v1.CreateControlRequest(
                     parent="parent_value",
@@ -598,7 +598,7 @@ class ControlServiceAsyncClient:
                 control.boost_action.filter = "filter_value"
                 control.boost_action.data_store = "data_store_value"
                 control.display_name = "display_name_value"
-                control.solution_type = "SOLUTION_TYPE_GENERATIVE_CHAT"
+                control.solution_type = "SOLUTION_TYPE_AI_MODE"
 
                 request = discoveryengine_v1.UpdateControlRequest(
                     control=control,

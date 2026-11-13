@@ -204,7 +204,7 @@ def test_aggregated_list_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -237,7 +237,7 @@ def test_delete_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -270,7 +270,7 @@ def test_get_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -303,7 +303,7 @@ def test_insert_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -336,7 +336,7 @@ def test_list_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -369,7 +369,7 @@ def test_move_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -402,7 +402,7 @@ def test_set_labels_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -437,7 +437,7 @@ def test_test_iam_permissions_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -4024,11 +4024,13 @@ def test_get_rest_call_success(request_type):
             label_fingerprint="label_fingerprint_value",
             name="name_value",
             network="network_value",
+            network_attachment="network_attachment_value",
             network_tier="network_tier_value",
             prefix_length=1391,
             purpose="purpose_value",
             region="region_value",
             self_link="self_link_value",
+            service_class_id="service_class_id_value",
             status="status_value",
             subnetwork="subnetwork_value",
             users=["users_value"],
@@ -4060,11 +4062,13 @@ def test_get_rest_call_success(request_type):
     assert response.label_fingerprint == "label_fingerprint_value"
     assert response.name == "name_value"
     assert response.network == "network_value"
+    assert response.network_attachment == "network_attachment_value"
     assert response.network_tier == "network_tier_value"
     assert response.prefix_length == 1391
     assert response.purpose == "purpose_value"
     assert response.region == "region_value"
     assert response.self_link == "self_link_value"
+    assert response.service_class_id == "service_class_id_value"
     assert response.status == "status_value"
     assert response.subnetwork == "subnetwork_value"
     assert response.users == ["users_value"]
@@ -4178,11 +4182,13 @@ def test_insert_rest_call_success(request_type):
         "labels": {},
         "name": "name_value",
         "network": "network_value",
+        "network_attachment": "network_attachment_value",
         "network_tier": "network_tier_value",
         "prefix_length": 1391,
         "purpose": "purpose_value",
         "region": "region_value",
         "self_link": "self_link_value",
+        "service_class_id": "service_class_id_value",
         "status": "status_value",
         "subnetwork": "subnetwork_value",
         "users": ["users_value1", "users_value2"],

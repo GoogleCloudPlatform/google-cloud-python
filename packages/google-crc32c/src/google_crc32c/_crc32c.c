@@ -6,11 +6,37 @@
 static const Py_ssize_t gil_threshold = 1024 * 1024;
 
 static int
-_should_release_gil(Py_ssize_t length, PyObject *chunk_obj)
+_should_release_gil(const Py_buffer *chunk)
 {
-    /* Checks if the chunk is immutable (bytes) to prevent concurrent modification,
-     * and large enough to benefit from releasing the GIL. */
-    return (length >= gil_threshold && PyBytes_Check(chunk_obj));
+    /* Release the GIL only for chunks of at least gil_threshold bytes backed
+     * by an immutable bytes object (a bytes instance or a memoryview of one). */
+    PyObject *owner = chunk->obj;
+
+    if (chunk->len < gil_threshold || owner == NULL) {
+        return 0;
+    }
+    if (PyMemoryView_Check(owner)) {
+        owner = PyMemoryView_GET_BASE(owner);
+    }
+    return owner != NULL && PyBytes_Check(owner);
+}
+
+static uint32_t
+_extend_buffer(uint32_t crc, const Py_buffer *chunk)
+{
+    PyThreadState *save = NULL;
+
+    if (_should_release_gil(chunk)) {
+        save = PyEval_SaveThread();
+    }
+
+    crc = crc32c_extend(crc, (const uint8_t*)chunk->buf, (size_t)chunk->len);
+
+    if (save) {
+        PyEval_RestoreThread(save);
+    }
+
+    return crc;
 }
 
 static PyObject *
@@ -18,22 +44,15 @@ _crc32c_extend(PyObject *self, PyObject *args)
 {
     unsigned long crc_input;
     uint32_t crc;
-    const char *chunk;
-    Py_ssize_t length;
-    PyThreadState *save = NULL;
+    Py_buffer chunk;
 
-    if (!PyArg_ParseTuple(args, "ky#", &crc_input, &chunk, &length))
+    /* "y*" accepts any C-contiguous object supporting the buffer protocol
+     * (bytes, bytearray, memoryview, array.array, mmap, ...). */
+    if (!PyArg_ParseTuple(args, "ky*", &crc_input, &chunk))
         return NULL;
 
-    if (_should_release_gil(length, PyTuple_GET_ITEM(args, 1))) {
-        save = PyEval_SaveThread();
-    }
-
-    crc = crc32c_extend((uint32_t)crc_input, (const uint8_t*)chunk, length);
-
-    if (save) {
-        PyEval_RestoreThread(save);
-    }
+    crc = _extend_buffer((uint32_t)crc_input, &chunk);
+    PyBuffer_Release(&chunk);
 
     return PyLong_FromUnsignedLong(crc);
 }
@@ -43,22 +62,14 @@ static PyObject *
 _crc32c_value(PyObject *self, PyObject *args)
 {
     uint32_t crc;
-    const char *chunk;
-    Py_ssize_t length;
-    PyThreadState *save = NULL;
+    Py_buffer chunk;
 
-    if (!PyArg_ParseTuple(args, "y#", &chunk, &length))
+    if (!PyArg_ParseTuple(args, "y*", &chunk))
         return NULL;
 
-    if (_should_release_gil(length, PyTuple_GET_ITEM(args, 0))) {
-        save = PyEval_SaveThread();
-    }
-
-    crc = crc32c_value((const uint8_t*)chunk, length);
-
-    if (save) {
-        PyEval_RestoreThread(save);
-    }
+    /* crc32c_value(data, n) is crc32c_extend(0, data, n). */
+    crc = _extend_buffer(0, &chunk);
+    PyBuffer_Release(&chunk);
 
     return PyLong_FromUnsignedLong(crc);
 }
@@ -86,5 +97,13 @@ static struct PyModuleDef crc32cmodule = {
 PyMODINIT_FUNC
 PyInit__crc32c(void)
 {
-    return PyModule_Create(&crc32cmodule);
+    PyObject *m = PyModule_Create(&crc32cmodule);
+    if (m == NULL) {
+        return NULL;
+    }
+    if (PyModule_AddIntConstant(m, "GIL_RELEASE_THRESHOLD", (long)gil_threshold) < 0) {
+        Py_DECREF(m);
+        return NULL;
+    }
+    return m;
 }

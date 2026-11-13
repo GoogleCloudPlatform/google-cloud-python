@@ -32,6 +32,7 @@ from google.apps.chat_v1.types import (
 )
 from google.apps.chat_v1.types import attachment as gc_attachment
 from google.apps.chat_v1.types import deletion_metadata as gc_deletion_metadata
+from google.apps.chat_v1.types import elements as gc_elements
 from google.apps.chat_v1.types import markup_syntax as gc_markup_syntax
 from google.apps.chat_v1.types import matched_url as gc_matched_url
 from google.apps.chat_v1.types import slash_command as gc_slash_command
@@ -58,6 +59,8 @@ __protobuf__ = proto.module(
         "DialogAction",
         "Dialog",
         "CardWithId",
+        "ReplaceMessageCardsRequest",
+        "ReplaceMessageCardsResponse",
         "SearchMessagesRequest",
         "SearchMessagesResponse",
         "SearchMessageResult",
@@ -283,6 +286,25 @@ class Message(proto.Message):
             Creating a message with accessory widgets requires [app
             authentication]
             (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
+        elements (google.apps.chat_v1.types.Elements):
+            Optional. Additional message components, including inline
+            ``citations`` (where each citation is associated with a
+            specific portion of the message text) and ``cited_sources``
+            (which are general references used to generate the response
+            and are not directly linked to specific segments of the
+            text).
+
+            On input, provide ``elements`` when creating or updating a
+            message. On output, both ``citations`` and ``cited_sources``
+            are populated when reading a message that contains them.
+            Callers can read structured citation metadata from
+            ``elements``, while ``formatted_text`` also includes inline
+            citation tags or source links depending on
+            ``markup_syntax``.
+
+            These differ from ``annotations``, which are output-only and
+            offer supplementary information tied to message fragments or
+            the entire message text.
         markup_syntax (google.apps.chat_v1.types.MarkupSyntax):
             Optional. Specifies how the server interprets the message
             ``text`` field content.
@@ -418,6 +440,11 @@ class Message(proto.Message):
         proto.MESSAGE,
         number=44,
         message="AccessoryWidget",
+    )
+    elements: gc_elements.Elements = proto.Field(
+        proto.MESSAGE,
+        number=45,
+        message=gc_elements.Elements,
     )
     markup_syntax: gc_markup_syntax.MarkupSyntax = proto.Field(
         proto.ENUM,
@@ -1318,6 +1345,8 @@ class CardWithId(proto.Message):
             message.
         card (google.apps.card_v1.types.Card):
             A card. Maximum size is 32 KB.
+        owner_user (google.apps.chat_v1.types.User):
+            Output only. The app that owns the card.
     """
 
     card_id: str = proto.Field(
@@ -1329,6 +1358,42 @@ class CardWithId(proto.Message):
         number=2,
         message=gac_card.Card,
     )
+    owner_user: user.User = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=user.User,
+    )
+
+
+class ReplaceMessageCardsRequest(proto.Message):
+    r"""Request message for ReplaceMessageCards API method.
+
+    Attributes:
+        name (str):
+            Required. The resource name of the message.
+
+            Format: ``spaces/{space}/messages/{message}``
+        cards_v2 (MutableSequence[google.apps.chat_v1.types.CardWithId]):
+            Optional. An array of
+            `cards <https://developers.google.com/workspace/chat/api/reference/rest/v1/cards>`__
+            to be included in the message. These cards will replace the
+            existing cards of the message. If empty, the original cards
+            included in the message will be cleared.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    cards_v2: MutableSequence["CardWithId"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="CardWithId",
+    )
+
+
+class ReplaceMessageCardsResponse(proto.Message):
+    r"""Response message for ReplaceMessageCards API."""
 
 
 class SearchMessagesRequest(proto.Message):

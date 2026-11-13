@@ -29,12 +29,14 @@ __lazy_modules__ = {
     "google.ads.datamanager_v1.services.ingestion_service",
     "google.ads.datamanager_v1.services.marketing_data_insights_service",
     "google.ads.datamanager_v1.services.partner_link_service",
+    "google.ads.datamanager_v1.services.reporting_service",
     "google.ads.datamanager_v1.services.user_list_direct_license_service",
     "google.ads.datamanager_v1.services.user_list_global_license_service",
     "google.ads.datamanager_v1.services.user_list_service",
     "google.ads.datamanager_v1.types.ad_event",
     "google.ads.datamanager_v1.types.age_range",
     "google.ads.datamanager_v1.types.audience",
+    "google.ads.datamanager_v1.types.call_info",
     "google.ads.datamanager_v1.types.cart_data",
     "google.ads.datamanager_v1.types.consent",
     "google.ads.datamanager_v1.types.destination",
@@ -50,7 +52,9 @@ __lazy_modules__ = {
     "google.ads.datamanager_v1.types.item_parameter",
     "google.ads.datamanager_v1.types.match_rate",
     "google.ads.datamanager_v1.types.partner_link_service",
+    "google.ads.datamanager_v1.types.partner_match_report_entry",
     "google.ads.datamanager_v1.types.processing_errors",
+    "google.ads.datamanager_v1.types.reporting_service",
     "google.ads.datamanager_v1.types.request_status_per_destination",
     "google.ads.datamanager_v1.types.terms_of_service",
     "google.ads.datamanager_v1.types.user",
@@ -82,6 +86,10 @@ from .services.marketing_data_insights_service import (
 from .services.partner_link_service import (
     PartnerLinkServiceAsyncClient,
     PartnerLinkServiceClient,
+)
+from .services.reporting_service import (
+    ReportingServiceAsyncClient,
+    ReportingServiceClient,
 )
 from .services.user_list_direct_license_service import (
     UserListDirectLicenseServiceAsyncClient,
@@ -117,6 +125,7 @@ from .types.audience import (
     PpidData,
     UserIdData,
 )
+from .types.call_info import CallInfo
 from .types.cart_data import CartData, Item, ItemCustomVariable
 from .types.consent import Consent, ConsentStatus
 from .types.destination import Destination, Product, ProductAccount
@@ -175,6 +184,14 @@ from .types.partner_link_service import (
     SearchPartnerLinksRequest,
     SearchPartnerLinksResponse,
 )
+from .types.partner_match_report_entry import (
+    PartnerMatchAdGroup,
+    PartnerMatchAdvertiserAccount,
+    PartnerMatchCampaign,
+    PartnerMatchLineItem,
+    PartnerMatchReportEntry,
+    PartnerMatchUserList,
+)
 from .types.processing_errors import (
     ErrorCount,
     ErrorInfo,
@@ -184,6 +201,10 @@ from .types.processing_errors import (
     WarningCount,
     WarningInfo,
     WarningReason,
+)
+from .types.reporting_service import (
+    RetrievePartnerMatchReportRequest,
+    RetrievePartnerMatchReportResponse,
 )
 from .types.request_status_per_destination import RequestStatusPerDestination
 from .types.terms_of_service import TermsOfService, TermsOfServiceStatus
@@ -250,6 +271,7 @@ __all__ = (
     "IngestionServiceAsyncClient",
     "MarketingDataInsightsServiceAsyncClient",
     "PartnerLinkServiceAsyncClient",
+    "ReportingServiceAsyncClient",
     "UserListDirectLicenseServiceAsyncClient",
     "UserListGlobalLicenseServiceAsyncClient",
     "UserListServiceAsyncClient",
@@ -264,6 +286,7 @@ __all__ = (
     "AudienceMember",
     "AwsWrappedKeyInfo",
     "Baseline",
+    "CallInfo",
     "CartData",
     "CompositeData",
     "Consent",
@@ -335,6 +358,12 @@ __all__ = (
     "PartnerLink",
     "PartnerLinkMetadata",
     "PartnerLinkServiceClient",
+    "PartnerMatchAdGroup",
+    "PartnerMatchAdvertiserAccount",
+    "PartnerMatchCampaign",
+    "PartnerMatchLineItem",
+    "PartnerMatchReportEntry",
+    "PartnerMatchUserList",
     "PartnerProvidedIdData",
     "Platform",
     "PlatformType",
@@ -350,9 +379,12 @@ __all__ = (
     "RemoveAudienceMembersResponse",
     "RemoveUsersRequest",
     "RemoveUsersResponse",
+    "ReportingServiceClient",
     "RequestStatusPerDestination",
     "RetrieveInsightsRequest",
     "RetrieveInsightsResponse",
+    "RetrievePartnerMatchReportRequest",
+    "RetrievePartnerMatchReportResponse",
     "RetrieveRequestStatusRequest",
     "RetrieveRequestStatusResponse",
     "SearchPartnerLinksRequest",

@@ -258,7 +258,8 @@ def _generate_authentication_header_map(
     """
     # iam.amazonaws.com host => iam service.
     # sts.us-east-2.amazonaws.com host => sts service.
-    service_name = host.split(".")[0]
+    # sts-fips.us-east-2.amazonaws.com host => sts service.
+    service_name = host.split(".")[0].removesuffix("-fips")
 
     current_time = _helpers.utcnow()
     amz_date = current_time.strftime("%Y%m%dT%H%M%SZ")

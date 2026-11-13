@@ -225,6 +225,8 @@ class SqlOperationsServiceRestStub:
 class SqlOperationsServiceRestTransport(_BaseSqlOperationsServiceRestTransport):
     """REST backend synchronous transport for SqlOperationsService.
 
+    Service to fetch operations for database instances.
+
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
     and call it.

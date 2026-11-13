@@ -3685,10 +3685,15 @@ class BuildOptions(proto.Message):
                 Not a verifiable build (the default).
             VERIFIED (1):
                 Build must be verified.
+            BEST_EFFORT (3):
+                Build verification is best effort. If
+                provenance generation fails, the build will
+                still succeed.
         """
 
         NOT_VERIFIED = 0
         VERIFIED = 1
+        BEST_EFFORT = 3
 
     class MachineType(proto.Enum):
         r"""Supported Compute Engine machine types. For more information, see
@@ -3802,8 +3807,9 @@ class BuildOptions(proto.Message):
                 write to Cloud Storage buckets in the build
                 project.
             LEGACY_BUCKET (2):
-                Bucket is located in a Google-owned project
-                and is not regionalized.
+                Deprecated: Use ``REGIONAL_USER_OWNED_BUCKET`` instead.
+                Bucket is located in a Google-owned project and is not
+                regionalized.
         """
 
         DEFAULT_LOGS_BUCKET_BEHAVIOR_UNSPECIFIED = 0
@@ -4246,8 +4252,9 @@ class PrivatePoolV1Config(proto.Message):
         network_config (google.cloud.devtools.cloudbuild_v1.types.PrivatePoolV1Config.NetworkConfig):
             Network configuration for the pool.
         private_service_connect (google.cloud.devtools.cloudbuild_v1.types.PrivatePoolV1Config.PrivateServiceConnect):
-            Immutable. Private Service Connect(PSC)
-            Network configuration for the pool.
+            Immutable. Deprecated: Private Service
+            Connect is no longer supported. Private Service
+            Connect(PSC) Network configuration for the pool.
     """
 
     class WorkerConfig(proto.Message):
@@ -4360,7 +4367,8 @@ class PrivatePoolV1Config(proto.Message):
         )
 
     class PrivateServiceConnect(proto.Message):
-        r"""Defines the Private Service Connect network configuration for
+        r"""Deprecated: Private Service Connect is no longer supported.
+        Defines the Private Service Connect network configuration for
         the pool.
 
         Attributes:

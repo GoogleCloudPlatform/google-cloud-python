@@ -421,6 +421,13 @@ class ListMessagesRequest(proto.Message):
             - create_time (e.g.,
               ``createTime > "2025-01-28T06:51:56-08:00"``)
             - update_time
+        pending_write_wait_skipped (bool):
+            Optional. If true, the wait for in-flight
+            writes on the most recent turn is skipped. By
+            default ListMessages waits for those writes to
+            become durable so a caller reading right after a
+            chat turn does not miss the tail of that turn's
+            messages.
     """
 
     parent: str = proto.Field(
@@ -438,6 +445,10 @@ class ListMessagesRequest(proto.Message):
     filter: str = proto.Field(
         proto.STRING,
         number=5,
+    )
+    pending_write_wait_skipped: bool = proto.Field(
+        proto.BOOL,
+        number=7,
     )
 
 
@@ -563,9 +574,9 @@ class ChatRequest(proto.Message):
 
         Values:
             THINKING_MODE_UNSPECIFIED (0):
-                Unspecified thinking mode, agent will use
-                THINKING mode by default except for BigQuery
-                user defaulting to FAST mode by default.
+                The default value. For BigQuery and Looker
+                data sources, the agent uses FAST. For all other
+                data sources, the agent uses THINKING.
             FAST (1):
                 Fast mode, answers quickly.
             THINKING (2):

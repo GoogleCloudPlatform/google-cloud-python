@@ -43,16 +43,16 @@ class CloudVmCluster(proto.Message):
             format:
             projects/{project}/locations/{region}/cloudVmClusters/{cloud_vm_cluster}
         exadata_infrastructure (str):
-            Required. The name of the Exadata Infrastructure resource on
-            which VM cluster resource is created, in the following
-            format:
+            Required. Immutable. The name of the Exadata Infrastructure
+            resource on which VM cluster resource is created, in the
+            following format:
             projects/{project}/locations/{region}/cloudExadataInfrastuctures/{cloud_extradata_infrastructure}
         display_name (str):
-            Optional. User friendly name for this
-            resource.
+            Optional. Immutable. User friendly name for
+            this resource.
         properties (google.cloud.oracledatabase_v1.types.CloudVmClusterProperties):
-            Optional. Various properties of the VM
-            Cluster.
+            Optional. Immutable. Various properties of
+            the VM Cluster.
         labels (MutableMapping[str, str]):
             Optional. Labels or tags associated with the
             VM Cluster.
@@ -60,40 +60,54 @@ class CloudVmCluster(proto.Message):
             Output only. The date and time that the VM
             cluster was created.
         cidr (str):
-            Optional. Network settings. CIDR to use for
-            cluster IP allocation.
+            Optional. Immutable. Network settings. CIDR
+            to use for cluster IP allocation.
         backup_subnet_cidr (str):
-            Optional. CIDR range of the backup subnet.
+            Optional. Immutable. CIDR range of the backup
+            subnet.
         network (str):
-            Optional. The name of the VPC network.
-            Format:
+            Optional. Immutable. The name of the VPC
+            network. Format:
             projects/{project}/global/networks/{network}
         gcp_oracle_zone (str):
             Output only. The GCP Oracle zone where Oracle CloudVmCluster
             is hosted. This will be the same as the gcp_oracle_zone of
             the CloudExadataInfrastructure. Example: us-east4-b-r2.
         odb_network (str):
-            Optional. The name of the OdbNetwork associated with the VM
-            Cluster. Format:
+            Optional. Immutable. The name of the OdbNetwork associated
+            with the VM Cluster. Format:
             projects/{project}/locations/{location}/odbNetworks/{odb_network}
             It is optional but if specified, this should match the
             parent ODBNetwork of the odb_subnet and backup_odb_subnet.
         odb_subnet (str):
-            Optional. The name of the OdbSubnet associated with the VM
-            Cluster for IP allocation. Format:
+            Optional. Immutable. The name of the OdbSubnet associated
+            with the VM Cluster for IP allocation. Format:
             projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
         backup_odb_subnet (str):
-            Optional. The name of the backup OdbSubnet associated with
-            the VM Cluster. Format:
+            Optional. Immutable. The name of the backup OdbSubnet
+            associated with the VM Cluster. Format:
             projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
+        odb_dns_zone (str):
+            Optional. Immutable. The name of the OdbDnsZone for using
+            custom domain name for the VM Cluster. Format:
+            projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbDnsZones/{odb_dns_zone}
         identity_connector (google.cloud.oracledatabase_v1.types.IdentityConnector):
             Output only. The identity connector details
             which will allow OCI to securely access the
             resources in the customer project.
         exascale_db_storage_vault (str):
-            Optional. The name of ExascaleDbStorageVault associated with
-            the VM Cluster. Format:
+            Optional. Immutable. The name of ExascaleDbStorageVault
+            associated with the VM Cluster. Format:
             projects/{project}/locations/{location}/exascaleDbStorageVaults/{exascale_db_storage_vault}
+        identity_connector_disabled (bool):
+            Optional. Input only. Immutable. If set to
+            true, disables the automatic provisioning of the
+            Workload Identity Connector during creation. If
+            set to false or omitted, the Workload Identity
+            Connector will be automatically provisioned by
+            default. Note: Provisioning the Workload
+            Identity Connector is a prerequisite for
+            enabling Google Cloud CMEK.
     """
 
     name: str = proto.Field(
@@ -151,6 +165,10 @@ class CloudVmCluster(proto.Message):
         proto.STRING,
         number=15,
     )
+    odb_dns_zone: str = proto.Field(
+        proto.STRING,
+        number=18,
+    )
     identity_connector: common.IdentityConnector = proto.Field(
         proto.MESSAGE,
         number=16,
@@ -159,6 +177,10 @@ class CloudVmCluster(proto.Message):
     exascale_db_storage_vault: str = proto.Field(
         proto.STRING,
         number=17,
+    )
+    identity_connector_disabled: bool = proto.Field(
+        proto.BOOL,
+        number=19,
     )
 
 

@@ -13,6 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+from .acl_config import (
+    AclConfig,
+)
+from .acl_config_service import (
+    GetAclConfigRequest,
+    UpdateAclConfigRequest,
+)
+from .agent_gateway_setting import (
+    AgentGatewaySetting,
+)
 from .answer import (
     Answer,
 )
@@ -26,8 +36,14 @@ from .assistant import (
 )
 from .assistant_service import (
     AssistUserMetadata,
+    CreateAssistantRequest,
+    DeleteAssistantRequest,
+    GetAssistantRequest,
+    ListAssistantsRequest,
+    ListAssistantsResponse,
     StreamAssistRequest,
     StreamAssistResponse,
+    UpdateAssistantRequest,
 )
 from .chunk import (
     Chunk,
@@ -43,10 +59,19 @@ from .cmek_config_service import (
     UpdateCmekConfigMetadata,
     UpdateCmekConfigRequest,
 )
+from .collection import (
+    Collection,
+)
+from .collection_service import (
+    DeleteCollectionMetadata,
+    DeleteCollectionRequest,
+)
 from .common import (
     CustomAttribute,
+    DataProtectionPolicy,
     DoubleList,
     HealthcareFhirConfig,
+    IdpConfig,
     IndustryVertical,
     Interval,
     Principal,
@@ -54,7 +79,10 @@ from .common import (
     SearchLinkPromotion,
     SearchTier,
     SearchUseCase,
+    SessionConfig,
     SolutionType,
+    SubscriptionTerm,
+    SubscriptionTier,
     UserInfo,
 )
 from .completion import (
@@ -62,6 +90,8 @@ from .completion import (
     SuggestionDenyListEntry,
 )
 from .completion_service import (
+    AdvancedCompleteQueryRequest,
+    AdvancedCompleteQueryResponse,
     CompleteQueryRequest,
     CompleteQueryResponse,
 )
@@ -105,6 +135,24 @@ from .conversational_search_service import (
 )
 from .custom_tuning_model import (
     CustomTuningModel,
+)
+from .data_connector import (
+    ActionConfig,
+    AlertPolicyConfig,
+    BAPConfig,
+    CliConfig,
+    ConnectorType,
+    DataConnector,
+    DestinationConfig,
+    DynamicTool,
+    IdentityScheduleConfig,
+    Tenant,
+)
+from .data_connector_service import (
+    GetDataConnectorRequest,
+    SetUpDataConnectorMetadata,
+    SetUpDataConnectorRequest,
+    UpdateDataConnectorRequest,
 )
 from .data_store import (
     AdvancedSiteSearchConfig,
@@ -151,10 +199,15 @@ from .engine_service import (
     ListEnginesResponse,
     UpdateEngineRequest,
 )
+from .feedback import (
+    Feedback,
+)
 from .grounded_generation_service import (
     CheckGroundingRequest,
     CheckGroundingResponse,
     CheckGroundingSpec,
+    Citation,
+    CitationMetadata,
     GenerateGroundedContentRequest,
     GenerateGroundedContentResponse,
     GroundedGenerationContent,
@@ -204,6 +257,23 @@ from .import_config import (
     ImportUserEventsRequest,
     ImportUserEventsResponse,
     SpannerSource,
+)
+from .license_config import (
+    LicenseConfig,
+)
+from .license_config_service import (
+    CreateLicenseConfigRequest,
+    DistributeLicenseConfigRequest,
+    DistributeLicenseConfigResponse,
+    GetLicenseConfigRequest,
+    ListLicenseConfigsRequest,
+    ListLicenseConfigsResponse,
+    RetractLicenseConfigRequest,
+    RetractLicenseConfigResponse,
+    UpdateLicenseConfigRequest,
+)
+from .logging import (
+    ObservabilityConfig,
 )
 from .project import (
     Project,
@@ -266,9 +336,15 @@ from .search_tuning_service import (
     TrainCustomModelResponse,
 )
 from .serving_config import (
+    AnswerGenerationSpec,
     ServingConfig,
 )
 from .serving_config_service import (
+    CreateServingConfigRequest,
+    DeleteServingConfigRequest,
+    GetServingConfigRequest,
+    ListServingConfigsRequest,
+    ListServingConfigsResponse,
     UpdateServingConfigRequest,
 )
 from .session import (
@@ -331,25 +407,53 @@ from .user_event_service import (
     WriteUserEventRequest,
 )
 from .user_license import (
+    LicenseConfigUsageStats,
     UserLicense,
 )
 from .user_license_service import (
     BatchUpdateUserLicensesMetadata,
     BatchUpdateUserLicensesRequest,
     BatchUpdateUserLicensesResponse,
+    ListLicenseConfigsUsageStatsRequest,
+    ListLicenseConfigsUsageStatsResponse,
     ListUserLicensesRequest,
     ListUserLicensesResponse,
 )
+from .user_store import (
+    UserStore,
+)
+from .user_store_service import (
+    GetUserStoreRequest,
+    UpdateUserStoreRequest,
+)
+from .widget_config import (
+    ModelInfoView,
+    WidgetConfig,
+)
+from .widget_config_service import (
+    GetWidgetConfigRequest,
+    UpdateWidgetConfigRequest,
+)
 
 __all__ = (
+    "AclConfig",
+    "GetAclConfigRequest",
+    "UpdateAclConfigRequest",
+    "AgentGatewaySetting",
     "Answer",
     "AssistAnswer",
     "AssistantContent",
     "AssistantGroundedContent",
     "Assistant",
     "AssistUserMetadata",
+    "CreateAssistantRequest",
+    "DeleteAssistantRequest",
+    "GetAssistantRequest",
+    "ListAssistantsRequest",
+    "ListAssistantsResponse",
     "StreamAssistRequest",
     "StreamAssistResponse",
+    "UpdateAssistantRequest",
     "Chunk",
     "CmekConfig",
     "DeleteCmekConfigMetadata",
@@ -360,20 +464,30 @@ __all__ = (
     "SingleRegionKey",
     "UpdateCmekConfigMetadata",
     "UpdateCmekConfigRequest",
+    "Collection",
+    "DeleteCollectionMetadata",
+    "DeleteCollectionRequest",
     "CustomAttribute",
+    "DataProtectionPolicy",
     "DoubleList",
     "HealthcareFhirConfig",
+    "IdpConfig",
     "Interval",
     "Principal",
     "SearchLinkPromotion",
+    "SessionConfig",
     "UserInfo",
     "IndustryVertical",
     "SearchAddOn",
     "SearchTier",
     "SearchUseCase",
     "SolutionType",
+    "SubscriptionTerm",
+    "SubscriptionTier",
     "CompletionSuggestion",
     "SuggestionDenyListEntry",
+    "AdvancedCompleteQueryRequest",
+    "AdvancedCompleteQueryResponse",
     "CompleteQueryRequest",
     "CompleteQueryResponse",
     "Condition",
@@ -407,6 +521,20 @@ __all__ = (
     "UpdateConversationRequest",
     "UpdateSessionRequest",
     "CustomTuningModel",
+    "ActionConfig",
+    "AlertPolicyConfig",
+    "BAPConfig",
+    "CliConfig",
+    "DataConnector",
+    "DestinationConfig",
+    "DynamicTool",
+    "IdentityScheduleConfig",
+    "Tenant",
+    "ConnectorType",
+    "GetDataConnectorRequest",
+    "SetUpDataConnectorMetadata",
+    "SetUpDataConnectorRequest",
+    "UpdateDataConnectorRequest",
     "AdvancedSiteSearchConfig",
     "DataStore",
     "NaturalLanguageQueryUnderstandingConfig",
@@ -438,9 +566,12 @@ __all__ = (
     "ListEnginesRequest",
     "ListEnginesResponse",
     "UpdateEngineRequest",
+    "Feedback",
     "CheckGroundingRequest",
     "CheckGroundingResponse",
     "CheckGroundingSpec",
+    "Citation",
+    "CitationMetadata",
     "GenerateGroundedContentRequest",
     "GenerateGroundedContentResponse",
     "GroundedGenerationContent",
@@ -482,6 +613,17 @@ __all__ = (
     "ImportUserEventsRequest",
     "ImportUserEventsResponse",
     "SpannerSource",
+    "LicenseConfig",
+    "CreateLicenseConfigRequest",
+    "DistributeLicenseConfigRequest",
+    "DistributeLicenseConfigResponse",
+    "GetLicenseConfigRequest",
+    "ListLicenseConfigsRequest",
+    "ListLicenseConfigsResponse",
+    "RetractLicenseConfigRequest",
+    "RetractLicenseConfigResponse",
+    "UpdateLicenseConfigRequest",
+    "ObservabilityConfig",
     "Project",
     "ProvisionProjectMetadata",
     "ProvisionProjectRequest",
@@ -522,7 +664,13 @@ __all__ = (
     "TrainCustomModelMetadata",
     "TrainCustomModelRequest",
     "TrainCustomModelResponse",
+    "AnswerGenerationSpec",
     "ServingConfig",
+    "CreateServingConfigRequest",
+    "DeleteServingConfigRequest",
+    "GetServingConfigRequest",
+    "ListServingConfigsRequest",
+    "ListServingConfigsResponse",
     "UpdateServingConfigRequest",
     "Query",
     "Session",
@@ -573,10 +721,20 @@ __all__ = (
     "UserEvent",
     "CollectUserEventRequest",
     "WriteUserEventRequest",
+    "LicenseConfigUsageStats",
     "UserLicense",
     "BatchUpdateUserLicensesMetadata",
     "BatchUpdateUserLicensesRequest",
     "BatchUpdateUserLicensesResponse",
+    "ListLicenseConfigsUsageStatsRequest",
+    "ListLicenseConfigsUsageStatsResponse",
     "ListUserLicensesRequest",
     "ListUserLicensesResponse",
+    "UserStore",
+    "GetUserStoreRequest",
+    "UpdateUserStoreRequest",
+    "WidgetConfig",
+    "ModelInfoView",
+    "GetWidgetConfigRequest",
+    "UpdateWidgetConfigRequest",
 )

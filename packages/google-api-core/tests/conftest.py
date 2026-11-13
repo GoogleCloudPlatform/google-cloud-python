@@ -44,6 +44,7 @@ def mock_otel(monkeypatch):
     mock_trace = mock.Mock()
     mock_trace.get_tracer.return_value = mock_tracer
     mock_trace.SpanKind.CLIENT = "CLIENT"
+    mock_trace.SpanKind.INTERNAL = "INTERNAL"
     mock_trace.StatusCode.ERROR = "ERROR"
 
     with (
@@ -56,6 +57,9 @@ def mock_otel(monkeypatch):
             {
                 "opentelemetry": mock.Mock(trace=mock_trace),
                 "opentelemetry.trace": mock_trace,
+                "opentelemetry.trace.status": mock.Mock(),
+                "opentelemetry.trace.propagation.tracecontext": mock.Mock(),
+                "opentelemetry.instrumentation.grpc": mock.Mock(),
             },
         ),
     ):

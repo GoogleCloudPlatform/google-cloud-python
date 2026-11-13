@@ -1528,6 +1528,34 @@ class DataformGrpcTransport(DataformTransport):
         return self._stubs["fetch_git_ahead_behind"]
 
     @property
+    def fetch_workspace_history(
+        self,
+    ) -> Callable[
+        [dataform.FetchWorkspaceHistoryRequest], dataform.FetchWorkspaceHistoryResponse
+    ]:
+        r"""Return a callable for the fetch workspace history method over gRPC.
+
+        Fetches a Workspace's history of commits.
+
+        Returns:
+            Callable[[~.FetchWorkspaceHistoryRequest],
+                    ~.FetchWorkspaceHistoryResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "fetch_workspace_history" not in self._stubs:
+            self._stubs["fetch_workspace_history"] = self._logged_channel.unary_unary(
+                "/google.cloud.dataform.v1beta1.Dataform/FetchWorkspaceHistory",
+                request_serializer=dataform.FetchWorkspaceHistoryRequest.serialize,
+                response_deserializer=dataform.FetchWorkspaceHistoryResponse.deserialize,
+            )
+        return self._stubs["fetch_workspace_history"]
+
+    @property
     def commit_workspace_changes(
         self,
     ) -> Callable[
@@ -2074,6 +2102,36 @@ class DataformGrpcTransport(DataformTransport):
                 response_deserializer=dataform.CompilationResult.deserialize,
             )
         return self._stubs["create_compilation_result"]
+
+    @property
+    def create_compilation_result_long_running(
+        self,
+    ) -> Callable[[dataform.CreateCompilationResultRequest], operations_pb2.Operation]:
+        r"""Return a callable for the create compilation result long
+        running method over gRPC.
+
+        Creates a new CompilationResult in a given project
+        and location asynchronously.
+
+        Returns:
+            Callable[[~.CreateCompilationResultRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_compilation_result_long_running" not in self._stubs:
+            self._stubs["create_compilation_result_long_running"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.dataform.v1beta1.Dataform/CreateCompilationResultLongRunning",
+                    request_serializer=dataform.CreateCompilationResultRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["create_compilation_result_long_running"]
 
     @property
     def query_compilation_result_actions(

@@ -23,7 +23,7 @@ import enum
 import functools
 from typing import Any, List, Optional, Tuple
 
-from google.api_core import _observability, grpc_helpers
+from google.api_core import _observability, exceptions, grpc_helpers
 from google.api_core.gapic_v1 import client_info
 from google.api_core.gapic_v1.client_info import METRICS_METADATA_KEY
 from google.api_core.timeout import TimeToDeadlineTimeout
@@ -126,50 +126,6 @@ def _extract_rpc_identity(
     return method_str, service, method
 
 
-def _extract_status_code(exc: Optional[BaseException]) -> str:
-    """Extract canonical status code name string from an exception.
-
-    Status code name strings are resolved by inspecting the following locations:
-    * Chained exceptions: Unwraps RetryError or __cause__ to the root exception.
-    * Enum & code attributes: Inspects .grpc_status_code on GoogleAPICallError or .code on gRPC errors.
-    * Integer status codes: Maps raw gRPC integer status codes to canonical enum names.
-    * Fallback: Defaults to the exception class name for standard Python errors.
-
-    Args:
-        exc (Optional[BaseException]): The exception to extract the status code name from.
-
-    Returns:
-        str: The canonical status code name (e.g. "NOT_FOUND", "UNAVAILABLE") or class name.
-    """
-    if exc is None:
-        return ""
-
-    # 1. Unwrap chained exceptions: unwrap RetryError or __cause__ to the root failure
-    target = getattr(exc, "cause", None) or getattr(exc, "__cause__", None) or exc
-
-    # 2. Check enum & code attributes: .grpc_status_code enum or callable/non-callable .code
-    status = getattr(target, "grpc_status_code", None)
-    if status is None and hasattr(target, "code"):
-        try:
-            status = target.code() if callable(target.code) else target.code
-        except Exception:
-            status = None
-
-    name = getattr(status, "name", None)
-    if name:
-        return str(name)
-
-    # 3. Check integer status codes: map raw gRPC integer status codes to canonical enum names
-    if isinstance(status, int):
-        from google.api_core import exceptions
-
-        status = exceptions._INT_TO_GRPC_CODE.get(status, status)
-        return getattr(status, "name", str(status))
-
-    # 4. Fallback: default to the exception class name for standard Python errors
-    return target.__class__.__name__
-
-
 def _extract_error_attributes(exc: Optional[BaseException]) -> dict[str, Any]:
     """Extract gcp.errors.* and error.type attributes from an exception.
 
@@ -206,32 +162,51 @@ def _extract_error_attributes(exc: Optional[BaseException]) -> dict[str, Any]:
         )
         if rpc_call is not None and hasattr(rpc_call, "trailing_metadata"):
             try:
-                from google.api_core import exceptions
-
                 _, error_info = exceptions._parse_grpc_error_details(rpc_call)
             except Exception:
                 pass
 
     # 4. Unified attribute extraction: extract domain, reason, and metadata from ErrorInfo or exception attributes
+    http_response = getattr(target_exc, "response", None)
+    http_status = (
+        getattr(http_response, "status_code", getattr(http_response, "status", None))
+        if http_response is not None and not hasattr(http_response, "trailing_metadata")
+        else None
+    )
+
     source = error_info or target_exc
-    domain = getattr(source, "domain", None)
+    if isinstance(source, dict):
+        domain = source.get("domain")
+        reason = source.get("reason")
+        metadata = source.get("metadata")
+    else:
+        domain = getattr(source, "domain", None)
+        reason = getattr(source, "reason", None)
+        metadata = getattr(source, "metadata", None)
+
     if domain:
         attrs["gcp.errors.domain"] = domain
-    reason = getattr(source, "reason", None)
     if reason:
         attrs["error.type"] = reason
+    elif isinstance(http_status, int):
+        attrs["error.type"] = str(http_status)
     else:
         # Fallback per OpenTelemetry Semantic Conventions: every failed span should record
         # a low-cardinality error.type. Use canonical status code name or exception class name.
-        status_code = _extract_status_code(target_exc)
+        status_code = exceptions._extract_status_code(target_exc)
         attrs["error.type"] = status_code or target_exc.__class__.__name__
-    metadata = getattr(source, "metadata", None)
     if metadata:
         for k, v in metadata.items():
             attrs[f"gcp.errors.metadata.{k}"] = str(v)
 
     # 5. Extract human-readable error description for cross-language PRD parity
-    message = getattr(target_exc, "message", None)
+    message = (
+        _observability._TraceContext._extract_http_error_message(http_response)
+        if http_status is not None
+        else None
+    )
+    if not message:
+        message = getattr(target_exc, "message", None)
     if not message and hasattr(target_exc, "details"):
         details = target_exc.details
         message = details() if callable(details) else details
@@ -274,6 +249,8 @@ class _GapicCallable(object):
             Client information used for metadata headers. Defaults to None.
         kind (str): The transport kind for the RPC method. Defaults to "grpc".
             Allowed values for OpenTelemetry method tracing are "grpc" and "rest".
+        default_host (Optional[str]): Fallback transport host when ``api_endpoint``
+            is not set on ``client_options``. Defaults to None.
     """
 
     _SUPPORTED_TRACING_KINDS = (_TRANSPORT_KIND_GRPC, _TRANSPORT_KIND_REST)
@@ -290,6 +267,7 @@ class _GapicCallable(object):
         is_streaming=False,
         client_info=None,
         kind=_DEFAULT_TRANSPORT_KIND,
+        default_host=None,
     ):
         self._target = target
         self._retry = retry
@@ -330,14 +308,18 @@ class _GapicCallable(object):
                     tracer = trace.get_tracer("google.api_core")
 
                 span_name, _, _ = _extract_rpc_identity(method_name)
+                endpoint_attrs = _observability._extract_endpoint_attributes(
+                    client_options, default_host=default_host
+                )
                 span_attributes = {
                     "rpc.system.name": "http" if kind.startswith("rest") else "grpc",
                     "rpc.method": span_name,
+                    **endpoint_attrs,
                 }
                 self._start_span_fn = functools.partial(
                     tracer.start_as_current_span,
                     span_name,
-                    kind=trace.SpanKind.CLIENT,
+                    kind=trace.SpanKind.INTERNAL,
                     attributes=span_attributes,
                 )
             except (ImportError, AttributeError, TypeError):
@@ -400,7 +382,7 @@ class _GapicCallable(object):
             except BaseException as exc:
                 if span is not None and hasattr(span, "set_attribute"):
                     span.set_attribute(
-                        "rpc.response.status_code", _extract_status_code(exc)
+                        "rpc.response.status_code", exceptions._extract_status_code(exc)
                     )
                     for k, v in _extract_error_attributes(exc).items():
                         span.set_attribute(k, v)
@@ -427,6 +409,7 @@ def wrap_method(
     method_name=None,
     is_streaming=False,
     kind=_DEFAULT_TRANSPORT_KIND,
+    default_host=None,
 ):
     """Wrap an RPC method with common behavior.
 
@@ -521,6 +504,8 @@ def wrap_method(
             Streaming methods are currently gated and do not generate Tier 3 spans.
         kind (str): The transport kind for the RPC method. Defaults to "grpc".
             Allowed values for OpenTelemetry method tracing are "grpc" and "rest".
+        default_host (Optional[str]): Fallback transport host when ``api_endpoint``
+            is not set on ``client_options``. Defaults to None.
 
     Returns:
         Callable: A new callable that takes optional ``retry``, ``timeout``,
@@ -553,5 +538,6 @@ def wrap_method(
             is_streaming=is_streaming,
             client_info=client_info,
             kind=kind,
+            default_host=default_host,
         )
     )

@@ -242,6 +242,27 @@ class HypercomputeClusterClient(metaclass=HypercomputeClusterClientMeta):
         return m.groupdict() if m else {}
 
     @staticmethod
+    def disk_path(
+        project: str,
+        zone: str,
+        disk: str,
+    ) -> str:
+        """Returns a fully-qualified disk string."""
+        return "projects/{project}/zones/{zone}/disks/{disk}".format(
+            project=project,
+            zone=zone,
+            disk=disk,
+        )
+
+    @staticmethod
+    def parse_disk_path(path: str) -> Dict[str, str]:
+        """Parses a disk path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/zones/(?P<zone>.+?)/disks/(?P<disk>.+?)$", path
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
     def disk_type_path(
         project: str,
         zone: str,
@@ -286,12 +307,29 @@ class HypercomputeClusterClient(metaclass=HypercomputeClusterClientMeta):
         return m.groupdict() if m else {}
 
     @staticmethod
-    def lustre_instance_path(
+    def image_path(
+        project: str,
+        image: str,
+    ) -> str:
+        """Returns a fully-qualified image string."""
+        return "projects/{project}/global/images/{image}".format(
+            project=project,
+            image=image,
+        )
+
+    @staticmethod
+    def parse_image_path(path: str) -> Dict[str, str]:
+        """Parses a image path into its component segments."""
+        m = re.match(r"^projects/(?P<project>.+?)/global/images/(?P<image>.+?)$", path)
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def instance_path(
         project: str,
         location: str,
         instance: str,
     ) -> str:
-        """Returns a fully-qualified lustre_instance string."""
+        """Returns a fully-qualified instance string."""
         return "projects/{project}/locations/{location}/instances/{instance}".format(
             project=project,
             location=location,
@@ -299,10 +337,52 @@ class HypercomputeClusterClient(metaclass=HypercomputeClusterClientMeta):
         )
 
     @staticmethod
-    def parse_lustre_instance_path(path: str) -> Dict[str, str]:
-        """Parses a lustre_instance path into its component segments."""
+    def parse_instance_path(path: str) -> Dict[str, str]:
+        """Parses a instance path into its component segments."""
         m = re.match(
             r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/instances/(?P<instance>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def instance_group_manager_path(
+        project: str,
+        zone: str,
+        instance_group_manager: str,
+    ) -> str:
+        """Returns a fully-qualified instance_group_manager string."""
+        return "projects/{project}/zones/{zone}/instanceGroupManagers/{instance_group_manager}".format(
+            project=project,
+            zone=zone,
+            instance_group_manager=instance_group_manager,
+        )
+
+    @staticmethod
+    def parse_instance_group_manager_path(path: str) -> Dict[str, str]:
+        """Parses a instance_group_manager path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/zones/(?P<zone>.+?)/instanceGroupManagers/(?P<instance_group_manager>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def instance_template_path(
+        project: str,
+        instance_template: str,
+    ) -> str:
+        """Returns a fully-qualified instance_template string."""
+        return "projects/{project}/global/instanceTemplates/{instance_template}".format(
+            project=project,
+            instance_template=instance_template,
+        )
+
+    @staticmethod
+    def parse_instance_template_path(path: str) -> Dict[str, str]:
+        """Parses a instance_template path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/global/instanceTemplates/(?P<instance_template>.+?)$",
             path,
         )
         return m.groupdict() if m else {}
@@ -327,6 +407,30 @@ class HypercomputeClusterClient(metaclass=HypercomputeClusterClientMeta):
         return m.groupdict() if m else {}
 
     @staticmethod
+    def node_path(
+        project: str,
+        location: str,
+        cluster: str,
+        node: str,
+    ) -> str:
+        """Returns a fully-qualified node string."""
+        return "projects/{project}/locations/{location}/clusters/{cluster}/nodes/{node}".format(
+            project=project,
+            location=location,
+            cluster=cluster,
+            node=node,
+        )
+
+    @staticmethod
+    def parse_node_path(path: str) -> Dict[str, str]:
+        """Parses a node path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/clusters/(?P<cluster>.+?)/nodes/(?P<node>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
     def reservation_path(
         project: str,
         zone: str,
@@ -344,6 +448,97 @@ class HypercomputeClusterClient(metaclass=HypercomputeClusterClientMeta):
         """Parses a reservation path into its component segments."""
         m = re.match(
             r"^projects/(?P<project>.+?)/zones/(?P<zone>.+?)/reservations/(?P<reservation>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def reservation_block_path(
+        project: str,
+        zone: str,
+        reservation: str,
+        reservation_block: str,
+    ) -> str:
+        """Returns a fully-qualified reservation_block string."""
+        return "projects/{project}/zones/{zone}/reservations/{reservation}/reservationBlocks/{reservation_block}".format(
+            project=project,
+            zone=zone,
+            reservation=reservation,
+            reservation_block=reservation_block,
+        )
+
+    @staticmethod
+    def parse_reservation_block_path(path: str) -> Dict[str, str]:
+        """Parses a reservation_block path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/zones/(?P<zone>.+?)/reservations/(?P<reservation>.+?)/reservationBlocks/(?P<reservation_block>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def reservation_sub_block_path(
+        project: str,
+        zone: str,
+        reservation: str,
+        reservation_block: str,
+        reservation_sub_block: str,
+    ) -> str:
+        """Returns a fully-qualified reservation_sub_block string."""
+        return "projects/{project}/zones/{zone}/reservations/{reservation}/reservationBlocks/{reservation_block}/reservationSubBlocks/{reservation_sub_block}".format(
+            project=project,
+            zone=zone,
+            reservation=reservation,
+            reservation_block=reservation_block,
+            reservation_sub_block=reservation_sub_block,
+        )
+
+    @staticmethod
+    def parse_reservation_sub_block_path(path: str) -> Dict[str, str]:
+        """Parses a reservation_sub_block path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/zones/(?P<zone>.+?)/reservations/(?P<reservation>.+?)/reservationBlocks/(?P<reservation_block>.+?)/reservationSubBlocks/(?P<reservation_sub_block>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def snapshot_path(
+        project: str,
+        snapshot: str,
+    ) -> str:
+        """Returns a fully-qualified snapshot string."""
+        return "projects/{project}/global/snapshots/{snapshot}".format(
+            project=project,
+            snapshot=snapshot,
+        )
+
+    @staticmethod
+    def parse_snapshot_path(path: str) -> Dict[str, str]:
+        """Parses a snapshot path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/global/snapshots/(?P<snapshot>.+?)$", path
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def storage_pool_path(
+        project: str,
+        zone: str,
+        storage_pool: str,
+    ) -> str:
+        """Returns a fully-qualified storage_pool string."""
+        return "projects/{project}/zones/{zone}/storagePools/{storage_pool}".format(
+            project=project,
+            zone=zone,
+            storage_pool=storage_pool,
+        )
+
+    @staticmethod
+    def parse_storage_pool_path(path: str) -> Dict[str, str]:
+        """Parses a storage_pool path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/zones/(?P<zone>.+?)/storagePools/(?P<storage_pool>.+?)$",
             path,
         )
         return m.groupdict() if m else {}
@@ -1080,9 +1275,10 @@ class HypercomputeClusterClient(metaclass=HypercomputeClusterClientMeta):
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             cluster_id (str):
-                Required. ID of the cluster to create. Must conform to
-                `RFC-1034 <https://datatracker.ietf.org/doc/html/rfc1034>`__
-                (lower-case, alphanumeric, and at most 63 characters).
+                Required. The ID of the cluster to create. The cluster
+                ID must start with a lowercase letter (``a``-``z``), use
+                only lowercase letters or numbers, and contain up to 10
+                characters. For example, specify ``cluster001``.
 
                 This corresponds to the ``cluster_id`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -1438,6 +1634,130 @@ class HypercomputeClusterClient(metaclass=HypercomputeClusterClientMeta):
             self._transport.operations_client,
             empty_pb2.Empty,
             metadata_type=operation_metadata.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def list_nodes(
+        self,
+        request: Optional[Union[hypercompute_cluster.ListNodesRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListNodesPager:
+        r"""Lists Nodes in a given cluster.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import hypercomputecluster_v1beta
+
+            def sample_list_nodes():
+                # Create a client
+                client = hypercomputecluster_v1beta.HypercomputeClusterClient()
+
+                # Initialize request argument(s)
+                request = hypercomputecluster_v1beta.ListNodesRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_nodes(request=request)
+
+                # Handle the response
+                for response in page_result:
+                    print(response)
+
+        Args:
+            request (Union[google.cloud.hypercomputecluster_v1beta.types.ListNodesRequest, dict]):
+                The request object. Request message for
+                [ListNodes][google.cloud.hypercomputecluster.v1beta.HypercomputeCluster.ListNodes].
+            parent (str):
+                Required. Parent cluster of the nodes to list, in the
+                format
+                ``projects/{project}/locations/{location}/clusters/{cluster}``.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.hypercomputecluster_v1beta.services.hypercompute_cluster.pagers.ListNodesPager:
+                Response message for
+                   [ListNodes][google.cloud.hypercomputecluster.v1beta.HypercomputeCluster.ListNodes].
+
+                Iterating over this object will yield results and
+                resolve additional pages automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, hypercompute_cluster.ListNodesRequest):
+            request = hypercompute_cluster.ListNodesRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.list_nodes]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__iter__` convenience method.
+        response = pagers.ListNodesPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
         # Done; return the response.

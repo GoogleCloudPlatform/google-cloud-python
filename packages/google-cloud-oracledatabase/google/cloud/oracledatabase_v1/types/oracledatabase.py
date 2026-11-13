@@ -47,11 +47,13 @@ __protobuf__ = proto.module(
         "ListCloudExadataInfrastructuresResponse",
         "GetCloudExadataInfrastructureRequest",
         "CreateCloudExadataInfrastructureRequest",
+        "UpdateCloudExadataInfrastructureRequest",
         "DeleteCloudExadataInfrastructureRequest",
         "ListCloudVmClustersRequest",
         "ListCloudVmClustersResponse",
         "GetCloudVmClusterRequest",
         "CreateCloudVmClusterRequest",
+        "UpdateCloudVmClusterRequest",
         "DeleteCloudVmClusterRequest",
         "ListEntitlementsRequest",
         "ListEntitlementsResponse",
@@ -94,6 +96,10 @@ __protobuf__ = proto.module(
         "ListExadbVmClustersResponse",
         "UpdateExadbVmClusterRequest",
         "RemoveVirtualMachineExadbVmClusterRequest",
+        "EnableCloudVmClusterIdentityConnectorRequest",
+        "EnableExadbVmClusterIdentityConnectorRequest",
+        "DisableCloudVmClusterIdentityConnectorRequest",
+        "DisableExadbVmClusterIdentityConnectorRequest",
     },
 )
 
@@ -246,6 +252,62 @@ class CreateCloudExadataInfrastructureRequest(proto.Message):
     request_id: str = proto.Field(
         proto.STRING,
         number=4,
+    )
+
+
+class UpdateCloudExadataInfrastructureRequest(proto.Message):
+    r"""The request for ``CloudExadataInfrastructure.Update``.
+
+    Attributes:
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. Field mask is used to specify the fields to be
+            overwritten in the Exadata resource by the update. The
+            fields specified in the ``update_mask`` are relative to the
+            resource, not the full request. A field will be overwritten
+            if it is in the mask. If the user does not provide a mask
+            then the service treats this as an implied field mask
+            equivalent to all fields that are populated (have a
+            non-empty value). To clear or unset a field, the field must
+            be explicitly specified in the ``update_mask``.
+        cloud_exadata_infrastructure (google.cloud.oracledatabase_v1.types.CloudExadataInfrastructure):
+            Required. The resource being updated. Note only ``labels``
+            can be updated. The provided ``labels`` will completely
+            replace the existing labels. Any existing label keys that
+            are not included in the update request will be deleted. Not
+            providing ``labels`` and ``update_mask`` will not update the
+            labels. To clear all labels, specify ``labels`` in the
+            ``update_mask`` and omit or leave the ``labels`` field empty
+            in the update request.
+        request_id (str):
+            Optional. An optional ID to identify the
+            request. This value is used to identify
+            duplicate requests. If you make a request with
+            the same request ID and the original request is
+            still in progress or completed, the server
+            ignores the second request. This prevents
+            clients from accidentally creating duplicate
+            commitments.
+
+            The request ID must be a valid UUID with the
+            exception that zero UUID is not supported
+            (00000000-0000-0000-0000-000000000000).
+    """
+
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=field_mask_pb2.FieldMask,
+    )
+    cloud_exadata_infrastructure: exadata_infra.CloudExadataInfrastructure = (
+        proto.Field(
+            proto.MESSAGE,
+            number=2,
+            message=exadata_infra.CloudExadataInfrastructure,
+        )
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 
@@ -424,6 +486,58 @@ class CreateCloudVmClusterRequest(proto.Message):
     request_id: str = proto.Field(
         proto.STRING,
         number=4,
+    )
+
+
+class UpdateCloudVmClusterRequest(proto.Message):
+    r"""The request for ``CloudVmCluster.Update``.
+
+    Attributes:
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. A mask specifying which fields in the VM Cluster
+            should be updated. A field specified in the mask is
+            overwritten. If a mask isn't provided, the service treats
+            this as an implied field mask equivalent to all fields that
+            are populated (have a non-empty value). To clear or unset a
+            field, the field must be explicitly specified in the
+            ``update_mask``.
+        cloud_vm_cluster (google.cloud.oracledatabase_v1.types.CloudVmCluster):
+            Required. The resource being updated. Note only ``labels``
+            can be updated. The provided ``labels`` will completely
+            replace the existing labels. Any existing label keys that
+            are not included in the update request will be deleted. Not
+            providing ``labels`` and ``update_mask`` will not update the
+            labels. To clear all labels, specify ``labels`` in the
+            ``update_mask`` and omit or leave the ``labels`` field empty
+            in the update request.
+        request_id (str):
+            Optional. An optional ID to identify the
+            request. This value is used to identify
+            duplicate requests. If you make a request with
+            the same request ID and the original request is
+            still in progress or completed, the server
+            ignores the second request. This prevents
+            clients from accidentally creating duplicate
+            commitments.
+
+            The request ID must be a valid UUID with the
+            exception that zero UUID is not supported
+            (00000000-0000-0000-0000-000000000000).
+    """
+
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=field_mask_pb2.FieldMask,
+    )
+    cloud_vm_cluster: vm_cluster.CloudVmCluster = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=vm_cluster.CloudVmCluster,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 
@@ -1009,12 +1123,20 @@ class UpdateAutonomousDatabaseRequest(proto.Message):
         update_mask (google.protobuf.field_mask_pb2.FieldMask):
             Optional. Field mask is used to specify the fields to be
             overwritten in the Exadata resource by the update. The
-            fields specified in the update_mask are relative to the
+            fields specified in the ``update_mask`` are relative to the
             resource, not the full request. A field will be overwritten
             if it is in the mask. If the user does not provide a mask
-            then all fields will be overwritten.
+            then the service treats this as an implied field mask
+            equivalent to all fields that are populated (have a
+            non-empty value). To clear or unset a field, the field must
+            be explicitly specified in the ``update_mask``.
         autonomous_database (google.cloud.oracledatabase_v1.types.AutonomousDatabase):
-            Required. The resource being updated
+            Required. The Autonomous Database resource being updated.
+            For ``labels``, the provided map completely replaces
+            existing labels; any existing keys not included will be
+            deleted. To clear all labels, specify ``labels`` in the
+            ``update_mask`` and omit or leave the ``labels`` field empty
+            in the update request.
         request_id (str):
             Optional. An optional ID to identify the
             request. This value is used to identify
@@ -1712,18 +1834,26 @@ class ListExadbVmClustersResponse(proto.Message):
 
 class UpdateExadbVmClusterRequest(proto.Message):
     r"""The request for ``ExadbVmCluster.Update``. We only support adding
-    the Virtual Machine to the ExadbVmCluster. Rest of the fields in
-    ExadbVmCluster are immutable.
+    the Virtual Machine to the ExadbVmCluster and updating labels. Rest
+    of the fields in ExadbVmCluster are immutable.
 
     Attributes:
         update_mask (google.protobuf.field_mask_pb2.FieldMask):
-            Optional. A mask specifying which fields in
-            th VM Cluster should be updated. A field
-            specified in the mask is overwritten. If a mask
-            isn't provided then all the fields in the VM
-            Cluster are overwritten.
+            Optional. A mask specifying which fields in th VM Cluster
+            should be updated. A field specified in the mask is
+            overwritten. If a mask isn't provided then the service
+            treats this as an implied field mask equivalent to all
+            fields that are populated (have a non-empty value). To clear
+            or unset a field, the field must be explicitly specified in
+            the ``update_mask``.
         exadb_vm_cluster (google.cloud.oracledatabase_v1.types.ExadbVmCluster):
-            Required. The resource being updated.
+            Required. The ExadbVmCluster resource being updated. Mutable
+            fields that can be updated include ``labels`` and
+            ``properties.node_count``. For ``labels``, the provided map
+            completely replaces existing labels; any existing keys not
+            included will be deleted. To clear all labels, specify
+            ``labels`` in the ``update_mask`` and omit or leave the
+            ``labels`` field empty in the update request.
         request_id (str):
             Optional. An optional ID to identify the
             request. This value is used to identify
@@ -1792,6 +1922,74 @@ class RemoveVirtualMachineExadbVmClusterRequest(proto.Message):
     hostnames: MutableSequence[str] = proto.RepeatedField(
         proto.STRING,
         number=4,
+    )
+
+
+class EnableCloudVmClusterIdentityConnectorRequest(proto.Message):
+    r"""The request for
+    ``CloudVmCluster.EnableCloudVmClusterIdentityConnector``.
+
+    Attributes:
+        name (str):
+            Required. The name of the Cloud VM Cluster in the following
+            format:
+            projects/{project}/locations/{location}/cloudVmClusters/{cloud_vm_cluster}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class EnableExadbVmClusterIdentityConnectorRequest(proto.Message):
+    r"""The request for
+    ``ExadbVmCluster.EnableExadbVmClusterIdentityConnector``.
+
+    Attributes:
+        name (str):
+            Required. The name of the Exadb VM Cluster in the following
+            format:
+            projects/{project}/locations/{location}/exadbVmClusters/{exadb_vm_cluster}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class DisableCloudVmClusterIdentityConnectorRequest(proto.Message):
+    r"""The request for
+    ``CloudVmCluster.DisableCloudVmClusterIdentityConnector``.
+
+    Attributes:
+        name (str):
+            Required. The name of the Cloud VM Cluster in the following
+            format:
+            projects/{project}/locations/{location}/cloudVmClusters/{cloud_vm_cluster}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class DisableExadbVmClusterIdentityConnectorRequest(proto.Message):
+    r"""The request for
+    ``ExadbVmCluster.DisableExadbVmClusterIdentityConnector``.
+
+    Attributes:
+        name (str):
+            Required. The name of the Exadb VM Cluster in the following
+            format:
+            projects/{project}/locations/{location}/exadbVmClusters/{exadb_vm_cluster}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
     )
 
 

@@ -725,6 +725,54 @@ def dataframe_to_parquet(
     )
 
 
+def _format_datetime_for_csv(value):
+    if value is not pandas.NaT and isinstance(value, datetime):
+        return datetime.isoformat(value, sep=" ")
+    return value
+
+
+def dataframe_to_csv(dataframe, bq_schema, filepath):
+    """Write dataframe as a CSV file, according to the desired BQ schema.
+
+    Args:
+        dataframe (pandas.DataFrame):
+            DataFrame to convert to CSV file.
+        bq_schema (Optional[Sequence[Union[ \
+            :class:`~google.cloud.bigquery.schema.SchemaField`, \
+            Mapping[str, Any] \
+        ]]]):
+            Desired BigQuery schema.
+        filepath (str):
+            Path to write CSV file to.
+    """
+    if bq_schema:
+        bq_schema = schema._to_schema_fields(bq_schema)
+        new_columns = {}
+        for bq_field in bq_schema:
+            if (
+                bq_field.field_type in {"DATETIME", "TIMESTAMP"}
+                and bq_field.name in dataframe.columns
+                and dataframe[bq_field.name].dtype == "object"
+            ):
+                # Format datetime objects with isoformat to ensure 4-digit
+                # years (< 1000) and preserve timezone offsets in pandas 3.1+.
+                # https://github.com/googleapis/python-bigquery-pandas/issues/365
+                new_columns[bq_field.name] = dataframe[bq_field.name].map(
+                    _format_datetime_for_csv
+                )
+        if new_columns:
+            dataframe = dataframe.assign(**new_columns)
+
+    dataframe.to_csv(
+        filepath,
+        index=False,
+        header=False,
+        encoding="utf-8",
+        float_format="%.17g",
+        date_format="%Y-%m-%d %H:%M:%S.%f",
+    )
+
+
 def _row_iterator_page_to_arrow(page, column_names, arrow_types):
     # Iterate over the page to force the API request to get the page data.
     try:

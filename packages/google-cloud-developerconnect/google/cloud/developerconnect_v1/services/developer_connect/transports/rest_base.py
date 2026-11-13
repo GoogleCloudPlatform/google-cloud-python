@@ -89,6 +89,40 @@ class _BaseDeveloperConnectRestTransport(DeveloperConnectTransport):
             api_audience=api_audience,
         )
 
+    class _BaseAddGitRepositoryLinkPullRequestComment:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:addPullRequestComment",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseAddGitRepositoryLinkPullRequestReviewComment:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:addPullRequestReviewComment",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
     class _BaseCreateAccountConnector:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -226,6 +260,25 @@ class _BaseDeveloperConnectRestTransport(DeveloperConnectTransport):
             ]
             return http_options
 
+    class _BaseDiffGitRepositoryLinkCommit:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
+            "baseSha": "",
+            "headSha": "",
+        }
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:diffCommit",
+                },
+            ]
+            return http_options
+
     class _BaseFetchAccessToken:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -273,6 +326,93 @@ class _BaseDeveloperConnectRestTransport(DeveloperConnectTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{git_repository_link=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:fetchGitRefs",
+                },
+            ]
+            return http_options
+
+    class _BaseFetchGitRepositoryLinkCommit:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
+            "commitSha": "",
+        }
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:fetchCommit",
+                },
+            ]
+            return http_options
+
+    class _BaseFetchGitRepositoryLinkCommitList:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:fetchCommitList",
+                },
+            ]
+            return http_options
+
+    class _BaseFetchGitRepositoryLinkFileBlame:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
+            "ref": "",
+            "path": "",
+        }
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:fetchFileBlame",
+                },
+            ]
+            return http_options
+
+    class _BaseFetchGitRepositoryLinkPullRequest:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
+            "pullRequestId": "",
+        }
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:fetchPullRequest",
+                },
+            ]
+            return http_options
+
+    class _BaseFetchGitRepositoryLinkPullRequestList:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:fetchPullRequestList",
                 },
             ]
             return http_options
@@ -467,6 +607,40 @@ class _BaseDeveloperConnectRestTransport(DeveloperConnectTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{parent=projects/*/locations/*/accountConnectors/*}/users",
+                },
+            ]
+            return http_options
+
+    class _BaseModifyGitRepositoryLinkPullRequest:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:modifyPullRequest",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseOpenGitRepositoryLinkPullRequest:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:openPullRequest",
+                    "body": "*",
                 },
             ]
             return http_options

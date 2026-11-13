@@ -31,6 +31,9 @@ _CLUSTER_NAME_RE = re.compile(
 class Cluster(object):
     """Representation of a Google Cloud Bigtable Cluster.
 
+    .. deprecated:: 2.30.0
+        Use :class:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient` instead.
+
     We can use a :class:`Cluster` to:
 
     * :meth:`reload` itself
@@ -300,6 +303,11 @@ class Cluster(object):
     def reload(self):
         """Reload the metadata for this cluster.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.get_cluster`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -317,6 +325,11 @@ class Cluster(object):
 
     def exists(self):
         """Check whether the cluster already exists.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.get_cluster`
+            instead.
 
         For example:
 
@@ -338,6 +351,11 @@ class Cluster(object):
 
     def create(self):
         """Create this cluster.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.create_cluster`
+            instead.
 
         For example:
 
@@ -384,6 +402,11 @@ class Cluster(object):
 
     def update(self):
         """Update this cluster.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.partial_update_cluster`
+            instead.
 
         For example:
 
@@ -443,6 +466,11 @@ class Cluster(object):
         """
         Disable autoscaling by specifying the number of nodes.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.partial_update_cluster`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -474,6 +502,11 @@ class Cluster(object):
 
     def delete(self):
         """Delete this cluster.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.delete_cluster`
+            instead.
 
         For example:
 

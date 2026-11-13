@@ -6748,7 +6748,7 @@ def test_enable_managed_rotation_flattened():
         # using the keyword arguments to the method.
         client.enable_managed_rotation(
             parent="parent_value",
-            cloud_sql_single_user_credentials=service.EnableManagedRotationRequest.CloudSQLSingleUserCredentials(
+            cloud_sql_single_user_credentials=resources.CloudSqlSingleUserCredentials(
                 instance_id="instance_id_value"
             ),
         )
@@ -6760,11 +6760,10 @@ def test_enable_managed_rotation_flattened():
         arg = args[0].parent
         mock_val = "parent_value"
         assert arg == mock_val
-        assert (
-            args[0].cloud_sql_single_user_credentials
-            == service.EnableManagedRotationRequest.CloudSQLSingleUserCredentials(
-                instance_id="instance_id_value"
-            )
+        assert args[
+            0
+        ].cloud_sql_single_user_credentials == resources.CloudSqlSingleUserCredentials(
+            instance_id="instance_id_value"
         )
 
 
@@ -6779,7 +6778,7 @@ def test_enable_managed_rotation_flattened_error():
         client.enable_managed_rotation(
             service.EnableManagedRotationRequest(),
             parent="parent_value",
-            cloud_sql_single_user_credentials=service.EnableManagedRotationRequest.CloudSQLSingleUserCredentials(
+            cloud_sql_single_user_credentials=resources.CloudSqlSingleUserCredentials(
                 instance_id="instance_id_value"
             ),
         )
@@ -6805,7 +6804,7 @@ async def test_enable_managed_rotation_flattened_async():
         # using the keyword arguments to the method.
         response = await client.enable_managed_rotation(
             parent="parent_value",
-            cloud_sql_single_user_credentials=service.EnableManagedRotationRequest.CloudSQLSingleUserCredentials(
+            cloud_sql_single_user_credentials=resources.CloudSqlSingleUserCredentials(
                 instance_id="instance_id_value"
             ),
         )
@@ -6817,11 +6816,10 @@ async def test_enable_managed_rotation_flattened_async():
         arg = args[0].parent
         mock_val = "parent_value"
         assert arg == mock_val
-        assert (
-            args[0].cloud_sql_single_user_credentials
-            == service.EnableManagedRotationRequest.CloudSQLSingleUserCredentials(
-                instance_id="instance_id_value"
-            )
+        assert args[
+            0
+        ].cloud_sql_single_user_credentials == resources.CloudSqlSingleUserCredentials(
+            instance_id="instance_id_value"
         )
 
 
@@ -6837,7 +6835,7 @@ async def test_enable_managed_rotation_flattened_error_async():
         await client.enable_managed_rotation(
             service.EnableManagedRotationRequest(),
             parent="parent_value",
-            cloud_sql_single_user_credentials=service.EnableManagedRotationRequest.CloudSQLSingleUserCredentials(
+            cloud_sql_single_user_credentials=resources.CloudSqlSingleUserCredentials(
                 instance_id="instance_id_value"
             ),
         )
@@ -9902,7 +9900,7 @@ def test_enable_managed_rotation_rest_flattened_error(transport: str = "rest"):
         client.enable_managed_rotation(
             service.EnableManagedRotationRequest(),
             parent="parent_value",
-            cloud_sql_single_user_credentials=service.EnableManagedRotationRequest.CloudSQLSingleUserCredentials(
+            cloud_sql_single_user_credentials=resources.CloudSqlSingleUserCredentials(
                 instance_id="instance_id_value"
             ),
         )

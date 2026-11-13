@@ -201,7 +201,7 @@ def test_bulk_insert_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1467,6 +1467,10 @@ def test_bulk_insert_rest_call_success(request_type):
             "can_ip_forward": True,
             "confidential_instance_config": {
                 "confidential_instance_type": "confidential_instance_type_value",
+                "confidential_paravisor_config": {
+                    "confidential_tpm_type": "confidential_tpm_type_value",
+                    "sev_snp_irq_mode": "sev_snp_irq_mode_value",
+                },
                 "enable_confidential_compute": True,
             },
             "description": "description_value",
@@ -1553,6 +1557,7 @@ def test_bulk_insert_rest_call_success(request_type):
                         {
                             "external_ipv6": "external_ipv6_value",
                             "external_ipv6_prefix_length": 2837,
+                            "ip_collection": "ip_collection_value",
                             "kind": "kind_value",
                             "name": "name_value",
                             "nat_i_p": "nat_i_p_value",
@@ -1630,6 +1635,7 @@ def test_bulk_insert_rest_call_success(request_type):
                 "on_instance_stop_action": {"discard_local_ssd": True},
                 "preemptible": True,
                 "preemption_notice_duration": {},
+                "protection_tier": "protection_tier_value",
                 "provisioning_model": "provisioning_model_value",
                 "skip_guest_os_shutdown": True,
                 "termination_time": "termination_time_value",
@@ -1649,6 +1655,7 @@ def test_bulk_insert_rest_call_success(request_type):
             "workload_identity_config": {
                 "identity": "identity_value",
                 "identity_certificate_enabled": True,
+                "identity_type": "identity_type_value",
             },
         },
         "location_policy": {

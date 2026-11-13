@@ -22,6 +22,8 @@ from django.db.models.sql.compiler import (
 )
 from django.db.utils import DatabaseError
 
+from django_spanner.utils import add_dummy_where
+
 
 class SQLCompiler(BaseSQLCompiler):
     """
@@ -136,15 +138,19 @@ class SQLInsertCompiler(BaseSQLInsertCompiler, SQLCompiler):
 
 
 class SQLDeleteCompiler(BaseSQLDeleteCompiler, SQLCompiler):
-    """A wrapper class for compatibility with Django specifications."""
+    """A variation of the Django SQL delete compiler for Spanner."""
 
-    pass
+    def as_sql(self):
+        sql, parameters = super().as_sql()
+        return (add_dummy_where(sql), parameters) if sql else (sql, parameters)
 
 
 class SQLUpdateCompiler(BaseSQLUpdateCompiler, SQLCompiler):
-    """A wrapper class for compatibility with Django specifications."""
+    """A variation of the Django SQL update compiler for Spanner."""
 
-    pass
+    def as_sql(self):
+        sql, parameters = super().as_sql()
+        return (add_dummy_where(sql), parameters) if sql else (sql, parameters)
 
 
 class SQLAggregateCompiler(BaseSQLAggregateCompiler, SQLCompiler):

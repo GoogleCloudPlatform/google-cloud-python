@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.56.0-preview.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-compute-v1.56.0-preview.1...google-cloud-compute-v1.56.0-preview.2) (2026-10-29)
+
+
+### Features
+
+* add AliasNetworkEndpoints service and AliasNetworkEndpoint ([1f86109](https://github.com/googleapis/google-cloud-python/commit/1f86109380984b6a65bf57b884ddfc6b87cafef2))
+* add HaControllerParams and HaControllerInstanceNetworkInterface ([1f86109](https://github.com/googleapis/google-cloud-python/commit/1f86109380984b6a65bf57b884ddfc6b87cafef2))
+* add ip_collection to AccessConfig and network_attachment and ([1f86109](https://github.com/googleapis/google-cloud-python/commit/1f86109380984b6a65bf57b884ddfc6b87cafef2))
+* add MEMORY_OPTIMIZED_X5 values to Commitment.Type enum and ([1f86109](https://github.com/googleapis/google-cloud-python/commit/1f86109380984b6a65bf57b884ddfc6b87cafef2))
+* add ProtectionTier enum and protection_tier field to Scheduling ([1f86109](https://github.com/googleapis/google-cloud-python/commit/1f86109380984b6a65bf57b884ddfc6b87cafef2))
+* remove FLOW_MANAGEMENT_UNSPECIFIED from ([1f86109](https://github.com/googleapis/google-cloud-python/commit/1f86109380984b6a65bf57b884ddfc6b87cafef2))
+* update API sources and regenerate ([#18699](https://github.com/googleapis/google-cloud-python/issues/18699)) ([1aa57db](https://github.com/googleapis/google-cloud-python/commit/1aa57db6309e47e1a0505be80ed0443d2ca5a4d0))
+* update Compute Engine v1 (preview) API to 2026-10-01-preview ([1f86109](https://github.com/googleapis/google-cloud-python/commit/1f86109380984b6a65bf57b884ddfc6b87cafef2))
+
+
+### Documentation
+
+* see release notes ([1f86109](https://github.com/googleapis/google-cloud-python/commit/1f86109380984b6a65bf57b884ddfc6b87cafef2))
+
 ## [1.56.0-preview.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-compute-v1.51.0-preview.1...google-cloud-compute-v1.56.0-preview.1) (2026-10-01)
 
 

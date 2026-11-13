@@ -14,6 +14,7 @@
 # limitations under the License.
 #
 from .resources import (
+    CloudSqlSingleUserCredentials,
     CustomerManagedEncryption,
     CustomerManagedEncryptionStatus,
     Replication,
@@ -45,6 +46,7 @@ from .service import (
 )
 
 __all__ = (
+    "CloudSqlSingleUserCredentials",
     "CustomerManagedEncryption",
     "CustomerManagedEncryptionStatus",
     "Replication",

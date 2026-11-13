@@ -2585,7 +2585,13 @@
       "component": "google-cloud-saasplatform-saasservicemgmt",
       "extra-files": [
         "google/cloud/saasplatform_saasservicemgmt/gapic_version.py",
+        "google/cloud/saasplatform_saasservicemgmt_v1/gapic_version.py",
         "google/cloud/saasplatform_saasservicemgmt_v1beta1/gapic_version.py",
+        {
+          "jsonpath": "$.clientLibrary.version",
+          "path": "samples/generated_samples/snippet_metadata_google.cloud.saasplatform.saasservicemgmt.v1.json",
+          "type": "json"
+        },
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.cloud.saasplatform.saasservicemgmt.v1beta1.json",
@@ -3555,15 +3561,9 @@
       "extra-files": [
         "google/shopping/merchant_accounts/gapic_version.py",
         "google/shopping/merchant_accounts_v1/gapic_version.py",
-        "google/shopping/merchant_accounts_v1beta/gapic_version.py",
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.accounts.v1.json",
-          "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.accounts.v1beta.json",
           "type": "json"
         }
       ]
@@ -3573,15 +3573,9 @@
       "extra-files": [
         "google/shopping/merchant_conversions/gapic_version.py",
         "google/shopping/merchant_conversions_v1/gapic_version.py",
-        "google/shopping/merchant_conversions_v1beta/gapic_version.py",
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.conversions.v1.json",
-          "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.conversions.v1beta.json",
           "type": "json"
         }
       ]
@@ -3591,15 +3585,9 @@
       "extra-files": [
         "google/shopping/merchant_datasources/gapic_version.py",
         "google/shopping/merchant_datasources_v1/gapic_version.py",
-        "google/shopping/merchant_datasources_v1beta/gapic_version.py",
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.datasources.v1.json",
-          "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.datasources.v1beta.json",
           "type": "json"
         }
       ]
@@ -3609,15 +3597,9 @@
       "extra-files": [
         "google/shopping/merchant_inventories/gapic_version.py",
         "google/shopping/merchant_inventories_v1/gapic_version.py",
-        "google/shopping/merchant_inventories_v1beta/gapic_version.py",
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.inventories.v1.json",
-          "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.inventories.v1beta.json",
           "type": "json"
         }
       ]
@@ -3627,15 +3609,9 @@
       "extra-files": [
         "google/shopping/merchant_issueresolution/gapic_version.py",
         "google/shopping/merchant_issueresolution_v1/gapic_version.py",
-        "google/shopping/merchant_issueresolution_v1beta/gapic_version.py",
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.issueresolution.v1.json",
-          "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.issueresolution.v1beta.json",
           "type": "json"
         }
       ]
@@ -3645,15 +3621,9 @@
       "extra-files": [
         "google/shopping/merchant_lfp/gapic_version.py",
         "google/shopping/merchant_lfp_v1/gapic_version.py",
-        "google/shopping/merchant_lfp_v1beta/gapic_version.py",
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.lfp.v1.json",
-          "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.lfp.v1beta.json",
           "type": "json"
         }
       ]
@@ -3675,15 +3645,9 @@
       "extra-files": [
         "google/shopping/merchant_notifications/gapic_version.py",
         "google/shopping/merchant_notifications_v1/gapic_version.py",
-        "google/shopping/merchant_notifications_v1beta/gapic_version.py",
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.notifications.v1.json",
-          "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.notifications.v1beta.json",
           "type": "json"
         }
       ]
@@ -3693,15 +3657,9 @@
       "extra-files": [
         "google/shopping/merchant_ordertracking/gapic_version.py",
         "google/shopping/merchant_ordertracking_v1/gapic_version.py",
-        "google/shopping/merchant_ordertracking_v1beta/gapic_version.py",
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.ordertracking.v1.json",
-          "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.ordertracking.v1beta.json",
           "type": "json"
         }
       ]
@@ -3711,15 +3669,9 @@
       "extra-files": [
         "google/shopping/merchant_products/gapic_version.py",
         "google/shopping/merchant_products_v1/gapic_version.py",
-        "google/shopping/merchant_products_v1beta/gapic_version.py",
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.products.v1.json",
-          "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.products.v1beta.json",
           "type": "json"
         }
       ]
@@ -3741,15 +3693,9 @@
       "extra-files": [
         "google/shopping/merchant_promotions/gapic_version.py",
         "google/shopping/merchant_promotions_v1/gapic_version.py",
-        "google/shopping/merchant_promotions_v1beta/gapic_version.py",
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.promotions.v1.json",
-          "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.promotions.v1beta.json",
           "type": "json"
         }
       ]
@@ -3759,15 +3705,9 @@
       "extra-files": [
         "google/shopping/merchant_quota/gapic_version.py",
         "google/shopping/merchant_quota_v1/gapic_version.py",
-        "google/shopping/merchant_quota_v1beta/gapic_version.py",
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.quota.v1.json",
-          "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.quota.v1beta.json",
           "type": "json"
         }
       ]
@@ -3778,7 +3718,6 @@
         "google/shopping/merchant_reports/gapic_version.py",
         "google/shopping/merchant_reports_v1/gapic_version.py",
         "google/shopping/merchant_reports_v1alpha/gapic_version.py",
-        "google/shopping/merchant_reports_v1beta/gapic_version.py",
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.reports.v1.json",
@@ -3788,11 +3727,6 @@
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.reports.v1alpha.json",
           "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.reports.v1beta.json",
-          "type": "json"
         }
       ]
     },
@@ -3801,15 +3735,9 @@
       "extra-files": [
         "google/shopping/merchant_reviews/gapic_version.py",
         "google/shopping/merchant_reviews_v1/gapic_version.py",
-        "google/shopping/merchant_reviews_v1beta/gapic_version.py",
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.reviews.v1.json",
-          "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.reviews.v1beta.json",
           "type": "json"
         }
       ]

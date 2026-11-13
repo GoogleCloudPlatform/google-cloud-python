@@ -29,6 +29,7 @@ __lazy_modules__ = {
     "google.cloud.iam_admin_v1.services.iam",
     "google.cloud.iam_admin_v1.types.audit_data",
     "google.cloud.iam_admin_v1.types.iam",
+    "google.cloud.iam_admin_v1.types.workforce_pool_platform_logs",
 }
 
 
@@ -83,6 +84,7 @@ from .types.iam import (
     UpdateRoleRequest,
     UploadServiceAccountKeyRequest,
 )
+from .types.workforce_pool_platform_logs import WorkforcePoolAttributeSyncEventLog
 
 __all__ = (
     "IAMAsyncClient",
@@ -135,6 +137,7 @@ __all__ = (
     "UndeleteServiceAccountResponse",
     "UpdateRoleRequest",
     "UploadServiceAccountKeyRequest",
+    "WorkforcePoolAttributeSyncEventLog",
 )
 
 api_core.check_python_version("google.cloud.iam_admin_v1")

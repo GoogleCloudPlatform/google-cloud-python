@@ -200,7 +200,7 @@ def method_exception(self):
 <!-- ## Images -->
 ## External Links
 
-External links can be written in two formats in RST: inline link and seperate link. Read more [here](http://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#external-links).
+External links can be written in two formats in RST: inline link and separate link. Read more [here](http://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#external-links).
 
 But note that our tool only support inline external link format currently. As an example:
 
@@ -208,9 +208,9 @@ But note that our tool only support inline external link format currently. As an
 def method_external_link(self):
     """ Docstring of :meth:`format.rst.foo.Foo.method_external_link`.
     Inline link should be transformed to markdown: `Link Text <http://inline.external.link>`_.
-    And seperated link will fail: `Seperated Link`_
+    And separated link will fail: `Separated Link`_
 
-    .. _Seperated Link: http://seperated.external.link
+    .. _Separated Link: http://separated.external.link
     """
     pass
 ```

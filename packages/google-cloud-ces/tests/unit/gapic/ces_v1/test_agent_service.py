@@ -35438,6 +35438,10 @@ def test_create_tool_rest_call_success(request_type):
                     }
                 ],
             },
+            "api_authentication": {},
+            "stateful_agent": True,
+            "input_variable_mapping": {},
+            "output_variable_mapping": {},
         },
         "name": "name_value",
         "display_name": "display_name_value",
@@ -35913,6 +35917,10 @@ def test_update_tool_rest_call_success(request_type):
                     }
                 ],
             },
+            "api_authentication": {},
+            "stateful_agent": True,
+            "input_variable_mapping": {},
+            "output_variable_mapping": {},
         },
         "name": "projects/sample1/locations/sample2/apps/sample3/tools/sample4",
         "display_name": "display_name_value",
@@ -39913,6 +39921,10 @@ def test_create_app_version_rest_call_success(request_type):
                                 }
                             ],
                         },
+                        "api_authentication": {},
+                        "stateful_agent": True,
+                        "input_variable_mapping": {},
+                        "output_variable_mapping": {},
                     },
                     "name": "name_value",
                     "display_name": "display_name_value",

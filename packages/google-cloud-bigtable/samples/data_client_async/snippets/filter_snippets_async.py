@@ -367,6 +367,7 @@ async def filter_composing_condition(project_id, instance_id, table_id):
 # [END bigtable_filters_composing_condition_asyncio]
 
 
+# [START bigtable_filters_print_asyncio]
 def print_row(row):
     from google.cloud._helpers import _datetime_from_microseconds
 
@@ -387,3 +388,6 @@ def print_row(row):
             )
         )
     print("")
+
+
+# [END bigtable_filters_print_asyncio]

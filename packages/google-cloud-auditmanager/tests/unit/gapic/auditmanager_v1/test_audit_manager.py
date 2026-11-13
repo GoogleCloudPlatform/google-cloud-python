@@ -66,7 +66,7 @@ from google.cloud.auditmanager_v1.services.audit_manager import (
     pagers,
     transports,
 )
-from google.cloud.auditmanager_v1.types import auditmanager
+from google.cloud.auditmanager_v1.types import auditmanager, parameters
 
 CRED_INFO_JSON = {
     "credential_source": "/path/to/file",
@@ -9467,6 +9467,7 @@ def test_create_audit_schedule_rest_call_success(request_type):
         "next_run_time": {},
         "last_trigger_time": {},
         "error_message": "error_message_value",
+        "parameter_overrides": {},
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -9707,6 +9708,7 @@ def test_update_audit_schedule_rest_call_success(request_type):
         "next_run_time": {},
         "last_trigger_time": {},
         "error_message": "error_message_value",
+        "parameter_overrides": {},
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency

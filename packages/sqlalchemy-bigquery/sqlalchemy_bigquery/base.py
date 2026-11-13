@@ -25,6 +25,7 @@ import random
 import re
 import uuid
 from decimal import Decimal
+from typing import Any
 
 import google.api_core.exceptions
 import packaging.version
@@ -586,6 +587,17 @@ class BigQueryCompiler(vendored_postgresql.PGCompiler, SQLCompiler):
 
     def visit_mod_binary(self, binary, operator, **kw):
         return f"MOD({self.process(binary.left, **kw)}, {self.process(binary.right, **kw)})"
+
+    def visit_now_func(self, fn, **kw):
+        # BigQuery has no NOW() function, use CURRENT_TIMESTAMP instead.
+        return "CURRENT_TIMESTAMP"
+
+    def visit_try_cast(self, cast: elements.Cast, **kwargs: Any) -> str:
+        """Compile a ``SAFE_CAST`` / ``try_cast`` expression for BigQuery."""
+        return "SAFE_CAST(%s AS %s)" % (
+            self.process(cast.clause, **kwargs),
+            self.process(cast.typeclause, **kwargs),
+        )
 
 
 class BigQueryTypeCompiler(GenericTypeCompiler):
@@ -1380,6 +1392,32 @@ class BigQueryDialect(DefaultDialect):
             view_name = f"{self.dataset_id}.{view_name}"
         view = client.get_table(view_name)
         return view.view_query
+
+
+_BaseTryCast = getattr(elements, "TryCast", elements.Cast)
+
+
+class SafeCast(_BaseTryCast):
+    """Represent a BigQuery ``SAFE_CAST`` expression."""
+
+    __visit_name__ = "try_cast"
+    inherit_cache = True
+
+
+def safe_cast(expression: Any, type_: Any) -> SafeCast:
+    """Produce a BigQuery ``SAFE_CAST`` expression.
+
+    ``SAFE_CAST`` is identical to ``CAST``, except that it returns ``NULL``
+    instead of raising an error when a cast fails.
+
+    Args:
+        expression: A SQL expression, column, or literal to be cast.
+        type_: The target SQLAlchemy ``TypeEngine`` class or instance.
+
+    Returns:
+        A ``SafeCast`` clause element that compiles to ``SAFE_CAST(...)``.
+    """
+    return SafeCast(expression, type_)
 
 
 class unnest(sqlalchemy.sql.functions.GenericFunction):

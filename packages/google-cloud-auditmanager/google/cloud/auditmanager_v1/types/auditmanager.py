@@ -21,6 +21,8 @@ import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
+from google.cloud.auditmanager_v1.types import parameters
+
 __protobuf__ = proto.module(
     package="google.cloud.auditmanager.v1",
     manifest={
@@ -277,6 +279,10 @@ class GenerateAuditScopeReportRequest(proto.Message):
               requests.
             - **CI/CD & Automation**: Test your scripts, permissions,
               and parameters safely without consuming resource quotas.
+        parameter_overrides (MutableMapping[str, google.cloud.auditmanager_v1.types.ParameterOverrides]):
+            Optional. Maps dynamic parameter overrides by Cloud Control
+            resource name at execution time. For example,
+            ``{"organizations/123/locations/global/cloudControls/control-1": {parameters: [...]}}``
     """
 
     class AuditScopeReportFormat(proto.Enum):
@@ -313,6 +319,14 @@ class GenerateAuditScopeReportRequest(proto.Message):
         proto.BOOL,
         number=6,
     )
+    parameter_overrides: MutableMapping[str, parameters.ParameterOverrides] = (
+        proto.MapField(
+            proto.STRING,
+            proto.MESSAGE,
+            number=7,
+            message=parameters.ParameterOverrides,
+        )
+    )
 
 
 class GenerateAuditReportRequest(proto.Message):
@@ -347,6 +361,10 @@ class GenerateAuditReportRequest(proto.Message):
         compliance_framework (str):
             Required. The framework that's used for the audit report.
             For example, ``NIST_800_53``.
+        parameter_overrides (MutableMapping[str, google.cloud.auditmanager_v1.types.ParameterOverrides]):
+            Optional. Maps dynamic parameter overrides by Cloud Control
+            resource name at execution time. For example,
+            ``{"organizations/123/locations/global/cloudControls/control-1": {parameters: [...]}}``
         validate_only (bool):
             Optional. If ``true``, only validates the request and does
             not generate the audit report. This executes standard
@@ -402,6 +420,14 @@ class GenerateAuditReportRequest(proto.Message):
     compliance_framework: str = proto.Field(
         proto.STRING,
         number=5,
+    )
+    parameter_overrides: MutableMapping[str, parameters.ParameterOverrides] = (
+        proto.MapField(
+            proto.STRING,
+            proto.MESSAGE,
+            number=7,
+            message=parameters.ParameterOverrides,
+        )
     )
     validate_only: bool = proto.Field(
         proto.BOOL,
@@ -955,6 +981,10 @@ class AuditReport(proto.Message):
             Output only. Project number, folder ID, or
             organization ID that the audit report was
             generated for.
+        cloud_control_parameter_states (MutableMapping[str, google.cloud.auditmanager_v1.types.CloudControlParameterStates]):
+            Output only. Parameter values provided by the
+            user and values for tunable parameters, stored
+            in the DB, keyed by control name.
     """
 
     class ReportGenerationState(proto.Enum):
@@ -1033,6 +1063,14 @@ class AuditReport(proto.Message):
     scope_id: str = proto.Field(
         proto.STRING,
         number=11,
+    )
+    cloud_control_parameter_states: MutableMapping[
+        str, parameters.CloudControlParameterStates
+    ] = proto.MapField(
+        proto.STRING,
+        proto.MESSAGE,
+        number=16,
+        message=parameters.CloudControlParameterStates,
     )
 
 
@@ -1541,6 +1579,10 @@ class AuditSchedule(proto.Message):
         error_message (str):
             Output only. Describes the error if the
             schedule is in an error state.
+        parameter_overrides (MutableMapping[str, google.cloud.auditmanager_v1.types.ParameterOverrides]):
+            Optional. Maps dynamic parameter overrides by Cloud Control
+            resource name at execution time. For example,
+            ``{"organizations/123/locations/global/cloudControls/control-1": {parameters: [...]}}``
     """
 
     class AuditReportFormat(proto.Enum):
@@ -1610,6 +1652,14 @@ class AuditSchedule(proto.Message):
     error_message: str = proto.Field(
         proto.STRING,
         number=13,
+    )
+    parameter_overrides: MutableMapping[str, parameters.ParameterOverrides] = (
+        proto.MapField(
+            proto.STRING,
+            proto.MESSAGE,
+            number=14,
+            message=parameters.ParameterOverrides,
+        )
     )
 
 

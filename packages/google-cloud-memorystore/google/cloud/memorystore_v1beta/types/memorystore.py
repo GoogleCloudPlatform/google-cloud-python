@@ -29,6 +29,7 @@ __protobuf__ = proto.module(
     manifest={
         "PscConnectionStatus",
         "ConnectionType",
+        "IpVersion",
         "Instance",
         "AclPolicyInfo",
         "StartMigrationRequest",
@@ -140,6 +141,24 @@ class ConnectionType(proto.Enum):
     CONNECTION_TYPE_DISCOVERY = 1
     CONNECTION_TYPE_PRIMARY = 2
     CONNECTION_TYPE_READER = 3
+
+
+class IpVersion(proto.Enum):
+    r"""IP version for PSC consumer endpoints.
+
+    Values:
+        IP_VERSION_UNSPECIFIED (0):
+            Not specified. Defaults to IPV4 on
+            CreateInstance.
+        IPV4 (1):
+            IPv4 address family.
+        IPV6 (2):
+            IPv6 address family.
+    """
+
+    IP_VERSION_UNSPECIFIED = 0
+    IPV4 = 1
+    IPV6 = 2
 
 
 class Instance(proto.Message):
@@ -2082,6 +2101,10 @@ class PscAutoConnection(proto.Message):
             status.
         connection_type (google.cloud.memorystore_v1beta.types.ConnectionType):
             Output only. Type of the PSC connection.
+        ip_version (google.cloud.memorystore_v1beta.types.IpVersion):
+            Optional. Immutable. The IP version used for
+            the PSC auto-created endpoint. If not specified,
+            defaults to IPV4.
     """
 
     port: int = proto.Field(
@@ -2122,6 +2145,11 @@ class PscAutoConnection(proto.Message):
         proto.ENUM,
         number=8,
         enum="ConnectionType",
+    )
+    ip_version: "IpVersion" = proto.Field(
+        proto.ENUM,
+        number=10,
+        enum="IpVersion",
     )
 
 
@@ -2398,6 +2426,14 @@ class ZoneDistributionConfig(proto.Message):
         zone (str):
             Optional. Defines zone where all resources will be allocated
             with SINGLE_ZONE mode. Ignored for MULTI_ZONE mode.
+        zones (MutableSequence[str]):
+            Optional. Specify the zones of a multi-zone
+            instance where Memorystore instance allocates
+            resources. This flag isn't applicable for
+            single-zone instances.
+        active_zones (MutableSequence[str]):
+            Output only. The exact list of zones where
+            the instance currently has active VMs.
         mode (google.cloud.memorystore_v1beta.types.ZoneDistributionConfig.ZoneDistributionMode):
             Optional. Current zone distribution mode. Defaults to
             MULTI_ZONE.
@@ -2424,6 +2460,14 @@ class ZoneDistributionConfig(proto.Message):
     zone: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+    zones: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+    active_zones: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=4,
     )
     mode: ZoneDistributionMode = proto.Field(
         proto.ENUM,

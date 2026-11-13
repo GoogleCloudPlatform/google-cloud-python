@@ -120,7 +120,9 @@ class SqlBackupsServiceClientMeta(type):
 
 
 class SqlBackupsServiceClient(metaclass=SqlBackupsServiceClientMeta):
-    """"""
+    """Service for managing database backups for Cloud SQL
+    instances.
+    """
 
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
     DEFAULT_ENDPOINT = "sqladmin.googleapis.com"
@@ -241,6 +243,23 @@ class SqlBackupsServiceClient(metaclass=SqlBackupsServiceClientMeta):
             r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/keyRings/(?P<key_ring>.+?)/cryptoKeys/(?P<crypto_key>.+?)/cryptoKeyVersions/(?P<crypto_key_version>.+?)$",
             path,
         )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def instance_path(
+        project: str,
+        instance: str,
+    ) -> str:
+        """Returns a fully-qualified instance string."""
+        return "projects/{project}/instances/{instance}".format(
+            project=project,
+            instance=instance,
+        )
+
+    @staticmethod
+    def parse_instance_path(path: str) -> Dict[str, str]:
+        """Parses a instance path into its component segments."""
+        m = re.match(r"^projects/(?P<project>.+?)/instances/(?P<instance>.+?)$", path)
         return m.groupdict() if m else {}
 
     @staticmethod

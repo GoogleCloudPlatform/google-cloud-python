@@ -64,7 +64,7 @@ _LOGGER = std_logging.getLogger(__name__)
 
 
 class SqlFlagsServiceAsyncClient:
-    """"""
+    """Service to manage database flags for Cloud SQL instances."""
 
     _client: SqlFlagsServiceClient
 

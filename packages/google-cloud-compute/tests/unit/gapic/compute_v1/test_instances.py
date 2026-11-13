@@ -204,7 +204,7 @@ def test_add_access_config_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -239,7 +239,7 @@ def test_add_network_interface_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -274,7 +274,7 @@ def test_add_resource_policies_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -309,7 +309,7 @@ def test_aggregated_list_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -342,7 +342,7 @@ def test_attach_disk_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -375,7 +375,7 @@ def test_bulk_insert_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -408,7 +408,7 @@ def test_delete_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -443,7 +443,7 @@ def test_delete_access_config_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -478,7 +478,7 @@ def test_delete_network_interface_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -511,7 +511,7 @@ def test_detach_disk_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -544,7 +544,7 @@ def test_get_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -579,7 +579,7 @@ def test_get_effective_firewalls_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -614,7 +614,7 @@ def test_get_guest_attributes_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -649,7 +649,7 @@ def test_get_iam_policy_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -684,7 +684,7 @@ def test_get_screenshot_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -719,7 +719,7 @@ def test_get_serial_port_output_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -754,7 +754,7 @@ def test_get_shielded_instance_identity_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -787,7 +787,7 @@ def test_insert_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -820,7 +820,7 @@ def test_list_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -855,7 +855,7 @@ def test_list_referrers_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -890,7 +890,7 @@ def test_perform_maintenance_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -925,7 +925,7 @@ def test_remove_resource_policies_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -960,7 +960,7 @@ def test_report_host_as_faulty_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -993,7 +993,7 @@ def test_reset_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1026,7 +1026,7 @@ def test_resume_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1061,7 +1061,7 @@ def test_send_diagnostic_interrupt_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1096,7 +1096,7 @@ def test_set_deletion_protection_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1131,7 +1131,7 @@ def test_set_disk_auto_delete_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1166,7 +1166,7 @@ def test_set_iam_policy_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1199,7 +1199,7 @@ def test_set_labels_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1234,7 +1234,7 @@ def test_set_machine_resources_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1269,7 +1269,7 @@ def test_set_machine_type_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1302,7 +1302,7 @@ def test_set_metadata_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1337,7 +1337,7 @@ def test_set_min_cpu_platform_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1370,7 +1370,7 @@ def test_set_name_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1405,7 +1405,7 @@ def test_set_scheduling_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1440,7 +1440,7 @@ def test_set_security_policy_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1475,7 +1475,7 @@ def test_set_service_account_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1510,7 +1510,7 @@ def test_set_shielded_instance_integrity_policy_api_version_header(transport_nam
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1543,7 +1543,7 @@ def test_set_tags_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1578,7 +1578,7 @@ def test_simulate_maintenance_event_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1611,7 +1611,7 @@ def test_start_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1646,7 +1646,7 @@ def test_start_with_encryption_key_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1679,7 +1679,7 @@ def test_stop_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1712,7 +1712,7 @@ def test_suspend_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1747,7 +1747,7 @@ def test_test_iam_permissions_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1780,7 +1780,7 @@ def test_update_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1815,7 +1815,7 @@ def test_update_access_config_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1850,7 +1850,7 @@ def test_update_display_device_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1885,7 +1885,7 @@ def test_update_network_interface_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -1920,7 +1920,7 @@ def test_update_shielded_instance_config_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -20986,6 +20986,7 @@ def test_add_access_config_rest_call_success(request_type):
     request_init["access_config_resource"] = {
         "external_ipv6": "external_ipv6_value",
         "external_ipv6_prefix_length": 2837,
+        "ip_collection": "ip_collection_value",
         "kind": "kind_value",
         "name": "name_value",
         "nat_i_p": "nat_i_p_value",
@@ -21241,6 +21242,7 @@ def test_add_network_interface_rest_call_success(request_type):
             {
                 "external_ipv6": "external_ipv6_value",
                 "external_ipv6_prefix_length": 2837,
+                "ip_collection": "ip_collection_value",
                 "kind": "kind_value",
                 "name": "name_value",
                 "nat_i_p": "nat_i_p_value",
@@ -22220,6 +22222,10 @@ def test_bulk_insert_rest_call_success(request_type):
             "can_ip_forward": True,
             "confidential_instance_config": {
                 "confidential_instance_type": "confidential_instance_type_value",
+                "confidential_paravisor_config": {
+                    "confidential_tpm_type": "confidential_tpm_type_value",
+                    "sev_snp_irq_mode": "sev_snp_irq_mode_value",
+                },
                 "enable_confidential_compute": True,
             },
             "description": "description_value",
@@ -22306,6 +22312,7 @@ def test_bulk_insert_rest_call_success(request_type):
                         {
                             "external_ipv6": "external_ipv6_value",
                             "external_ipv6_prefix_length": 2837,
+                            "ip_collection": "ip_collection_value",
                             "kind": "kind_value",
                             "name": "name_value",
                             "nat_i_p": "nat_i_p_value",
@@ -22383,6 +22390,7 @@ def test_bulk_insert_rest_call_success(request_type):
                 "on_instance_stop_action": {"discard_local_ssd": True},
                 "preemptible": True,
                 "preemption_notice_duration": {},
+                "protection_tier": "protection_tier_value",
                 "provisioning_model": "provisioning_model_value",
                 "skip_guest_os_shutdown": True,
                 "termination_time": "termination_time_value",
@@ -22402,6 +22410,7 @@ def test_bulk_insert_rest_call_success(request_type):
             "workload_identity_config": {
                 "identity": "identity_value",
                 "identity_certificate_enabled": True,
+                "identity_type": "identity_type_value",
             },
         },
         "location_policy": {
@@ -24314,6 +24323,10 @@ def test_insert_rest_call_success(request_type):
         "can_ip_forward": True,
         "confidential_instance_config": {
             "confidential_instance_type": "confidential_instance_type_value",
+            "confidential_paravisor_config": {
+                "confidential_tpm_type": "confidential_tpm_type_value",
+                "sev_snp_irq_mode": "sev_snp_irq_mode_value",
+            },
             "enable_confidential_compute": True,
         },
         "cpu_platform": "cpu_platform_value",
@@ -24408,6 +24421,7 @@ def test_insert_rest_call_success(request_type):
                     {
                         "external_ipv6": "external_ipv6_value",
                         "external_ipv6_prefix_length": 2837,
+                        "ip_collection": "ip_collection_value",
                         "kind": "kind_value",
                         "name": "name_value",
                         "nat_i_p": "nat_i_p_value",
@@ -24488,6 +24502,7 @@ def test_insert_rest_call_success(request_type):
             "scheduling": {
                 "availability_domain": 2002,
                 "graceful_shutdown_timestamp": "graceful_shutdown_timestamp_value",
+                "protection_tier": "protection_tier_value",
                 "termination_timestamp": "termination_timestamp_value",
             },
             "shutdown_details": {
@@ -24534,6 +24549,7 @@ def test_insert_rest_call_success(request_type):
             "on_instance_stop_action": {"discard_local_ssd": True},
             "preemptible": True,
             "preemption_notice_duration": {},
+            "protection_tier": "protection_tier_value",
             "provisioning_model": "provisioning_model_value",
             "skip_guest_os_shutdown": True,
             "termination_time": "termination_time_value",
@@ -24560,6 +24576,7 @@ def test_insert_rest_call_success(request_type):
         "workload_identity_config": {
             "identity": "identity_value",
             "identity_certificate_enabled": True,
+            "identity_type": "identity_type_value",
         },
         "zone": "zone_value",
     }
@@ -28300,6 +28317,7 @@ def test_set_scheduling_rest_call_success(request_type):
         "on_instance_stop_action": {"discard_local_ssd": True},
         "preemptible": True,
         "preemption_notice_duration": {},
+        "protection_tier": "protection_tier_value",
         "provisioning_model": "provisioning_model_value",
         "skip_guest_os_shutdown": True,
         "termination_time": "termination_time_value",
@@ -30692,6 +30710,10 @@ def test_update_rest_call_success(request_type):
         "can_ip_forward": True,
         "confidential_instance_config": {
             "confidential_instance_type": "confidential_instance_type_value",
+            "confidential_paravisor_config": {
+                "confidential_tpm_type": "confidential_tpm_type_value",
+                "sev_snp_irq_mode": "sev_snp_irq_mode_value",
+            },
             "enable_confidential_compute": True,
         },
         "cpu_platform": "cpu_platform_value",
@@ -30786,6 +30808,7 @@ def test_update_rest_call_success(request_type):
                     {
                         "external_ipv6": "external_ipv6_value",
                         "external_ipv6_prefix_length": 2837,
+                        "ip_collection": "ip_collection_value",
                         "kind": "kind_value",
                         "name": "name_value",
                         "nat_i_p": "nat_i_p_value",
@@ -30866,6 +30889,7 @@ def test_update_rest_call_success(request_type):
             "scheduling": {
                 "availability_domain": 2002,
                 "graceful_shutdown_timestamp": "graceful_shutdown_timestamp_value",
+                "protection_tier": "protection_tier_value",
                 "termination_timestamp": "termination_timestamp_value",
             },
             "shutdown_details": {
@@ -30912,6 +30936,7 @@ def test_update_rest_call_success(request_type):
             "on_instance_stop_action": {"discard_local_ssd": True},
             "preemptible": True,
             "preemption_notice_duration": {},
+            "protection_tier": "protection_tier_value",
             "provisioning_model": "provisioning_model_value",
             "skip_guest_os_shutdown": True,
             "termination_time": "termination_time_value",
@@ -30938,6 +30963,7 @@ def test_update_rest_call_success(request_type):
         "workload_identity_config": {
             "identity": "identity_value",
             "identity_certificate_enabled": True,
+            "identity_type": "identity_type_value",
         },
         "zone": "zone_value",
     }
@@ -31175,6 +31201,7 @@ def test_update_access_config_rest_call_success(request_type):
     request_init["access_config_resource"] = {
         "external_ipv6": "external_ipv6_value",
         "external_ipv6_prefix_length": 2837,
+        "ip_collection": "ip_collection_value",
         "kind": "kind_value",
         "name": "name_value",
         "nat_i_p": "nat_i_p_value",
@@ -31674,6 +31701,7 @@ def test_update_network_interface_rest_call_success(request_type):
             {
                 "external_ipv6": "external_ipv6_value",
                 "external_ipv6_prefix_length": 2837,
+                "ip_collection": "ip_collection_value",
                 "kind": "kind_value",
                 "name": "name_value",
                 "nat_i_p": "nat_i_p_value",

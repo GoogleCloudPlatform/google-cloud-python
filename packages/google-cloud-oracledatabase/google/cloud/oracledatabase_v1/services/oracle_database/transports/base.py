@@ -32,12 +32,15 @@ from google.cloud.oracledatabase_v1.types import (
     autonomous_database,
     database,
     database_character_set,
+    database_connection,
     db_system,
+    db_system_compute_performance,
     db_system_initial_storage_size,
     db_version,
     exadata_infra,
     exadb_vm_cluster,
     exascale_db_storage_vault,
+    flex_component,
     goldengate_connection,
     goldengate_connection_assignment,
     goldengate_connection_type,
@@ -46,16 +49,21 @@ from google.cloud.oracledatabase_v1.types import (
     goldengate_deployment_type,
     goldengate_deployment_version,
     minor_version,
+    odb_dns_zone,
     odb_network,
     odb_subnet,
     oracledatabase,
     pluggable_database,
     vm_cluster,
 )
+from google.cloud.oracledatabase_v1.types import (
+    database_connection as gco_database_connection,
+)
 from google.cloud.oracledatabase_v1.types import db_system as gco_db_system
 from google.cloud.oracledatabase_v1.types import (
     exascale_db_storage_vault as gco_exascale_db_storage_vault,
 )
+from google.cloud.oracledatabase_v1.types import execute_sql as gco_execute_sql
 from google.cloud.oracledatabase_v1.types import (
     goldengate_connection as gco_goldengate_connection,
 )
@@ -65,6 +73,7 @@ from google.cloud.oracledatabase_v1.types import (
 from google.cloud.oracledatabase_v1.types import (
     goldengate_deployment as gco_goldengate_deployment,
 )
+from google.cloud.oracledatabase_v1.types import odb_dns_zone as gco_odb_dns_zone
 from google.cloud.oracledatabase_v1.types import odb_network as gco_odb_network
 from google.cloud.oracledatabase_v1.types import odb_subnet as gco_odb_subnet
 
@@ -215,6 +224,11 @@ class OracleDatabaseTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.update_cloud_exadata_infrastructure: gapic_v1.method.wrap_method(
+                self.update_cloud_exadata_infrastructure,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.delete_cloud_exadata_infrastructure: gapic_v1.method.wrap_method(
                 self.delete_cloud_exadata_infrastructure,
                 default_timeout=None,
@@ -260,13 +274,53 @@ class OracleDatabaseTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.update_cloud_vm_cluster: gapic_v1.method.wrap_method(
+                self.update_cloud_vm_cluster,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.delete_cloud_vm_cluster: gapic_v1.method.wrap_method(
                 self.delete_cloud_vm_cluster,
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.enable_cloud_vm_cluster_identity_connector: gapic_v1.method.wrap_method(
+                self.enable_cloud_vm_cluster_identity_connector,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.disable_cloud_vm_cluster_identity_connector: gapic_v1.method.wrap_method(
+                self.disable_cloud_vm_cluster_identity_connector,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.enable_exadb_vm_cluster_identity_connector: gapic_v1.method.wrap_method(
+                self.enable_exadb_vm_cluster_identity_connector,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.disable_exadb_vm_cluster_identity_connector: gapic_v1.method.wrap_method(
+                self.disable_exadb_vm_cluster_identity_connector,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.list_entitlements: gapic_v1.method.wrap_method(
                 self.list_entitlements,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_flex_components: gapic_v1.method.wrap_method(
+                self.list_flex_components,
                 default_retry=retries.Retry(
                     initial=1.0,
                     maximum=10.0,
@@ -525,6 +579,11 @@ class OracleDatabaseTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.update_odb_network: gapic_v1.method.wrap_method(
+                self.update_odb_network,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.delete_odb_network: gapic_v1.method.wrap_method(
                 self.delete_odb_network,
                 default_timeout=None,
@@ -565,8 +624,53 @@ class OracleDatabaseTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.update_odb_subnet: gapic_v1.method.wrap_method(
+                self.update_odb_subnet,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.delete_odb_subnet: gapic_v1.method.wrap_method(
                 self.delete_odb_subnet,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_odb_dns_zones: gapic_v1.method.wrap_method(
+                self.list_odb_dns_zones,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_odb_dns_zone: gapic_v1.method.wrap_method(
+                self.get_odb_dns_zone,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.create_odb_dns_zone: gapic_v1.method.wrap_method(
+                self.create_odb_dns_zone,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_odb_dns_zone: gapic_v1.method.wrap_method(
+                self.delete_odb_dns_zone,
                 default_timeout=None,
                 client_info=client_info,
             ),
@@ -655,6 +759,11 @@ class OracleDatabaseTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.update_exascale_db_storage_vault: gapic_v1.method.wrap_method(
+                self.update_exascale_db_storage_vault,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.delete_exascale_db_storage_vault: gapic_v1.method.wrap_method(
                 self.delete_exascale_db_storage_vault,
                 default_timeout=None,
@@ -662,6 +771,21 @@ class OracleDatabaseTransport(abc.ABC):
             ),
             self.list_db_system_initial_storage_sizes: gapic_v1.method.wrap_method(
                 self.list_db_system_initial_storage_sizes,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_db_system_compute_performances: gapic_v1.method.wrap_method(
+                self.list_db_system_compute_performances,
                 default_retry=retries.Retry(
                     initial=1.0,
                     maximum=10.0,
@@ -770,6 +894,11 @@ class OracleDatabaseTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.update_db_system: gapic_v1.method.wrap_method(
+                self.update_db_system,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.delete_db_system: gapic_v1.method.wrap_method(
                 self.delete_db_system,
                 default_timeout=None,
@@ -807,6 +936,11 @@ class OracleDatabaseTransport(abc.ABC):
             ),
             self.create_goldengate_deployment: gapic_v1.method.wrap_method(
                 self.create_goldengate_deployment,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_goldengate_deployment: gapic_v1.method.wrap_method(
+                self.update_goldengate_deployment,
                 default_timeout=None,
                 client_info=client_info,
             ),
@@ -857,6 +991,11 @@ class OracleDatabaseTransport(abc.ABC):
             ),
             self.create_goldengate_connection: gapic_v1.method.wrap_method(
                 self.create_goldengate_connection,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_goldengate_connection: gapic_v1.method.wrap_method(
+                self.update_goldengate_connection,
                 default_timeout=None,
                 client_info=client_info,
             ),
@@ -990,6 +1129,11 @@ class OracleDatabaseTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.update_goldengate_connection_assignment: gapic_v1.method.wrap_method(
+                self.update_goldengate_connection_assignment,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.delete_goldengate_connection_assignment: gapic_v1.method.wrap_method(
                 self.delete_goldengate_connection_assignment,
                 default_timeout=None,
@@ -997,6 +1141,61 @@ class OracleDatabaseTransport(abc.ABC):
             ),
             self.test_goldengate_connection_assignment: gapic_v1.method.wrap_method(
                 self.test_goldengate_connection_assignment,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_database_connections: gapic_v1.method.wrap_method(
+                self.list_database_connections,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_database_connection: gapic_v1.method.wrap_method(
+                self.get_database_connection,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.create_database_connection: gapic_v1.method.wrap_method(
+                self.create_database_connection,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_database_connection: gapic_v1.method.wrap_method(
+                self.update_database_connection,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_database_connection: gapic_v1.method.wrap_method(
+                self.delete_database_connection,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.test_database_connection: gapic_v1.method.wrap_method(
+                self.test_database_connection,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.execute_sql: gapic_v1.method.wrap_method(
+                self.execute_sql,
                 default_timeout=None,
                 client_info=client_info,
             ),
@@ -1080,6 +1279,15 @@ class OracleDatabaseTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def update_cloud_exadata_infrastructure(
+        self,
+    ) -> Callable[
+        [oracledatabase.UpdateCloudExadataInfrastructureRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def delete_cloud_exadata_infrastructure(
         self,
     ) -> Callable[
@@ -1128,10 +1336,55 @@ class OracleDatabaseTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def update_cloud_vm_cluster(
+        self,
+    ) -> Callable[
+        [oracledatabase.UpdateCloudVmClusterRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def delete_cloud_vm_cluster(
         self,
     ) -> Callable[
         [oracledatabase.DeleteCloudVmClusterRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def enable_cloud_vm_cluster_identity_connector(
+        self,
+    ) -> Callable[
+        [oracledatabase.EnableCloudVmClusterIdentityConnectorRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def disable_cloud_vm_cluster_identity_connector(
+        self,
+    ) -> Callable[
+        [oracledatabase.DisableCloudVmClusterIdentityConnectorRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def enable_exadb_vm_cluster_identity_connector(
+        self,
+    ) -> Callable[
+        [oracledatabase.EnableExadbVmClusterIdentityConnectorRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def disable_exadb_vm_cluster_identity_connector(
+        self,
+    ) -> Callable[
+        [oracledatabase.DisableExadbVmClusterIdentityConnectorRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
     ]:
         raise NotImplementedError()
@@ -1144,6 +1397,18 @@ class OracleDatabaseTransport(abc.ABC):
         Union[
             oracledatabase.ListEntitlementsResponse,
             Awaitable[oracledatabase.ListEntitlementsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_flex_components(
+        self,
+    ) -> Callable[
+        [flex_component.ListFlexComponentsRequest],
+        Union[
+            flex_component.ListFlexComponentsResponse,
+            Awaitable[flex_component.ListFlexComponentsResponse],
         ],
     ]:
         raise NotImplementedError()
@@ -1413,6 +1678,15 @@ class OracleDatabaseTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def update_odb_network(
+        self,
+    ) -> Callable[
+        [gco_odb_network.UpdateOdbNetworkRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def delete_odb_network(
         self,
     ) -> Callable[
@@ -1452,10 +1726,58 @@ class OracleDatabaseTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def update_odb_subnet(
+        self,
+    ) -> Callable[
+        [gco_odb_subnet.UpdateOdbSubnetRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def delete_odb_subnet(
         self,
     ) -> Callable[
         [odb_subnet.DeleteOdbSubnetRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_odb_dns_zones(
+        self,
+    ) -> Callable[
+        [odb_dns_zone.ListOdbDnsZonesRequest],
+        Union[
+            odb_dns_zone.ListOdbDnsZonesResponse,
+            Awaitable[odb_dns_zone.ListOdbDnsZonesResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_odb_dns_zone(
+        self,
+    ) -> Callable[
+        [odb_dns_zone.GetOdbDnsZoneRequest],
+        Union[odb_dns_zone.OdbDnsZone, Awaitable[odb_dns_zone.OdbDnsZone]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_odb_dns_zone(
+        self,
+    ) -> Callable[
+        [gco_odb_dns_zone.CreateOdbDnsZoneRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_odb_dns_zone(
+        self,
+    ) -> Callable[
+        [odb_dns_zone.DeleteOdbDnsZoneRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
     ]:
         raise NotImplementedError()
@@ -1553,6 +1875,15 @@ class OracleDatabaseTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def update_exascale_db_storage_vault(
+        self,
+    ) -> Callable[
+        [gco_exascale_db_storage_vault.UpdateExascaleDbStorageVaultRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def delete_exascale_db_storage_vault(
         self,
     ) -> Callable[
@@ -1570,6 +1901,20 @@ class OracleDatabaseTransport(abc.ABC):
             db_system_initial_storage_size.ListDbSystemInitialStorageSizesResponse,
             Awaitable[
                 db_system_initial_storage_size.ListDbSystemInitialStorageSizesResponse
+            ],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_db_system_compute_performances(
+        self,
+    ) -> Callable[
+        [db_system_compute_performance.ListDbSystemComputePerformancesRequest],
+        Union[
+            db_system_compute_performance.ListDbSystemComputePerformancesResponse,
+            Awaitable[
+                db_system_compute_performance.ListDbSystemComputePerformancesResponse
             ],
         ],
     ]:
@@ -1649,6 +1994,15 @@ class OracleDatabaseTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def update_db_system(
+        self,
+    ) -> Callable[
+        [gco_db_system.UpdateDbSystemRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def delete_db_system(
         self,
     ) -> Callable[
@@ -1686,6 +2040,15 @@ class OracleDatabaseTransport(abc.ABC):
         self,
     ) -> Callable[
         [gco_goldengate_deployment.CreateGoldengateDeploymentRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_goldengate_deployment(
+        self,
+    ) -> Callable[
+        [gco_goldengate_deployment.UpdateGoldengateDeploymentRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
     ]:
         raise NotImplementedError()
@@ -1746,6 +2109,15 @@ class OracleDatabaseTransport(abc.ABC):
         self,
     ) -> Callable[
         [gco_goldengate_connection.CreateGoldengateConnectionRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_goldengate_connection(
+        self,
+    ) -> Callable[
+        [gco_goldengate_connection.UpdateGoldengateConnectionRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
     ]:
         raise NotImplementedError()
@@ -1873,6 +2245,17 @@ class OracleDatabaseTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def update_goldengate_connection_assignment(
+        self,
+    ) -> Callable[
+        [
+            gco_goldengate_connection_assignment.UpdateGoldengateConnectionAssignmentRequest
+        ],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def delete_goldengate_connection_assignment(
         self,
     ) -> Callable[
@@ -1891,6 +2274,81 @@ class OracleDatabaseTransport(abc.ABC):
             Awaitable[
                 goldengate_connection_assignment.TestGoldengateConnectionAssignmentResponse
             ],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_database_connections(
+        self,
+    ) -> Callable[
+        [database_connection.ListDatabaseConnectionsRequest],
+        Union[
+            database_connection.ListDatabaseConnectionsResponse,
+            Awaitable[database_connection.ListDatabaseConnectionsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_database_connection(
+        self,
+    ) -> Callable[
+        [database_connection.GetDatabaseConnectionRequest],
+        Union[
+            database_connection.DatabaseConnection,
+            Awaitable[database_connection.DatabaseConnection],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_database_connection(
+        self,
+    ) -> Callable[
+        [gco_database_connection.CreateDatabaseConnectionRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_database_connection(
+        self,
+    ) -> Callable[
+        [gco_database_connection.UpdateDatabaseConnectionRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_database_connection(
+        self,
+    ) -> Callable[
+        [database_connection.DeleteDatabaseConnectionRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def test_database_connection(
+        self,
+    ) -> Callable[
+        [database_connection.TestDatabaseConnectionRequest],
+        Union[
+            database_connection.TestDatabaseConnectionResponse,
+            Awaitable[database_connection.TestDatabaseConnectionResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def execute_sql(
+        self,
+    ) -> Callable[
+        [gco_execute_sql.ExecuteSqlRequest],
+        Union[
+            gco_execute_sql.ExecuteSqlResponse,
+            Awaitable[gco_execute_sql.ExecuteSqlResponse],
         ],
     ]:
         raise NotImplementedError()

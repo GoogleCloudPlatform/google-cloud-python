@@ -26,12 +26,15 @@ from google.cloud.oracledatabase_v1.types import (
     autonomous_database,
     database,
     database_character_set,
+    database_connection,
     db_system,
+    db_system_compute_performance,
     db_system_initial_storage_size,
     db_version,
     exadata_infra,
     exadb_vm_cluster,
     exascale_db_storage_vault,
+    flex_component,
     goldengate_connection,
     goldengate_connection_assignment,
     goldengate_connection_type,
@@ -40,16 +43,21 @@ from google.cloud.oracledatabase_v1.types import (
     goldengate_deployment_type,
     goldengate_deployment_version,
     minor_version,
+    odb_dns_zone,
     odb_network,
     odb_subnet,
     oracledatabase,
     pluggable_database,
     vm_cluster,
 )
+from google.cloud.oracledatabase_v1.types import (
+    database_connection as gco_database_connection,
+)
 from google.cloud.oracledatabase_v1.types import db_system as gco_db_system
 from google.cloud.oracledatabase_v1.types import (
     exascale_db_storage_vault as gco_exascale_db_storage_vault,
 )
+from google.cloud.oracledatabase_v1.types import execute_sql as gco_execute_sql
 from google.cloud.oracledatabase_v1.types import (
     goldengate_connection as gco_goldengate_connection,
 )
@@ -59,6 +67,7 @@ from google.cloud.oracledatabase_v1.types import (
 from google.cloud.oracledatabase_v1.types import (
     goldengate_deployment as gco_goldengate_deployment,
 )
+from google.cloud.oracledatabase_v1.types import odb_dns_zone as gco_odb_dns_zone
 from google.cloud.oracledatabase_v1.types import odb_network as gco_odb_network
 from google.cloud.oracledatabase_v1.types import odb_subnet as gco_odb_subnet
 
@@ -201,6 +210,25 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
             ]
             return http_options
 
+    class _BaseCreateDatabaseConnection:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
+            "databaseConnectionId": "",
+        }
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=projects/*/locations/*}/databaseConnections",
+                    "body": "database_connection",
+                },
+            ]
+            return http_options
+
     class _BaseCreateDbSystem:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -315,6 +343,25 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
             ]
             return http_options
 
+    class _BaseCreateOdbDnsZone:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
+            "odbDnsZoneId": "",
+        }
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=projects/*/locations/*/odbNetworks/*}/odbDnsZones",
+                    "body": "odb_dns_zone",
+                },
+            ]
+            return http_options
+
     class _BaseCreateOdbNetwork:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -397,6 +444,22 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
                 {
                     "method": "delete",
                     "uri": "/v1/{name=projects/*/locations/*/cloudVmClusters/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseDeleteDatabaseConnection:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "delete",
+                    "uri": "/v1/{name=projects/*/locations/*/databaseConnections/*}",
                 },
             ]
             return http_options
@@ -497,6 +560,22 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
             ]
             return http_options
 
+    class _BaseDeleteOdbDnsZone:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "delete",
+                    "uri": "/v1/{name=projects/*/locations/*/odbNetworks/*/odbDnsZones/*}",
+                },
+            ]
+            return http_options
+
     class _BaseDeleteOdbNetwork:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -525,6 +604,91 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
                 {
                     "method": "delete",
                     "uri": "/v1/{name=projects/*/locations/*/odbNetworks/*/odbSubnets/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseDisableCloudVmClusterIdentityConnector:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=projects/*/locations/*/cloudVmClusters/*}:disableIdentityConnector",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseDisableExadbVmClusterIdentityConnector:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=projects/*/locations/*/exadbVmClusters/*}:disableIdentityConnector",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseEnableCloudVmClusterIdentityConnector:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=projects/*/locations/*/cloudVmClusters/*}:enableIdentityConnector",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseEnableExadbVmClusterIdentityConnector:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=projects/*/locations/*/exadbVmClusters/*}:enableIdentityConnector",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseExecuteSql:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=projects/*/locations/*/databaseConnections/*}:executeSql",
+                    "body": "*",
                 },
             ]
             return http_options
@@ -643,6 +807,22 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
             ]
             return http_options
 
+    class _BaseGetDatabaseConnection:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/databaseConnections/*}",
+                },
+            ]
+            return http_options
+
     class _BaseGetDbSystem:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -735,6 +915,22 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{name=projects/*/locations/*/goldengateDeployments/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseGetOdbDnsZone:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/odbNetworks/*/odbDnsZones/*}",
                 },
             ]
             return http_options
@@ -899,6 +1095,22 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
             ]
             return http_options
 
+    class _BaseListDatabaseConnections:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=projects/*/locations/*}/databaseConnections",
+                },
+            ]
+            return http_options
+
     class _BaseListDatabases:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -947,6 +1159,22 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{parent=projects/*/locations/*/cloudExadataInfrastructures/*}/dbServers",
+                },
+            ]
+            return http_options
+
+    class _BaseListDbSystemComputePerformances:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=projects/*/locations/*}/dbSystemComputePerformances",
                 },
             ]
             return http_options
@@ -1059,6 +1287,22 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{parent=projects/*/locations/*}/exascaleDbStorageVaults",
+                },
+            ]
+            return http_options
+
+    class _BaseListFlexComponents:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=projects/*/locations/*}/flexComponents",
                 },
             ]
             return http_options
@@ -1203,6 +1447,22 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{parent=projects/*/locations/*/giVersions/*}/minorVersions",
+                },
+            ]
+            return http_options
+
+    class _BaseListOdbDnsZones:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=projects/*/locations/*/odbNetworks/*}/odbDnsZones",
                 },
             ]
             return http_options
@@ -1408,6 +1668,23 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
             ]
             return http_options
 
+    class _BaseTestDatabaseConnection:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=projects/*/locations/*/databaseConnections/*}:test",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
     class _BaseTestGoldengateConnectionAssignment:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -1442,6 +1719,74 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
             ]
             return http_options
 
+    class _BaseUpdateCloudExadataInfrastructure:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{cloud_exadata_infrastructure.name=projects/*/locations/*/cloudExadataInfrastructures/*}",
+                    "body": "cloud_exadata_infrastructure",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateCloudVmCluster:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{cloud_vm_cluster.name=projects/*/locations/*/cloudVmClusters/*}",
+                    "body": "cloud_vm_cluster",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateDatabaseConnection:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{database_connection.name=projects/*/locations/*/databaseConnections/*}",
+                    "body": "database_connection",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateDbSystem:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{db_system.name=projects/*/locations/*/dbSystems/*}",
+                    "body": "db_system",
+                },
+            ]
+            return http_options
+
     class _BaseUpdateExadbVmCluster:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -1455,6 +1800,108 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
                     "method": "patch",
                     "uri": "/v1/{exadb_vm_cluster.name=projects/*/locations/*/exadbVmClusters/*}",
                     "body": "exadb_vm_cluster",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateExascaleDbStorageVault:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{exascale_db_storage_vault.name=projects/*/locations/*/exascaleDbStorageVaults/*}",
+                    "body": "exascale_db_storage_vault",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateGoldengateConnection:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{goldengate_connection.name=projects/*/locations/*/goldengateConnections/*}",
+                    "body": "goldengate_connection",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateGoldengateConnectionAssignment:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{goldengate_connection_assignment.name=projects/*/locations/*/goldengateConnectionAssignments/*}",
+                    "body": "goldengate_connection_assignment",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateGoldengateDeployment:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{goldengate_deployment.name=projects/*/locations/*/goldengateDeployments/*}",
+                    "body": "goldengate_deployment",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateOdbNetwork:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{odb_network.name=projects/*/locations/*/odbNetworks/*}",
+                    "body": "odb_network",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateOdbSubnet:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{odb_subnet.name=projects/*/locations/*/odbNetworks/*/odbSubnets/*}",
+                    "body": "odb_subnet",
                 },
             ]
             return http_options

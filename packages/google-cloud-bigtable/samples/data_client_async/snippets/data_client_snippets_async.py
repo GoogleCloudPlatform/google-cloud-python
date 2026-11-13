@@ -247,6 +247,36 @@ async def read_row_range(table):
     await read_row_range(table.client.project, table.instance_id, table.table_id)
 
 
+async def read_row_ranges(table):
+    # [START bigtable_async_reads_row_ranges]
+    from google.cloud.bigtable.data import (
+        BigtableDataClientAsync,
+        ReadRowsQuery,
+        RowRange,
+    )
+
+    async def read_row_ranges(project_id, instance_id, table_id):
+        async with BigtableDataClientAsync(project=project_id) as client:
+            async with client.get_table(instance_id, table_id) as table:
+                row_ranges = [
+                    RowRange(
+                        start_key=b"phone#4c410523#20190501",
+                        end_key=b"phone#4c410523#201906201",
+                    ),
+                    RowRange(
+                        start_key=b"phone#5c10102#20190501",
+                        end_key=b"phone#5c10102#201906201",
+                    ),
+                ]
+                query = ReadRowsQuery(row_ranges=row_ranges)
+
+                async for row in await table.read_rows_stream(query):
+                    print(row)
+
+    # [END bigtable_async_reads_row_ranges]
+    await read_row_ranges(table.client.project, table.instance_id, table.table_id)
+
+
 async def read_with_prefix(table):
     # [START bigtable_async_reads_prefix]
     from google.cloud.bigtable.data import (
@@ -313,3 +343,29 @@ async def execute_query(table):
 
     # [END bigtable_async_execute_query]
     await execute_query(table.client.project, table.instance_id, table.table_id)
+
+
+# [START bigtable_async_reads_print]
+def print_row(row):
+    from google.cloud._helpers import _datetime_from_microseconds
+
+    print("Reading data for {}:".format(row.row_key.decode("utf-8")))
+    last_family = None
+    for cell in row.cells:
+        if last_family != cell.family:
+            print("Column Family {}".format(cell.family))
+            last_family = cell.family
+
+        labels = " [{}]".format(",".join(cell.labels)) if len(cell.labels) else ""
+        print(
+            "\t{}: {} @{}{}".format(
+                cell.qualifier.decode("utf-8"),
+                cell.value.decode("utf-8"),
+                _datetime_from_microseconds(cell.timestamp_micros),
+                labels,
+            )
+        )
+    print("")
+
+
+# [END bigtable_async_reads_print]

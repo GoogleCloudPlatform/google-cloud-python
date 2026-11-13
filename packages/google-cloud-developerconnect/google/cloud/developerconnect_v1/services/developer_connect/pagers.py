@@ -673,6 +673,343 @@ class FetchGitRefsAsyncPager:
         return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
 
 
+class FetchGitRepositoryLinkCommitListPager:
+    """A pager for iterating through ``fetch_git_repository_link_commit_list`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkCommitListResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``commits`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``FetchGitRepositoryLinkCommitList`` requests and continue to iterate
+    through the ``commits`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkCommitListResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ..., developer_connect.FetchGitRepositoryLinkCommitListResponse
+        ],
+        request: developer_connect.FetchGitRepositoryLinkCommitListRequest,
+        response: developer_connect.FetchGitRepositoryLinkCommitListResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkCommitListRequest):
+                The initial request object.
+            response (google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkCommitListResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = developer_connect.FetchGitRepositoryLinkCommitListRequest(
+            request
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(
+        self,
+    ) -> Iterator[developer_connect.FetchGitRepositoryLinkCommitListResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(self) -> Iterator[developer_connect.SCMCommit]:
+        for page in self.pages:
+            yield from page.commits
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class FetchGitRepositoryLinkCommitListAsyncPager:
+    """A pager for iterating through ``fetch_git_repository_link_commit_list`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkCommitListResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``commits`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``FetchGitRepositoryLinkCommitList`` requests and continue to iterate
+    through the ``commits`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkCommitListResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ..., Awaitable[developer_connect.FetchGitRepositoryLinkCommitListResponse]
+        ],
+        request: developer_connect.FetchGitRepositoryLinkCommitListRequest,
+        response: developer_connect.FetchGitRepositoryLinkCommitListResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkCommitListRequest):
+                The initial request object.
+            response (google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkCommitListResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = developer_connect.FetchGitRepositoryLinkCommitListRequest(
+            request
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(
+        self,
+    ) -> AsyncIterator[developer_connect.FetchGitRepositoryLinkCommitListResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(self) -> AsyncIterator[developer_connect.SCMCommit]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.commits:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class FetchGitRepositoryLinkPullRequestListPager:
+    """A pager for iterating through ``fetch_git_repository_link_pull_request_list`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkPullRequestListResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``pull_requests`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``FetchGitRepositoryLinkPullRequestList`` requests and continue to iterate
+    through the ``pull_requests`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkPullRequestListResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ..., developer_connect.FetchGitRepositoryLinkPullRequestListResponse
+        ],
+        request: developer_connect.FetchGitRepositoryLinkPullRequestListRequest,
+        response: developer_connect.FetchGitRepositoryLinkPullRequestListResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkPullRequestListRequest):
+                The initial request object.
+            response (google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkPullRequestListResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = developer_connect.FetchGitRepositoryLinkPullRequestListRequest(
+            request
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(
+        self,
+    ) -> Iterator[developer_connect.FetchGitRepositoryLinkPullRequestListResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(self) -> Iterator[developer_connect.PullRequest]:
+        for page in self.pages:
+            yield from page.pull_requests
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class FetchGitRepositoryLinkPullRequestListAsyncPager:
+    """A pager for iterating through ``fetch_git_repository_link_pull_request_list`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkPullRequestListResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``pull_requests`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``FetchGitRepositoryLinkPullRequestList`` requests and continue to iterate
+    through the ``pull_requests`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkPullRequestListResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ...,
+            Awaitable[developer_connect.FetchGitRepositoryLinkPullRequestListResponse],
+        ],
+        request: developer_connect.FetchGitRepositoryLinkPullRequestListRequest,
+        response: developer_connect.FetchGitRepositoryLinkPullRequestListResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkPullRequestListRequest):
+                The initial request object.
+            response (google.cloud.developerconnect_v1.types.FetchGitRepositoryLinkPullRequestListResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = developer_connect.FetchGitRepositoryLinkPullRequestListRequest(
+            request
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(
+        self,
+    ) -> AsyncIterator[developer_connect.FetchGitRepositoryLinkPullRequestListResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(self) -> AsyncIterator[developer_connect.PullRequest]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.pull_requests:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
 class ListAccountConnectorsPager:
     """A pager for iterating through ``list_account_connectors`` requests.
 

@@ -112,6 +112,8 @@ class _LoggingClientInterceptor(grpc.UnaryUnaryClientInterceptor):  # pragma: NO
 class SqlInstancesServiceGrpcTransport(SqlInstancesServiceTransport):
     """gRPC backend transport for SqlInstancesService.
 
+    Service to manage Cloud SQL instances.
+
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
     and call it.
@@ -1016,6 +1018,62 @@ class SqlInstancesServiceGrpcTransport(SqlInstancesServiceTransport):
         return self._stubs["restart"]
 
     @property
+    def start(
+        self,
+    ) -> Callable[
+        [cloud_sql_instances.SqlInstancesStartRequest], cloud_sql_resources.Operation
+    ]:
+        r"""Return a callable for the start method over gRPC.
+
+        Starts a Cloud SQL instance.
+
+        Returns:
+            Callable[[~.SqlInstancesStartRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "start" not in self._stubs:
+            self._stubs["start"] = self._logged_channel.unary_unary(
+                "/google.cloud.sql.v1.SqlInstancesService/Start",
+                request_serializer=cloud_sql_instances.SqlInstancesStartRequest.serialize,
+                response_deserializer=cloud_sql_resources.Operation.deserialize,
+            )
+        return self._stubs["start"]
+
+    @property
+    def stop(
+        self,
+    ) -> Callable[
+        [cloud_sql_instances.SqlInstancesStopRequest], cloud_sql_resources.Operation
+    ]:
+        r"""Return a callable for the stop method over gRPC.
+
+        Stops a Cloud SQL instance.
+
+        Returns:
+            Callable[[~.SqlInstancesStopRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "stop" not in self._stubs:
+            self._stubs["stop"] = self._logged_channel.unary_unary(
+                "/google.cloud.sql.v1.SqlInstancesService/Stop",
+                request_serializer=cloud_sql_instances.SqlInstancesStopRequest.serialize,
+                response_deserializer=cloud_sql_resources.Operation.deserialize,
+            )
+        return self._stubs["stop"]
+
+    @property
     def restore_backup(
         self,
     ) -> Callable[
@@ -1500,6 +1558,35 @@ class SqlInstancesServiceGrpcTransport(SqlInstancesServiceTransport):
         return self._stubs["get_latest_recovery_time"]
 
     @property
+    def execute_sql_read_only(
+        self,
+    ) -> Callable[
+        [cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyRequest],
+        cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyResponse,
+    ]:
+        r"""Return a callable for the execute sql read only method over gRPC.
+
+        Execute SQL statements in read-only mode.
+
+        Returns:
+            Callable[[~.SqlInstancesExecuteSqlReadOnlyRequest],
+                    ~.SqlInstancesExecuteSqlReadOnlyResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "execute_sql_read_only" not in self._stubs:
+            self._stubs["execute_sql_read_only"] = self._logged_channel.unary_unary(
+                "/google.cloud.sql.v1.SqlInstancesService/ExecuteSqlReadOnly",
+                request_serializer=cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyRequest.serialize,
+                response_deserializer=cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyResponse.deserialize,
+            )
+        return self._stubs["execute_sql_read_only"]
+
+    @property
     def execute_sql(
         self,
     ) -> Callable[
@@ -1649,6 +1736,39 @@ class SqlInstancesServiceGrpcTransport(SqlInstancesServiceTransport):
                 response_deserializer=cloud_sql_resources.Operation.deserialize,
             )
         return self._stubs["point_in_time_restore"]
+
+    @property
+    def reconcile_networking(
+        self,
+    ) -> Callable[
+        [cloud_sql_instances.SqlInstancesReconcileNetworkingRequest],
+        cloud_sql_resources.Operation,
+    ]:
+        r"""Return a callable for the reconcile networking method over gRPC.
+
+        Repairs and recreates networking resources for a
+        Cloud SQL instance. For Private Service Connect (PSC),
+        this operation recreates PSC DNS write endpoints on
+        specified VPC networks and reconciles Private Service
+        Connect connectivity infrastructure for the instance.
+
+        Returns:
+            Callable[[~.SqlInstancesReconcileNetworkingRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "reconcile_networking" not in self._stubs:
+            self._stubs["reconcile_networking"] = self._logged_channel.unary_unary(
+                "/google.cloud.sql.v1.SqlInstancesService/ReconcileNetworking",
+                request_serializer=cloud_sql_instances.SqlInstancesReconcileNetworkingRequest.serialize,
+                response_deserializer=cloud_sql_resources.Operation.deserialize,
+            )
+        return self._stubs["reconcile_networking"]
 
     def close(self):
         self._logged_channel.close()

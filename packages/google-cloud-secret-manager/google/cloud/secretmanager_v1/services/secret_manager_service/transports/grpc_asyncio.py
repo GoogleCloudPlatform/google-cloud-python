@@ -960,12 +960,12 @@ class SecretManagerServiceGrpcAsyncIOTransport(SecretManagerServiceTransport):
             ),
             self.enable_managed_rotation: self._wrap_method(
                 self.enable_managed_rotation,
-                default_timeout=None,
+                default_timeout=60.0,
                 client_info=client_info,
             ),
             self.rotate_secret: self._wrap_method(
                 self.rotate_secret,
-                default_timeout=None,
+                default_timeout=60.0,
                 client_info=client_info,
             ),
             self.get_location: self._wrap_method(

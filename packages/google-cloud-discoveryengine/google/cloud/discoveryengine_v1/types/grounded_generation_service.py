@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.type.date_pb2 as date_pb2  # type: ignore
 import proto  # type: ignore
 
 from google.cloud.discoveryengine_v1.types import grounding
@@ -30,6 +31,8 @@ __protobuf__ = proto.module(
         "CheckGroundingSpec",
         "CheckGroundingRequest",
         "CheckGroundingResponse",
+        "CitationMetadata",
+        "Citation",
     },
 )
 
@@ -175,7 +178,30 @@ class GenerateGroundedContentRequest(proto.Message):
                 tokens will be used.
 
                 This field is a member of `oneof`_ ``_max_output_tokens``.
+            provisioned_throughput_setting (google.cloud.discoveryengine_v1.types.GenerateGroundedContentRequest.GenerationSpec.ProvisionedThroughputSetting):
+                Optional. Setting for provisioned throughput.
         """
+
+        class ProvisionedThroughputSetting(proto.Enum):
+            r"""Setting for provisioned throughput.
+
+            Values:
+                PROVISIONED_THROUGHPUT_SETTING_UNSPECIFIED (0):
+                    Default value. If the user has remaining
+                    provisioned throughput, provisioned throughput
+                    will be used. Otherwise, pay as you go will be
+                    used.
+                PROVISIONED_THROUGHPUT_ONLY (1):
+                    Only use provisioned throughput. If the user
+                    has no remaining provisioned throughput, an
+                    error will be returned.
+                PAY_AS_YOU_GO_ONLY (2):
+                    Disables provisioned throughput.
+            """
+
+            PROVISIONED_THROUGHPUT_SETTING_UNSPECIFIED = 0
+            PROVISIONED_THROUGHPUT_ONLY = 1
+            PAY_AS_YOU_GO_ONLY = 2
 
         model_id: str = proto.Field(
             proto.STRING,
@@ -219,6 +245,11 @@ class GenerateGroundedContentRequest(proto.Message):
             proto.INT32,
             number=10,
             optional=True,
+        )
+        provisioned_throughput_setting: "GenerateGroundedContentRequest.GenerationSpec.ProvisionedThroughputSetting" = proto.Field(
+            proto.ENUM,
+            number=13,
+            enum="GenerateGroundedContentRequest.GenerationSpec.ProvisionedThroughputSetting",
         )
 
     class DynamicRetrievalConfiguration(proto.Message):
@@ -387,6 +418,13 @@ class GenerateGroundedContentRequest(proto.Message):
                 dynamic_retrieval_config (google.cloud.discoveryengine_v1.types.GenerateGroundedContentRequest.DynamicRetrievalConfiguration):
                     Optional. Specifies the dynamic retrieval
                     configuration for the given source.
+                exclude_domains (MutableSequence[str]):
+                    Optional. List of domains to be excluded from
+                    the search results.
+                blocking_confidence (google.cloud.discoveryengine_v1.types.Citation.PhishBlockThreshold):
+                    Optional. Sites with confidence level chosen
+                    & above this value will be blocked from the
+                    search results.
             """
 
             dynamic_retrieval_config: "GenerateGroundedContentRequest.DynamicRetrievalConfiguration" = proto.Field(
@@ -394,12 +432,39 @@ class GenerateGroundedContentRequest(proto.Message):
                 number=2,
                 message="GenerateGroundedContentRequest.DynamicRetrievalConfiguration",
             )
+            exclude_domains: MutableSequence[str] = proto.RepeatedField(
+                proto.STRING,
+                number=5,
+            )
+            blocking_confidence: "Citation.PhishBlockThreshold" = proto.Field(
+                proto.ENUM,
+                number=6,
+                enum="Citation.PhishBlockThreshold",
+            )
 
         class EnterpriseWebRetrievalSource(proto.Message):
             r"""Params for using enterprise web retrieval as grounding
             source.
 
+            Attributes:
+                exclude_domains (MutableSequence[str]):
+                    Optional. List of domains to be excluded from
+                    the search results.
+                blocking_confidence (google.cloud.discoveryengine_v1.types.Citation.PhishBlockThreshold):
+                    Optional. Sites with confidence level chosen
+                    & above this value will be blocked from the
+                    search results.
             """
+
+            exclude_domains: MutableSequence[str] = proto.RepeatedField(
+                proto.STRING,
+                number=1,
+            )
+            blocking_confidence: "Citation.PhishBlockThreshold" = proto.Field(
+                proto.ENUM,
+                number=2,
+                enum="Citation.PhishBlockThreshold",
+            )
 
         inline_source: "GenerateGroundedContentRequest.GroundingSource.InlineSource" = (
             proto.Field(
@@ -531,6 +596,8 @@ class GenerateGroundedContentResponse(proto.Message):
                     that the claim is supported by the fact.
                 images (MutableSequence[google.cloud.discoveryengine_v1.types.GenerateGroundedContentResponse.Candidate.GroundingMetadata.ImageMetadata]):
                     Images from the web search.
+                videos (MutableSequence[google.cloud.discoveryengine_v1.types.GenerateGroundedContentResponse.Candidate.GroundingMetadata.VideoMetadata]):
+                    Videos from the web search.
             """
 
             class RetrievalMetadata(proto.Message):
@@ -715,6 +782,8 @@ class GenerateGroundedContentResponse(proto.Message):
                             The url of the website.
                         title (str):
                             The title of the website.
+                        site_display_name (str):
+                            The display name of the website.
                     """
 
                     uri: str = proto.Field(
@@ -724,6 +793,10 @@ class GenerateGroundedContentResponse(proto.Message):
                     title: str = proto.Field(
                         proto.STRING,
                         number=2,
+                    )
+                    site_display_name: str = proto.Field(
+                        proto.STRING,
+                        number=3,
                     )
 
                 class Image(proto.Message):
@@ -767,6 +840,19 @@ class GenerateGroundedContentResponse(proto.Message):
                     message="GenerateGroundedContentResponse.Candidate.GroundingMetadata.ImageMetadata.WebsiteInfo",
                 )
 
+            class VideoMetadata(proto.Message):
+                r"""Metadata about a video from the web search.
+
+                Attributes:
+                    youtube_external_id (str):
+                        The external id of the video.
+                """
+
+                youtube_external_id: str = proto.Field(
+                    proto.STRING,
+                    number=1,
+                )
+
             retrieval_metadata: MutableSequence[
                 "GenerateGroundedContentResponse.Candidate.GroundingMetadata.RetrievalMetadata"
             ] = proto.RepeatedField(
@@ -801,6 +887,13 @@ class GenerateGroundedContentResponse(proto.Message):
                 proto.MESSAGE,
                 number=9,
                 message="GenerateGroundedContentResponse.Candidate.GroundingMetadata.ImageMetadata",
+            )
+            videos: MutableSequence[
+                "GenerateGroundedContentResponse.Candidate.GroundingMetadata.VideoMetadata"
+            ] = proto.RepeatedField(
+                proto.MESSAGE,
+                number=11,
+                message="GenerateGroundedContentResponse.Candidate.GroundingMetadata.VideoMetadata",
             )
 
         index: int = proto.Field(
@@ -1085,6 +1178,105 @@ class CheckGroundingResponse(proto.Message):
         proto.MESSAGE,
         number=4,
         message=Claim,
+    )
+
+
+class CitationMetadata(proto.Message):
+    r"""A collection of source attributions for a piece of content.
+
+    Attributes:
+        citations (MutableSequence[google.cloud.discoveryengine_v1.types.Citation]):
+            Output only. List of citations.
+    """
+
+    citations: MutableSequence["Citation"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="Citation",
+    )
+
+
+class Citation(proto.Message):
+    r"""Source attributions for content.
+
+    Attributes:
+        start_index (int):
+            Output only. Start index into the content.
+        end_index (int):
+            Output only. End index into the content.
+        uri (str):
+            Output only. Url reference of the
+            attribution.
+        title (str):
+            Output only. Title of the attribution.
+        license_ (str):
+            Output only. License of the attribution.
+        publication_date (google.type.date_pb2.Date):
+            Output only. Publication date of the
+            attribution.
+    """
+
+    class PhishBlockThreshold(proto.Enum):
+        r"""These are available confidence level user can set to block
+        malicious urls with chosen confidence and above. For
+        understanding different confidence of webrisk, please refer to
+        https://cloud.google.com/web-risk/docs/reference/rpc/google.cloud.webrisk.v1eap1#confidencelevel
+
+        Values:
+            PHISH_BLOCK_THRESHOLD_UNSPECIFIED (0):
+                Defaults to unspecified.
+            BLOCK_LOW_AND_ABOVE (30):
+                Blocks Low and above confidence URL that is
+                risky.
+            BLOCK_MEDIUM_AND_ABOVE (40):
+                Blocks Medium and above confidence URL that
+                is risky.
+            BLOCK_HIGH_AND_ABOVE (50):
+                Blocks High and above confidence URL that is
+                risky.
+            BLOCK_HIGHER_AND_ABOVE (55):
+                Blocks Higher and above confidence URL that
+                is risky.
+            BLOCK_VERY_HIGH_AND_ABOVE (60):
+                Blocks Very high and above confidence URL
+                that is risky.
+            BLOCK_ONLY_EXTREMELY_HIGH (100):
+                Blocks Extremely high confidence URL that is
+                risky.
+        """
+
+        PHISH_BLOCK_THRESHOLD_UNSPECIFIED = 0
+        BLOCK_LOW_AND_ABOVE = 30
+        BLOCK_MEDIUM_AND_ABOVE = 40
+        BLOCK_HIGH_AND_ABOVE = 50
+        BLOCK_HIGHER_AND_ABOVE = 55
+        BLOCK_VERY_HIGH_AND_ABOVE = 60
+        BLOCK_ONLY_EXTREMELY_HIGH = 100
+
+    start_index: int = proto.Field(
+        proto.INT32,
+        number=1,
+    )
+    end_index: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    uri: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    title: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    license_: str = proto.Field(
+        proto.STRING,
+        number=5,
+    )
+    publication_date: date_pb2.Date = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        message=date_pb2.Date,
     )
 
 

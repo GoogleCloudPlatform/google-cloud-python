@@ -5253,6 +5253,7 @@ def test_create_connectivity_test_rest_call_success(request_type):
             "redis_cluster": "redis_cluster_value",
             "gke_pod": "gke_pod_value",
             "dms_private_connection": "dms_private_connection_value",
+            "datastream_private_connection": "datastream_private_connection_value",
             "cloud_function": {"uri": "uri_value"},
             "app_engine_version": {"uri": "uri_value"},
             "cloud_run_revision": {
@@ -5616,6 +5617,7 @@ def test_create_connectivity_test_rest_call_success(request_type):
                                 "security_profile_group_uri": "security_profile_group_uri_value"
                             },
                             "dms_private_connection": {"uri": "uri_value"},
+                            "datastream_private_connection": {},
                         }
                     ],
                     "forward_trace_id": 1679,
@@ -5873,6 +5875,7 @@ def test_update_connectivity_test_rest_call_success(request_type):
             "redis_cluster": "redis_cluster_value",
             "gke_pod": "gke_pod_value",
             "dms_private_connection": "dms_private_connection_value",
+            "datastream_private_connection": "datastream_private_connection_value",
             "cloud_function": {"uri": "uri_value"},
             "app_engine_version": {"uri": "uri_value"},
             "cloud_run_revision": {
@@ -6236,6 +6239,7 @@ def test_update_connectivity_test_rest_call_success(request_type):
                                 "security_profile_group_uri": "security_profile_group_uri_value"
                             },
                             "dms_private_connection": {"uri": "uri_value"},
+                            "datastream_private_connection": {},
                         }
                     ],
                     "forward_trace_id": 1679,

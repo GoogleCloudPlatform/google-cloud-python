@@ -41,10 +41,10 @@ You can also skip verification::
 """
 
 try:
-    from collections.abc import Mapping
+    from collections.abc import Iterable, Mapping
 # Python 2.7 compatibility
 except ImportError:  # pragma: NO COVER
-    from collections import Mapping  # type: ignore
+    from collections import Iterable, Mapping  # type: ignore
 import copy
 import datetime
 import json
@@ -269,8 +269,8 @@ def decode(token, certs=None, verify=True, audience=None, clock_skew_in_seconds=
 
     try:
         verifier_cls = _ALGORITHM_TO_VERIFIER_CLASS[key_alg]
-    except KeyError as exc:
-        if key_alg in _CRYPTOGRAPHY_BASED_ALGORITHMS:
+    except (KeyError, TypeError) as exc:
+        if isinstance(key_alg, str) and key_alg in _CRYPTOGRAPHY_BASED_ALGORITHMS:
             raise exceptions.InvalidValue(
                 "The key algorithm {} requires the cryptography package to be installed.".format(
                     key_alg
@@ -284,11 +284,12 @@ def decode(token, certs=None, verify=True, audience=None, clock_skew_in_seconds=
     # use the certificate identified by the key ID in the token header.
     if isinstance(certs, Mapping):
         if key_id:
-            if key_id not in certs:
+            try:
+                certs_to_check = [certs[key_id]]
+            except (KeyError, TypeError) as exc:
                 raise exceptions.MalformedError(
                     "Certificate for key id {} not found.".format(key_id)
-                )
-            certs_to_check = [certs[key_id]]
+                ) from exc
         # If there's no key id in the header, check against all of the certs.
         else:
             certs_to_check = certs.values()
@@ -296,9 +297,19 @@ def decode(token, certs=None, verify=True, audience=None, clock_skew_in_seconds=
         certs_to_check = certs
 
     # Verify that the signature matches the message.
-    if not crypt.verify_signature(
-        signed_section, signature, certs_to_check, verifier_cls
-    ):
+    try:
+        valid_signature = crypt.verify_signature(
+            signed_section, signature, certs_to_check, verifier_cls
+        )
+    except TypeError as exc:
+        if not isinstance(certs_to_check, Iterable):
+            raise
+        raise exceptions.InvalidValue(
+            "Certificate key type does not match signature algorithm {}.".format(
+                key_alg
+            )
+        ) from exc
+    if not valid_signature:
         raise exceptions.MalformedError("Could not verify token signature.")
 
     # Verify the issued at and created times in the payload.

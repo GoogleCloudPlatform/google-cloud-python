@@ -4,6 +4,20 @@
 
 [1]: https://pypi.org/project/google-cloud-oracledatabase/#history
 
+## [0.6.5](https://github.com/googleapis/google-cloud-python/compare/google-cloud-oracledatabase-v0.6.4...google-cloud-oracledatabase-v0.6.5) (2026-11-12)
+
+
+### Features
+
+* update API sources and regenerate ([#19036](https://github.com/googleapis/google-cloud-python/issues/19036)) ([b64a9e5](https://github.com/googleapis/google-cloud-python/commit/b64a9e51a22810d4e3b4c44b13847eb96c604628))
+
+## [0.6.4](https://github.com/googleapis/google-cloud-python/compare/google-cloud-oracledatabase-v0.6.3...google-cloud-oracledatabase-v0.6.4) (2026-10-29)
+
+
+### Features
+
+* update API sources and regenerate ([#18889](https://github.com/googleapis/google-cloud-python/issues/18889)) ([8705243](https://github.com/googleapis/google-cloud-python/commit/870524380c52ea234235e0c449f5c9aee2945283))
+
 ## [0.6.3](https://github.com/googleapis/google-cloud-python/compare/google-cloud-oracledatabase-v0.6.2...google-cloud-oracledatabase-v0.6.3) (2026-10-01)
 
 

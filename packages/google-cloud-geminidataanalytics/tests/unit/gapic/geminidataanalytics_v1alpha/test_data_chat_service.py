@@ -5210,6 +5210,7 @@ def test_list_messages_rest_required_fields(
             "filter",
             "pageSize",
             "pageToken",
+            "pendingWriteWaitSkipped",
         )
     )
 

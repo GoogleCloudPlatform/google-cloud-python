@@ -31,7 +31,6 @@ from google.protobuf.struct_pb2 import Struct
 
 from google.cloud.aio._cross_sync import CrossSync
 from google.cloud.spanner_v1._helpers import (
-    AtomicCounter,
     _augment_error_with_request_id,
     _check_rst_stream_error,
     _drain_stream,
@@ -180,6 +179,8 @@ def _restart_on_unavailable(
                     if item.resume_token:
                         resume_token = item.resume_token
                         break
+                else:
+                    stream_finished = True
             except ServiceUnavailable:
                 del item_buffer[:]
                 request.resume_token = resume_token
@@ -211,10 +212,18 @@ def _restart_on_unavailable(
             if len(item_buffer) == 0:
                 iterator = None
                 break
+            if stream_finished and metrics_tracer is not None:
+                try:
+                    metrics_tracer.record_operation_completion()
+                except Exception:
+                    pass
+                finally:
+                    metrics_tracer = None
             for item in item_buffer:
                 yield item
             del item_buffer[:]
             if stream_finished:
+                iterator = None
                 break
     finally:
         try:
@@ -740,20 +749,20 @@ class _SnapshotBase(_SessionWrapper):
             MetricsCapture(self._resource_info),
         ):
             nth_request = getattr(database, "_next_nth_request", 0)
-            attempt = AtomicCounter()
+            attempt = 0
 
             def attempt_tracking_method():
+                nonlocal attempt
+                attempt += 1
                 all_metadata = database.metadata_with_request_id(
-                    nth_request, attempt.increment(), metadata, span
+                    nth_request, attempt, metadata, span
                 )
-                partition_read_method = functools.partial(
-                    api.partition_read,
+                return api.partition_read(
                     request=partition_read_request,
                     metadata=all_metadata,
                     retry=retry,
                     timeout=timeout,
                 )
-                return partition_read_method()
 
             response = _retry(
                 attempt_tracking_method,
@@ -815,20 +824,20 @@ class _SnapshotBase(_SessionWrapper):
             MetricsCapture(self._resource_info),
         ):
             nth_request = getattr(database, "_next_nth_request", 0)
-            attempt = AtomicCounter()
+            attempt = 0
 
             def attempt_tracking_method():
+                nonlocal attempt
+                attempt += 1
                 all_metadata = database.metadata_with_request_id(
-                    nth_request, attempt.increment(), metadata, span
+                    nth_request, attempt, metadata, span
                 )
-                partition_query_method = functools.partial(
-                    api.partition_query,
+                return api.partition_query(
                     request=partition_query_request,
                     metadata=all_metadata,
                     retry=retry,
                     timeout=timeout,
                 )
-                return partition_query_method()
 
             response = _retry(
                 attempt_tracking_method,
@@ -880,22 +889,21 @@ class _SnapshotBase(_SessionWrapper):
             MetricsCapture(self._resource_info),
         ):
             nth_request = getattr(database, "_next_nth_request", 0)
-            attempt = AtomicCounter()
+            attempt = 0
 
             def wrapped_method():
+                nonlocal attempt
+                attempt += 1
                 begin_transaction_request = BeginTransactionRequest(
                     **begin_request_kwargs
                 )
                 call_metadata, error_augmenter = database.with_error_augmentation(
-                    nth_request, attempt.increment(), metadata, span
-                )
-                begin_transaction_method = functools.partial(
-                    api.begin_transaction,
-                    request=begin_transaction_request,
-                    metadata=call_metadata,
+                    nth_request, attempt, metadata, span
                 )
                 with error_augmenter:
-                    return begin_transaction_method()
+                    return api.begin_transaction(
+                        request=begin_transaction_request, metadata=call_metadata
+                    )
 
             def before_next_retry(nth_retry, delay_in_seconds):
                 add_span_event(

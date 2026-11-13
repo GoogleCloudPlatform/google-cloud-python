@@ -25,10 +25,10 @@ from google.cloud.sqladmin_v1beta4.types import cloud_sql_resources
 __protobuf__ = proto.module(
     package="google.cloud.sql.v1beta4",
     manifest={
-        "SqlWorkloadCapturesStartRequest",
-        "SqlWorkloadCapturesStopRequest",
-        "SqlWorkloadCapturesStartReplayRequest",
-        "SqlWorkloadCapturesStopReplayRequest",
+        "WorkloadCapturesStartRequest",
+        "WorkloadCapturesStopRequest",
+        "WorkloadCapturesStartReplayRequest",
+        "WorkloadCapturesStopReplayRequest",
         "SqlWorkloadCapturesListRequest",
         "WorkloadCapturesListResponse",
         "WorkloadCapture",
@@ -36,7 +36,7 @@ __protobuf__ = proto.module(
 )
 
 
-class SqlWorkloadCapturesStartRequest(proto.Message):
+class WorkloadCapturesStartRequest(proto.Message):
     r"""Request to start recording traffic from the primary instance
     (captured workload).
 
@@ -69,7 +69,7 @@ class SqlWorkloadCapturesStartRequest(proto.Message):
     )
 
 
-class SqlWorkloadCapturesStopRequest(proto.Message):
+class WorkloadCapturesStopRequest(proto.Message):
     r"""Request to stop recording traffic from the primary instance.
 
     Attributes:
@@ -101,7 +101,7 @@ class SqlWorkloadCapturesStopRequest(proto.Message):
     )
 
 
-class SqlWorkloadCapturesStartReplayRequest(proto.Message):
+class WorkloadCapturesStartReplayRequest(proto.Message):
     r"""Request to start executing a captured workload on a replay
     instance (the Cloud SQL instance where the recorded SQL queries
     are executed).
@@ -141,7 +141,7 @@ class SqlWorkloadCapturesStartReplayRequest(proto.Message):
     )
 
 
-class SqlWorkloadCapturesStopReplayRequest(proto.Message):
+class WorkloadCapturesStopReplayRequest(proto.Message):
     r"""Request to stop an active workload replay on a target Cloud
     SQL replay instance.
 
@@ -252,6 +252,9 @@ class WorkloadCapture(proto.Message):
             with the workload capture.
 
             This field is a member of `oneof`_ ``_backup_id``.
+        capture_mode (google.cloud.sqladmin_v1beta4.types.WorkloadCapture.WorkloadCaptureMode):
+            Output only. The capture mode of the workload
+            capture.
     """
 
     class State(proto.Enum):
@@ -281,6 +284,24 @@ class WorkloadCapture(proto.Message):
         COMPLETED = 2
         FAILED = 3
         TERMINATED = 4
+
+    class WorkloadCaptureMode(proto.Enum):
+        r"""Specifies the mode of the workload capture.
+
+        Values:
+            WORKLOAD_CAPTURE_MODE_UNSPECIFIED (0):
+                Default value. This value is unused.
+            CAPTURE_ONLY (1):
+                Records and stores the workload without live
+                replay.
+            CAPTURE_AND_LIVE_REPLAY (2):
+                Records the workload and simultaneously
+                replays it on a live replay instance.
+        """
+
+        WORKLOAD_CAPTURE_MODE_UNSPECIFIED = 0
+        CAPTURE_ONLY = 1
+        CAPTURE_AND_LIVE_REPLAY = 2
 
     workload_id: str = proto.Field(
         proto.STRING,
@@ -319,6 +340,11 @@ class WorkloadCapture(proto.Message):
         proto.STRING,
         number=8,
         optional=True,
+    )
+    capture_mode: WorkloadCaptureMode = proto.Field(
+        proto.ENUM,
+        number=13,
+        enum=WorkloadCaptureMode,
     )
 
 

@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-cloud-ces",
-    "version": "0.7.2"
+    "version": "0.7.4"
   },
   "snippets": [
     {
@@ -5139,12 +5139,12 @@
       "regionTag": "ces_v1beta_generated_AgentService_ImportApp_async",
       "segments": [
         {
-          "end": 56,
+          "end": 57,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 56,
+          "end": 57,
           "start": 27,
           "type": "SHORT"
         },
@@ -5154,18 +5154,18 @@
           "type": "CLIENT_INITIALIZATION"
         },
         {
-          "end": 46,
+          "end": 47,
           "start": 41,
           "type": "REQUEST_INITIALIZATION"
         },
         {
-          "end": 53,
-          "start": 47,
+          "end": 54,
+          "start": 48,
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 57,
-          "start": 54,
+          "end": 58,
+          "start": 55,
           "type": "RESPONSE_HANDLING"
         }
       ],
@@ -5227,12 +5227,12 @@
       "regionTag": "ces_v1beta_generated_AgentService_ImportApp_sync",
       "segments": [
         {
-          "end": 56,
+          "end": 57,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 56,
+          "end": 57,
           "start": 27,
           "type": "SHORT"
         },
@@ -5242,18 +5242,18 @@
           "type": "CLIENT_INITIALIZATION"
         },
         {
-          "end": 46,
+          "end": 47,
           "start": 41,
           "type": "REQUEST_INITIALIZATION"
         },
         {
-          "end": 53,
-          "start": 47,
+          "end": 54,
+          "start": 48,
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 57,
-          "start": 54,
+          "end": 58,
+          "start": 55,
           "type": "RESPONSE_HANDLING"
         }
       ],
@@ -7207,6 +7207,175 @@
           "fullName": "google.cloud.ces_v1beta.AgentServiceAsyncClient",
           "shortName": "AgentServiceAsyncClient"
         },
+        "fullName": "google.cloud.ces_v1beta.AgentServiceAsyncClient.update_app_version",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.AgentService.UpdateAppVersion",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.AgentService",
+            "shortName": "AgentService"
+          },
+          "shortName": "UpdateAppVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.UpdateAppVersionRequest"
+          },
+          {
+            "name": "app_version",
+            "type": "google.cloud.ces_v1beta.types.AppVersion"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ces_v1beta.types.AppVersion",
+        "shortName": "update_app_version"
+      },
+      "description": "Sample for UpdateAppVersion",
+      "file": "ces_v1beta_generated_agent_service_update_app_version_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_AgentService_UpdateAppVersion_async",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_agent_service_update_app_version_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.AgentServiceClient",
+          "shortName": "AgentServiceClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.AgentServiceClient.update_app_version",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.AgentService.UpdateAppVersion",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.AgentService",
+            "shortName": "AgentService"
+          },
+          "shortName": "UpdateAppVersion"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.UpdateAppVersionRequest"
+          },
+          {
+            "name": "app_version",
+            "type": "google.cloud.ces_v1beta.types.AppVersion"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ces_v1beta.types.AppVersion",
+        "shortName": "update_app_version"
+      },
+      "description": "Sample for UpdateAppVersion",
+      "file": "ces_v1beta_generated_agent_service_update_app_version_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_AgentService_UpdateAppVersion_sync",
+      "segments": [
+        {
+          "end": 50,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 50,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 44,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 45,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 51,
+          "start": 48,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_agent_service_update_app_version_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.AgentServiceAsyncClient",
+          "shortName": "AgentServiceAsyncClient"
+        },
         "fullName": "google.cloud.ces_v1beta.AgentServiceAsyncClient.update_app",
         "method": {
           "fullName": "google.cloud.ces.v1beta.AgentService.UpdateApp",
@@ -8381,6 +8550,958 @@
         }
       ],
       "title": "ces_v1beta_generated_agent_service_update_toolset_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.AssistantServiceAsyncClient",
+          "shortName": "AssistantServiceAsyncClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.AssistantServiceAsyncClient.chat_ai_assistant",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.AssistantService.ChatAiAssistant",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.AssistantService",
+            "shortName": "AssistantService"
+          },
+          "shortName": "ChatAiAssistant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.ChatAiAssistantRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ces_v1beta.types.ChatAiAssistantResponse",
+        "shortName": "chat_ai_assistant"
+      },
+      "description": "Sample for ChatAiAssistant",
+      "file": "ces_v1beta_generated_assistant_service_chat_ai_assistant_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_AssistantService_ChatAiAssistant_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_assistant_service_chat_ai_assistant_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.AssistantServiceClient",
+          "shortName": "AssistantServiceClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.AssistantServiceClient.chat_ai_assistant",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.AssistantService.ChatAiAssistant",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.AssistantService",
+            "shortName": "AssistantService"
+          },
+          "shortName": "ChatAiAssistant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.ChatAiAssistantRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ces_v1beta.types.ChatAiAssistantResponse",
+        "shortName": "chat_ai_assistant"
+      },
+      "description": "Sample for ChatAiAssistant",
+      "file": "ces_v1beta_generated_assistant_service_chat_ai_assistant_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_AssistantService_ChatAiAssistant_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 47,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 48,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 51,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_assistant_service_chat_ai_assistant_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.AssistantServiceAsyncClient",
+          "shortName": "AssistantServiceAsyncClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.AssistantServiceAsyncClient.create_assistant_session",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.AssistantService.CreateAssistantSession",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.AssistantService",
+            "shortName": "AssistantService"
+          },
+          "shortName": "CreateAssistantSession"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.CreateAssistantSessionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "assistant_session_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ces_v1beta.types.AssistantSession",
+        "shortName": "create_assistant_session"
+      },
+      "description": "Sample for CreateAssistantSession",
+      "file": "ces_v1beta_generated_assistant_service_create_assistant_session_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_AssistantService_CreateAssistantSession_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_assistant_service_create_assistant_session_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.AssistantServiceClient",
+          "shortName": "AssistantServiceClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.AssistantServiceClient.create_assistant_session",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.AssistantService.CreateAssistantSession",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.AssistantService",
+            "shortName": "AssistantService"
+          },
+          "shortName": "CreateAssistantSession"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.CreateAssistantSessionRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "assistant_session_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ces_v1beta.types.AssistantSession",
+        "shortName": "create_assistant_session"
+      },
+      "description": "Sample for CreateAssistantSession",
+      "file": "ces_v1beta_generated_assistant_service_create_assistant_session_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_AssistantService_CreateAssistantSession_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_assistant_service_create_assistant_session_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.AssistantServiceAsyncClient",
+          "shortName": "AssistantServiceAsyncClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.AssistantServiceAsyncClient.delete_assistant_session",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.AssistantService.DeleteAssistantSession",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.AssistantService",
+            "shortName": "AssistantService"
+          },
+          "shortName": "DeleteAssistantSession"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.DeleteAssistantSessionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_assistant_session"
+      },
+      "description": "Sample for DeleteAssistantSession",
+      "file": "ces_v1beta_generated_assistant_service_delete_assistant_session_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_AssistantService_DeleteAssistantSession_async",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_assistant_service_delete_assistant_session_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.AssistantServiceClient",
+          "shortName": "AssistantServiceClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.AssistantServiceClient.delete_assistant_session",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.AssistantService.DeleteAssistantSession",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.AssistantService",
+            "shortName": "AssistantService"
+          },
+          "shortName": "DeleteAssistantSession"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.DeleteAssistantSessionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "shortName": "delete_assistant_session"
+      },
+      "description": "Sample for DeleteAssistantSession",
+      "file": "ces_v1beta_generated_assistant_service_delete_assistant_session_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_AssistantService_DeleteAssistantSession_sync",
+      "segments": [
+        {
+          "end": 49,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 49,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_assistant_service_delete_assistant_session_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.AssistantServiceAsyncClient",
+          "shortName": "AssistantServiceAsyncClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.AssistantServiceAsyncClient.get_assistant_session",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.AssistantService.GetAssistantSession",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.AssistantService",
+            "shortName": "AssistantService"
+          },
+          "shortName": "GetAssistantSession"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.GetAssistantSessionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ces_v1beta.types.AssistantSession",
+        "shortName": "get_assistant_session"
+      },
+      "description": "Sample for GetAssistantSession",
+      "file": "ces_v1beta_generated_assistant_service_get_assistant_session_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_AssistantService_GetAssistantSession_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_assistant_service_get_assistant_session_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.AssistantServiceClient",
+          "shortName": "AssistantServiceClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.AssistantServiceClient.get_assistant_session",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.AssistantService.GetAssistantSession",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.AssistantService",
+            "shortName": "AssistantService"
+          },
+          "shortName": "GetAssistantSession"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.GetAssistantSessionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ces_v1beta.types.AssistantSession",
+        "shortName": "get_assistant_session"
+      },
+      "description": "Sample for GetAssistantSession",
+      "file": "ces_v1beta_generated_assistant_service_get_assistant_session_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_AssistantService_GetAssistantSession_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_assistant_service_get_assistant_session_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.AssistantServiceAsyncClient",
+          "shortName": "AssistantServiceAsyncClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.AssistantServiceAsyncClient.list_assistant_sessions",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.AssistantService.ListAssistantSessions",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.AssistantService",
+            "shortName": "AssistantService"
+          },
+          "shortName": "ListAssistantSessions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.ListAssistantSessionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ces_v1beta.services.assistant_service.pagers.ListAssistantSessionsAsyncPager",
+        "shortName": "list_assistant_sessions"
+      },
+      "description": "Sample for ListAssistantSessions",
+      "file": "ces_v1beta_generated_assistant_service_list_assistant_sessions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_AssistantService_ListAssistantSessions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_assistant_service_list_assistant_sessions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.AssistantServiceClient",
+          "shortName": "AssistantServiceClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.AssistantServiceClient.list_assistant_sessions",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.AssistantService.ListAssistantSessions",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.AssistantService",
+            "shortName": "AssistantService"
+          },
+          "shortName": "ListAssistantSessions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.ListAssistantSessionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ces_v1beta.services.assistant_service.pagers.ListAssistantSessionsPager",
+        "shortName": "list_assistant_sessions"
+      },
+      "description": "Sample for ListAssistantSessions",
+      "file": "ces_v1beta_generated_assistant_service_list_assistant_sessions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_AssistantService_ListAssistantSessions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_assistant_service_list_assistant_sessions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.AssistantServiceAsyncClient",
+          "shortName": "AssistantServiceAsyncClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.AssistantServiceAsyncClient.run_assistant",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.AssistantService.RunAssistant",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.AssistantService",
+            "shortName": "AssistantService"
+          },
+          "shortName": "RunAssistant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.RunAssistantRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ces_v1beta.types.RunAssistantResponse",
+        "shortName": "run_assistant"
+      },
+      "description": "Sample for RunAssistant",
+      "file": "ces_v1beta_generated_assistant_service_run_assistant_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_AssistantService_RunAssistant_async",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_assistant_service_run_assistant_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.AssistantServiceClient",
+          "shortName": "AssistantServiceClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.AssistantServiceClient.run_assistant",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.AssistantService.RunAssistant",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.AssistantService",
+            "shortName": "AssistantService"
+          },
+          "shortName": "RunAssistant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.RunAssistantRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ces_v1beta.types.RunAssistantResponse",
+        "shortName": "run_assistant"
+      },
+      "description": "Sample for RunAssistant",
+      "file": "ces_v1beta_generated_assistant_service_run_assistant_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_AssistantService_RunAssistant_sync",
+      "segments": [
+        {
+          "end": 56,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 56,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 50,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 53,
+          "start": 51,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 57,
+          "start": 54,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_assistant_service_run_assistant_sync.py"
     },
     {
       "canonical": true,
@@ -14268,6 +15389,312 @@
           "fullName": "google.cloud.ces_v1beta.SessionServiceAsyncClient",
           "shortName": "SessionServiceAsyncClient"
         },
+        "fullName": "google.cloud.ces_v1beta.SessionServiceAsyncClient.cancel_assistant_turn",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.SessionService.CancelAssistantTurn",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.SessionService",
+            "shortName": "SessionService"
+          },
+          "shortName": "CancelAssistantTurn"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.CancelAssistantTurnRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ces_v1beta.types.CancelAssistantTurnResponse",
+        "shortName": "cancel_assistant_turn"
+      },
+      "description": "Sample for CancelAssistantTurn",
+      "file": "ces_v1beta_generated_session_service_cancel_assistant_turn_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_SessionService_CancelAssistantTurn_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_session_service_cancel_assistant_turn_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.SessionServiceClient",
+          "shortName": "SessionServiceClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.SessionServiceClient.cancel_assistant_turn",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.SessionService.CancelAssistantTurn",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.SessionService",
+            "shortName": "SessionService"
+          },
+          "shortName": "CancelAssistantTurn"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.CancelAssistantTurnRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ces_v1beta.types.CancelAssistantTurnResponse",
+        "shortName": "cancel_assistant_turn"
+      },
+      "description": "Sample for CancelAssistantTurn",
+      "file": "ces_v1beta_generated_session_service_cancel_assistant_turn_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_SessionService_CancelAssistantTurn_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_session_service_cancel_assistant_turn_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.SessionServiceAsyncClient",
+          "shortName": "SessionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.SessionServiceAsyncClient.generate_onboarding_suggestions",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.SessionService.GenerateOnboardingSuggestions",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.SessionService",
+            "shortName": "SessionService"
+          },
+          "shortName": "GenerateOnboardingSuggestions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.GenerateOnboardingSuggestionsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ces_v1beta.types.GenerateOnboardingSuggestionsResponse",
+        "shortName": "generate_onboarding_suggestions"
+      },
+      "description": "Sample for GenerateOnboardingSuggestions",
+      "file": "ces_v1beta_generated_session_service_generate_onboarding_suggestions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_SessionService_GenerateOnboardingSuggestions_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_session_service_generate_onboarding_suggestions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.SessionServiceClient",
+          "shortName": "SessionServiceClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.SessionServiceClient.generate_onboarding_suggestions",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.SessionService.GenerateOnboardingSuggestions",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.SessionService",
+            "shortName": "SessionService"
+          },
+          "shortName": "GenerateOnboardingSuggestions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.GenerateOnboardingSuggestionsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.ces_v1beta.types.GenerateOnboardingSuggestionsResponse",
+        "shortName": "generate_onboarding_suggestions"
+      },
+      "description": "Sample for GenerateOnboardingSuggestions",
+      "file": "ces_v1beta_generated_session_service_generate_onboarding_suggestions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_SessionService_GenerateOnboardingSuggestions_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_session_service_generate_onboarding_suggestions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.SessionServiceAsyncClient",
+          "shortName": "SessionServiceAsyncClient"
+        },
         "fullName": "google.cloud.ces_v1beta.SessionServiceAsyncClient.run_session",
         "method": {
           "fullName": "google.cloud.ces.v1beta.SessionService.RunSession",
@@ -14412,6 +15839,159 @@
         }
       ],
       "title": "ces_v1beta_generated_session_service_run_session_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.SessionServiceAsyncClient",
+          "shortName": "SessionServiceAsyncClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.SessionServiceAsyncClient.stream_chat_ai_assistant",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.SessionService.StreamChatAiAssistant",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.SessionService",
+            "shortName": "SessionService"
+          },
+          "shortName": "StreamChatAiAssistant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.StreamChatAiAssistantRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.cloud.ces_v1beta.types.StreamChatAiAssistantResponse]",
+        "shortName": "stream_chat_ai_assistant"
+      },
+      "description": "Sample for StreamChatAiAssistant",
+      "file": "ces_v1beta_generated_session_service_stream_chat_ai_assistant_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_SessionService_StreamChatAiAssistant_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_session_service_stream_chat_ai_assistant_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.ces_v1beta.SessionServiceClient",
+          "shortName": "SessionServiceClient"
+        },
+        "fullName": "google.cloud.ces_v1beta.SessionServiceClient.stream_chat_ai_assistant",
+        "method": {
+          "fullName": "google.cloud.ces.v1beta.SessionService.StreamChatAiAssistant",
+          "service": {
+            "fullName": "google.cloud.ces.v1beta.SessionService",
+            "shortName": "SessionService"
+          },
+          "shortName": "StreamChatAiAssistant"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.ces_v1beta.types.StreamChatAiAssistantRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "Iterable[google.cloud.ces_v1beta.types.StreamChatAiAssistantResponse]",
+        "shortName": "stream_chat_ai_assistant"
+      },
+      "description": "Sample for StreamChatAiAssistant",
+      "file": "ces_v1beta_generated_session_service_stream_chat_ai_assistant_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "ces_v1beta_generated_SessionService_StreamChatAiAssistant_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "ces_v1beta_generated_session_service_stream_chat_ai_assistant_sync.py"
     },
     {
       "canonical": true,

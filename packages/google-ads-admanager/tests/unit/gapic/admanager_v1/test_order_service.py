@@ -4758,6 +4758,7 @@ def test_get_order_rest_call_success(request_type):
             creator="creator_value",
             currency_code="currency_code_value",
             unlimited_end_time=True,
+            end_time_unlimited=True,
             external_order_id=1802,
             archived=True,
             last_modified_by_app="last_modified_by_app_value",
@@ -4800,6 +4801,7 @@ def test_get_order_rest_call_success(request_type):
     assert response.creator == "creator_value"
     assert response.currency_code == "currency_code_value"
     assert response.unlimited_end_time is True
+    assert response.end_time_unlimited is True
     assert response.external_order_id == 1802
     assert response.archived is True
     assert response.last_modified_by_app == "last_modified_by_app_value"

@@ -55,8 +55,12 @@ from google.apps.chat_v1.types.availability import (
     MarkAsDoNotDisturbRequest,
     UpdateAvailabilityRequest,
 )
+from google.apps.chat_v1.types.citation import Citation
+from google.apps.chat_v1.types.cited_source import CitedSource
 from google.apps.chat_v1.types.contextual_addon import ContextualAddOnMarkup
 from google.apps.chat_v1.types.deletion_metadata import DeletionMetadata
+from google.apps.chat_v1.types.elements import Elements
+from google.apps.chat_v1.types.elements_common import ElementsImage
 from google.apps.chat_v1.types.event_payload import (
     MembershipBatchCreatedEventData,
     MembershipBatchDeletedEventData,
@@ -107,6 +111,8 @@ from google.apps.chat_v1.types.message import (
     Message,
     QuotedMessageMetadata,
     QuotedMessageSnapshot,
+    ReplaceMessageCardsRequest,
+    ReplaceMessageCardsResponse,
     SearchMessageResult,
     SearchMessagesRequest,
     SearchMessagesResponse,
@@ -222,8 +228,12 @@ __all__ = (
     "MarkAsAwayRequest",
     "MarkAsDoNotDisturbRequest",
     "UpdateAvailabilityRequest",
+    "Citation",
+    "CitedSource",
     "ContextualAddOnMarkup",
     "DeletionMetadata",
+    "Elements",
+    "ElementsImage",
     "MembershipBatchCreatedEventData",
     "MembershipBatchDeletedEventData",
     "MembershipBatchUpdatedEventData",
@@ -269,6 +279,8 @@ __all__ = (
     "Message",
     "QuotedMessageMetadata",
     "QuotedMessageSnapshot",
+    "ReplaceMessageCardsRequest",
+    "ReplaceMessageCardsResponse",
     "SearchMessageResult",
     "SearchMessagesRequest",
     "SearchMessagesResponse",

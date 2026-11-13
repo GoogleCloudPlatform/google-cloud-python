@@ -12,8 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import copy
 import http.client
 import json
+import pickle
+import types
 from unittest import mock
 
 import pytest
@@ -52,6 +55,50 @@ def test_create_google_cloud_error_with_args():
     assert exception.message == "Testing"
     assert exception.errors == [error]
     assert exception.response == response
+
+
+@pytest.mark.parametrize("protocol", range(pickle.HIGHEST_PROTOCOL + 1))
+def test_retry_error_pickle_round_trip(protocol):
+    cause = exceptions.ServiceUnavailable("backend unavailable")
+    error = exceptions.RetryError("Timeout of 1.0s exceeded", cause)
+
+    restored = pickle.loads(pickle.dumps(error, protocol=protocol))
+
+    assert isinstance(restored, exceptions.RetryError)
+    assert restored.message == error.message
+    assert isinstance(restored.cause, exceptions.ServiceUnavailable)
+    assert restored.cause.message == cause.message
+    assert str(restored) == str(error)
+
+
+def test_retry_error_pickle_round_trip_without_cause():
+    error = exceptions.RetryError("Timeout of 1.0s exceeded", None)
+
+    restored = pickle.loads(pickle.dumps(error))
+
+    assert restored.cause is None
+    assert str(restored) == str(error)
+
+
+def test_retry_error_pickle_preserves_instance_attributes():
+    error = exceptions.RetryError("Timeout of 1.0s exceeded", None)
+    error.custom_attribute = "value"
+
+    restored = pickle.loads(pickle.dumps(error))
+
+    assert restored.custom_attribute == "value"
+
+
+@pytest.mark.parametrize("copy_fn", [copy.copy, copy.deepcopy])
+def test_retry_error_copy(copy_fn):
+    cause = exceptions.ServiceUnavailable("backend unavailable")
+    error = exceptions.RetryError("Timeout of 1.0s exceeded", cause)
+
+    copied = copy_fn(error)
+
+    assert isinstance(copied, exceptions.RetryError)
+    assert copied.message == error.message
+    assert str(copied) == str(error)
 
 
 def test_from_http_status():
@@ -352,6 +399,12 @@ def test_error_details_from_rest_response():
         " 'service': 'translate.googleapis.com'},"
         " 'reason': 'SERVICE_DISABLED'}]"
     )
+    assert exception.reason == "SERVICE_DISABLED"
+    assert exception.domain == "googleapis.com"
+    assert exception.metadata == {
+        "consumer": "projects/455411330361",
+        "service": "translate.googleapis.com",
+    }
 
 
 def test_error_details_from_v1_rest_response():
@@ -434,3 +487,149 @@ def test_from_grpc_error_misleading_404():
     assert exception.grpc_status_code == grpc.StatusCode.UNIMPLEMENTED
     assert "Received http2 header with status: 404" in exception.message
     assert "api_endpoint" in exception.message
+
+
+@pytest.mark.parametrize(
+    "error_info, expected_reason, expected_domain, expected_metadata",
+    [
+        pytest.param(
+            {
+                "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                "reason": "SERVICE_DISABLED",
+                "domain": "googleapis.com",
+                "metadata": {"service": "translate.googleapis.com"},
+            },
+            "SERVICE_DISABLED",
+            "googleapis.com",
+            {"service": "translate.googleapis.com"},
+            id="populated_dict",
+        ),
+        pytest.param(
+            {"@type": "type.googleapis.com/google.rpc.ErrorInfo"},
+            None,
+            None,
+            None,
+            id="partial_dict_missing_keys",
+        ),
+        pytest.param({}, None, None, None, id="empty_dict"),
+    ],
+)
+def test_error_info_dict_accessors_boundary(
+    error_info, expected_reason, expected_domain, expected_metadata
+):
+    exception = exceptions.GoogleAPICallError("err", error_info=error_info)
+    assert exception.reason == expected_reason
+    assert exception.domain == expected_domain
+    assert exception.metadata == expected_metadata
+
+
+def _raising_code():
+    raise RuntimeError("boom")
+
+
+@pytest.mark.parametrize(
+    "exc_obj, kwargs, expected_code",
+    [
+        pytest.param(None, {}, "", id="none_no_default"),
+        pytest.param(
+            None, {"default": "UNAVAILABLE"}, "UNAVAILABLE", id="none_with_default"
+        ),
+        pytest.param(
+            exceptions.NotFound("missing"),
+            {},
+            "NOT_FOUND",
+            id="google_api_call_error_with_grpc_code",
+        ),
+        pytest.param(
+            exceptions.BadRequest("invalid"),
+            {},
+            "BAD_REQUEST",
+            id="google_api_call_error_http_only",
+        ),
+        pytest.param(
+            exceptions.RetryError(
+                "retry failed", cause=exceptions.ServiceUnavailable("down")
+            ),
+            {},
+            "UNAVAILABLE" if grpc is not None else "SERVICE_UNAVAILABLE",
+            id="retry_error_unwraps_cause",
+        ),
+        pytest.param(
+            types.SimpleNamespace(__cause__=exceptions.NotFound("root missing")),
+            {},
+            "NOT_FOUND",
+            id="dunder_cause_unwrapped",
+        ),
+        pytest.param(
+            types.SimpleNamespace(grpc_status_code=types.SimpleNamespace(name=None)),
+            {},
+            "SimpleNamespace",
+            id="grpc_status_code_without_name_falls_back",
+        ),
+        pytest.param(
+            types.SimpleNamespace(
+                code=lambda: types.SimpleNamespace(name="DEADLINE_EXCEEDED")
+            ),
+            {},
+            "DEADLINE_EXCEEDED",
+            id="callable_code_returns_enum_name",
+        ),
+        pytest.param(
+            types.SimpleNamespace(code=lambda: types.SimpleNamespace(name=None)),
+            {},
+            "SimpleNamespace",
+            id="callable_code_without_name_falls_back",
+        ),
+        pytest.param(
+            types.SimpleNamespace(code=_raising_code),
+            {},
+            "SimpleNamespace",
+            id="callable_code_raises_falls_back_to_class_name",
+        ),
+        pytest.param(
+            types.SimpleNamespace(code=_raising_code),
+            {"default": "UNAVAILABLE"},
+            "UNAVAILABLE",
+            id="callable_code_raises_falls_back_to_default",
+        ),
+        pytest.param(
+            types.SimpleNamespace(code=5),
+            {},
+            "NOT_FOUND",
+            marks=pytest.mark.skipif(grpc is None, reason="requires grpc"),
+            id="int_grpc_code_mapped",
+        ),
+        pytest.param(
+            types.SimpleNamespace(code=404),
+            {},
+            "NOT_FOUND",
+            id="int_http_status_code_mapped",
+        ),
+        pytest.param(
+            types.SimpleNamespace(code=999),
+            {},
+            "999",
+            id="int_unknown_code_stringified",
+        ),
+        pytest.param(
+            types.SimpleNamespace(code="unknown_code"),
+            {},
+            "SimpleNamespace",
+            id="non_int_code_without_name_falls_back",
+        ),
+        pytest.param(
+            ValueError("bad val"),
+            {},
+            "ValueError",
+            id="standard_exception_class_name",
+        ),
+        pytest.param(
+            ValueError("bad val"),
+            {"default": "503"},
+            "503",
+            id="standard_exception_with_default",
+        ),
+    ],
+)
+def test_extract_status_code_from_exceptions(exc_obj, kwargs, expected_code):
+    assert exceptions._extract_status_code(exc_obj, **kwargs) == expected_code

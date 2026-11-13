@@ -169,6 +169,10 @@ class Conversation(proto.Message):
             root_span (google.cloud.ces_v1beta.types.Span):
                 Optional. The root span of the action
                 processing.
+            user_intended_text (str):
+                Optional. The intended ground-truth text from
+                the Simulated Caller (Polysynth). Only populated
+                when word error rate metrics are enabled.
         """
 
         messages: MutableSequence[example.Message] = proto.RepeatedField(
@@ -180,6 +184,10 @@ class Conversation(proto.Message):
             proto.MESSAGE,
             number=2,
             message=common.Span,
+        )
+        user_intended_text: str = proto.Field(
+            proto.STRING,
+            number=3,
         )
 
     name: str = proto.Field(

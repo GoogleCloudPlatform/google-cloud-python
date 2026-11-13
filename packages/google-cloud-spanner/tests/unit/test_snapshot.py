@@ -1027,7 +1027,7 @@ class Test_restart_on_unavailable(OpenTelemetryBase):
 
         mock_tracer = mock.Mock()
 
-        FIRST = (self._make_item(0), self._make_item(1))
+        FIRST = (self._make_item(0, resume_token=b"r1"), self._make_item(1))
         raw = _MockIterator(*FIRST)
         restart = mock.Mock(return_value=raw)
         request = mock.Mock(test="test", spec=["test", "resume_token"])
@@ -1063,7 +1063,7 @@ class Test_restart_on_unavailable(OpenTelemetryBase):
         )
         from google.cloud.spanner_v1.snapshot import _restart_on_unavailable
 
-        FIRST = (self._make_item(0), self._make_item(1))
+        FIRST = (self._make_item(0, resume_token=b"r1"), self._make_item(1))
         raw = _MockIterator(*FIRST)
         restart = mock.Mock(return_value=raw)
         request = mock.Mock(test="test", spec=["test", "resume_token"])
@@ -1195,8 +1195,17 @@ class Test_restart_on_unavailable(OpenTelemetryBase):
             "metrics export failure"
         )
 
-        item = mock.Mock(
+        item_one = mock.Mock(
             value=0,
+            resume_token=b"r1",
+            metadata=None,
+            precommit_token=None,
+            last=False,
+            _pb=None,
+            spec=["value", "resume_token", "metadata", "precommit_token", "last"],
+        )
+        item_two = mock.Mock(
+            value=1,
             resume_token=b"",
             metadata=None,
             precommit_token=None,
@@ -1204,7 +1213,7 @@ class Test_restart_on_unavailable(OpenTelemetryBase):
             _pb=None,
             spec=["value", "resume_token", "metadata", "precommit_token", "last"],
         )
-        mock_iterator = _MockIterator(item)
+        mock_iterator = _MockIterator(item_one, item_two)
         mock_iterator.cancel = mock.Mock()
         request = mock.Mock(test="test", spec=["test", "resume_token"])
         database = _Database()
@@ -1229,9 +1238,59 @@ class Test_restart_on_unavailable(OpenTelemetryBase):
                 break
             resumable.close()
 
-            self.assertEqual(items, [item])
+            self.assertEqual(items, [item_one])
             mock_tracer.record_operation_completion.assert_called_once()
             mock_iterator.cancel.assert_called_once()
+
+            # Also verify error is handled when stream finishes normally before yield
+            mock_tracer.reset_mock()
+            resumable_done = _restart_on_unavailable(
+                mock.Mock(return_value=_MockIterator(item_two)),
+                request,
+                session=session,
+                transaction=derived,
+                request_id_manager=session._database,
+                resource_info={"project": "p"},
+            )
+            # Take the final item and stop pulling, like StreamedResultSet does.
+            first = next(resumable_done)
+            self.assertEqual(first, item_two)
+            # Completion is recorded before the final yield...
+            mock_tracer.record_operation_completion.assert_called_once()
+
+            resumable_done.close()
+            # ...and the finally doesn't record it a second time.
+            mock_tracer.record_operation_completion.assert_called_once()
+
+            # Also verify when stream_finished is set via item.last=True
+            mock_tracer.reset_mock()
+            item_last = mock.Mock(
+                value=2,
+                resume_token=b"",
+                metadata=None,
+                precommit_token=None,
+                last=True,
+                _pb=None,
+                spec=["value", "resume_token", "metadata", "precommit_token", "last"],
+            )
+            with mock.patch(
+                "google.cloud.spanner_v1.snapshot._drain_stream"
+            ) as mock_drain:
+                resumable_last = _restart_on_unavailable(
+                    mock.Mock(return_value=_MockIterator(item_last)),
+                    request,
+                    session=session,
+                    transaction=derived,
+                    request_id_manager=session._database,
+                    resource_info={"project": "p"},
+                )
+                first_last = next(resumable_last)
+                self.assertEqual(first_last, item_last)
+                mock_drain.assert_called_once()
+                mock_tracer.record_operation_completion.assert_called_once()
+
+                resumable_last.close()
+                mock_tracer.record_operation_completion.assert_called_once()
 
     def test_restart_on_unavailable_metrics_completion_error_preserves_query_error(
         self,

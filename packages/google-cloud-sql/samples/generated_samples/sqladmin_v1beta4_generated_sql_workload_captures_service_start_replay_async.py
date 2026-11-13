@@ -42,7 +42,7 @@ async def sample_start_replay():
     start_workload_replay_context = sqladmin_v1beta4.StartWorkloadReplayContext()
     start_workload_replay_context.replay_instance = "replay_instance_value"
 
-    request = sqladmin_v1beta4.SqlWorkloadCapturesStartReplayRequest(
+    request = sqladmin_v1beta4.WorkloadCapturesStartReplayRequest(
         project="project_value",
         instance="instance_value",
         start_workload_replay_context=start_workload_replay_context,

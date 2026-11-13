@@ -116,7 +116,7 @@ class SqlSslCertsServiceClientMeta(type):
 
 
 class SqlSslCertsServiceClient(metaclass=SqlSslCertsServiceClientMeta):
-    """"""
+    """Service to manage SSL certs for Cloud SQL instances."""
 
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
     DEFAULT_ENDPOINT = "sqladmin.googleapis.com"
@@ -906,6 +906,307 @@ class SqlSslCertsServiceClient(metaclass=SqlSslCertsServiceClientMeta):
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
         rpc = self._transport._wrapped_methods[self._transport.list]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (
+                    ("project", request.project),
+                    ("instance", request.instance),
+                )
+            ),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def update_customer_managed_certificate(
+        self,
+        request: Optional[
+            Union[cloud_sql.UpdateCustomerManagedCertificateRequest, dict]
+        ] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> cloud_sql_resources.Operation:
+        r"""Upload and update customer managed certificate bundle
+        for an existing Cloud SQL instance.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import sqladmin_v1beta4
+
+            def sample_update_customer_managed_certificate():
+                # Create a client
+                client = sqladmin_v1beta4.SqlSslCertsServiceClient()
+
+                # Initialize request argument(s)
+                customer_managed_certificate_config = sqladmin_v1beta4.CustomerManagedCertificateConfig()
+                customer_managed_certificate_config.intent = "NATIVE_REPLICATION"
+                customer_managed_certificate_config.customer_managed_certificates.certificate_type = "CERTIFICATE_TYPE_PEER_CLIENT_CERTIFICATE"
+                customer_managed_certificate_config.customer_managed_certificates.content = b'content_blob'
+
+                request = sqladmin_v1beta4.UpdateCustomerManagedCertificateRequest(
+                    instance="instance_value",
+                    project="project_value",
+                    customer_managed_certificate_config=customer_managed_certificate_config,
+                    certificate_bundle="certificate_bundle_value",
+                )
+
+                # Make the request
+                response = client.update_customer_managed_certificate(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.sqladmin_v1beta4.types.UpdateCustomerManagedCertificateRequest, dict]):
+                The request object. Request message for
+                SqlSslCertsService.UpdateCustomerManagedCertificate.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.sqladmin_v1beta4.types.Operation:
+                An Operation resource.&nbsp;For
+                successful operations that return an
+                Operation resource, only the fields
+                relevant to the operation are populated
+                in the resource.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_sql.UpdateCustomerManagedCertificateRequest):
+            request = cloud_sql.UpdateCustomerManagedCertificateRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.update_customer_managed_certificate
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (
+                    ("project", request.project),
+                    ("instance", request.instance),
+                    ("certificate_bundle", request.certificate_bundle),
+                )
+            ),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def delete_customer_managed_certificate(
+        self,
+        request: Optional[
+            Union[cloud_sql.DeleteCustomerManagedCertificateRequest, dict]
+        ] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> cloud_sql_resources.Operation:
+        r"""Delete customer managed certificate bundle for an
+        existing Cloud SQL instance.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import sqladmin_v1beta4
+
+            def sample_delete_customer_managed_certificate():
+                # Create a client
+                client = sqladmin_v1beta4.SqlSslCertsServiceClient()
+
+                # Initialize request argument(s)
+                request = sqladmin_v1beta4.DeleteCustomerManagedCertificateRequest(
+                    instance="instance_value",
+                    project="project_value",
+                    certificate_bundle="certificate_bundle_value",
+                )
+
+                # Make the request
+                response = client.delete_customer_managed_certificate(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.sqladmin_v1beta4.types.DeleteCustomerManagedCertificateRequest, dict]):
+                The request object. Request message for
+                SqlSslCertsService.DeleteCustomerManagedCertificate.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.sqladmin_v1beta4.types.Operation:
+                An Operation resource.&nbsp;For
+                successful operations that return an
+                Operation resource, only the fields
+                relevant to the operation are populated
+                in the resource.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_sql.DeleteCustomerManagedCertificateRequest):
+            request = cloud_sql.DeleteCustomerManagedCertificateRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.delete_customer_managed_certificate
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (
+                    ("project", request.project),
+                    ("instance", request.instance),
+                    ("certificate_bundle", request.certificate_bundle),
+                )
+            ),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def list_customer_managed_certificates(
+        self,
+        request: Optional[
+            Union[cloud_sql.ListCustomerManagedCertificatesRequest, dict]
+        ] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> cloud_sql.ListCustomerManagedCertificatesResponse:
+        r"""List all customer managed certificate bundles for an
+        existing Cloud SQL instance.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import sqladmin_v1beta4
+
+            def sample_list_customer_managed_certificates():
+                # Create a client
+                client = sqladmin_v1beta4.SqlSslCertsServiceClient()
+
+                # Initialize request argument(s)
+                request = sqladmin_v1beta4.ListCustomerManagedCertificatesRequest(
+                    instance="instance_value",
+                    project="project_value",
+                )
+
+                # Make the request
+                response = client.list_customer_managed_certificates(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.sqladmin_v1beta4.types.ListCustomerManagedCertificatesRequest, dict]):
+                The request object. Request message for
+                SqlSslCertsService.ListCustomerManagedCertificates.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.sqladmin_v1beta4.types.ListCustomerManagedCertificatesResponse:
+                Response message for
+                SqlSslCertsService.ListCustomerManagedCertificates.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_sql.ListCustomerManagedCertificatesRequest):
+            request = cloud_sql.ListCustomerManagedCertificatesRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.list_customer_managed_certificates
+        ]
 
         # Certain fields should be provided within the metadata header;
         # add these here.

@@ -1548,3 +1548,28 @@ def test_sync_streaming_response_wrapper_del_unrecorded(mock_tracer_ctx):
     wrapper = _StreamingResponseWrapper(mock_response, mock_tracer_ctx)
     wrapper.__del__()
     mock_tracer_ctx.record_attempt_completion.assert_called_once()
+
+
+def test_streaming_response_wrapper_last_true_records_metrics(mock_tracer_ctx):
+    mock_item = Mock(last=True)
+    wrapper = _StreamingResponseWrapper(iter([mock_item]), mock_tracer_ctx)
+    assert next(wrapper) is mock_item
+    mock_tracer_ctx.record_attempt_completion.assert_called_once()
+
+
+@pytest.mark.asyncio
+async def test_async_streaming_response_wrapper_last_true_records_metrics(
+    mock_tracer_ctx,
+):
+    mock_item = Mock(last=True)
+
+    class AsyncCallWithLast:
+        def __aiter__(self):
+            async def _gen():
+                yield mock_item
+
+            return _gen()
+
+    wrapper = _AsyncStreamingResponseWrapper(AsyncCallWithLast(), mock_tracer_ctx)
+    assert await wrapper.__anext__() is mock_item
+    mock_tracer_ctx.record_attempt_completion.assert_called_once()

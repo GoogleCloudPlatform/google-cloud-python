@@ -89,6 +89,9 @@ class TimestampRangeFilter(BaseTimestampRangeFilter):
     def __init__(self, range_):
         self.range_ = range_
 
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}(range_={self.range_!r})"
+
 
 class ExactValueFilter(ValueRegexFilter):
     """Row filter for an exact value.

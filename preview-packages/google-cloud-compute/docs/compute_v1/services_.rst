@@ -18,9 +18,12 @@ Services for Google Cloud Compute v1 API
     external_vpn_gateways
     firewall_policies
     firewalls
+    folder_global_vm_extension_policies
+    folder_zone_vm_extension_policies
     forwarding_rules
     future_reservations
     global_addresses
+    global_folder_operations
     global_forwarding_rules
     global_frontend_settings_service
     global_network_endpoint_groups
@@ -62,7 +65,9 @@ Services for Google Cloud Compute v1 API
     node_groups
     node_templates
     node_types
+    organization_global_vm_extension_policies
     organization_security_policies
+    organization_zone_vm_extension_policies
     packet_mirrorings
     preview_features
     projects
@@ -133,6 +138,8 @@ Services for Google Cloud Compute v1 API
     vpn_gateways
     vpn_tunnels
     wire_groups
+    zone_folder_operations
     zone_operations
+    zone_organization_operations
     zones
     zone_vm_extension_policies

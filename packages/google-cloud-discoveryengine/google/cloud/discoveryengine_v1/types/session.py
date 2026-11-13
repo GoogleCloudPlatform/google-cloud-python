@@ -62,6 +62,11 @@ class Session(proto.Message):
             Optional. Whether the session is pinned,
             pinned session will be displayed on the top of
             the session list.
+        pending_async_assist_operation_id (str):
+            Output only. Full resource name of an in-progress
+            AsyncAssist operation for this session, e.g.
+            ``projects/*/locations/*/collections/*/engines/*/sessions/*/operations/*``.
+            Set when the operation starts and cleared when it finishes.
     """
 
     class State(proto.Enum):
@@ -111,6 +116,9 @@ class Session(proto.Message):
                 used, model parameters (temperature, grounding
                 parameters, etc.). The prefix "google." is
                 reserved for Google-developed functionality.
+            live (bool):
+                Optional. Indicates whether this turn is a
+                live turn.
         """
 
         query: "Query" = proto.Field(
@@ -136,6 +144,10 @@ class Session(proto.Message):
             proto.STRING,
             proto.STRING,
             number=16,
+        )
+        live: bool = proto.Field(
+            proto.BOOL,
+            number=20,
         )
 
     name: str = proto.Field(
@@ -177,6 +189,10 @@ class Session(proto.Message):
     is_pinned: bool = proto.Field(
         proto.BOOL,
         number=8,
+    )
+    pending_async_assist_operation_id: str = proto.Field(
+        proto.STRING,
+        number=22,
     )
 
 

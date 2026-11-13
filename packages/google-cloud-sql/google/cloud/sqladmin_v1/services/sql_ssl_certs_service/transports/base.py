@@ -165,6 +165,21 @@ class SqlSslCertsServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.update_customer_managed_certificate: gapic_v1.method.wrap_method(
+                self.update_customer_managed_certificate,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_customer_managed_certificate: gapic_v1.method.wrap_method(
+                self.delete_customer_managed_certificate,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_customer_managed_certificates: gapic_v1.method.wrap_method(
+                self.list_customer_managed_certificates,
+                default_timeout=None,
+                client_info=client_info,
+            ),
         }
 
     def close(self):
@@ -214,6 +229,36 @@ class SqlSslCertsServiceTransport(abc.ABC):
         Union[
             cloud_sql_ssl_certs.SslCertsListResponse,
             Awaitable[cloud_sql_ssl_certs.SslCertsListResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_customer_managed_certificate(
+        self,
+    ) -> Callable[
+        [cloud_sql_ssl_certs.UpdateCustomerManagedCertificateRequest],
+        Union[cloud_sql_resources.Operation, Awaitable[cloud_sql_resources.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_customer_managed_certificate(
+        self,
+    ) -> Callable[
+        [cloud_sql_ssl_certs.DeleteCustomerManagedCertificateRequest],
+        Union[cloud_sql_resources.Operation, Awaitable[cloud_sql_resources.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_customer_managed_certificates(
+        self,
+    ) -> Callable[
+        [cloud_sql_ssl_certs.ListCustomerManagedCertificatesRequest],
+        Union[
+            cloud_sql_ssl_certs.ListCustomerManagedCertificatesResponse,
+            Awaitable[cloud_sql_ssl_certs.ListCustomerManagedCertificatesResponse],
         ],
     ]:
         raise NotImplementedError()

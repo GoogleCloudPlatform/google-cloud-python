@@ -211,6 +211,9 @@ class DBWorkload(proto.Enum):
         APEX (4):
             Autonomous Database with the Oracle APEX
             Application Development workload type.
+        LH (5):
+            Autonomous Database with the Lakehouse
+            workload type.
     """
 
     DB_WORKLOAD_UNSPECIFIED = 0
@@ -218,6 +221,7 @@ class DBWorkload(proto.Enum):
     DW = 2
     AJD = 3
     APEX = 4
+    LH = 5
 
 
 class AutonomousDatabase(proto.Message):
@@ -244,13 +248,14 @@ class AutonomousDatabase(proto.Message):
             entitlement associated with the Autonomous
             Database.
         admin_password (str):
-            Optional. Immutable. The password for the default ADMIN
-            user. Note: Only one of ``admin_password_secret_version`` or
-            ``admin_password`` can be populated.
+            Optional. Input only. Immutable. The password for the
+            default ADMIN user. Note: Only one of
+            ``admin_password_secret_version`` or ``admin_password`` can
+            be populated.
         admin_password_secret_version (str):
-            Optional. Immutable. The resource name of a secret version
-            in Secret Manager which contains the database admin user's
-            password. Format:
+            Optional. Input only. Immutable. The resource name of a
+            secret version in Secret Manager which contains the database
+            admin user's password. Format:
             projects/{project}/secrets/{secret}/versions/{version}.
             Note: Only one of ``admin_password_secret_version`` or
             ``admin_password`` can be populated.

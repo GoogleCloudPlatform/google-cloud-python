@@ -20,7 +20,7 @@ from typing import MutableMapping, MutableSequence
 import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
 import proto  # type: ignore
 
-from google.cloud.run_v2.types import k8s_min, vendor_settings
+from google.cloud.run_v2.types import k8s_min, sandbox, vendor_settings
 
 __protobuf__ = proto.module(
     package="google.cloud.run.v2",
@@ -87,6 +87,8 @@ class WorkerPoolRevisionTemplate(proto.Message):
         containers (MutableSequence[google.cloud.run_v2.types.Container]):
             Holds list of the containers that defines the
             unit of execution for this Revision.
+        sandboxes (google.cloud.run_v2.types.SandboxConfiguration):
+            Optional. Configuration for sandboxes.
         volumes (MutableSequence[google.cloud.run_v2.types.Volume]):
             Optional. A list of Volumes to make available
             to containers.
@@ -112,6 +114,12 @@ class WorkerPoolRevisionTemplate(proto.Message):
             disabled on this worker pool.
 
             This field is a member of `oneof`_ ``_gpu_zonal_redundancy_disabled``.
+        client (str):
+            Optional. Arbitrary identifier for the API
+            client.
+        client_version (str):
+            Optional. Arbitrary version identifier for
+            the API client.
     """
 
     revision: str = proto.Field(
@@ -141,6 +149,11 @@ class WorkerPoolRevisionTemplate(proto.Message):
         proto.MESSAGE,
         number=6,
         message=k8s_min.Container,
+    )
+    sandboxes: sandbox.SandboxConfiguration = proto.Field(
+        proto.MESSAGE,
+        number=19,
+        message=sandbox.SandboxConfiguration,
     )
     volumes: MutableSequence[k8s_min.Volume] = proto.RepeatedField(
         proto.MESSAGE,
@@ -177,6 +190,14 @@ class WorkerPoolRevisionTemplate(proto.Message):
         proto.BOOL,
         number=16,
         optional=True,
+    )
+    client: str = proto.Field(
+        proto.STRING,
+        number=17,
+    )
+    client_version: str = proto.Field(
+        proto.STRING,
+        number=18,
     )
 
 

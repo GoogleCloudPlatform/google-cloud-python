@@ -66,7 +66,7 @@ _LOGGER = std_logging.getLogger(__name__)
 
 
 class SqlBackupRunsServiceAsyncClient:
-    """"""
+    """Service for managing database backups."""
 
     _client: SqlBackupRunsServiceClient
 

@@ -19,6 +19,7 @@ from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
@@ -28,7 +29,8 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
 from google.cloud.discoveryengine_v1 import gapic_version as package_version
-from google.cloud.discoveryengine_v1.types import assistant_service
+from google.cloud.discoveryengine_v1.types import assistant, assistant_service
+from google.cloud.discoveryengine_v1.types import assistant as gcd_assistant
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
     gapic_version=package_version.__version__
@@ -39,7 +41,12 @@ DEFAULT_CLIENT_INFO.protobuf_runtime_version = google.protobuf.__version__
 class AssistantServiceTransport(abc.ABC):
     """Abstract transport class for AssistantService."""
 
-    AUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
+    AUTH_SCOPES = (
+        "https://www.googleapis.com/auth/cloud-platform",
+        "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
+        "https://www.googleapis.com/auth/discoveryengine.readwrite",
+        "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+    )
 
     DEFAULT_HOST: str = "discoveryengine.googleapis.com"
 
@@ -156,6 +163,31 @@ class AssistantServiceTransport(abc.ABC):
                 default_timeout=300.0,
                 client_info=client_info,
             ),
+            self.create_assistant: gapic_v1.method.wrap_method(
+                self.create_assistant,
+                default_timeout=30.0,
+                client_info=client_info,
+            ),
+            self.delete_assistant: gapic_v1.method.wrap_method(
+                self.delete_assistant,
+                default_timeout=30.0,
+                client_info=client_info,
+            ),
+            self.update_assistant: gapic_v1.method.wrap_method(
+                self.update_assistant,
+                default_timeout=30.0,
+                client_info=client_info,
+            ),
+            self.get_assistant: gapic_v1.method.wrap_method(
+                self.get_assistant,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_assistants: gapic_v1.method.wrap_method(
+                self.list_assistants,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.cancel_operation: gapic_v1.method.wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
@@ -190,6 +222,54 @@ class AssistantServiceTransport(abc.ABC):
         Union[
             assistant_service.StreamAssistResponse,
             Awaitable[assistant_service.StreamAssistResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_assistant(
+        self,
+    ) -> Callable[
+        [assistant_service.CreateAssistantRequest],
+        Union[assistant.Assistant, Awaitable[assistant.Assistant]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_assistant(
+        self,
+    ) -> Callable[
+        [assistant_service.DeleteAssistantRequest],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_assistant(
+        self,
+    ) -> Callable[
+        [assistant_service.UpdateAssistantRequest],
+        Union[gcd_assistant.Assistant, Awaitable[gcd_assistant.Assistant]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_assistant(
+        self,
+    ) -> Callable[
+        [assistant_service.GetAssistantRequest],
+        Union[assistant.Assistant, Awaitable[assistant.Assistant]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_assistants(
+        self,
+    ) -> Callable[
+        [assistant_service.ListAssistantsRequest],
+        Union[
+            assistant_service.ListAssistantsResponse,
+            Awaitable[assistant_service.ListAssistantsResponse],
         ],
     ]:
         raise NotImplementedError()

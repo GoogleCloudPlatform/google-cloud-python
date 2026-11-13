@@ -154,6 +154,20 @@ class TestUtils(SpannerSimpleTestClass):
                 "ALTER TABLE tests_author ADD COLUMN age INT64", []
             )
 
+    def test_add_field_with_default(self):
+        """Tests adding fields with default values executes UPDATE with WHERE 1=1."""
+        with DatabaseSchemaEditor(self.connection) as schema_editor:
+            schema_editor.execute = mock.MagicMock()
+            new_field = IntegerField(default=42, null=True)
+            new_field.set_attributes_from_name("age")
+            new_field.model = Author
+            schema_editor.add_field(Author, new_field)
+
+            schema_editor.execute.assert_any_call(
+                "UPDATE tests_author SET age=%s WHERE 1=1",
+                (42,),
+            )
+
     def test_remove_field(self):
         """
         Tests remove fields from models

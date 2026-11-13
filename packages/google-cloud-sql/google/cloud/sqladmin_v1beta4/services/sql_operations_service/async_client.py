@@ -66,7 +66,7 @@ _LOGGER = std_logging.getLogger(__name__)
 
 
 class SqlOperationsServiceAsyncClient:
-    """"""
+    """Service to fetch operations for database instances."""
 
     _client: SqlOperationsServiceClient
 

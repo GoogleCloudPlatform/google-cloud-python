@@ -65,7 +65,7 @@ _LOGGER = std_logging.getLogger(__name__)
 
 
 class SqlUsersServiceAsyncClient:
-    """"""
+    """Cloud SQL users service."""
 
     _client: SqlUsersServiceClient
 

@@ -129,6 +129,13 @@ class SearchRequest(proto.Message):
             the specs directly under
             [SearchRequest][google.cloud.discoveryengine.v1.SearchRequest]
             should be used.
+
+            On an engine with multiple data stores, this field is
+            optional. If it's empty, all of the engine's data stores are
+            searched (blended search). Unless it specifies exactly one
+            data store, some request fields, such as ``order_by`` and
+            ``query_expansion_spec``, aren't supported and return an
+            ``INVALID_ARGUMENT`` error.
         num_results_per_data_store (int):
             Optional. The maximum number of results to retrieve from
             each data store. If not specified, it will use the

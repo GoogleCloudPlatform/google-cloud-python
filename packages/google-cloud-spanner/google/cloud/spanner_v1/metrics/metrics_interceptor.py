@@ -272,13 +272,16 @@ class _StreamingResponseWrapper:
         if self._iterator is None:
             self._iterator = iter(self._response)
         try:
-            return next(self._iterator)
+            item = next(self._iterator)
         except StopIteration:
             self._record_metrics()
             raise
         except Exception:
             self._record_metrics()
             raise
+        if getattr(item, "last", False):
+            self._record_metrics()
+        return item
 
     def _record_metrics(self):
         with self._lock:
@@ -495,10 +498,13 @@ class _AsyncStreamingResponseWrapper(
             else:
                 self._iterator = self._response
         try:
-            return await self._iterator.__anext__()
+            item = await self._iterator.__anext__()
         except StopAsyncIteration:
             await self._record_metrics()
             raise
         except Exception:
             await self._record_metrics()
             raise
+        if getattr(item, "last", False):
+            await self._record_metrics()
+        return item

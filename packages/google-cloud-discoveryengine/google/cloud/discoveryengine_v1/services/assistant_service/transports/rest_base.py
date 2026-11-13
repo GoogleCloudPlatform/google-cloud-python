@@ -17,12 +17,14 @@ import json  # type: ignore
 import re
 from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
+import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 from google.api_core import gapic_v1, path_template
 from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 
-from google.cloud.discoveryengine_v1.types import assistant_service
+from google.cloud.discoveryengine_v1.types import assistant, assistant_service
+from google.cloud.discoveryengine_v1.types import assistant as gcd_assistant
 
 from .base import DEFAULT_CLIENT_INFO, AssistantServiceTransport
 
@@ -89,6 +91,73 @@ class _BaseAssistantServiceRestTransport(AssistantServiceTransport):
             api_audience=api_audience,
         )
 
+    class _BaseCreateAssistant:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
+            "assistantId": "",
+        }
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=projects/*/locations/*/collections/*/engines/*}/assistants",
+                    "body": "assistant",
+                },
+            ]
+            return http_options
+
+    class _BaseDeleteAssistant:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "delete",
+                    "uri": "/v1/{name=projects/*/locations/*/collections/*/engines/*/assistants/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseGetAssistant:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/collections/*/engines/*/assistants/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseListAssistants:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=projects/*/locations/*/collections/*/engines/*}/assistants",
+                },
+            ]
+            return http_options
+
     class _BaseStreamAssist:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -102,6 +171,23 @@ class _BaseAssistantServiceRestTransport(AssistantServiceTransport):
                     "method": "post",
                     "uri": "/v1/{name=projects/*/locations/*/collections/*/engines/*/assistants/*}:streamAssist",
                     "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateAssistant:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{assistant.name=projects/*/locations/*/collections/*/engines/*/assistants/*}",
+                    "body": "assistant",
                 },
             ]
             return http_options
@@ -174,6 +260,10 @@ class _BaseAssistantServiceRestTransport(AssistantServiceTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{name=projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine/targetSites/operations/*}",
+                },
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/collections/*/engines/*/assistants/*/agents/*/operations/*}",
                 },
                 {
                     "method": "get",

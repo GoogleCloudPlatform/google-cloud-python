@@ -41,6 +41,7 @@ async def sample_update_cmek_config():
     # Initialize request argument(s)
     config = discoveryengine_v1.CmekConfig()
     config.name = "name_value"
+    config.kms_key = "kms_key_value"
 
     request = discoveryengine_v1.UpdateCmekConfigRequest(
         config=config,

@@ -17,6 +17,7 @@ import json  # type: ignore
 import re
 from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
+import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 from google.api_core import gapic_v1, path_template
 from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
@@ -93,6 +94,108 @@ class _BaseLineItemCreativeAssociationServiceRestTransport(
             api_audience=api_audience,
         )
 
+    class _BaseBatchActivateLineItemCreativeAssociations:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=networks/*/lineItems/*}/creatives:batchActivate",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseBatchCreateLineItemCreativeAssociations:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=networks/*/lineItems/*}/creatives:batchCreate",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseBatchDeactivateLineItemCreativeAssociations:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=networks/*/lineItems/*}/creatives:batchDeactivate",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseBatchDeleteLineItemCreativeAssociations:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=networks/*/lineItems/*}/creatives:batchDelete",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseBatchUpdateLineItemCreativeAssociations:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=networks/*/lineItems/*}/creatives:batchUpdate",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseCreateLineItemCreativeAssociation:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=networks/*/lineItems/*}/creatives",
+                    "body": "line_item_creative_association",
+                },
+            ]
+            return http_options
+
     class _BaseGetLineItemCreativeAssociation:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -121,6 +224,40 @@ class _BaseLineItemCreativeAssociationServiceRestTransport(
                 {
                     "method": "get",
                     "uri": "/v1/{parent=networks/*/lineItems/*}/creatives",
+                },
+            ]
+            return http_options
+
+    class _BasePreviewLineItemCreativeAssociation:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=networks/*/lineItems/*/creatives/*}:preview",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateLineItemCreativeAssociation:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{line_item_creative_association.name=networks/*/lineItems/*/creatives/*}",
+                    "body": "line_item_creative_association",
                 },
             ]
             return http_options

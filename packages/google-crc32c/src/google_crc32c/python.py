@@ -16,14 +16,17 @@ import array
 
 from google_crc32c._checksum import CommonChecksum
 
+GIL_RELEASE_THRESHOLD = 1024 * 1024
+
 
 def extend(crc, chunk):
     """Update an existing CRC checksum with new chunk of data.
 
     Args
         crc (int): An existing CRC check sum.
-        chunk (Union[bytes, List[int], Tuple[int]]): A new chunk of data.
-            Intended to be a byte string or similar.
+        chunk (Union[bytes-like, Iterable[int]]): A new chunk of data.
+            Bytes-like objects are hashed as raw bytes; an iterable of
+            ints in ``range(256)`` is also accepted.
 
     Returns
         int: New CRC checksum computed by extending existing CRC
@@ -39,8 +42,9 @@ def value(chunk):
     """Compute a CRC checksum for a chunk of data.
 
     Args
-        chunk (Union[bytes, List[int], Tuple[int]]): A new chunk of data.
-            Intended to be a byte string or similar.
+        chunk (Union[bytes-like, Iterable[int]]): A new chunk of data.
+            Bytes-like objects are hashed as raw bytes; an iterable of
+            ints in ``range(256)`` is also accepted.
 
     Returns
         int: New CRC checksum computed for ``chunk``.
@@ -54,31 +58,38 @@ class Checksum(CommonChecksum):
     """Hashlib-alike helper for CRC32C operations.
 
     Args:
-        initial_value (Optional[bytes]): the initial chunk of data from
+        initial_value (Optional[bytes-like]): the initial chunk of data from
             which the CRC32C checksum is computed.  Defaults to b''.
     """
 
     def __init__(self, initial_value=b""):
         self._crc = 0
-        if initial_value != b"":
-            self.update(initial_value)
+        self.update(initial_value)
 
     def update(self, data):
         """Update the checksum with a new chunk of data.
 
         Args:
-            chunk (Optional[bytes]): a chunk of data used to extend
+            data (Optional[bytes-like]): a chunk of data used to extend
                 the CRC32C checksum.
         """
-        if not isinstance(data, array.array) or data.itemsize != 1:
-            buffer = array.array("B", data)
-        else:
-            buffer = data
-        self._crc = self._crc ^ 0xFFFFFFFF
-        for b in buffer:
-            table_poly = _TABLE[(b ^ self._crc) & 0xFF]
-            self._crc = table_poly ^ ((self._crc >> 8) & 0xFFFFFFFF)
-        self._crc = self._crc ^ 0xFFFFFFFF
+        try:
+            view = memoryview(data)
+        except TypeError:
+            # Not a buffer: an iterable of ints in range(256).
+            view = memoryview(array.array("B", data))
+        with view:
+            # Hash the raw bytes, like the C extension.
+            if not view.c_contiguous:
+                raise BufferError("memoryview: underlying buffer is not C-contiguous")
+            if not view.nbytes:
+                return  # Nothing to hash; cast() rejects empty N-D views.
+            with view.cast("B") as buffer:
+                self._crc = self._crc ^ 0xFFFFFFFF
+                for b in buffer:
+                    table_poly = _TABLE[(b ^ self._crc) & 0xFF]
+                    self._crc = table_poly ^ ((self._crc >> 8) & 0xFFFFFFFF)
+                self._crc = self._crc ^ 0xFFFFFFFF
 
 
 # fmt:off

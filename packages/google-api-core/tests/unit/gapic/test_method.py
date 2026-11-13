@@ -354,6 +354,7 @@ def test__deduplicate_metadata_tokens(headers, expected):
 _DEFAULT_SPAN_ATTRIBUTES = {
     "rpc.system.name": "grpc",
     "rpc.method": "google.cloud.secretmanager.v1.SecretManagerService/ListSecrets",
+    "url.domain": "googleapis.com",
 }
 
 
@@ -456,10 +457,11 @@ def test_wrap_method_otel_tracing_enabled_success(mock_otel, kind):
     expected_attributes = {
         "rpc.system.name": "http" if kind == "rest" else "grpc",
         "rpc.method": "google.cloud.secretmanager.v1.SecretManagerService/ListSecrets",
+        "url.domain": "googleapis.com",
     }
     mock_otel.tracer.start_as_current_span.assert_called_once_with(
         "google.cloud.secretmanager.v1.SecretManagerService/ListSecrets",
-        kind="CLIENT",
+        kind="INTERNAL",
         attributes=expected_attributes,
     )
     mock_otel.span.set_attribute.assert_called_with("rpc.response.status_code", "OK")
@@ -485,7 +487,7 @@ def test_wrap_method_otel_tracing_custom_client_options(mock_otel):
     mock_provider.get_tracer.assert_called_once_with("google.api_core")
     mock_otel.tracer.start_as_current_span.assert_called_once_with(
         "google.cloud.secretmanager.v1.SecretManagerService/ListSecrets",
-        kind="CLIENT",
+        kind="INTERNAL",
         attributes=_DEFAULT_SPAN_ATTRIBUTES,
     )
     mock_otel.span.set_attribute.assert_called_with("rpc.response.status_code", "OK")
@@ -511,7 +513,7 @@ def test_wrap_method_otel_tracing_dict_client_options(mock_otel):
     mock_provider.get_tracer.assert_called_once_with("google.api_core")
     mock_otel.tracer.start_as_current_span.assert_called_once_with(
         "google.cloud.secretmanager.v1.SecretManagerService/ListSecrets",
-        kind="CLIENT",
+        kind="INTERNAL",
         attributes=_DEFAULT_SPAN_ATTRIBUTES,
     )
     mock_otel.span.set_attribute.assert_called_with("rpc.response.status_code", "OK")
@@ -695,7 +697,7 @@ def test_wrap_method_otel_tracing_attributes_deferred_gcp_client_omitted(mock_ot
     assert result == "success"
     mock_otel.tracer.start_as_current_span.assert_called_once_with(
         "google.cloud.secretmanager.v1.SecretManagerService/ListSecrets",
-        kind="CLIENT",
+        kind="INTERNAL",
         attributes=_DEFAULT_SPAN_ATTRIBUTES,
     )
 
@@ -714,10 +716,66 @@ def test_wrap_method_otel_tracing_attributes_no_service(mock_otel):
     assert result == "success"
     mock_otel.tracer.start_as_current_span.assert_called_once_with(
         "ListSecrets",
-        kind="CLIENT",
+        kind="INTERNAL",
         attributes={
             **_DEFAULT_SPAN_ATTRIBUTES,
             "rpc.method": "ListSecrets",
+        },
+    )
+
+
+def test_wrap_method_otel_tracing_endpoint_attributes_from_client_options(
+    mock_otel,
+):
+    """Proves that T3 spans include url.domain, server.address, and server.port from client_options."""
+    mock_target = mock.Mock(return_value="ok")
+    options = client_options_lib.ClientOptions(
+        api_endpoint="localhost:7469",
+        universe_domain="custom.domain.com",
+    )
+    wrapped = google.api_core.gapic_v1.method.wrap_method(
+        mock_target,
+        client_options=options,
+        method_name="/google.showcase.v1beta1.Echo/Echo",
+        kind="grpc",
+    )
+    assert wrapped() == "ok"
+    mock_otel.tracer.start_as_current_span.assert_called_once_with(
+        "google.showcase.v1beta1.Echo/Echo",
+        kind="INTERNAL",
+        attributes={
+            "rpc.system.name": "grpc",
+            "rpc.method": "google.showcase.v1beta1.Echo/Echo",
+            "url.domain": "custom.domain.com",
+            "server.address": "localhost",
+            "server.port": 7469,
+        },
+    )
+
+
+def test_wrap_method_otel_tracing_endpoint_attributes_from_default_host(
+    mock_otel,
+):
+    """Proves that T3 spans fall back to default_host when client_options.api_endpoint is unset."""
+    mock_target = mock.Mock(return_value="ok")
+    options = client_options_lib.ClientOptions()
+    wrapped = google.api_core.gapic_v1.method.wrap_method(
+        mock_target,
+        client_options=options,
+        method_name="/google.showcase.v1beta1.Echo/Echo",
+        kind="grpc",
+        default_host="localhost:7469",
+    )
+    assert wrapped() == "ok"
+    mock_otel.tracer.start_as_current_span.assert_called_once_with(
+        "google.showcase.v1beta1.Echo/Echo",
+        kind="INTERNAL",
+        attributes={
+            "rpc.system.name": "grpc",
+            "rpc.method": "google.showcase.v1beta1.Echo/Echo",
+            "url.domain": "googleapis.com",
+            "server.address": "localhost",
+            "server.port": 7469,
         },
     )
 
@@ -784,56 +842,6 @@ def test_wrap_method_otel_tracing_records_gcp_error_attributes(mock_otel):
         "gcp.errors.metadata.quota_limit", "100"
     )
     mock_otel.span.set_attribute.assert_any_call("status.message", "quota exceeded")
-
-
-def test_extract_status_code_variations():
-    """Proves that _extract_status_code handles grpc status, callable/non-callable codes, ints, and exceptions."""
-    import types
-
-    from google.api_core.gapic_v1.method import _extract_status_code
-
-    # 1. grpc_status exists but has no name or name is None
-    exc1 = types.SimpleNamespace(grpc_status_code=types.SimpleNamespace(name=None))
-    assert _extract_status_code(exc1) == "SimpleNamespace"
-
-    # 2. callable code_fn returns object with name
-    exc2 = types.SimpleNamespace(code=lambda: types.SimpleNamespace(name="CANCELLED"))
-    assert _extract_status_code(exc2) == "CANCELLED"
-
-    # 3. callable code_fn returns object without name
-    exc3 = types.SimpleNamespace(code=lambda: types.SimpleNamespace(name=None))
-    assert _extract_status_code(exc3) == "SimpleNamespace"
-
-    # 4. callable code_fn raises Exception
-    def raising_code():
-        raise RuntimeError("boom")
-
-    exc4 = types.SimpleNamespace(code=raising_code)
-    assert _extract_status_code(exc4) == "SimpleNamespace"
-
-    # 5. non-callable code_fn with name
-    exc5 = types.SimpleNamespace(code=types.SimpleNamespace(name="DEADLINE_EXCEEDED"))
-    assert _extract_status_code(exc5) == "DEADLINE_EXCEEDED"
-
-    # 6. non-callable code_fn that is an int in _INT_TO_GRPC_CODE (5 -> NOT_FOUND)
-    exc6 = types.SimpleNamespace(code=5)
-    assert _extract_status_code(exc6) == "NOT_FOUND"
-
-    # 7. non-callable code_fn that is an int not in _INT_TO_GRPC_CODE (999)
-    exc7 = types.SimpleNamespace(code=999)
-    assert _extract_status_code(exc7) == "999"
-
-    # 8. non-callable code_fn that is not an int and has no name
-    exc8 = types.SimpleNamespace(code="unknown_code")
-    assert _extract_status_code(exc8) == "SimpleNamespace"
-
-    # 9. None exception
-    assert _extract_status_code(None) == ""
-
-    # 10. __cause__ chaining fallback
-    inner_exc = types.SimpleNamespace(code=5)
-    outer_exc = types.SimpleNamespace(__cause__=inner_exc)
-    assert _extract_status_code(outer_exc) == "NOT_FOUND"
 
 
 def test_extract_error_attributes_variations():
@@ -947,6 +955,59 @@ def test_extract_error_attributes_variations():
     exc_cancelled_empty = asyncio.CancelledError()
     assert _extract_error_attributes(exc_cancelled_empty) == {
         "error.type": "CancelledError",
+    }
+
+    # 12. HTTP response attached to GoogleAPICallError (direct and wrapped in RetryError)
+    http_resp_503 = types.SimpleNamespace(
+        status_code=503,
+        json=lambda: {"error": {"message": "Persistent outage"}},
+    )
+    http_exc = exceptions.ServiceUnavailable(
+        "POST http://localhost:7469/v1beta1/sequences/23: Persistent outage",
+        response=http_resp_503,
+    )
+    assert _extract_error_attributes(http_exc) == {
+        "error.type": "503",
+        "status.message": "Persistent outage",
+    }
+    retry_http_exc = exceptions.RetryError("Deadline of 0.1s exceeded", cause=http_exc)
+    assert _extract_error_attributes(retry_http_exc) == {
+        "error.type": "503",
+        "status.message": "Persistent outage",
+    }
+
+    # 13. HTTP response with dict ErrorInfo (from JSON format_http_response_error)
+    http_exc_dict_info = exceptions.BadRequest(
+        "POST http://localhost:7469/v1beta1/echo:echo: Quota exceeded",
+        response=types.SimpleNamespace(
+            status_code=400,
+            json=lambda: {"error": {"message": "Quota exceeded"}},
+        ),
+        error_info={
+            "domain": "googleapis.com",
+            "reason": "RATE_LIMIT_EXCEEDED",
+            "metadata": {"service": "showcase.googleapis.com"},
+        },
+    )
+    assert _extract_error_attributes(http_exc_dict_info) == {
+        "gcp.errors.domain": "googleapis.com",
+        "error.type": "RATE_LIMIT_EXCEEDED",
+        "gcp.errors.metadata.service": "showcase.googleapis.com",
+        "status.message": "Quota exceeded",
+    }
+
+    # 14. gRPC Call-like response (has trailing_metadata) is NOT treated as an HTTP response
+    grpc_call_like = types.SimpleNamespace(
+        status_code=503,
+        trailing_metadata=(),
+    )
+    grpc_exc_with_resp = exceptions.ServiceUnavailable(
+        "gRPC transport error",
+        response=grpc_call_like,
+    )
+    assert _extract_error_attributes(grpc_exc_with_resp) == {
+        "error.type": "UNAVAILABLE",
+        "status.message": "gRPC transport error",
     }
 
 

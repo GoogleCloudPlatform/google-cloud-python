@@ -79,8 +79,14 @@ class ProjectServiceAsyncClient:
     _DEFAULT_ENDPOINT_TEMPLATE = ProjectServiceClient._DEFAULT_ENDPOINT_TEMPLATE
     _DEFAULT_UNIVERSE = ProjectServiceClient._DEFAULT_UNIVERSE
 
+    content_policy_path = staticmethod(ProjectServiceClient.content_policy_path)
+    parse_content_policy_path = staticmethod(
+        ProjectServiceClient.parse_content_policy_path
+    )
     project_path = staticmethod(ProjectServiceClient.project_path)
     parse_project_path = staticmethod(ProjectServiceClient.parse_project_path)
+    template_path = staticmethod(ProjectServiceClient.template_path)
+    parse_template_path = staticmethod(ProjectServiceClient.parse_template_path)
     common_billing_account_path = staticmethod(
         ProjectServiceClient.common_billing_account_path
     )

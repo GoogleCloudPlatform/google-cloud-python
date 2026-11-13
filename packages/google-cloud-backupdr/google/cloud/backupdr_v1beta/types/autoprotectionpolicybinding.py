@@ -41,11 +41,12 @@ class AutoProtectionPolicyBinding(proto.Message):
 
     Attributes:
         name (str):
-            Identifier. The resource name of the
+            Output only. Identifier. The resource name of the
             AutoProtectionPolicyBinding. Format:
             ``projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protection_policy}/bindings/{binding}``
         description (str):
-            Optional. A description of the binding.
+            Optional. A description of the binding. The
+            description must be at most 2048 characters.
         state (google.cloud.backupdr_v1beta.types.AutoProtectionPolicyBinding.State):
             Output only. The current state of the
             AutoProtectionPolicyBinding.
@@ -64,9 +65,9 @@ class AutoProtectionPolicyBinding(proto.Message):
             Output only. The timestamp when the binding
             was last updated.
         etag (str):
-            Optional. Output only. The etag for the
-            binding. If this is provided on update, it must
-            match the server's etag.
+            Output only. The etag for the binding.
+            If this is provided on update, it must match the
+            server's etag.
     """
 
     class State(proto.Enum):
@@ -169,9 +170,24 @@ class CreateAutoProtectionPolicyBindingRequest(proto.Message):
             Required. The ID to use for the binding.
             This will become the final component of the
             binding's resource name.
+
+            This value must start with a lowercase letter
+            followed by up to 62 lowercase letters, numbers,
+            or hyphens, and cannot end with a hyphen.
         auto_protection_policy_binding (google.cloud.backupdr_v1beta.types.AutoProtectionPolicyBinding):
             Required. The AutoProtectionPolicyBinding
             resource to create.
+        request_id (str):
+            Optional. An optional request ID to identify
+            requests. Specify a unique request ID so that if
+            you must retry your request, the server will
+            know to ignore the request if it has already
+            been completed. The server will guarantee that
+            for at least 60 minutes since the first request.
+
+            The request ID must be a valid UUID with the
+            exception that zero UUID is not supported
+            (00000000-0000-0000-0000-000000000000).
     """
 
     parent: str = proto.Field(
@@ -186,6 +202,10 @@ class CreateAutoProtectionPolicyBindingRequest(proto.Message):
         proto.MESSAGE,
         number=3,
         message="AutoProtectionPolicyBinding",
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=4,
     )
 
 
@@ -297,11 +317,36 @@ class InitiateDeleteAutoProtectionPolicyBindingRequest(proto.Message):
         name (str):
             Required. The name of the binding to delete. Format:
             projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protection_policy}/bindings/{binding}
+        etag (str):
+            Optional. The current etag of the
+            AutoProtectionPolicyBinding. If an etag is
+            provided and does not match the current etag of
+            the binding, deletion will be blocked and an
+            ABORTED error will be returned.
+        request_id (str):
+            Optional. An optional request ID to identify
+            requests. Specify a unique request ID so that if
+            you must retry your request, the server will
+            know to ignore the request if it has already
+            been completed. The server will guarantee that
+            for at least 60 minutes since the first request.
+
+            The request ID must be a valid UUID with the
+            exception that zero UUID is not supported
+            (00000000-0000-0000-0000-000000000000).
     """
 
     name: str = proto.Field(
         proto.STRING,
         number=1,
+    )
+    etag: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 

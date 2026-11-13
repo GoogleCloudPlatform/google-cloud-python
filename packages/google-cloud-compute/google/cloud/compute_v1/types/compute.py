@@ -174,6 +174,9 @@ __protobuf__ = proto.module(
         "BackendServiceCdnPolicyNegativeCachingPolicy",
         "BackendServiceConnectionTrackingPolicy",
         "BackendServiceCustomMetric",
+        "BackendServiceDynamicForwarding",
+        "BackendServiceDynamicForwardingForwardProxy",
+        "BackendServiceDynamicForwardingIpPortSelection",
         "BackendServiceFailoverPolicy",
         "BackendServiceGroupHealth",
         "BackendServiceHAPolicy",
@@ -269,6 +272,7 @@ __protobuf__ = proto.module(
         "CompositeHealthChecksGetHealthResponseHealthSourceHealth",
         "CompositeHealthChecksScopedList",
         "ConfidentialInstanceConfig",
+        "ConfidentialParavisorConfig",
         "ConnectionDraining",
         "ConsistentHashLoadBalancerSettings",
         "ConsistentHashLoadBalancerSettingsHttpCookie",
@@ -434,6 +438,7 @@ __protobuf__ = proto.module(
         "DistributionPolicy",
         "DistributionPolicyZoneConfiguration",
         "Duration",
+        "DynamicCompressionPolicy",
         "EnableXpnHostProjectRequest",
         "EnableXpnResourceProjectRequest",
         "Error",
@@ -565,12 +570,14 @@ __protobuf__ = proto.module(
         "GetIamPolicyRegionInstantSnapshotRequest",
         "GetIamPolicyRegionNetworkFirewallPolicyRequest",
         "GetIamPolicyRegionSnapshotRequest",
+        "GetIamPolicyRegionSslPolicyRequest",
         "GetIamPolicyReservationBlockRequest",
         "GetIamPolicyReservationRequest",
         "GetIamPolicyReservationSubBlockRequest",
         "GetIamPolicyResourcePolicyRequest",
         "GetIamPolicyServiceAttachmentRequest",
         "GetIamPolicySnapshotRequest",
+        "GetIamPolicySslPolicyRequest",
         "GetIamPolicyStoragePoolRequest",
         "GetIamPolicySubnetworkRequest",
         "GetImageFamilyViewRequest",
@@ -775,6 +782,7 @@ __protobuf__ = proto.module(
         "Image",
         "ImageFamilyView",
         "ImageList",
+        "ImageOptimizationPolicy",
         "ImageParams",
         "ImageView",
         "ImageViewsListResponse",
@@ -1738,12 +1746,14 @@ __protobuf__ = proto.module(
         "SetIamPolicyRegionInstantSnapshotRequest",
         "SetIamPolicyRegionNetworkFirewallPolicyRequest",
         "SetIamPolicyRegionSnapshotRequest",
+        "SetIamPolicyRegionSslPolicyRequest",
         "SetIamPolicyReservationBlockRequest",
         "SetIamPolicyReservationRequest",
         "SetIamPolicyReservationSubBlockRequest",
         "SetIamPolicyResourcePolicyRequest",
         "SetIamPolicyServiceAttachmentRequest",
         "SetIamPolicySnapshotRequest",
+        "SetIamPolicySslPolicyRequest",
         "SetIamPolicyStoragePoolRequest",
         "SetIamPolicySubnetworkRequest",
         "SetInstanceTemplateInstanceGroupManagerRequest",
@@ -1979,6 +1989,7 @@ __protobuf__ = proto.module(
         "TestIamPermissionsRegionNetworkFirewallPolicyRequest",
         "TestIamPermissionsRegionNotificationEndpointRequest",
         "TestIamPermissionsRegionSnapshotRequest",
+        "TestIamPermissionsRegionSslPolicyRequest",
         "TestIamPermissionsReservationBlockRequest",
         "TestIamPermissionsReservationRequest",
         "TestIamPermissionsReservationSubBlockRequest",
@@ -1986,6 +1997,7 @@ __protobuf__ = proto.module(
         "TestIamPermissionsRouteRequest",
         "TestIamPermissionsServiceAttachmentRequest",
         "TestIamPermissionsSnapshotRequest",
+        "TestIamPermissionsSslPolicyRequest",
         "TestIamPermissionsStoragePoolRequest",
         "TestIamPermissionsSubnetworkRequest",
         "TestIamPermissionsTargetInstanceRequest",
@@ -2037,7 +2049,9 @@ __protobuf__ = proto.module(
         "UpdateZoneVmExtensionPolicyRequest",
         "UrlMap",
         "UrlMapList",
+        "UrlMapQuotaUsage",
         "UrlMapReference",
+        "UrlMapStatus",
         "UrlMapTest",
         "UrlMapTestHeader",
         "UrlMapValidationResult",
@@ -2823,6 +2837,29 @@ class AccessConfig(proto.Message):
             length of the external IPv6 range.
 
             This field is a member of `oneof`_ ``_external_ipv6_prefix_length``.
+        ip_collection (str):
+            Reference to the source of external IPv4
+            addresses, like a PublicDelegatedPrefix (PDP)
+            for BYOIP. The PDP must support enhanced IPv4
+            allocations.
+
+            Use one of the following formats to specify a
+            PDP when allocating an external IPv4 address
+            using BYOIP.
+
+               -
+               Full resource URL, as
+            inhttps://www.googleapis.com/compute/v1/projects/projectId/regions/region/publicDelegatedPrefixes/pdp-name
+            -
+               Partial URL, as in
+
+
+                      -
+              projects/projectId/regions/region/publicDelegatedPrefixes/pdp-name
+                      -
+              regions/region/publicDelegatedPrefixes/pdp-name
+
+            This field is a member of `oneof`_ ``_ip_collection``.
         kind (str):
             Output only. [Output Only] Type of the resource.
             Alwayscompute#accessConfig for access configs.
@@ -2962,6 +2999,11 @@ class AccessConfig(proto.Message):
     external_ipv6_prefix_length: int = proto.Field(
         proto.INT32,
         number=425672143,
+        optional=True,
+    )
+    ip_collection: str = proto.Field(
+        proto.STRING,
+        number=176818358,
         optional=True,
     )
     kind: str = proto.Field(
@@ -4648,6 +4690,12 @@ class Address(proto.Message):
             theVPC_PEERING purpose.
 
             This field is a member of `oneof`_ ``_network``.
+        network_attachment (str):
+            Optional. The URL of the network attachment that this
+            address comes from in the following format:
+            projects/{project}/regions/{region_name}/networkAttachments/{network_attachment_name}.
+
+            This field is a member of `oneof`_ ``_network_attachment``.
         network_tier (str):
             This signifies the networking tier used for
             configuring this address and can only take the
@@ -4716,6 +4764,13 @@ class Address(proto.Message):
             [Output Only] Server-defined URL for the resource.
 
             This field is a member of `oneof`_ ``_self_link``.
+        service_class_id (str):
+            Optional. Producer Service's Service class ID for the region
+            of this address. Can only be used with network_attachment.
+            It is not possible to use on its own; however,
+            network_attachment can be used without service_class_id.
+
+            This field is a member of `oneof`_ ``_service_class_id``.
         status (str):
             Output only. [Output Only] The status of the address, which
             can be one ofRESERVING, RESERVED, or IN_USE. An address that
@@ -4892,6 +4947,16 @@ class Address(proto.Message):
             NAT_AUTO (163666477):
                 External IP automatically reserved for Cloud
                 NAT.
+            PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0 (119932186):
+                The global external address can only be
+                assigned to Global External Passthrough Network
+                Load Balancer forwarding rules, as an
+                Availability Group 0 address.
+            PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1 (119932187):
+                The global external address can only be
+                assigned to Global External Passthrough Network
+                Load Balancer forwarding rules, as an
+                Availability Group 1 address.
             PRIVATE_SERVICE_CONNECT (48134724):
                 A private network IP address that can be used
                 to configure Private Service Connect. This
@@ -4913,6 +4978,8 @@ class Address(proto.Message):
         GCE_ENDPOINT = 230515243
         IPSEC_INTERCONNECT = 340437251
         NAT_AUTO = 163666477
+        PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0 = 119932186
+        PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1 = 119932187
         PRIVATE_SERVICE_CONNECT = 48134724
         SERVERLESS = 270492508
         SHARED_LOADBALANCER_VIP = 294447572
@@ -5008,6 +5075,11 @@ class Address(proto.Message):
         number=232872494,
         optional=True,
     )
+    network_attachment: str = proto.Field(
+        proto.STRING,
+        number=224644052,
+        optional=True,
+    )
     network_tier: str = proto.Field(
         proto.STRING,
         number=517397843,
@@ -5031,6 +5103,11 @@ class Address(proto.Message):
     self_link: str = proto.Field(
         proto.STRING,
         number=456214797,
+        optional=True,
+    )
+    service_class_id: str = proto.Field(
+        proto.STRING,
+        number=422763404,
         optional=True,
     )
     status: str = proto.Field(
@@ -19212,6 +19289,14 @@ class BackendService(proto.Message):
             resource.
 
             This field is a member of `oneof`_ ``_description``.
+        dynamic_forwarding (google.cloud.compute_v1.types.BackendServiceDynamicForwarding):
+            Dynamic forwarding configuration. This field
+            is used to configure the backend service with
+            dynamic forwarding feature which together with
+            Service Extension allows customized and complex
+            routing logic.
+
+            This field is a member of `oneof`_ ``_dynamic_forwarding``.
         edge_security_policy (str):
             [Output Only] The resource URL for the edge security policy
             associated with this backend service.
@@ -19877,6 +19962,9 @@ class BackendService(proto.Message):
                 external Application Load Balancers, regional
                 external Application Load Balancers, or regional
                 external proxy Network Load Balancers.
+            EXTERNAL_PASSTHROUGH (216895232):
+                Signifies that this will be used for global
+                external passthrough Network Load Balancers.
             INTERNAL (279295677):
                 Signifies that this will be used for internal
                 passthrough Network Load Balancers.
@@ -19893,6 +19981,7 @@ class BackendService(proto.Message):
         UNDEFINED_LOAD_BALANCING_SCHEME = 0
         EXTERNAL = 35607499
         EXTERNAL_MANAGED = 512006923
+        EXTERNAL_PASSTHROUGH = 216895232
         INTERNAL = 279295677
         INTERNAL_MANAGED = 37350397
         INTERNAL_SELF_MANAGED = 236211150
@@ -20237,6 +20326,12 @@ class BackendService(proto.Message):
         proto.STRING,
         number=422937596,
         optional=True,
+    )
+    dynamic_forwarding: "BackendServiceDynamicForwarding" = proto.Field(
+        proto.MESSAGE,
+        number=719613,
+        optional=True,
+        message="BackendServiceDynamicForwarding",
     )
     edge_security_policy: str = proto.Field(
         proto.STRING,
@@ -21085,6 +21180,112 @@ class BackendServiceCustomMetric(proto.Message):
     )
 
 
+class BackendServiceDynamicForwarding(proto.Message):
+    r"""Defines a dynamic forwarding configuration for the backend
+    service.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        forward_proxy (google.cloud.compute_v1.types.BackendServiceDynamicForwardingForwardProxy):
+            Dynamic Forwarding Proxy configuration.
+
+            This field is a member of `oneof`_ ``_forward_proxy``.
+        ip_port_selection (google.cloud.compute_v1.types.BackendServiceDynamicForwardingIpPortSelection):
+            IP:PORT based dynamic forwarding
+            configuration.
+
+            This field is a member of `oneof`_ ``_ip_port_selection``.
+    """
+
+    forward_proxy: "BackendServiceDynamicForwardingForwardProxy" = proto.Field(
+        proto.MESSAGE,
+        number=483776628,
+        optional=True,
+        message="BackendServiceDynamicForwardingForwardProxy",
+    )
+    ip_port_selection: "BackendServiceDynamicForwardingIpPortSelection" = proto.Field(
+        proto.MESSAGE,
+        number=527934822,
+        optional=True,
+        message="BackendServiceDynamicForwardingIpPortSelection",
+    )
+
+
+class BackendServiceDynamicForwardingForwardProxy(proto.Message):
+    r"""Defines Dynamic Forwarding Proxy configuration.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        enabled (bool):
+            A boolean flag enabling dynamic forwarding
+            proxy.
+
+            This field is a member of `oneof`_ ``_enabled``.
+        proxy_mode (str):
+            Determines the dynamic forwarding proxy mode.
+            Check the ProxyMode enum for the list of
+            possible values.
+
+            This field is a member of `oneof`_ ``_proxy_mode``.
+    """
+
+    class ProxyMode(proto.Enum):
+        r"""Determines the dynamic forwarding proxy mode.
+
+        Values:
+            UNDEFINED_PROXY_MODE (0):
+                A value indicating that the enum field is not
+                set.
+            CLOUD_RUN (214253889):
+                Dynamic forwarding directly to Cloud Run
+                services.
+            DIRECT_FORWARDING (492448019):
+                Dynamic forwarding based on the Http Host
+                header.
+        """
+
+        UNDEFINED_PROXY_MODE = 0
+        CLOUD_RUN = 214253889
+        DIRECT_FORWARDING = 492448019
+
+    enabled: bool = proto.Field(
+        proto.BOOL,
+        number=1018689,
+        optional=True,
+    )
+    proxy_mode: str = proto.Field(
+        proto.STRING,
+        number=286358740,
+        optional=True,
+    )
+
+
+class BackendServiceDynamicForwardingIpPortSelection(proto.Message):
+    r"""Defines a IP:PORT based dynamic forwarding configuration for
+    the backend service. Some ranges are restricted: Restricted
+    ranges.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        enabled (bool):
+            A boolean flag enabling IP:PORT based dynamic
+            forwarding.
+
+            This field is a member of `oneof`_ ``_enabled``.
+    """
+
+    enabled: bool = proto.Field(
+        proto.BOOL,
+        number=1018689,
+        optional=True,
+    )
+
+
 class BackendServiceFailoverPolicy(proto.Message):
     r"""For load balancers that have configurable failover: `Internal
     passthrough Network Load
@@ -21218,6 +21419,9 @@ class BackendServiceHAPolicy(proto.Message):
                Advertisement(RA) packet (IPv6).  Google Cloud immediately but
                temporarily associates the forwarding rule IP address with that VM, and
                both new and in-flight packets are quickly delivered to that VM.
+               - HA_CONTROLLER: The Backend Service is managed by a High Availability
+               Controller. Failover and leader election are exclusively managed by the
+               HA Controller service.
 
             Note the important properties of the Fast IP Move
             functionality:
@@ -21319,6 +21523,9 @@ class BackendServiceHAPolicy(proto.Message):
            Advertisement(RA) packet (IPv6).  Google Cloud immediately but
            temporarily associates the forwarding rule IP address with that VM, and
            both new and in-flight packets are quickly delivered to that VM.
+           - HA_CONTROLLER: The Backend Service is managed by a High Availability
+           Controller. Failover and leader election are exclusively managed by the
+           HA Controller service.
 
         Note the important properties of the Fast IP Move functionality:
 
@@ -23440,8 +23647,14 @@ class BulkInsertInstanceResource(proto.Message):
 
             This field is a member of `oneof`_ ``_count``.
         instance_flexibility_policy (google.cloud.compute_v1.types.InstanceFlexibilityPolicy):
-            A flexible specification of machine type of
-            instances to create.
+            A specification of alternative machine types
+            to use when creating instances. A single
+            bulkInsert request can create instances with
+            multiple different machine types based on
+            capacity and quota availability. This field is
+            supported only for regional bulkInsert requests.
+            For more information, see About
+            instance flexibility for VMs created in bulk.
 
             This field is a member of `oneof`_ ``_instance_flexibility_policy``.
         instance_properties (google.cloud.compute_v1.types.InstanceProperties):
@@ -23937,6 +24150,17 @@ class CacheInvalidationRule(proto.Message):
     .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
     Attributes:
+        backend_service (str):
+            If set, this invalidation rule will only apply to requests
+            routed to the given backend service or backend bucket. For
+            example, for a backend bucket ``bb1`` in the same scope as
+            the URL map, the path would be
+            ``projects/my-project/global/backendBuckets/bb1``; and for a
+            backend service ``bs1`` in the same scope as the URL map,
+            the path would be
+            ``projects/my-project/global/backendServices/bs1``.
+
+            This field is a member of `oneof`_ ``_backend_service``.
         cache_tags (MutableSequence[str]):
             A list of cache tags used to identify cached objects.
 
@@ -23951,24 +24175,55 @@ class CacheInvalidationRule(proto.Message):
 
             Up to 10 tags can be specified in a single invalidation
             request.
-        host (str):
+        content_type (str):
             If set, this invalidation rule will only
-            apply to requests with a Host header matching
-            host.
+            apply to responses with the given content-type.
+            Parameters are not allowed and are ignored from
+            the response when matching. Wildcards are not
+            allowed.
+
+            This field is a member of `oneof`_ ``_content_type``.
+        host (str):
+            If set, this invalidation rule will only apply to requests
+            with a Host header matching host. This field also accepts
+            wildcards (\*) to replace the leftmost (or first) label of a
+            hostname. For example, \*.example.com will match
+            www.example.com, but not sub1.dev.example.com.
 
             This field is a member of `oneof`_ ``_host``.
+        http_status (int):
+            If set, this invalidation rule will only
+            apply to responses with the given HTTP status.
+            Valid range is 200-599.
+
+            This field is a member of `oneof`_ ``_http_status``.
         path (str):
 
             This field is a member of `oneof`_ ``_path``.
     """
 
+    backend_service: str = proto.Field(
+        proto.STRING,
+        number=306946058,
+        optional=True,
+    )
     cache_tags: MutableSequence[str] = proto.RepeatedField(
         proto.STRING,
         number=29073078,
     )
+    content_type: str = proto.Field(
+        proto.STRING,
+        number=294975296,
+        optional=True,
+    )
     host: str = proto.Field(
         proto.STRING,
         number=3208616,
+        optional=True,
+    )
+    http_status: int = proto.Field(
+        proto.INT32,
+        number=468949897,
         optional=True,
     )
     path: str = proto.Field(
@@ -24207,6 +24462,10 @@ class CachePolicy(proto.Message):
             UNDEFINED_CACHE_MODE (0):
                 A value indicating that the enum field is not
                 set.
+            BYPASS_CACHE (372518219):
+                Bypasses the cache for this route. All
+                requests are forwarded to the origin, and
+                responses are not cached.
             CACHE_ALL_STATIC (355027945):
                 Automatically cache static content, including
                 common image formats, media (video and audio),
@@ -24230,6 +24489,7 @@ class CachePolicy(proto.Message):
         """
 
         UNDEFINED_CACHE_MODE = 0
+        BYPASS_CACHE = 372518219
         CACHE_ALL_STATIC = 355027945
         FORCE_CACHE_ALL = 486026928
         USE_ORIGIN_HEADERS = 55380261
@@ -26385,6 +26645,12 @@ class Commitment(proto.Message):
                 No description available.
             MEMORY_OPTIMIZED_M4 (276301373):
                 No description available.
+            MEMORY_OPTIMIZED_M4N (512278961):
+                CUD bucket for M4N machines with less than
+                6TB of memory.
+            MEMORY_OPTIMIZED_M4N_6TB (69895574):
+                CUD bucket for M4N machines with 6TB of
+                memory.
             MEMORY_OPTIMIZED_M4_6TB (210543650):
                 No description available.
             MEMORY_OPTIMIZED_X4_1440_24T (206669823):
@@ -26410,6 +26676,21 @@ class Commitment(proto.Message):
                 12TB of memory.
             MEMORY_OPTIMIZED_X4_960_16T (424752534):
                 CUD bucket for X4 machine with 960 vCPUs and
+                16TB of memory.
+            MEMORY_OPTIMIZED_X5_1376_24T (287823040):
+                CUD bucket for X5 machine with 1376 vCPUs and
+                24TB of memory.
+            MEMORY_OPTIMIZED_X5_1376_32T (287823939):
+                CUD bucket for X5 machine with 1376 vCPUs and
+                32TB of memory.
+            MEMORY_OPTIMIZED_X5_2064_48T (411390009):
+                CUD bucket for X5 machine with 2064 vCPUs and
+                48TB of memory.
+            MEMORY_OPTIMIZED_X5_688_12T (314400670):
+                CUD bucket for X5 machine with 688 vCPUs and
+                12TB of memory.
+            MEMORY_OPTIMIZED_X5_688_16T (314400794):
+                CUD bucket for X5 machine with 688 vCPUs and
                 16TB of memory.
             NETWORK_OPTIMIZED_C4N (147027572):
                 CUD bucket for C4N (dual Diorite) machines.
@@ -26466,6 +26747,8 @@ class Commitment(proto.Message):
         MEMORY_OPTIMIZED = 281753417
         MEMORY_OPTIMIZED_M3 = 276301372
         MEMORY_OPTIMIZED_M4 = 276301373
+        MEMORY_OPTIMIZED_M4N = 512278961
+        MEMORY_OPTIMIZED_M4N_6TB = 69895574
         MEMORY_OPTIMIZED_M4_6TB = 210543650
         MEMORY_OPTIMIZED_X4_1440_24T = 206669823
         MEMORY_OPTIMIZED_X4_16TB = 183089120
@@ -26476,6 +26759,11 @@ class Commitment(proto.Message):
         MEMORY_OPTIMIZED_X4_480_8T = 478547804
         MEMORY_OPTIMIZED_X4_960_12T = 424752410
         MEMORY_OPTIMIZED_X4_960_16T = 424752534
+        MEMORY_OPTIMIZED_X5_1376_24T = 287823040
+        MEMORY_OPTIMIZED_X5_1376_32T = 287823939
+        MEMORY_OPTIMIZED_X5_2064_48T = 411390009
+        MEMORY_OPTIMIZED_X5_688_12T = 314400670
+        MEMORY_OPTIMIZED_X5_688_16T = 314400794
         NETWORK_OPTIMIZED_C4N = 147027572
         NETWORK_OPTIMIZED_U4C = 147044859
         NETWORK_OPTIMIZED_U4P = 147044872
@@ -27306,9 +27594,16 @@ class ConfidentialInstanceConfig(proto.Message):
             possible values.
 
             This field is a member of `oneof`_ ``_confidential_instance_type``.
+        confidential_paravisor_config (google.cloud.compute_v1.types.ConfidentialParavisorConfig):
+            Defines a set of Confidential Paravisor
+            (SVSM) options.
+
+            This field is a member of `oneof`_ ``_confidential_paravisor_config``.
         enable_confidential_compute (bool):
             Defines whether the instance should have
-            confidential compute enabled.
+            confidential compute enabled. When enabled, the
+            technology used defaults to AMD SEV unless
+            confidentialInstanceType is specified.
 
             This field is a member of `oneof`_ ``_enable_confidential_compute``.
     """
@@ -27349,9 +27644,90 @@ class ConfidentialInstanceConfig(proto.Message):
         number=43484717,
         optional=True,
     )
+    confidential_paravisor_config: "ConfidentialParavisorConfig" = proto.Field(
+        proto.MESSAGE,
+        number=99055285,
+        optional=True,
+        message="ConfidentialParavisorConfig",
+    )
     enable_confidential_compute: bool = proto.Field(
         proto.BOOL,
         number=102135228,
+        optional=True,
+    )
+
+
+class ConfidentialParavisorConfig(proto.Message):
+    r"""A set of Confidential Paravisor (SVSM) options.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        confidential_tpm_type (str):
+            Defines the type of TPM to use for the
+            confidential instance. Check the
+            ConfidentialTpmType enum for the list of
+            possible values.
+
+            This field is a member of `oneof`_ ``_confidential_tpm_type``.
+        sev_snp_irq_mode (str):
+            Defines the IRQ mode to use for the
+            confidential instance. Check the SevSnpIrqMode
+            enum for the list of possible values.
+
+            This field is a member of `oneof`_ ``_sev_snp_irq_mode``.
+    """
+
+    class ConfidentialTpmType(proto.Enum):
+        r"""Defines the type of TPM to use for the confidential instance.
+
+        Values:
+            UNDEFINED_CONFIDENTIAL_TPM_TYPE (0):
+                A value indicating that the enum field is not
+                set.
+            CONFIDENTIAL_TPM_TYPE_UNSPECIFIED (93357335):
+                No TPM type specified. Do not use this value.
+            EPHEMERAL (128756093):
+                An ephemeral vTPM running in the paravisor
+                (SVSM).
+            NO_CC_TPM (318240048):
+                No confidential computing vTPM is used in the
+                paravisor (SVSM).
+        """
+
+        UNDEFINED_CONFIDENTIAL_TPM_TYPE = 0
+        CONFIDENTIAL_TPM_TYPE_UNSPECIFIED = 93357335
+        EPHEMERAL = 128756093
+        NO_CC_TPM = 318240048
+
+    class SevSnpIrqMode(proto.Enum):
+        r"""Defines the IRQ mode to use for the confidential instance.
+
+        Values:
+            UNDEFINED_SEV_SNP_IRQ_MODE (0):
+                A value indicating that the enum field is not
+                set.
+            RESTRICTED (261551195):
+                Restricted interrupt injection.
+            SEV_SNP_IRQ_MODE_UNSPECIFIED (516327895):
+                No IRQ mode specified. Do not use this value.
+            UNRESTRICTED (457266100):
+                Unrestricted interrupt injection.
+        """
+
+        UNDEFINED_SEV_SNP_IRQ_MODE = 0
+        RESTRICTED = 261551195
+        SEV_SNP_IRQ_MODE_UNSPECIFIED = 516327895
+        UNRESTRICTED = 457266100
+
+    confidential_tpm_type: str = proto.Field(
+        proto.STRING,
+        number=61175327,
+        optional=True,
+    )
+    sev_snp_irq_mode: str = proto.Field(
+        proto.STRING,
+        number=195957407,
         optional=True,
     )
 
@@ -35499,6 +35875,42 @@ class Disk(proto.Message):
             that was used.
 
             This field is a member of `oneof`_ ``_source_instant_snapshot_id``.
+        source_machine_image (str):
+            The machine image to create the disk from.
+            You can provide this as a partial or full URL to
+            the resource. For example, the following are
+            valid values:
+
+
+                 -
+              https://www.googleapis.com/compute/v1/projects/project/global/machineImages/machineImage
+               -
+              projects/project/global/machineImages/machineImage
+                 - global/machineImages/machineImage
+
+            This field is a member of `oneof`_ ``_source_machine_image``.
+        source_machine_image_disk_device_name (str):
+            The device name of a disk within a given machine image. The
+            source_machine_image must be specified.
+
+            This field is a member of `oneof`_ ``_source_machine_image_disk_device_name``.
+        source_machine_image_encryption_key (google.cloud.compute_v1.types.CustomerEncryptionKey):
+            Thecustomer-supplied
+            encryption key of the source machine image.
+            Required if the source machine image is
+            protected by a customer-supplied encryption key.
+
+            This field is a member of `oneof`_ ``_source_machine_image_encryption_key``.
+        source_machine_image_id (str):
+            Output only. [Output Only] The unique ID of the machine
+            image used to create this disk. This value identifies the
+            exact machine image that was used to create this persistent
+            disk. For example, if you created the persistent disk from a
+            machine image that was later deleted and recreated under the
+            same name, the source machine image ID would identify the
+            exact version of the machine image that was used.
+
+            This field is a member of `oneof`_ ``_source_machine_image_id``.
         source_snapshot (str):
             The source snapshot used to create this disk.
             You can provide this as a partial or full URL to
@@ -35893,6 +36305,27 @@ class Disk(proto.Message):
     source_instant_snapshot_id: str = proto.Field(
         proto.STRING,
         number=287582708,
+        optional=True,
+    )
+    source_machine_image: str = proto.Field(
+        proto.STRING,
+        number=21769791,
+        optional=True,
+    )
+    source_machine_image_disk_device_name: str = proto.Field(
+        proto.STRING,
+        number=68623666,
+        optional=True,
+    )
+    source_machine_image_encryption_key: "CustomerEncryptionKey" = proto.Field(
+        proto.MESSAGE,
+        number=192839075,
+        optional=True,
+        message="CustomerEncryptionKey",
+    )
+    source_machine_image_id: str = proto.Field(
+        proto.STRING,
+        number=3876635,
         optional=True,
     )
     source_snapshot: str = proto.Field(
@@ -37145,6 +37578,51 @@ class Duration(proto.Message):
     seconds: int = proto.Field(
         proto.INT64,
         number=359484031,
+        optional=True,
+    )
+
+
+class DynamicCompressionPolicy(proto.Message):
+    r"""Dynamic compression policy for this URL Map's route.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        compression_mode (str):
+            Compress text responses using Brotli or gzip
+            compression, based on the client's
+            Accept-Encoding header. Check the
+            CompressionMode enum for the list of possible
+            values.
+
+            This field is a member of `oneof`_ ``_compression_mode``.
+    """
+
+    class CompressionMode(proto.Enum):
+        r"""Compress text responses using Brotli or gzip compression,
+        based on the client's Accept-Encoding header.
+
+        Values:
+            UNDEFINED_COMPRESSION_MODE (0):
+                A value indicating that the enum field is not
+                set.
+            AUTOMATIC (165298699):
+                Automatically uses the best compression based
+                on the Accept-Encoding header sent by the
+                client.
+            DISABLED (516696700):
+                Disables compression. Existing compressed
+                responses cached by Cloud CDN will not be served
+                to clients.
+        """
+
+        UNDEFINED_COMPRESSION_MODE = 0
+        AUTOMATIC = 165298699
+        DISABLED = 516696700
+
+    compression_mode: str = proto.Field(
+        proto.STRING,
+        number=95520988,
         optional=True,
     )
 
@@ -38801,6 +39279,20 @@ class FirewallPolicy(proto.Message):
             policies.
 
             This field is a member of `oneof`_ ``_parent``.
+        policy_source (str):
+            Indicates the source of this Firewall Policy. This field is
+            optional on creation and defaults to USER_DEFINED.
+
+            The USER_DEFINED value indicates a regular firewall policy.
+
+            The SYSTEM value indicates a system-level policy managed by
+            an internal service like GKE. This SYSTEM value is reserved
+            for internal services and cannot be set by users during
+            policy creation. Policies with a SYSTEM source cannot be
+            modified or deleted by users. Check the PolicySource enum
+            for the list of possible values.
+
+            This field is a member of `oneof`_ ``_policy_source``.
         policy_type (str):
             The type of the firewall policy. This field can be one of
             VPC_POLICY, RDMA_ROCE_POLICY or ULL_POLICY.
@@ -38853,6 +39345,36 @@ class FirewallPolicy(proto.Message):
 
             This field is a member of `oneof`_ ``_short_name``.
     """
+
+    class PolicySource(proto.Enum):
+        r"""Indicates the source of this Firewall Policy. This field is optional
+        on creation and defaults to USER_DEFINED.
+
+        The USER_DEFINED value indicates a regular firewall policy.
+
+        The SYSTEM value indicates a system-level policy managed by an
+        internal service like GKE. This SYSTEM value is reserved for
+        internal services and cannot be set by users during policy creation.
+        Policies with a SYSTEM source cannot be modified or deleted by
+        users.
+
+        Values:
+            UNDEFINED_POLICY_SOURCE (0):
+                A value indicating that the enum field is not
+                set.
+            SYSTEM (313484847):
+                A system-level policy managed by an internal
+                service like GKE. This value is reserved for
+                internal services and cannot be set by users
+                during policy creation. Policies with a SYSTEM
+                source cannot be modified or deleted by users.
+            USER_DEFINED (491485557):
+                A regular firewall policy.
+        """
+
+        UNDEFINED_POLICY_SOURCE = 0
+        SYSTEM = 313484847
+        USER_DEFINED = 491485557
 
     class PolicyType(proto.Enum):
         r"""The type of the firewall policy. This field can be one of
@@ -38925,6 +39447,11 @@ class FirewallPolicy(proto.Message):
     parent: str = proto.Field(
         proto.STRING,
         number=78317738,
+        optional=True,
+    )
+    policy_source: str = proto.Field(
+        proto.STRING,
+        number=232383432,
         optional=True,
     )
     policy_type: str = proto.Field(
@@ -39926,6 +40453,78 @@ class ForwardingRule(proto.Message):
             details.
 
             This field is a member of `oneof`_ ``_I_p_address``.
+        I_p_addresses (MutableSequence[str]):
+            IP addresses for which this forwarding rule accepts traffic.
+            All IP addresses must have the same IP version, IPv4 or
+            IPv6. When a client sends traffic that matches one of the
+            specified IP addresses, protocol and ports, the forwarding
+            rule directs the traffic to the referencedbackendService.
+            All IP addresses are served by the same set of backends, and
+            they share the target capacities specified in the backend
+            service fairly.
+
+            Global external Passthrough Network Load Balancer requires
+            two IP addresses for each forwarding rule to provide high
+            availability when both IP addresses are used to serve client
+            requests. The two IP addresses must come from global IP
+            pools that belong to two distinct Availability Groups,
+            represented by the
+            purposePASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0
+            andPASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1.
+            TheIPAddresses field specifies zero, one, or two IP
+            addresses:
+
+            ::
+
+               - If omitted, Google Cloud assigns two ephemeral IP addresses, one from
+               each Availability Group.
+               - If you specify one IP address that references an existing static IP
+               address resource from one Availability Group, Google Cloud assigns an
+               ephemeral IP address from the other Availability Group.
+               - If you specify two IP addresses that reference existing static IP
+               address resources, they are required to be from different Availability
+               Groups.
+
+            For global external Passthrough Network Load Balancer, each
+            IP address can be one of the following:
+
+            ::
+
+               - A static or ephemeral IPv4 address from a Google-owned IP pool.
+               - A static IPv4 address from a global public delegated prefix.
+               - A static or ephemeral IPv6 /96 prefix from a Google-owned IP pool.
+
+            For global external Passthrough Network Load Balancer, the
+            two IP addresses can be of different types. One IP address
+            can be from a BYOIP prefix while the other is from a
+            Google-owned IP pool. One IP address can be static while the
+            other is ephemeral. However, both IP addresses must have the
+            same IP version, IPv4 or IPv6.
+
+            The IP addresses can only be set at creation and cannot be
+            updated.
+
+            When creating a global external Passthrough Network Load
+            Balancer forwarding rule (a parent forwarding rule), you
+            must use theIPAddresses field, but the Google
+            Cloud-generated child forwarding rules set the IPAddress
+            field instead. Refer to theavailabilityGroup field for
+            further details.
+
+            Refer to the IPAddress field for the formats that can be
+            used to specify IP addresses while creating a forwarding
+            rule.
+
+            Because Passthrough Network Load Balancers do not terminate
+            or translate traffic, the backend stack types must be
+            compatible with the forwarding rule IP version:
+
+            ::
+
+               - If the forwarding rule IP version is IPv4, backends should be
+               configured as dual-stack or IPv4-only.
+               - If the forwarding rule IP version is IPv6, backends should be
+               configured as dual-stack or IPv6-only.
         I_p_protocol (str):
             The IP protocol to which this rule applies.
 
@@ -39979,6 +40578,39 @@ class ForwardingRule(proto.Message):
         attached_extensions (MutableSequence[google.cloud.compute_v1.types.ForwardingRuleAttachedExtension]):
             Output only. [Output Only]. The extensions that are attached
             to this ForwardingRule.
+        availability_group (str):
+            Output only. [Output Only] Specifies the load balancing
+            availability group, one of the two that collectively provide
+            high availability.
+
+            Specifies the availability group of the forwarding rule.
+            This field is for use by global external passthrough load
+            balancers (load balancing scheme EXTERNAL_PASSTHROUGH) and
+            is set for the child forwarding rules only. The possible
+            values are:
+
+            ::
+
+               - AVAILABILITY_GROUP0: Set for the child forwarding rule
+               that is programmed on the AVAILABILITY_GROUP0 load balancing
+               stack. The child forwarding rule has the same IP protocol, port, and
+               backend service settings as the parent forwarding rule, but has only one of
+               the two IP addresses of the parent forwarding rule, the one with the
+               purpose PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0.
+               - AVAILABILITY_GROUP1: Set for the child forwarding rule
+               that is programmed on the AVAILABILITY_GROUP1 load balancing
+               stack. The child forwarding rule has the same IP protocol, port and backend
+               service settings as the parent forwarding rule, but has only one of the two
+               IP addresses of the parent forwarding rule, the one with the purposePASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1.
+
+            For each global external Passthrough Network Load Balancer
+            forwarding rule (a parent forwarding rule) that you create,
+            Google Cloud generates two output-only child forwarding
+            rules, one forAVAILABILITY_GROUP0 and one
+            forAVAILABILITY_GROUP1. Check the AvailabilityGroup enum for
+            the list of possible values.
+
+            This field is a member of `oneof`_ ``_availability_group``.
         backend_service (str):
             Identifies the backend service to which the
             forwarding rule sends traffic.
@@ -40004,6 +40636,18 @@ class ForwardingRule(proto.Message):
             forwarding rule does not have sourceIPRanges specified.
 
             This field is a member of `oneof`_ ``_base_forwarding_rule``.
+        child_forwarding_rules (MutableSequence[str]):
+            Output only. [Output Only] The resource URLs for the child
+            forwarding rules.
+
+            Applicable only to the parent forwarding rule of global
+            external passthrough load balancers. This field contains the
+            list of child forwarding rule URLs associated with the
+            parent forwarding rule: one for each availability group.
+            AVAILABILITY_GROUP0 will be the first element, and
+            AVAILABILITY_GROUP1 will be the second element. Refer to
+            theavailabilityGroup field for further details. It cannot be
+            set by any other forwarding rules.
         creation_timestamp (str):
             Output only. [Output Only] Creation timestamp inRFC3339 text
             format.
@@ -40229,6 +40873,15 @@ class ForwardingRule(proto.Message):
             set, this field is not mutable.
 
             This field is a member of `oneof`_ ``_no_automate_dns_zone``.
+        parent_forwarding_rule (str):
+            Output only. [Output Only] The resource URL for the parent
+            forwarding rule.
+
+            Applicable only to the child forwarding rules of global
+            external passthrough load balancers. This field contains the
+            URL of the parent forwarding rule.
+
+            This field is a member of `oneof`_ ``_parent_forwarding_rule``.
         port_range (str):
             The ports, portRange, and allPorts fields are mutually
             exclusive. Only packets addressed to ports in the specified
@@ -40400,6 +41053,51 @@ class ForwardingRule(proto.Message):
             This field is a member of `oneof`_ ``_target``.
     """
 
+    class AvailabilityGroup(proto.Enum):
+        r"""Output only. [Output Only] Specifies the load balancing availability
+        group, one of the two that collectively provide high availability.
+
+        Specifies the availability group of the forwarding rule. This field
+        is for use by global external passthrough load balancers (load
+        balancing scheme EXTERNAL_PASSTHROUGH) and is set for the child
+        forwarding rules only. The possible values are:
+
+        ::
+
+           - AVAILABILITY_GROUP0: Set for the child forwarding rule
+           that is programmed on the AVAILABILITY_GROUP0 load balancing
+           stack. The child forwarding rule has the same IP protocol, port, and
+           backend service settings as the parent forwarding rule, but has only one of
+           the two IP addresses of the parent forwarding rule, the one with the
+           purpose PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0.
+           - AVAILABILITY_GROUP1: Set for the child forwarding rule
+           that is programmed on the AVAILABILITY_GROUP1 load balancing
+           stack. The child forwarding rule has the same IP protocol, port and backend
+           service settings as the parent forwarding rule, but has only one of the two
+           IP addresses of the parent forwarding rule, the one with the purposePASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1.
+
+        For each global external Passthrough Network Load Balancer
+        forwarding rule (a parent forwarding rule) that you create, Google
+        Cloud generates two output-only child forwarding rules, one
+        forAVAILABILITY_GROUP0 and one forAVAILABILITY_GROUP1.
+
+        Values:
+            UNDEFINED_AVAILABILITY_GROUP (0):
+                A value indicating that the enum field is not
+                set.
+            AVAILABILITY_GROUP0 (79044885):
+                No description available.
+            AVAILABILITY_GROUP1 (79044886):
+                No description available.
+            AVAILABILITY_GROUP_UNSPECIFIED (510741331):
+                No description available.
+        """
+
+        UNDEFINED_AVAILABILITY_GROUP = 0
+        AVAILABILITY_GROUP0 = 79044885
+        AVAILABILITY_GROUP1 = 79044886
+        AVAILABILITY_GROUP_UNSPECIFIED = 510741331
+
     class ExternalManagedBackendBucketMigrationState(proto.Enum):
         r"""Specifies the canary migration state for the backend buckets
         attached to this forwarding rule. Possible values are PREPARE,
@@ -40511,6 +41209,8 @@ class ForwardingRule(proto.Message):
                 No description available.
             EXTERNAL_MANAGED (512006923):
                 No description available.
+            EXTERNAL_PASSTHROUGH (216895232):
+                No description available.
             INTERNAL (279295677):
                 No description available.
             INTERNAL_MANAGED (37350397):
@@ -40524,6 +41224,7 @@ class ForwardingRule(proto.Message):
         UNDEFINED_LOAD_BALANCING_SCHEME = 0
         EXTERNAL = 35607499
         EXTERNAL_MANAGED = 512006923
+        EXTERNAL_PASSTHROUGH = 216895232
         INTERNAL = 279295677
         INTERNAL_MANAGED = 37350397
         INTERNAL_SELF_MANAGED = 236211150
@@ -40607,6 +41308,10 @@ class ForwardingRule(proto.Message):
         number=42976943,
         optional=True,
     )
+    I_p_addresses: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=498656157,
+    )
     I_p_protocol: str = proto.Field(
         proto.STRING,
         number=488094525,
@@ -40634,6 +41339,11 @@ class ForwardingRule(proto.Message):
             message="ForwardingRuleAttachedExtension",
         )
     )
+    availability_group: str = proto.Field(
+        proto.STRING,
+        number=62963355,
+        optional=True,
+    )
     backend_service: str = proto.Field(
         proto.STRING,
         number=306946058,
@@ -40643,6 +41353,10 @@ class ForwardingRule(proto.Message):
         proto.STRING,
         number=524873104,
         optional=True,
+    )
+    child_forwarding_rules: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=334878200,
     )
     creation_timestamp: str = proto.Field(
         proto.STRING,
@@ -40732,6 +41446,11 @@ class ForwardingRule(proto.Message):
     no_automate_dns_zone: bool = proto.Field(
         proto.BOOL,
         number=64546991,
+        optional=True,
+    )
+    parent_forwarding_rule: str = proto.Field(
+        proto.STRING,
+        number=329325929,
         optional=True,
     )
     port_range: str = proto.Field(
@@ -45534,6 +46253,45 @@ class GetIamPolicyRegionSnapshotRequest(proto.Message):
     )
 
 
+class GetIamPolicyRegionSslPolicyRequest(proto.Message):
+    r"""A request message for RegionSslPolicies.GetIamPolicy. See the
+    method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        options_requested_policy_version (int):
+            Requested IAM Policy version.
+
+            This field is a member of `oneof`_ ``_options_requested_policy_version``.
+        project (str):
+            Project ID for this request.
+        region (str):
+            The name of the region for this request.
+        resource (str):
+            Name or id of the resource for this request.
+    """
+
+    options_requested_policy_version: int = proto.Field(
+        proto.INT32,
+        number=499220029,
+        optional=True,
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+    region: str = proto.Field(
+        proto.STRING,
+        number=138946292,
+    )
+    resource: str = proto.Field(
+        proto.STRING,
+        number=195806222,
+    )
+
+
 class GetIamPolicyReservationBlockRequest(proto.Message):
     r"""A request message for ReservationBlocks.GetIamPolicy. See the
     method description for details.
@@ -45746,6 +46504,39 @@ class GetIamPolicyServiceAttachmentRequest(proto.Message):
 class GetIamPolicySnapshotRequest(proto.Message):
     r"""A request message for Snapshots.GetIamPolicy. See the method
     description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        options_requested_policy_version (int):
+            Requested IAM Policy version.
+
+            This field is a member of `oneof`_ ``_options_requested_policy_version``.
+        project (str):
+            Project ID for this request.
+        resource (str):
+            Name or id of the resource for this request.
+    """
+
+    options_requested_policy_version: int = proto.Field(
+        proto.INT32,
+        number=499220029,
+        optional=True,
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+    resource: str = proto.Field(
+        proto.STRING,
+        number=195806222,
+    )
+
+
+class GetIamPolicySslPolicyRequest(proto.Message):
+    r"""A request message for SslPolicies.GetIamPolicy. See the
+    method description for details.
 
 
     .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
@@ -55047,6 +55838,12 @@ class HttpRouteAction(proto.Message):
             target gRPC proxy.
 
             This field is a member of `oneof`_ ``_cors_policy``.
+        dynamic_compression_policy (google.cloud.compute_v1.types.DynamicCompressionPolicy):
+            Dynamic compression policy for this URL Map's route.
+            Available only for Global EXTERNAL_MANAGED load balancer
+            schemes.
+
+            This field is a member of `oneof`_ ``_dynamic_compression_policy``.
         fault_injection_policy (google.cloud.compute_v1.types.HttpFaultInjection):
             The specification for fault injection introduced into
             traffic to test the resiliency of clients to backend service
@@ -55067,6 +55864,14 @@ class HttpRouteAction(proto.Message):
                management features.
 
             This field is a member of `oneof`_ ``_fault_injection_policy``.
+        image_optimization_policy (google.cloud.compute_v1.types.ImageOptimizationPolicy):
+            Image optimization policy for this URL Map's route.
+            Available only for Global EXTERNAL_MANAGED load balancer
+            schemes. Either Cloud CDN must be enabled on the backend
+            service or backend bucket serving the route, or cache policy
+            must be configured on the same route
+
+            This field is a member of `oneof`_ ``_image_optimization_policy``.
         max_stream_duration (google.cloud.compute_v1.types.Duration):
             Specifies the maximum duration (timeout) for streams on the
             selected route. Unlike the timeout field where the timeout
@@ -55159,11 +55964,23 @@ class HttpRouteAction(proto.Message):
         optional=True,
         message="CorsPolicy",
     )
+    dynamic_compression_policy: "DynamicCompressionPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=356626987,
+        optional=True,
+        message="DynamicCompressionPolicy",
+    )
     fault_injection_policy: "HttpFaultInjection" = proto.Field(
         proto.MESSAGE,
         number=412781079,
         optional=True,
         message="HttpFaultInjection",
+    )
+    image_optimization_policy: "ImageOptimizationPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=86640480,
+        optional=True,
+        message="ImageOptimizationPolicy",
     )
     max_stream_duration: "Duration" = proto.Field(
         proto.MESSAGE,
@@ -56187,6 +57004,60 @@ class ImageList(proto.Message):
         number=50704284,
         optional=True,
         message="Warning",
+    )
+
+
+class ImageOptimizationPolicy(proto.Message):
+    r"""The configuration for Cloud CDN's image optimization feature.
+    This feature dynamically processes and delivers images from the
+    network edge. Image Optimization is only available for Global
+    External Application Load Balancers.
+    Either Cloud CDN must be enabled on the backend service or
+    backend bucket serving the route, or cache policy must be
+    configured on the same route.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        query_parameter_interpretation (str):
+            Specifies whether to interpret query
+            parameters for image optimization. Check the
+            QueryParameterInterpretation enum for the list
+            of possible values.
+
+            This field is a member of `oneof`_ ``_query_parameter_interpretation``.
+    """
+
+    class QueryParameterInterpretation(proto.Enum):
+        r"""Specifies whether to interpret query parameters for image
+        optimization.
+
+        Values:
+            UNDEFINED_QUERY_PARAMETER_INTERPRETATION (0):
+                A value indicating that the enum field is not
+                set.
+            DISABLED (516696700):
+                Query parameters for image optimization are
+                ignored.
+            ENABLED (182130465):
+                Query parameters for image optimization are
+                interpreted.
+            QUERY_PARAMETER_INTERPRETATION_UNSPECIFIED (417522445):
+                Default value. This field value translates to
+                the default behavior, which is to ignore query
+                parameters for image optimization.
+        """
+
+        UNDEFINED_QUERY_PARAMETER_INTERPRETATION = 0
+        DISABLED = 516696700
+        ENABLED = 182130465
+        QUERY_PARAMETER_INTERPRETATION_UNSPECIFIED = 417522445
+
+    query_parameter_interpretation: str = proto.Field(
+        proto.STRING,
+        number=298574069,
+        optional=True,
     )
 
 
@@ -62609,17 +63480,8 @@ class InstanceFlexibilityPolicy(proto.Message):
 
     Attributes:
         instance_selections (MutableMapping[str, google.cloud.compute_v1.types.InstanceFlexibilityPolicyInstanceSelection]):
-            Specification of alternative, flexible
-            instance subsets. One of them will be selected
-            to create the instances based on various
-            criteria, like:
-
-            - ranks,
-            - location policy,
-            - current capacity,
-            - available reservations (you can specify
-              affinity in InstanceProperties),
-            - SWAN/GOOSE limitations.
+            Specifies named instance selections that
+            define properties for instances created in bulk.
             Key is an arbitrary, unique RFC1035 string that
             identifies the instance selection.
     """
@@ -64759,6 +65621,9 @@ class InstanceGroupManagerStatusAcceleratorTopology(proto.Message):
                 The accelerator topology is being activated.
             ACTIVE (314733318):
                 The accelerator topology is active.
+            ACTIVE_DEGRADED (471128135):
+                The accelerator topology is active but
+                operating in degraded mode.
             DEACTIVATING (57182257):
                 The accelerator topology is being
                 deactivated.
@@ -64776,6 +65641,7 @@ class InstanceGroupManagerStatusAcceleratorTopology(proto.Message):
         UNDEFINED_STATE = 0
         ACTIVATING = 378825968
         ACTIVE = 314733318
+        ACTIVE_DEGRADED = 471128135
         DEACTIVATING = 57182257
         FAILED = 455706685
         INCOMPLETE = 11941214
@@ -99018,6 +99884,14 @@ class MachineImageParams(proto.Message):
     r"""Machine Image parameters
 
     Attributes:
+        excluded_disks (MutableSequence[str]):
+            Input only. Specifies the list of disk device
+            names that must be excluded from the new machine
+            image.
+        included_disks (MutableSequence[str]):
+            Input only. Specifies the list of disk device
+            names that must be included with the new machine
+            image.
         resource_manager_tags (MutableMapping[str, str]):
             Input only. Resource manager tags to be bound to the machine
             image. Tag keys and values have the same definition as
@@ -99029,6 +99903,14 @@ class MachineImageParams(proto.Message):
             PATCH) when empty.
     """
 
+    excluded_disks: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=301656001,
+    )
+    included_disks: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=139709747,
+    )
     resource_manager_tags: MutableMapping[str, str] = proto.MapField(
         proto.STRING,
         proto.STRING,
@@ -101026,6 +101908,9 @@ class Network(proto.Message):
             created.
 
             This field is a member of `oneof`_ ``_I_pv4_range``.
+        additional_tags (MutableSequence[str]):
+            Output only. [Output Only] Additional tags for this
+            resource.
         auto_create_subnetworks (bool):
             Must be set to create a VPC network. If not
             set, a legacy network is created.
@@ -101184,6 +102069,10 @@ class Network(proto.Message):
         proto.STRING,
         number=59234358,
         optional=True,
+    )
+    additional_tags: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=418903345,
     )
     auto_create_subnetworks: bool = proto.Field(
         proto.BOOL,
@@ -101623,6 +102512,9 @@ class NetworkAttachmentConnectedEndpoint(proto.Message):
             REJECTED (174130302):
                 The consumer prohibits traffic from the
                 producer to reach its VPC.
+            RESERVED (432241448):
+                There is no traffic flowing in this state,
+                only the address is reserved.
             STATUS_UNSPECIFIED (42133066):
                 No description available.
         """
@@ -101633,6 +102525,7 @@ class NetworkAttachmentConnectedEndpoint(proto.Message):
         NEEDS_ATTENTION = 344491452
         PENDING = 35394935
         REJECTED = 174130302
+        RESERVED = 432241448
         STATUS_UNSPECIFIED = 42133066
 
     ip_address: str = proto.Field(
@@ -104667,6 +105560,16 @@ class NetworkProfileNetworkFeatures(proto.Message):
             NAT_AUTO (163666477):
                 External IP automatically reserved for Cloud
                 NAT.
+            PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0 (119932186):
+                The global external address can only be
+                assigned to Global External Passthrough Network
+                Load Balancer forwarding rules, as an
+                Availability Group 0 address.
+            PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1 (119932187):
+                The global external address can only be
+                assigned to Global External Passthrough Network
+                Load Balancer forwarding rules, as an
+                Availability Group 1 address.
             PRIVATE_SERVICE_CONNECT (48134724):
                 A private network IP address that can be used
                 to configure Private Service Connect. This
@@ -104688,6 +105591,8 @@ class NetworkProfileNetworkFeatures(proto.Message):
         GCE_ENDPOINT = 230515243
         IPSEC_INTERCONNECT = 340437251
         NAT_AUTO = 163666477
+        PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0 = 119932186
+        PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1 = 119932187
         PRIVATE_SERVICE_CONNECT = 48134724
         SERVERLESS = 270492508
         SHARED_LOADBALANCER_VIP = 294447572
@@ -116864,6 +117769,38 @@ class PublicDelegatedPrefix(proto.Message):
         public_delegated_sub_prefixs (MutableSequence[google.cloud.compute_v1.types.PublicDelegatedPrefixPublicDelegatedSubPrefix]):
             The list of sub public delegated prefixes
             that exist for this public delegated prefix.
+        purpose (str):
+            Immutable. The purpose of the public delegated prefix.
+
+            This field can only be set for the top-level global public
+            delegated prefix. It is an output-only field for the
+            sub-delegates that inherit the value from the top-level
+            global public delegated prefix. Once the value is set, it
+            cannot be changed.
+
+            The field cannot be set for regional public delegated
+            prefixes.
+
+            The supported values are:
+
+            ::
+
+                 - APPLICATION_AND_PROXY_LOAD_BALANCERS: The global public
+                 delegated prefix can only be used by Global External Application and
+                 Proxy Load Balancers to allocate addresses for forwarding rules. This is
+                 the default value.
+                 - PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0: The
+                 global public delegated prefix can only be used by Global External
+                 Passthrough Network Load Balancers to allocate Availability Group 0
+                 addresses for forwarding rules.
+                 - PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1: The
+                 global public delegated prefix can only be used by Global External
+                 Passthrough Network Load Balancers to allocate Availability Group 1
+                 addresses for forwarding rules.
+
+            Check the Purpose enum for the list of possible values.
+
+            This field is a member of `oneof`_ ``_purpose``.
         region (str):
             Output only. [Output Only] URL of the region where the
             public delegated prefix resides. This field applies only to
@@ -116981,6 +117918,59 @@ class PublicDelegatedPrefix(proto.Message):
         EXTERNAL_IPV6_FORWARDING_RULE_CREATION = 398684356
         EXTERNAL_IPV6_SUBNETWORK_CREATION = 61198284
         INTERNAL_IPV6_SUBNETWORK_CREATION = 153239834
+
+    class Purpose(proto.Enum):
+        r"""Immutable. The purpose of the public delegated prefix.
+
+        This field can only be set for the top-level global public delegated
+        prefix. It is an output-only field for the sub-delegates that
+        inherit the value from the top-level global public delegated prefix.
+        Once the value is set, it cannot be changed.
+
+        The field cannot be set for regional public delegated prefixes.
+
+        The supported values are:
+
+        ::
+
+             - APPLICATION_AND_PROXY_LOAD_BALANCERS: The global public
+             delegated prefix can only be used by Global External Application and
+             Proxy Load Balancers to allocate addresses for forwarding rules. This is
+             the default value.
+             - PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0: The
+             global public delegated prefix can only be used by Global External
+             Passthrough Network Load Balancers to allocate Availability Group 0
+             addresses for forwarding rules.
+             - PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1: The
+             global public delegated prefix can only be used by Global External
+             Passthrough Network Load Balancers to allocate Availability Group 1
+             addresses for forwarding rules.
+
+        Values:
+            UNDEFINED_PURPOSE (0):
+                A value indicating that the enum field is not
+                set.
+            APPLICATION_AND_PROXY_LOAD_BALANCERS (480371116):
+                The global public delegated prefix can only
+                be used by Global External Application and Proxy
+                Load Balancers to allocate addresses for
+                forwarding rules. This is the default value.
+            PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0 (119932186):
+                The global public delegated prefix can only
+                be used by Global External Passthrough Network
+                Load Balancers to allocate Availability Group 0
+                addresses for forwarding rules.
+            PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1 (119932187):
+                The global public delegated prefix can only
+                be used by Global External Passthrough Network
+                Load Balancers to allocate Availability Group 1
+                addresses for forwarding rules.
+        """
+
+        UNDEFINED_PURPOSE = 0
+        APPLICATION_AND_PROXY_LOAD_BALANCERS = 480371116
+        PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0 = 119932186
+        PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1 = 119932187
 
     class Status(proto.Enum):
         r"""[Output Only] The status of the public delegated prefix, which can
@@ -117108,6 +118098,11 @@ class PublicDelegatedPrefix(proto.Message):
         proto.MESSAGE,
         number=188940044,
         message="PublicDelegatedPrefixPublicDelegatedSubPrefix",
+    )
+    purpose: str = proto.Field(
+        proto.STRING,
+        number=316407070,
+        optional=True,
     )
     region: str = proto.Field(
         proto.STRING,
@@ -117338,6 +118333,12 @@ class PublicDelegatedPrefixPublicDelegatedSubPrefix(proto.Message):
             The name of the sub public delegated prefix.
 
             This field is a member of `oneof`_ ``_name``.
+        purpose (str):
+            Output only. [Output Only] The purpose of the sub public
+            delegated prefix. Inherited from parent prefix. Check the
+            Purpose enum for the list of possible values.
+
+            This field is a member of `oneof`_ ``_purpose``.
         region (str):
             Output only. [Output Only] The region of the sub public
             delegated prefix if it is regional. If absent, the sub
@@ -117415,6 +118416,36 @@ class PublicDelegatedPrefixPublicDelegatedSubPrefix(proto.Message):
         EXTERNAL_IPV6_SUBNETWORK_CREATION = 61198284
         INTERNAL_IPV6_SUBNETWORK_CREATION = 153239834
 
+    class Purpose(proto.Enum):
+        r"""Output only. [Output Only] The purpose of the sub public delegated
+        prefix. Inherited from parent prefix.
+
+        Values:
+            UNDEFINED_PURPOSE (0):
+                A value indicating that the enum field is not
+                set.
+            APPLICATION_AND_PROXY_LOAD_BALANCERS (480371116):
+                The global public delegated prefix can only
+                be used by Global External Application and Proxy
+                Load Balancers to allocate addresses for
+                forwarding rules. This is the default value.
+            PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0 (119932186):
+                The global public delegated prefix can only
+                be used by Global External Passthrough Network
+                Load Balancers to allocate Availability Group 0
+                addresses for forwarding rules.
+            PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1 (119932187):
+                The global public delegated prefix can only
+                be used by Global External Passthrough Network
+                Load Balancers to allocate Availability Group 1
+                addresses for forwarding rules.
+        """
+
+        UNDEFINED_PURPOSE = 0
+        APPLICATION_AND_PROXY_LOAD_BALANCERS = 480371116
+        PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0 = 119932186
+        PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1 = 119932187
+
     class Status(proto.Enum):
         r"""Output only. [Output Only] The status of the sub public delegated
         prefix.
@@ -117476,6 +118507,11 @@ class PublicDelegatedPrefixPublicDelegatedSubPrefix(proto.Message):
     name: str = proto.Field(
         proto.STRING,
         number=3373707,
+        optional=True,
+    )
+    purpose: str = proto.Field(
+        proto.STRING,
+        number=316407070,
         optional=True,
     )
     region: str = proto.Field(
@@ -126360,12 +127396,54 @@ class ResourceStatusScheduling(proto.Message):
             process, in RFC3339 text format.
 
             This field is a member of `oneof`_ ``_graceful_shutdown_timestamp``.
+        protection_tier (str):
+            Output only. Protection tier for the workload
+            which specifies the workload expectations in the
+            event of infrastructure failures at data center
+            (e.g. power and/or cooling failures).
+            Check the ProtectionTier enum for the list of
+            possible values.
+
+            This field is a member of `oneof`_ ``_protection_tier``.
         termination_timestamp (str):
             Time in future when the instance will be
             terminated inRFC3339 text format.
 
             This field is a member of `oneof`_ ``_termination_timestamp``.
     """
+
+    class ProtectionTier(proto.Enum):
+        r"""Output only. Protection tier for the workload which specifies
+        the workload expectations in the event of infrastructure
+        failures at data center (e.g. power and/or cooling failures).
+
+        Values:
+            UNDEFINED_PROTECTION_TIER (0):
+                A value indicating that the enum field is not
+                set.
+            PROTECTION_TIER_CAPACITY_OPTIMIZED (59631065):
+                CAPACITY_OPTIMIZED capacity leverages redundancies (e.g.
+                power, cooling) at the data center during normal operating
+                conditions. In the event of infrastructure failures at data
+                center (e.g. power and/or cooling failures), this workload
+                may be disrupted. As a consequence, it has a weaker
+                availability SLO than STANDARD.
+            PROTECTION_TIER_STANDARD (312368532):
+                STANDARD protection for workload that should
+                be protected by redundancies (e.g. power,
+                cooling) at the data center level. In the event
+                of infrastructure failures at data center (e.g.
+                power and/or cooling failures), this workload is
+                expected to continue as normal using the
+                redundancies.
+            PROTECTION_TIER_UNSPECIFIED (262261984):
+                Unspecified protection tier.
+        """
+
+        UNDEFINED_PROTECTION_TIER = 0
+        PROTECTION_TIER_CAPACITY_OPTIMIZED = 59631065
+        PROTECTION_TIER_STANDARD = 312368532
+        PROTECTION_TIER_UNSPECIFIED = 262261984
 
     availability_domain: int = proto.Field(
         proto.INT32,
@@ -126375,6 +127453,11 @@ class ResourceStatusScheduling(proto.Message):
     graceful_shutdown_timestamp: str = proto.Field(
         proto.STRING,
         number=403022375,
+        optional=True,
+    )
+    protection_tier: str = proto.Field(
+        proto.STRING,
+        number=503959432,
         optional=True,
     )
     termination_timestamp: str = proto.Field(
@@ -130998,6 +132081,11 @@ class RouterStatusBgpPeerStatus(proto.Message):
         bfd_status (google.cloud.compute_v1.types.BfdStatus):
 
             This field is a member of `oneof`_ ``_bfd_status``.
+        depreferenced (bool):
+            Output only. [Output Only] Indicates whether the BGP peer is
+            in a depreferenced state.
+
+            This field is a member of `oneof`_ ``_depreferenced``.
         enable_ipv4 (bool):
             Output only. Enable IPv4 traffic over BGP
             Peer. It is enabled by default if the
@@ -131160,6 +132248,11 @@ class RouterStatusBgpPeerStatus(proto.Message):
         number=395631729,
         optional=True,
         message="BfdStatus",
+    )
+    depreferenced: bool = proto.Field(
+        proto.BOOL,
+        number=182429640,
+        optional=True,
     )
     enable_ipv4: bool = proto.Field(
         proto.BOOL,
@@ -132511,6 +133604,15 @@ class Scheduling(proto.Message):
             Soft Off signal is triggered.
 
             This field is a member of `oneof`_ ``_preemption_notice_duration``.
+        protection_tier (str):
+            Protection tier for the workload which
+            specifies the workload expectations in the event
+            of infrastructure failures at data center (e.g.
+            power and/or cooling failures).
+            Check the ProtectionTier enum for the list of
+            possible values.
+
+            This field is a member of `oneof`_ ``_protection_tier``.
         provisioning_model (str):
             Specifies the provisioning model of the
             instance. Check the ProvisioningModel enum for
@@ -132518,10 +133620,15 @@ class Scheduling(proto.Message):
 
             This field is a member of `oneof`_ ``_provisioning_model``.
         skip_guest_os_shutdown (bool):
-            Default is false and there will be 120
+            Defines whether GCE ACPI G2 Soft
+            Off signal should be skipped during shutdown
+            operation of VM.
+
+            Default is false, meaning there will be 120
             seconds between GCE ACPI G2 Soft Off and ACPI G3
-            Mechanical Off for Standard VMs and 30 seconds
-            for Spot VMs.
+            Mechanical
+            Off for Standard VMs and 30 seconds for Spot
+            VMs.
 
             This field is a member of `oneof`_ ``_skip_guest_os_shutdown``.
         termination_time (str):
@@ -132583,6 +133690,39 @@ class Scheduling(proto.Message):
         UNDEFINED_ON_HOST_MAINTENANCE = 0
         MIGRATE = 165699979
         TERMINATE = 527617601
+
+    class ProtectionTier(proto.Enum):
+        r"""Protection tier for the workload which specifies the workload
+        expectations in the event of infrastructure failures at data
+        center (e.g. power and/or cooling failures).
+
+        Values:
+            UNDEFINED_PROTECTION_TIER (0):
+                A value indicating that the enum field is not
+                set.
+            PROTECTION_TIER_CAPACITY_OPTIMIZED (59631065):
+                CAPACITY_OPTIMIZED capacity leverages redundancies (e.g.
+                power, cooling) at the data center during normal operating
+                conditions. In the event of infrastructure failures at data
+                center (e.g. power and/or cooling failures), this workload
+                may be disrupted. As a consequence, it has a weaker
+                availability SLO than STANDARD.
+            PROTECTION_TIER_STANDARD (312368532):
+                STANDARD protection for workload that should
+                be protected by redundancies (e.g. power,
+                cooling) at the data center level. In the event
+                of infrastructure failures at data center (e.g.
+                power and/or cooling failures), this workload is
+                expected to continue as normal using the
+                redundancies.
+            PROTECTION_TIER_UNSPECIFIED (262261984):
+                Unspecified protection tier.
+        """
+
+        UNDEFINED_PROTECTION_TIER = 0
+        PROTECTION_TIER_CAPACITY_OPTIMIZED = 59631065
+        PROTECTION_TIER_STANDARD = 312368532
+        PROTECTION_TIER_UNSPECIFIED = 262261984
 
     class ProvisioningModel(proto.Enum):
         r"""Specifies the provisioning model of the instance.
@@ -132689,6 +133829,11 @@ class Scheduling(proto.Message):
         number=486176437,
         optional=True,
         message="Duration",
+    )
+    protection_tier: str = proto.Field(
+        proto.STRING,
+        number=503959432,
+        optional=True,
     )
     provisioning_model: str = proto.Field(
         proto.STRING,
@@ -137817,6 +138962,40 @@ class SetIamPolicyRegionSnapshotRequest(proto.Message):
     )
 
 
+class SetIamPolicyRegionSslPolicyRequest(proto.Message):
+    r"""A request message for RegionSslPolicies.SetIamPolicy. See the
+    method description for details.
+
+    Attributes:
+        project (str):
+            Project ID for this request.
+        region (str):
+            The name of the region for this request.
+        region_set_policy_request_resource (google.cloud.compute_v1.types.RegionSetPolicyRequest):
+            The body resource for this request
+        resource (str):
+            Name or id of the resource for this request.
+    """
+
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+    region: str = proto.Field(
+        proto.STRING,
+        number=138946292,
+    )
+    region_set_policy_request_resource: "RegionSetPolicyRequest" = proto.Field(
+        proto.MESSAGE,
+        number=276489091,
+        message="RegionSetPolicyRequest",
+    )
+    resource: str = proto.Field(
+        proto.STRING,
+        number=195806222,
+    )
+
+
 class SetIamPolicyReservationBlockRequest(proto.Message):
     r"""A request message for ReservationBlocks.SetIamPolicy. See the
     method description for details.
@@ -138004,6 +139183,34 @@ class SetIamPolicyServiceAttachmentRequest(proto.Message):
 class SetIamPolicySnapshotRequest(proto.Message):
     r"""A request message for Snapshots.SetIamPolicy. See the method
     description for details.
+
+    Attributes:
+        global_set_policy_request_resource (google.cloud.compute_v1.types.GlobalSetPolicyRequest):
+            The body resource for this request
+        project (str):
+            Project ID for this request.
+        resource (str):
+            Name or id of the resource for this request.
+    """
+
+    global_set_policy_request_resource: "GlobalSetPolicyRequest" = proto.Field(
+        proto.MESSAGE,
+        number=337048498,
+        message="GlobalSetPolicyRequest",
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+    resource: str = proto.Field(
+        proto.STRING,
+        number=195806222,
+    )
+
+
+class SetIamPolicySslPolicyRequest(proto.Message):
+    r"""A request message for SslPolicies.SetIamPolicy. See the
+    method description for details.
 
     Attributes:
         global_set_policy_request_resource (google.cloud.compute_v1.types.GlobalSetPolicyRequest):
@@ -142145,9 +143352,10 @@ class Snapshot(proto.Message):
 
             This field is a member of `oneof`_ ``_snapshot_group_name``.
         snapshot_type (str):
-            Indicates the type of the snapshot.
-            Check the SnapshotType enum for the list of
-            possible values.
+            Indicates the type of the snapshot. Valid
+            values are ARCHIVE or STANDARD. The default is
+            STANDARD. Check the SnapshotType enum for the
+            list of possible values.
 
             This field is a member of `oneof`_ ``_snapshot_type``.
         source_disk (str):
@@ -142264,16 +143472,20 @@ class Snapshot(proto.Message):
         X86_64 = 425300551
 
     class SnapshotType(proto.Enum):
-        r"""Indicates the type of the snapshot.
+        r"""Indicates the type of the snapshot. Valid values are ARCHIVE
+        or STANDARD. The default is STANDARD.
 
         Values:
             UNDEFINED_SNAPSHOT_TYPE (0):
                 A value indicating that the enum field is not
                 set.
             ARCHIVE (506752162):
-                No description available.
+                Indicates an archive snapshot, which is
+                recommended for long-term retention and
+                compliance.
             STANDARD (484642493):
-                No description available.
+                Indicates a standard snapshot, which is
+                recommended for frequent restores.
         """
 
         UNDEFINED_SNAPSHOT_TYPE = 0
@@ -149420,7 +150632,7 @@ class TargetHttpsProxy(proto.Message):
             ::
 
                - //certificatemanager.googleapis.com/projects/{project}/locations/{location}/certificates/{resourceName}.
-               - https://certificatemanager.googleapis.com/v1alpha1/projects/{project}/locations/{location}/certificates/{resourceName}.
+               - https://certificatemanager.{universeDomain}/v1alpha1/projects/{project}/locations/{location}/certificates/{resourceName}.
         ssl_policy (str):
             URL of SslPolicy resource that will be
             associated with the TargetHttpsProxy resource.
@@ -153380,6 +154592,40 @@ class TestIamPermissionsRegionSnapshotRequest(proto.Message):
     )
 
 
+class TestIamPermissionsRegionSslPolicyRequest(proto.Message):
+    r"""A request message for RegionSslPolicies.TestIamPermissions.
+    See the method description for details.
+
+    Attributes:
+        project (str):
+            Project ID for this request.
+        region (str):
+            The name of the region for this request.
+        resource (str):
+            Name or id of the resource for this request.
+        test_permissions_request_resource (google.cloud.compute_v1.types.TestPermissionsRequest):
+            The body resource for this request
+    """
+
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+    region: str = proto.Field(
+        proto.STRING,
+        number=138946292,
+    )
+    resource: str = proto.Field(
+        proto.STRING,
+        number=195806222,
+    )
+    test_permissions_request_resource: "TestPermissionsRequest" = proto.Field(
+        proto.MESSAGE,
+        number=439214758,
+        message="TestPermissionsRequest",
+    )
+
+
 class TestIamPermissionsReservationBlockRequest(proto.Message):
     r"""A request message for ReservationBlocks.TestIamPermissions.
     See the method description for details.
@@ -153595,6 +154841,34 @@ class TestIamPermissionsServiceAttachmentRequest(proto.Message):
 
 class TestIamPermissionsSnapshotRequest(proto.Message):
     r"""A request message for Snapshots.TestIamPermissions. See the
+    method description for details.
+
+    Attributes:
+        project (str):
+            Project ID for this request.
+        resource (str):
+            Name or id of the resource for this request.
+        test_permissions_request_resource (google.cloud.compute_v1.types.TestPermissionsRequest):
+            The body resource for this request
+    """
+
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+    resource: str = proto.Field(
+        proto.STRING,
+        number=195806222,
+    )
+    test_permissions_request_resource: "TestPermissionsRequest" = proto.Field(
+        proto.MESSAGE,
+        number=439214758,
+        message="TestPermissionsRequest",
+    )
+
+
+class TestIamPermissionsSslPolicyRequest(proto.Message):
+    r"""A request message for SslPolicies.TestIamPermissions. See the
     method description for details.
 
     Attributes:
@@ -154022,6 +155296,9 @@ class UpcomingMaintenance(proto.Message):
             UNDEFINED_MAINTENANCE_REASONS (0):
                 A value indicating that the enum field is not
                 set.
+            FAILURE_CUSTOMER_REPORTED (42889343):
+                Maintenance due to a fault reported by the
+                customer via the R&R (Report-and-Replace) API.
             FAILURE_DISK (8573778):
                 Maintenance due to disk errors.
             FAILURE_GPU (467876919):
@@ -154063,6 +155340,7 @@ class UpcomingMaintenance(proto.Message):
         """
 
         UNDEFINED_MAINTENANCE_REASONS = 0
+        FAILURE_CUSTOMER_REPORTED = 42889343
         FAILURE_DISK = 8573778
         FAILURE_GPU = 467876919
         FAILURE_GPU_MULTIPLE_FAULTY_HOSTS_CUSTOMER_REPORTED = 223284959
@@ -156819,6 +158097,10 @@ class UrlMap(proto.Message):
             [Output Only] Server-defined URL for the resource.
 
             This field is a member of `oneof`_ ``_self_link``.
+        status (google.cloud.compute_v1.types.UrlMapStatus):
+            Output only. [Output Only] The status of the URL map.
+
+            This field is a member of `oneof`_ ``_status``.
         tests (MutableSequence[google.cloud.compute_v1.types.UrlMapTest]):
             The list of expected URL mapping tests.
             Request to update theUrlMap succeeds only if all
@@ -156909,6 +158191,12 @@ class UrlMap(proto.Message):
         number=456214797,
         optional=True,
     )
+    status: "UrlMapStatus" = proto.Field(
+        proto.MESSAGE,
+        number=181260274,
+        optional=True,
+        message="UrlMapStatus",
+    )
     tests: MutableSequence["UrlMapTest"] = proto.RepeatedField(
         proto.MESSAGE,
         number=110251553,
@@ -156990,6 +158278,36 @@ class UrlMapList(proto.Message):
     )
 
 
+class UrlMapQuotaUsage(proto.Message):
+    r"""Message representing the quota usage for a UrlMap.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        forwarding_rules (int):
+            Output only. The number of forwarding rules
+            that uses this UrlMap.
+
+            This field is a member of `oneof`_ ``_forwarding_rules``.
+        units (int):
+            Output only. The number of quota units
+            calculated for this UrlMap.
+
+            This field is a member of `oneof`_ ``_units``.
+    """
+
+    forwarding_rules: int = proto.Field(
+        proto.INT32,
+        number=315821365,
+        optional=True,
+    )
+    units: int = proto.Field(
+        proto.INT64,
+        number=111433583,
+        optional=True,
+    )
+
+
 class UrlMapReference(proto.Message):
     r"""
 
@@ -157005,6 +158323,27 @@ class UrlMapReference(proto.Message):
         proto.STRING,
         number=367020684,
         optional=True,
+    )
+
+
+class UrlMapStatus(proto.Message):
+    r"""[Output Only] The status of the URL map.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        quota_usage (google.cloud.compute_v1.types.UrlMapQuotaUsage):
+            Output only. Summary of quota usage for given
+            UrlMap.
+
+            This field is a member of `oneof`_ ``_quota_usage``.
+    """
+
+    quota_usage: "UrlMapQuotaUsage" = proto.Field(
+        proto.MESSAGE,
+        number=238511386,
+        optional=True,
+        message="UrlMapQuotaUsage",
     )
 
 
@@ -157154,6 +158493,11 @@ class UrlMapValidationResult(proto.Message):
             reasons.
 
             This field is a member of `oneof`_ ``_load_succeeded``.
+        quota_usage (google.cloud.compute_v1.types.UrlMapQuotaUsage):
+            Output only. Summary of quota usage for given
+            UrlMap.
+
+            This field is a member of `oneof`_ ``_quota_usage``.
         test_failures (MutableSequence[google.cloud.compute_v1.types.TestFailure]):
 
         test_passed (bool):
@@ -157172,6 +158516,12 @@ class UrlMapValidationResult(proto.Message):
         proto.BOOL,
         number=128326216,
         optional=True,
+    )
+    quota_usage: "UrlMapQuotaUsage" = proto.Field(
+        proto.MESSAGE,
+        number=238511386,
+        optional=True,
+        message="UrlMapQuotaUsage",
     )
     test_failures: MutableSequence["TestFailure"] = proto.RepeatedField(
         proto.MESSAGE,
@@ -159953,9 +161303,11 @@ class VpnTunnelCipherSuite(proto.Message):
 
     Attributes:
         phase1 (google.cloud.compute_v1.types.VpnTunnelPhase1Algorithms):
+            Cipher algorithms for IKE phase 1.
 
             This field is a member of `oneof`_ ``_phase1``.
         phase2 (google.cloud.compute_v1.types.VpnTunnelPhase2Algorithms):
+            Cipher algorithms for IKE phase 2.
 
             This field is a member of `oneof`_ ``_phase2``.
     """
@@ -160085,13 +161437,14 @@ class VpnTunnelPhase1Algorithms(proto.Message):
 
     Attributes:
         dh (MutableSequence[str]):
-
+            Diffie-Hellman groups for IKE phase 1.
         encryption (MutableSequence[str]):
-
+            Encryption algorithms for IKE phase 1.
         integrity (MutableSequence[str]):
-
+            Integrity algorithms for IKE phase 1.
         prf (MutableSequence[str]):
-
+            Pseudo-random functions (PRF) for IKE phase
+            1.
     """
 
     dh: MutableSequence[str] = proto.RepeatedField(
@@ -160117,11 +161470,12 @@ class VpnTunnelPhase2Algorithms(proto.Message):
 
     Attributes:
         encryption (MutableSequence[str]):
-
+            Encryption algorithms for IKE phase 2.
         integrity (MutableSequence[str]):
-
+            Integrity algorithms for IKE phase 2.
         pfs (MutableSequence[str]):
-
+            Perfect Forward Secrecy (PFS) groups for IKE
+            phase 2.
     """
 
     encryption: MutableSequence[str] = proto.RepeatedField(
@@ -161242,6 +162596,12 @@ class WireProperties(proto.Message):
             values.
 
             This field is a member of `oneof`_ ``_fault_response``.
+        flow_management (str):
+            The flow management configuration for the
+            wire. Check the FlowManagement enum for the list
+            of possible values.
+
+            This field is a member of `oneof`_ ``_flow_management``.
     """
 
     class BandwidthAllocation(proto.Enum):
@@ -161305,6 +162665,23 @@ class WireProperties(proto.Message):
         DISABLE_PORT = 287086488
         NONE = 2402104
 
+    class FlowManagement(proto.Enum):
+        r"""The flow management configuration for the wire.
+
+        Values:
+            UNDEFINED_FLOW_MANAGEMENT (0):
+                A value indicating that the enum field is not
+                set.
+            DYNAMIC_PATH (243852357):
+                The wire uses dynamic paths.
+            FIXED_PATH (74947120):
+                The wire uses fixed paths.
+        """
+
+        UNDEFINED_FLOW_MANAGEMENT = 0
+        DYNAMIC_PATH = 243852357
+        FIXED_PATH = 74947120
+
     bandwidth_allocation: str = proto.Field(
         proto.STRING,
         number=90651950,
@@ -161318,6 +162695,11 @@ class WireProperties(proto.Message):
     fault_response: str = proto.Field(
         proto.STRING,
         number=353587646,
+        optional=True,
+    )
+    flow_management: str = proto.Field(
+        proto.STRING,
+        number=183886836,
         optional=True,
     )
 
@@ -161446,7 +162828,32 @@ class WorkloadIdentityConfig(proto.Message):
         identity_certificate_enabled (bool):
 
             This field is a member of `oneof`_ ``_identity_certificate_enabled``.
+        identity_type (str):
+            Check the IdentityType enum for the list of
+            possible values.
+
+            This field is a member of `oneof`_ ``_identity_type``.
     """
+
+    class IdentityType(proto.Enum):
+        r"""
+
+        Values:
+            UNDEFINED_IDENTITY_TYPE (0):
+                A value indicating that the enum field is not
+                set.
+            AGENT_IDENTITY (71547096):
+                No description available.
+            IDENTITY_TYPE_UNSPECIFIED (157537011):
+                No description available.
+            SERVICE_ACCOUNT (178301539):
+                No description available.
+        """
+
+        UNDEFINED_IDENTITY_TYPE = 0
+        AGENT_IDENTITY = 71547096
+        IDENTITY_TYPE_UNSPECIFIED = 157537011
+        SERVICE_ACCOUNT = 178301539
 
     identity: str = proto.Field(
         proto.STRING,
@@ -161456,6 +162863,11 @@ class WorkloadIdentityConfig(proto.Message):
     identity_certificate_enabled: bool = proto.Field(
         proto.BOOL,
         number=342892440,
+        optional=True,
+    )
+    identity_type: str = proto.Field(
+        proto.STRING,
+        number=25665051,
         optional=True,
     )
 

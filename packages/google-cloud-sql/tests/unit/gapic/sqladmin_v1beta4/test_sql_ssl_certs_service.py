@@ -39,6 +39,7 @@ except ImportError:  # pragma: NO COVER
     HAS_GOOGLE_AUTH_AIO = False
 
 import google.auth
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 from google.api_core import (
     client_options,
@@ -2136,6 +2137,869 @@ async def test_list_field_headers_async():
     ) in kw["metadata"]
 
 
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        cloud_sql.UpdateCustomerManagedCertificateRequest(),
+        {},
+    ],
+)
+def test_update_customer_managed_certificate(request_type, transport: str = "grpc"):
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_customer_managed_certificate), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = cloud_sql_resources.Operation(
+            kind="kind_value",
+            target_link="target_link_value",
+            status=cloud_sql_resources.Operation.SqlOperationStatus.PENDING,
+            user="user_value",
+            operation_type=cloud_sql_resources.Operation.SqlOperationType.IMPORT,
+            name="name_value",
+            target_id="target_id_value",
+            self_link="self_link_value",
+            target_project="target_project_value",
+        )
+        response = client.update_customer_managed_certificate(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = cloud_sql.UpdateCustomerManagedCertificateRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, cloud_sql_resources.Operation)
+    assert response.kind == "kind_value"
+    assert response.target_link == "target_link_value"
+    assert response.status == cloud_sql_resources.Operation.SqlOperationStatus.PENDING
+    assert response.user == "user_value"
+    assert (
+        response.operation_type == cloud_sql_resources.Operation.SqlOperationType.IMPORT
+    )
+    assert response.name == "name_value"
+    assert response.target_id == "target_id_value"
+    assert response.self_link == "self_link_value"
+    assert response.target_project == "target_project_value"
+
+
+def test_update_customer_managed_certificate_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = cloud_sql.UpdateCustomerManagedCertificateRequest(
+        instance="instance_value",
+        project="project_value",
+        certificate_bundle="certificate_bundle_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_customer_managed_certificate), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.update_customer_managed_certificate(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql.UpdateCustomerManagedCertificateRequest(
+            instance="instance_value",
+            project="project_value",
+            certificate_bundle="certificate_bundle_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_update_customer_managed_certificate_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = SqlSslCertsServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.update_customer_managed_certificate
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.update_customer_managed_certificate
+        ] = mock_rpc
+        request = {}
+        client.update_customer_managed_certificate(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.update_customer_managed_certificate(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_update_customer_managed_certificate_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = SqlSslCertsServiceAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.update_customer_managed_certificate
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.update_customer_managed_certificate
+        ] = mock_rpc
+
+        request = {}
+        await client.update_customer_managed_certificate(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.update_customer_managed_certificate(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        cloud_sql.UpdateCustomerManagedCertificateRequest(),
+        {},
+    ],
+)
+async def test_update_customer_managed_certificate_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = SqlSslCertsServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_customer_managed_certificate), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_resources.Operation(
+                kind="kind_value",
+                target_link="target_link_value",
+                status=cloud_sql_resources.Operation.SqlOperationStatus.PENDING,
+                user="user_value",
+                operation_type=cloud_sql_resources.Operation.SqlOperationType.IMPORT,
+                name="name_value",
+                target_id="target_id_value",
+                self_link="self_link_value",
+                target_project="target_project_value",
+            )
+        )
+        response = await client.update_customer_managed_certificate(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = cloud_sql.UpdateCustomerManagedCertificateRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, cloud_sql_resources.Operation)
+    assert response.kind == "kind_value"
+    assert response.target_link == "target_link_value"
+    assert response.status == cloud_sql_resources.Operation.SqlOperationStatus.PENDING
+    assert response.user == "user_value"
+    assert (
+        response.operation_type == cloud_sql_resources.Operation.SqlOperationType.IMPORT
+    )
+    assert response.name == "name_value"
+    assert response.target_id == "target_id_value"
+    assert response.self_link == "self_link_value"
+    assert response.target_project == "target_project_value"
+
+
+def test_update_customer_managed_certificate_field_headers():
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = cloud_sql.UpdateCustomerManagedCertificateRequest()
+
+    request.project = "project_value"
+    request.instance = "instance_value"
+    request.certificate_bundle = "certificate_bundle_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_customer_managed_certificate), "__call__"
+    ) as call:
+        call.return_value = cloud_sql_resources.Operation()
+        client.update_customer_managed_certificate(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "project=project_value&instance=instance_value&certificate_bundle=certificate_bundle_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_update_customer_managed_certificate_field_headers_async():
+    client = SqlSslCertsServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = cloud_sql.UpdateCustomerManagedCertificateRequest()
+
+    request.project = "project_value"
+    request.instance = "instance_value"
+    request.certificate_bundle = "certificate_bundle_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_customer_managed_certificate), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_resources.Operation()
+        )
+        await client.update_customer_managed_certificate(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "project=project_value&instance=instance_value&certificate_bundle=certificate_bundle_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        cloud_sql.DeleteCustomerManagedCertificateRequest(),
+        {},
+    ],
+)
+def test_delete_customer_managed_certificate(request_type, transport: str = "grpc"):
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_customer_managed_certificate), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = cloud_sql_resources.Operation(
+            kind="kind_value",
+            target_link="target_link_value",
+            status=cloud_sql_resources.Operation.SqlOperationStatus.PENDING,
+            user="user_value",
+            operation_type=cloud_sql_resources.Operation.SqlOperationType.IMPORT,
+            name="name_value",
+            target_id="target_id_value",
+            self_link="self_link_value",
+            target_project="target_project_value",
+        )
+        response = client.delete_customer_managed_certificate(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = cloud_sql.DeleteCustomerManagedCertificateRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, cloud_sql_resources.Operation)
+    assert response.kind == "kind_value"
+    assert response.target_link == "target_link_value"
+    assert response.status == cloud_sql_resources.Operation.SqlOperationStatus.PENDING
+    assert response.user == "user_value"
+    assert (
+        response.operation_type == cloud_sql_resources.Operation.SqlOperationType.IMPORT
+    )
+    assert response.name == "name_value"
+    assert response.target_id == "target_id_value"
+    assert response.self_link == "self_link_value"
+    assert response.target_project == "target_project_value"
+
+
+def test_delete_customer_managed_certificate_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = cloud_sql.DeleteCustomerManagedCertificateRequest(
+        instance="instance_value",
+        project="project_value",
+        certificate_bundle="certificate_bundle_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_customer_managed_certificate), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.delete_customer_managed_certificate(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql.DeleteCustomerManagedCertificateRequest(
+            instance="instance_value",
+            project="project_value",
+            certificate_bundle="certificate_bundle_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_delete_customer_managed_certificate_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = SqlSslCertsServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.delete_customer_managed_certificate
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.delete_customer_managed_certificate
+        ] = mock_rpc
+        request = {}
+        client.delete_customer_managed_certificate(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.delete_customer_managed_certificate(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_delete_customer_managed_certificate_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = SqlSslCertsServiceAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.delete_customer_managed_certificate
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.delete_customer_managed_certificate
+        ] = mock_rpc
+
+        request = {}
+        await client.delete_customer_managed_certificate(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.delete_customer_managed_certificate(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        cloud_sql.DeleteCustomerManagedCertificateRequest(),
+        {},
+    ],
+)
+async def test_delete_customer_managed_certificate_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = SqlSslCertsServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_customer_managed_certificate), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_resources.Operation(
+                kind="kind_value",
+                target_link="target_link_value",
+                status=cloud_sql_resources.Operation.SqlOperationStatus.PENDING,
+                user="user_value",
+                operation_type=cloud_sql_resources.Operation.SqlOperationType.IMPORT,
+                name="name_value",
+                target_id="target_id_value",
+                self_link="self_link_value",
+                target_project="target_project_value",
+            )
+        )
+        response = await client.delete_customer_managed_certificate(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = cloud_sql.DeleteCustomerManagedCertificateRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, cloud_sql_resources.Operation)
+    assert response.kind == "kind_value"
+    assert response.target_link == "target_link_value"
+    assert response.status == cloud_sql_resources.Operation.SqlOperationStatus.PENDING
+    assert response.user == "user_value"
+    assert (
+        response.operation_type == cloud_sql_resources.Operation.SqlOperationType.IMPORT
+    )
+    assert response.name == "name_value"
+    assert response.target_id == "target_id_value"
+    assert response.self_link == "self_link_value"
+    assert response.target_project == "target_project_value"
+
+
+def test_delete_customer_managed_certificate_field_headers():
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = cloud_sql.DeleteCustomerManagedCertificateRequest()
+
+    request.project = "project_value"
+    request.instance = "instance_value"
+    request.certificate_bundle = "certificate_bundle_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_customer_managed_certificate), "__call__"
+    ) as call:
+        call.return_value = cloud_sql_resources.Operation()
+        client.delete_customer_managed_certificate(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "project=project_value&instance=instance_value&certificate_bundle=certificate_bundle_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_delete_customer_managed_certificate_field_headers_async():
+    client = SqlSslCertsServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = cloud_sql.DeleteCustomerManagedCertificateRequest()
+
+    request.project = "project_value"
+    request.instance = "instance_value"
+    request.certificate_bundle = "certificate_bundle_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_customer_managed_certificate), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_resources.Operation()
+        )
+        await client.delete_customer_managed_certificate(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "project=project_value&instance=instance_value&certificate_bundle=certificate_bundle_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        cloud_sql.ListCustomerManagedCertificatesRequest(),
+        {},
+    ],
+)
+def test_list_customer_managed_certificates(request_type, transport: str = "grpc"):
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_customer_managed_certificates), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = cloud_sql.ListCustomerManagedCertificatesResponse()
+        response = client.list_customer_managed_certificates(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = cloud_sql.ListCustomerManagedCertificatesRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, cloud_sql.ListCustomerManagedCertificatesResponse)
+
+
+def test_list_customer_managed_certificates_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = cloud_sql.ListCustomerManagedCertificatesRequest(
+        instance="instance_value",
+        project="project_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_customer_managed_certificates), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.list_customer_managed_certificates(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql.ListCustomerManagedCertificatesRequest(
+            instance="instance_value",
+            project="project_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_list_customer_managed_certificates_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = SqlSslCertsServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.list_customer_managed_certificates
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.list_customer_managed_certificates
+        ] = mock_rpc
+        request = {}
+        client.list_customer_managed_certificates(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.list_customer_managed_certificates(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_list_customer_managed_certificates_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = SqlSslCertsServiceAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.list_customer_managed_certificates
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.list_customer_managed_certificates
+        ] = mock_rpc
+
+        request = {}
+        await client.list_customer_managed_certificates(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.list_customer_managed_certificates(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        cloud_sql.ListCustomerManagedCertificatesRequest(),
+        {},
+    ],
+)
+async def test_list_customer_managed_certificates_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = SqlSslCertsServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_customer_managed_certificates), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql.ListCustomerManagedCertificatesResponse()
+        )
+        response = await client.list_customer_managed_certificates(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = cloud_sql.ListCustomerManagedCertificatesRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, cloud_sql.ListCustomerManagedCertificatesResponse)
+
+
+def test_list_customer_managed_certificates_field_headers():
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = cloud_sql.ListCustomerManagedCertificatesRequest()
+
+    request.project = "project_value"
+    request.instance = "instance_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_customer_managed_certificates), "__call__"
+    ) as call:
+        call.return_value = cloud_sql.ListCustomerManagedCertificatesResponse()
+        client.list_customer_managed_certificates(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "project=project_value&instance=instance_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_list_customer_managed_certificates_field_headers_async():
+    client = SqlSslCertsServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = cloud_sql.ListCustomerManagedCertificatesRequest()
+
+    request.project = "project_value"
+    request.instance = "instance_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_customer_managed_certificates), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql.ListCustomerManagedCertificatesResponse()
+        )
+        await client.list_customer_managed_certificates(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "project=project_value&instance=instance_value",
+    ) in kw["metadata"]
+
+
 def test_delete_rest_use_cached_wrapped_rpc():
     # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
     # instead of constructing them on each call
@@ -2278,6 +3142,377 @@ def test_list_rest_use_cached_wrapped_rpc():
         # Establish that a new wrapper was not created for this call
         assert wrapper_fn.call_count == 0
         assert mock_rpc.call_count == 2
+
+
+def test_update_customer_managed_certificate_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = SqlSslCertsServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.update_customer_managed_certificate
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.update_customer_managed_certificate
+        ] = mock_rpc
+
+        request = {}
+        client.update_customer_managed_certificate(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.update_customer_managed_certificate(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_update_customer_managed_certificate_rest_required_fields(
+    request_type=cloud_sql.UpdateCustomerManagedCertificateRequest,
+):
+    transport_class = transports.SqlSslCertsServiceRestTransport
+
+    request_init = {}
+    request_init["instance"] = ""
+    request_init["project"] = ""
+    request_init["certificate_bundle"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseUpdateCustomerManagedCertificate,
+        "_BaseUpdateCustomerManagedCertificate__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["instance"] = "instance_value"
+    jsonified_request["project"] = "project_value"
+    jsonified_request["certificateBundle"] = "certificate_bundle_value"
+
+    # verify required fields with non-default values are left alone
+    assert "instance" in jsonified_request
+    assert jsonified_request["instance"] == "instance_value"
+    assert "project" in jsonified_request
+    assert jsonified_request["project"] == "project_value"
+    assert "certificateBundle" in jsonified_request
+    assert jsonified_request["certificateBundle"] == "certificate_bundle_value"
+
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = cloud_sql_resources.Operation()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "patch",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = cloud_sql_resources.Operation.pb(return_value)
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.update_customer_managed_certificate(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_delete_customer_managed_certificate_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = SqlSslCertsServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.delete_customer_managed_certificate
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.delete_customer_managed_certificate
+        ] = mock_rpc
+
+        request = {}
+        client.delete_customer_managed_certificate(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.delete_customer_managed_certificate(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_delete_customer_managed_certificate_rest_required_fields(
+    request_type=cloud_sql.DeleteCustomerManagedCertificateRequest,
+):
+    transport_class = transports.SqlSslCertsServiceRestTransport
+
+    request_init = {}
+    request_init["instance"] = ""
+    request_init["project"] = ""
+    request_init["certificate_bundle"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseDeleteCustomerManagedCertificate,
+        "_BaseDeleteCustomerManagedCertificate__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["instance"] = "instance_value"
+    jsonified_request["project"] = "project_value"
+    jsonified_request["certificateBundle"] = "certificate_bundle_value"
+
+    # verify required fields with non-default values are left alone
+    assert "instance" in jsonified_request
+    assert jsonified_request["instance"] == "instance_value"
+    assert "project" in jsonified_request
+    assert jsonified_request["project"] == "project_value"
+    assert "certificateBundle" in jsonified_request
+    assert jsonified_request["certificateBundle"] == "certificate_bundle_value"
+
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = cloud_sql_resources.Operation()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "delete",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = cloud_sql_resources.Operation.pb(return_value)
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.delete_customer_managed_certificate(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_list_customer_managed_certificates_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = SqlSslCertsServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.list_customer_managed_certificates
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.list_customer_managed_certificates
+        ] = mock_rpc
+
+        request = {}
+        client.list_customer_managed_certificates(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.list_customer_managed_certificates(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_list_customer_managed_certificates_rest_required_fields(
+    request_type=cloud_sql.ListCustomerManagedCertificatesRequest,
+):
+    transport_class = transports.SqlSslCertsServiceRestTransport
+
+    request_init = {}
+    request_init["instance"] = ""
+    request_init["project"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseListCustomerManagedCertificates,
+        "_BaseListCustomerManagedCertificates__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["instance"] = "instance_value"
+    jsonified_request["project"] = "project_value"
+
+    # verify required fields with non-default values are left alone
+    assert "instance" in jsonified_request
+    assert jsonified_request["instance"] == "instance_value"
+    assert "project" in jsonified_request
+    assert jsonified_request["project"] == "project_value"
+
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = cloud_sql.ListCustomerManagedCertificatesResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = cloud_sql.ListCustomerManagedCertificatesResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.list_customer_managed_certificates(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
 
 
 def test_credentials_transport_error():
@@ -2466,6 +3701,72 @@ def test_list_empty_call_grpc():
         assert args[0] == request_msg
 
 
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_update_customer_managed_certificate_empty_call_grpc():
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_customer_managed_certificate), "__call__"
+    ) as call:
+        call.return_value = cloud_sql_resources.Operation()
+        client.update_customer_managed_certificate(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql.UpdateCustomerManagedCertificateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_delete_customer_managed_certificate_empty_call_grpc():
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_customer_managed_certificate), "__call__"
+    ) as call:
+        call.return_value = cloud_sql_resources.Operation()
+        client.delete_customer_managed_certificate(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql.DeleteCustomerManagedCertificateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_list_customer_managed_certificates_empty_call_grpc():
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_customer_managed_certificates), "__call__"
+    ) as call:
+        call.return_value = cloud_sql.ListCustomerManagedCertificatesResponse()
+        client.list_customer_managed_certificates(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql.ListCustomerManagedCertificatesRequest()
+        assert args[0] == request_msg
+
+
 def test_transport_kind_grpc_asyncio():
     transport = SqlSslCertsServiceAsyncClient.get_transport_class("grpc_asyncio")(
         credentials=async_anonymous_credentials()
@@ -2595,6 +3896,104 @@ async def test_list_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = cloud_sql.SqlSslCertsListRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_update_customer_managed_certificate_empty_call_grpc_asyncio():
+    client = SqlSslCertsServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_customer_managed_certificate), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_resources.Operation(
+                kind="kind_value",
+                target_link="target_link_value",
+                status=cloud_sql_resources.Operation.SqlOperationStatus.PENDING,
+                user="user_value",
+                operation_type=cloud_sql_resources.Operation.SqlOperationType.IMPORT,
+                name="name_value",
+                target_id="target_id_value",
+                self_link="self_link_value",
+                target_project="target_project_value",
+            )
+        )
+        await client.update_customer_managed_certificate(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql.UpdateCustomerManagedCertificateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_delete_customer_managed_certificate_empty_call_grpc_asyncio():
+    client = SqlSslCertsServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_customer_managed_certificate), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_resources.Operation(
+                kind="kind_value",
+                target_link="target_link_value",
+                status=cloud_sql_resources.Operation.SqlOperationStatus.PENDING,
+                user="user_value",
+                operation_type=cloud_sql_resources.Operation.SqlOperationType.IMPORT,
+                name="name_value",
+                target_id="target_id_value",
+                self_link="self_link_value",
+                target_project="target_project_value",
+            )
+        )
+        await client.delete_customer_managed_certificate(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql.DeleteCustomerManagedCertificateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_list_customer_managed_certificates_empty_call_grpc_asyncio():
+    client = SqlSslCertsServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_customer_managed_certificates), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql.ListCustomerManagedCertificatesResponse()
+        )
+        await client.list_customer_managed_certificates(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql.ListCustomerManagedCertificatesRequest()
         assert args[0] == request_msg
 
 
@@ -3245,6 +4644,465 @@ def test_list_rest_interceptors(null_interceptor):
         post_with_metadata.assert_called_once()
 
 
+def test_update_customer_managed_certificate_rest_bad_request(
+    request_type=cloud_sql.UpdateCustomerManagedCertificateRequest,
+):
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "project": "sample1",
+        "instance": "sample2",
+        "certificate_bundle": "sample3",
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.update_customer_managed_certificate(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        cloud_sql.UpdateCustomerManagedCertificateRequest,
+        dict,
+    ],
+)
+def test_update_customer_managed_certificate_rest_call_success(request_type):
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "project": "sample1",
+        "instance": "sample2",
+        "certificate_bundle": "sample3",
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = cloud_sql_resources.Operation(
+            kind="kind_value",
+            target_link="target_link_value",
+            status=cloud_sql_resources.Operation.SqlOperationStatus.PENDING,
+            user="user_value",
+            operation_type=cloud_sql_resources.Operation.SqlOperationType.IMPORT,
+            name="name_value",
+            target_id="target_id_value",
+            self_link="self_link_value",
+            target_project="target_project_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = cloud_sql_resources.Operation.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.update_customer_managed_certificate(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, cloud_sql_resources.Operation)
+    assert response.kind == "kind_value"
+    assert response.target_link == "target_link_value"
+    assert response.status == cloud_sql_resources.Operation.SqlOperationStatus.PENDING
+    assert response.user == "user_value"
+    assert (
+        response.operation_type == cloud_sql_resources.Operation.SqlOperationType.IMPORT
+    )
+    assert response.name == "name_value"
+    assert response.target_id == "target_id_value"
+    assert response.self_link == "self_link_value"
+    assert response.target_project == "target_project_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_update_customer_managed_certificate_rest_interceptors(null_interceptor):
+    transport = transports.SqlSslCertsServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.SqlSslCertsServiceRestInterceptor(),
+    )
+    client = SqlSslCertsServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.SqlSslCertsServiceRestInterceptor,
+            "post_update_customer_managed_certificate",
+        ) as post,
+        mock.patch.object(
+            transports.SqlSslCertsServiceRestInterceptor,
+            "post_update_customer_managed_certificate_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.SqlSslCertsServiceRestInterceptor,
+            "pre_update_customer_managed_certificate",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = cloud_sql.UpdateCustomerManagedCertificateRequest.pb(
+            cloud_sql.UpdateCustomerManagedCertificateRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = cloud_sql_resources.Operation.to_json(
+            cloud_sql_resources.Operation()
+        )
+        req.return_value.content = return_value
+
+        request = cloud_sql.UpdateCustomerManagedCertificateRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = cloud_sql_resources.Operation()
+        post_with_metadata.return_value = cloud_sql_resources.Operation(), metadata
+
+        client.update_customer_managed_certificate(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_delete_customer_managed_certificate_rest_bad_request(
+    request_type=cloud_sql.DeleteCustomerManagedCertificateRequest,
+):
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "project": "sample1",
+        "instance": "sample2",
+        "certificate_bundle": "sample3",
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.delete_customer_managed_certificate(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        cloud_sql.DeleteCustomerManagedCertificateRequest,
+        dict,
+    ],
+)
+def test_delete_customer_managed_certificate_rest_call_success(request_type):
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "project": "sample1",
+        "instance": "sample2",
+        "certificate_bundle": "sample3",
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = cloud_sql_resources.Operation(
+            kind="kind_value",
+            target_link="target_link_value",
+            status=cloud_sql_resources.Operation.SqlOperationStatus.PENDING,
+            user="user_value",
+            operation_type=cloud_sql_resources.Operation.SqlOperationType.IMPORT,
+            name="name_value",
+            target_id="target_id_value",
+            self_link="self_link_value",
+            target_project="target_project_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = cloud_sql_resources.Operation.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.delete_customer_managed_certificate(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, cloud_sql_resources.Operation)
+    assert response.kind == "kind_value"
+    assert response.target_link == "target_link_value"
+    assert response.status == cloud_sql_resources.Operation.SqlOperationStatus.PENDING
+    assert response.user == "user_value"
+    assert (
+        response.operation_type == cloud_sql_resources.Operation.SqlOperationType.IMPORT
+    )
+    assert response.name == "name_value"
+    assert response.target_id == "target_id_value"
+    assert response.self_link == "self_link_value"
+    assert response.target_project == "target_project_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_delete_customer_managed_certificate_rest_interceptors(null_interceptor):
+    transport = transports.SqlSslCertsServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.SqlSslCertsServiceRestInterceptor(),
+    )
+    client = SqlSslCertsServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.SqlSslCertsServiceRestInterceptor,
+            "post_delete_customer_managed_certificate",
+        ) as post,
+        mock.patch.object(
+            transports.SqlSslCertsServiceRestInterceptor,
+            "post_delete_customer_managed_certificate_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.SqlSslCertsServiceRestInterceptor,
+            "pre_delete_customer_managed_certificate",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = cloud_sql.DeleteCustomerManagedCertificateRequest.pb(
+            cloud_sql.DeleteCustomerManagedCertificateRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = cloud_sql_resources.Operation.to_json(
+            cloud_sql_resources.Operation()
+        )
+        req.return_value.content = return_value
+
+        request = cloud_sql.DeleteCustomerManagedCertificateRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = cloud_sql_resources.Operation()
+        post_with_metadata.return_value = cloud_sql_resources.Operation(), metadata
+
+        client.delete_customer_managed_certificate(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_list_customer_managed_certificates_rest_bad_request(
+    request_type=cloud_sql.ListCustomerManagedCertificatesRequest,
+):
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"project": "sample1", "instance": "sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.list_customer_managed_certificates(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        cloud_sql.ListCustomerManagedCertificatesRequest,
+        dict,
+    ],
+)
+def test_list_customer_managed_certificates_rest_call_success(request_type):
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"project": "sample1", "instance": "sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = cloud_sql.ListCustomerManagedCertificatesResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = cloud_sql.ListCustomerManagedCertificatesResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.list_customer_managed_certificates(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, cloud_sql.ListCustomerManagedCertificatesResponse)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_list_customer_managed_certificates_rest_interceptors(null_interceptor):
+    transport = transports.SqlSslCertsServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.SqlSslCertsServiceRestInterceptor(),
+    )
+    client = SqlSslCertsServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.SqlSslCertsServiceRestInterceptor,
+            "post_list_customer_managed_certificates",
+        ) as post,
+        mock.patch.object(
+            transports.SqlSslCertsServiceRestInterceptor,
+            "post_list_customer_managed_certificates_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.SqlSslCertsServiceRestInterceptor,
+            "pre_list_customer_managed_certificates",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = cloud_sql.ListCustomerManagedCertificatesRequest.pb(
+            cloud_sql.ListCustomerManagedCertificatesRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = cloud_sql.ListCustomerManagedCertificatesResponse.to_json(
+            cloud_sql.ListCustomerManagedCertificatesResponse()
+        )
+        req.return_value.content = return_value
+
+        request = cloud_sql.ListCustomerManagedCertificatesRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = cloud_sql.ListCustomerManagedCertificatesResponse()
+        post_with_metadata.return_value = (
+            cloud_sql.ListCustomerManagedCertificatesResponse(),
+            metadata,
+        )
+
+        client.list_customer_managed_certificates(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
 def test_initialize_client_w_rest():
     client = SqlSslCertsServiceClient(
         credentials=ga_credentials.AnonymousCredentials(), transport="rest"
@@ -3328,6 +5186,69 @@ def test_list_empty_call_rest():
         assert args[0] == request_msg
 
 
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_update_customer_managed_certificate_empty_call_rest():
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_customer_managed_certificate), "__call__"
+    ) as call:
+        client.update_customer_managed_certificate(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql.UpdateCustomerManagedCertificateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_delete_customer_managed_certificate_empty_call_rest():
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_customer_managed_certificate), "__call__"
+    ) as call:
+        client.delete_customer_managed_certificate(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql.DeleteCustomerManagedCertificateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_list_customer_managed_certificates_empty_call_rest():
+    client = SqlSslCertsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_customer_managed_certificates), "__call__"
+    ) as call:
+        client.list_customer_managed_certificates(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql.ListCustomerManagedCertificatesRequest()
+        assert args[0] == request_msg
+
+
 def test_transport_grpc_default():
     # A client should use the gRPC transport by default.
     client = SqlSslCertsServiceClient(
@@ -3365,6 +5286,9 @@ def test_sql_ssl_certs_service_base_transport():
         "get",
         "insert",
         "list",
+        "update_customer_managed_certificate",
+        "delete_customer_managed_certificate",
+        "list_customer_managed_certificates",
     )
     for method in methods:
         with pytest.raises(NotImplementedError):
@@ -3655,6 +5579,15 @@ def test_sql_ssl_certs_service_client_transport_session_collision(transport_name
     assert session1 != session2
     session1 = client1.transport.list._session
     session2 = client2.transport.list._session
+    assert session1 != session2
+    session1 = client1.transport.update_customer_managed_certificate._session
+    session2 = client2.transport.update_customer_managed_certificate._session
+    assert session1 != session2
+    session1 = client1.transport.delete_customer_managed_certificate._session
+    session2 = client2.transport.delete_customer_managed_certificate._session
+    assert session1 != session2
+    session1 = client1.transport.list_customer_managed_certificates._session
+    session2 = client2.transport.list_customer_managed_certificates._session
     assert session1 != session2
 
 

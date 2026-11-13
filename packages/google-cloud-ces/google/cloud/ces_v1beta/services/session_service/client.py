@@ -70,10 +70,12 @@ except ImportError:  # pragma: NO COVER
 
 _LOGGER = std_logging.getLogger(__name__)
 
+import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
+import google.rpc.status_pb2 as status_pb2  # type: ignore
 from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 
-from google.cloud.ces_v1beta.types import session_service
+from google.cloud.ces_v1beta.types import common, example, session_service
 
 from .transports.base import DEFAULT_CLIENT_INFO, SessionServiceTransport
 from .transports.grpc import SessionServiceGrpcTransport
@@ -197,6 +199,52 @@ class SessionServiceClient(metaclass=SessionServiceClientMeta):
         """Parses a agent path into its component segments."""
         m = re.match(
             r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/apps/(?P<app>.+?)/agents/(?P<agent>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def app_path(
+        project: str,
+        location: str,
+        app: str,
+    ) -> str:
+        """Returns a fully-qualified app string."""
+        return "projects/{project}/locations/{location}/apps/{app}".format(
+            project=project,
+            location=location,
+            app=app,
+        )
+
+    @staticmethod
+    def parse_app_path(path: str) -> Dict[str, str]:
+        """Parses a app path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/apps/(?P<app>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def assistant_session_path(
+        project: str,
+        location: str,
+        app: str,
+        assistant_session: str,
+    ) -> str:
+        """Returns a fully-qualified assistant_session string."""
+        return "projects/{project}/locations/{location}/apps/{app}/assistantSessions/{assistant_session}".format(
+            project=project,
+            location=location,
+            app=app,
+            assistant_session=assistant_session,
+        )
+
+    @staticmethod
+    def parse_assistant_session_path(path: str) -> Dict[str, str]:
+        """Parses a assistant_session path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/apps/(?P<app>.+?)/assistantSessions/(?P<assistant_session>.+?)$",
             path,
         )
         return m.groupdict() if m else {}
@@ -1017,6 +1065,277 @@ class SessionServiceClient(metaclass=SessionServiceClientMeta):
         # Send the request.
         response = rpc(
             requests,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def stream_chat_ai_assistant(
+        self,
+        request: Optional[
+            Union[session_service.StreamChatAiAssistantRequest, dict]
+        ] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> Iterable[session_service.StreamChatAiAssistantResponse]:
+        r"""Runs Arc, the AI assistant, for the specified
+        assistant session in a streaming fashion.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import ces_v1beta
+
+            def sample_stream_chat_ai_assistant():
+                # Create a client
+                client = ces_v1beta.SessionServiceClient()
+
+                # Initialize request argument(s)
+                request = ces_v1beta.StreamChatAiAssistantRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                stream = client.stream_chat_ai_assistant(request=request)
+
+                # Handle the response
+                for response in stream:
+                    print(response)
+
+        Args:
+            request (Union[google.cloud.ces_v1beta.types.StreamChatAiAssistantRequest, dict]):
+                The request object. Request message for
+                [SessionService.StreamChatAiAssistant][google.cloud.ces.v1beta.SessionService.StreamChatAiAssistant].
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            Iterable[google.cloud.ces_v1beta.types.StreamChatAiAssistantResponse]:
+                Response message for
+                   [SessionService.StreamChatAiAssistant][google.cloud.ces.v1beta.SessionService.StreamChatAiAssistant].
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, session_service.StreamChatAiAssistantRequest):
+            request = session_service.StreamChatAiAssistantRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.stream_chat_ai_assistant]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def cancel_assistant_turn(
+        self,
+        request: Optional[
+            Union[session_service.CancelAssistantTurnRequest, dict]
+        ] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> session_service.CancelAssistantTurnResponse:
+        r"""Cancels the assistant session's in-flight turn, if
+        any: the explicit user stop for a turn running detached
+        from any stream. A cancel landing on a task that does
+        not host the turn preempts it through the session turn
+        epoch instead, ending it within one lease renewal.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import ces_v1beta
+
+            def sample_cancel_assistant_turn():
+                # Create a client
+                client = ces_v1beta.SessionServiceClient()
+
+                # Initialize request argument(s)
+                request = ces_v1beta.CancelAssistantTurnRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.cancel_assistant_turn(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.ces_v1beta.types.CancelAssistantTurnRequest, dict]):
+                The request object. Request to cancel an assistant
+                session's in-flight turn.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.ces_v1beta.types.CancelAssistantTurnResponse:
+                Response for CancelAssistantTurn.
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, session_service.CancelAssistantTurnRequest):
+            request = session_service.CancelAssistantTurnRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.cancel_assistant_turn]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def generate_onboarding_suggestions(
+        self,
+        request: Optional[
+            Union[session_service.GenerateOnboardingSuggestionsRequest, dict]
+        ] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> session_service.GenerateOnboardingSuggestionsResponse:
+        r"""Generates personalized onboarding suggestions for the
+        Arc zero state: classifies the requesting user (new /
+        exploring / returning) from their assistant-session
+        history in the app and returns suggestion chips (resume
+        a session, continue work, or start something new) to
+        render before any message is sent.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import ces_v1beta
+
+            def sample_generate_onboarding_suggestions():
+                # Create a client
+                client = ces_v1beta.SessionServiceClient()
+
+                # Initialize request argument(s)
+                request = ces_v1beta.GenerateOnboardingSuggestionsRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.generate_onboarding_suggestions(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.ces_v1beta.types.GenerateOnboardingSuggestionsRequest, dict]):
+                The request object. Request message for
+                [SessionService.GenerateOnboardingSuggestions][google.cloud.ces.v1beta.SessionService.GenerateOnboardingSuggestions].
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.ces_v1beta.types.GenerateOnboardingSuggestionsResponse:
+                Response message for
+                   [SessionService.GenerateOnboardingSuggestions][google.cloud.ces.v1beta.SessionService.GenerateOnboardingSuggestions].
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, session_service.GenerateOnboardingSuggestionsRequest
+        ):
+            request = session_service.GenerateOnboardingSuggestionsRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.generate_onboarding_suggestions
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
             retry=retry,
             timeout=timeout,
             metadata=metadata,

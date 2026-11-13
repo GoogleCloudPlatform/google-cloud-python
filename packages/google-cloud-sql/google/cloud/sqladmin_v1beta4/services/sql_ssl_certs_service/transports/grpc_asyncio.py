@@ -118,6 +118,8 @@ class _LoggingClientAIOInterceptor(
 class SqlSslCertsServiceGrpcAsyncIOTransport(SqlSslCertsServiceTransport):
     """gRPC AsyncIO backend transport for SqlSslCertsService.
 
+    Service to manage SSL certs for Cloud SQL instances.
+
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
     and call it.
@@ -456,6 +458,105 @@ class SqlSslCertsServiceGrpcAsyncIOTransport(SqlSslCertsServiceTransport):
             )
         return self._stubs["list"]
 
+    @property
+    def update_customer_managed_certificate(
+        self,
+    ) -> Callable[
+        [cloud_sql.UpdateCustomerManagedCertificateRequest],
+        Awaitable[cloud_sql_resources.Operation],
+    ]:
+        r"""Return a callable for the update customer managed
+        certificate method over gRPC.
+
+        Upload and update customer managed certificate bundle
+        for an existing Cloud SQL instance.
+
+        Returns:
+            Callable[[~.UpdateCustomerManagedCertificateRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_customer_managed_certificate" not in self._stubs:
+            self._stubs["update_customer_managed_certificate"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.sql.v1beta4.SqlSslCertsService/UpdateCustomerManagedCertificate",
+                    request_serializer=cloud_sql.UpdateCustomerManagedCertificateRequest.serialize,
+                    response_deserializer=cloud_sql_resources.Operation.deserialize,
+                )
+            )
+        return self._stubs["update_customer_managed_certificate"]
+
+    @property
+    def delete_customer_managed_certificate(
+        self,
+    ) -> Callable[
+        [cloud_sql.DeleteCustomerManagedCertificateRequest],
+        Awaitable[cloud_sql_resources.Operation],
+    ]:
+        r"""Return a callable for the delete customer managed
+        certificate method over gRPC.
+
+        Delete customer managed certificate bundle for an
+        existing Cloud SQL instance.
+
+        Returns:
+            Callable[[~.DeleteCustomerManagedCertificateRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_customer_managed_certificate" not in self._stubs:
+            self._stubs["delete_customer_managed_certificate"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.sql.v1beta4.SqlSslCertsService/DeleteCustomerManagedCertificate",
+                    request_serializer=cloud_sql.DeleteCustomerManagedCertificateRequest.serialize,
+                    response_deserializer=cloud_sql_resources.Operation.deserialize,
+                )
+            )
+        return self._stubs["delete_customer_managed_certificate"]
+
+    @property
+    def list_customer_managed_certificates(
+        self,
+    ) -> Callable[
+        [cloud_sql.ListCustomerManagedCertificatesRequest],
+        Awaitable[cloud_sql.ListCustomerManagedCertificatesResponse],
+    ]:
+        r"""Return a callable for the list customer managed
+        certificates method over gRPC.
+
+        List all customer managed certificate bundles for an
+        existing Cloud SQL instance.
+
+        Returns:
+            Callable[[~.ListCustomerManagedCertificatesRequest],
+                    Awaitable[~.ListCustomerManagedCertificatesResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_customer_managed_certificates" not in self._stubs:
+            self._stubs["list_customer_managed_certificates"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.sql.v1beta4.SqlSslCertsService/ListCustomerManagedCertificates",
+                    request_serializer=cloud_sql.ListCustomerManagedCertificatesRequest.serialize,
+                    response_deserializer=cloud_sql.ListCustomerManagedCertificatesResponse.deserialize,
+                )
+            )
+        return self._stubs["list_customer_managed_certificates"]
+
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
         self._wrapped_methods = {
@@ -476,6 +577,21 @@ class SqlSslCertsServiceGrpcAsyncIOTransport(SqlSslCertsServiceTransport):
             ),
             self.list: self._wrap_method(
                 self.list,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_customer_managed_certificate: self._wrap_method(
+                self.update_customer_managed_certificate,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_customer_managed_certificate: self._wrap_method(
+                self.delete_customer_managed_certificate,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_customer_managed_certificates: self._wrap_method(
+                self.list_customer_managed_certificates,
                 default_timeout=None,
                 client_info=client_info,
             ),

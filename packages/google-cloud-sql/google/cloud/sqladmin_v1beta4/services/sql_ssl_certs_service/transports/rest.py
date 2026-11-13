@@ -82,6 +82,14 @@ class SqlSslCertsServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_delete_customer_managed_certificate(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_delete_customer_managed_certificate(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_get(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -103,6 +111,22 @@ class SqlSslCertsServiceRestInterceptor:
                 return request, metadata
 
             def post_list(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_list_customer_managed_certificates(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_customer_managed_certificates(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_customer_managed_certificate(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_customer_managed_certificate(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -157,6 +181,55 @@ class SqlSslCertsServiceRestInterceptor:
         `post_delete` interceptor. The (possibly modified) response returned by
         `post_delete` will be passed to
         `post_delete_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_delete_customer_managed_certificate(
+        self,
+        request: cloud_sql.DeleteCustomerManagedCertificateRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        cloud_sql.DeleteCustomerManagedCertificateRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for delete_customer_managed_certificate
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the SqlSslCertsService server.
+        """
+        return request, metadata
+
+    def post_delete_customer_managed_certificate(
+        self, response: cloud_sql_resources.Operation
+    ) -> cloud_sql_resources.Operation:
+        """Post-rpc interceptor for delete_customer_managed_certificate
+
+        DEPRECATED. Please use the `post_delete_customer_managed_certificate_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the SqlSslCertsService server but before
+        it is returned to user code. This `post_delete_customer_managed_certificate` interceptor runs
+        before the `post_delete_customer_managed_certificate_with_metadata` interceptor.
+        """
+        return response
+
+    def post_delete_customer_managed_certificate_with_metadata(
+        self,
+        response: cloud_sql_resources.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[cloud_sql_resources.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for delete_customer_managed_certificate
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the SqlSslCertsService server but before it is returned to user code.
+
+        We recommend only using this `post_delete_customer_managed_certificate_with_metadata`
+        interceptor in new development instead of the `post_delete_customer_managed_certificate` interceptor.
+        When both interceptors are used, this `post_delete_customer_managed_certificate_with_metadata` interceptor runs after the
+        `post_delete_customer_managed_certificate` interceptor. The (possibly modified) response returned by
+        `post_delete_customer_managed_certificate` will be passed to
+        `post_delete_customer_managed_certificate_with_metadata`.
         """
         return response, metadata
 
@@ -310,6 +383,107 @@ class SqlSslCertsServiceRestInterceptor:
         """
         return response, metadata
 
+    def pre_list_customer_managed_certificates(
+        self,
+        request: cloud_sql.ListCustomerManagedCertificatesRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        cloud_sql.ListCustomerManagedCertificatesRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for list_customer_managed_certificates
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the SqlSslCertsService server.
+        """
+        return request, metadata
+
+    def post_list_customer_managed_certificates(
+        self, response: cloud_sql.ListCustomerManagedCertificatesResponse
+    ) -> cloud_sql.ListCustomerManagedCertificatesResponse:
+        """Post-rpc interceptor for list_customer_managed_certificates
+
+        DEPRECATED. Please use the `post_list_customer_managed_certificates_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the SqlSslCertsService server but before
+        it is returned to user code. This `post_list_customer_managed_certificates` interceptor runs
+        before the `post_list_customer_managed_certificates_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_customer_managed_certificates_with_metadata(
+        self,
+        response: cloud_sql.ListCustomerManagedCertificatesResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        cloud_sql.ListCustomerManagedCertificatesResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for list_customer_managed_certificates
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the SqlSslCertsService server but before it is returned to user code.
+
+        We recommend only using this `post_list_customer_managed_certificates_with_metadata`
+        interceptor in new development instead of the `post_list_customer_managed_certificates` interceptor.
+        When both interceptors are used, this `post_list_customer_managed_certificates_with_metadata` interceptor runs after the
+        `post_list_customer_managed_certificates` interceptor. The (possibly modified) response returned by
+        `post_list_customer_managed_certificates` will be passed to
+        `post_list_customer_managed_certificates_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_customer_managed_certificate(
+        self,
+        request: cloud_sql.UpdateCustomerManagedCertificateRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        cloud_sql.UpdateCustomerManagedCertificateRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for update_customer_managed_certificate
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the SqlSslCertsService server.
+        """
+        return request, metadata
+
+    def post_update_customer_managed_certificate(
+        self, response: cloud_sql_resources.Operation
+    ) -> cloud_sql_resources.Operation:
+        """Post-rpc interceptor for update_customer_managed_certificate
+
+        DEPRECATED. Please use the `post_update_customer_managed_certificate_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the SqlSslCertsService server but before
+        it is returned to user code. This `post_update_customer_managed_certificate` interceptor runs
+        before the `post_update_customer_managed_certificate_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_customer_managed_certificate_with_metadata(
+        self,
+        response: cloud_sql_resources.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[cloud_sql_resources.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_customer_managed_certificate
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the SqlSslCertsService server but before it is returned to user code.
+
+        We recommend only using this `post_update_customer_managed_certificate_with_metadata`
+        interceptor in new development instead of the `post_update_customer_managed_certificate` interceptor.
+        When both interceptors are used, this `post_update_customer_managed_certificate_with_metadata` interceptor runs after the
+        `post_update_customer_managed_certificate` interceptor. The (possibly modified) response returned by
+        `post_update_customer_managed_certificate` will be passed to
+        `post_update_customer_managed_certificate_with_metadata`.
+        """
+        return response, metadata
+
 
 @dataclasses.dataclass
 class SqlSslCertsServiceRestStub:
@@ -320,6 +494,8 @@ class SqlSslCertsServiceRestStub:
 
 class SqlSslCertsServiceRestTransport(_BaseSqlSslCertsServiceRestTransport):
     """REST backend synchronous transport for SqlSslCertsService.
+
+    Service to manage SSL certs for Cloud SQL instances.
 
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
@@ -546,6 +722,165 @@ class SqlSslCertsServiceRestTransport(_BaseSqlSslCertsServiceRestTransport):
                     extra={
                         "serviceName": "google.cloud.sql.v1beta4.SqlSslCertsService",
                         "rpcName": "Delete",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _DeleteCustomerManagedCertificate(
+        _BaseSqlSslCertsServiceRestTransport._BaseDeleteCustomerManagedCertificate,
+        SqlSslCertsServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "SqlSslCertsServiceRestTransport.DeleteCustomerManagedCertificate"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: cloud_sql.DeleteCustomerManagedCertificateRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> cloud_sql_resources.Operation:
+            r"""Call the delete customer managed
+            certificate method over HTTP.
+
+                Args:
+                    request (~.cloud_sql.DeleteCustomerManagedCertificateRequest):
+                        The request object. Request message for
+                    SqlSslCertsService.DeleteCustomerManagedCertificate.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.cloud_sql_resources.Operation:
+                        An Operation resource.&nbsp;For
+                    successful operations that return an
+                    Operation resource, only the fields
+                    relevant to the operation are populated
+                    in the resource.
+
+            """
+
+            http_options = _BaseSqlSslCertsServiceRestTransport._BaseDeleteCustomerManagedCertificate._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_delete_customer_managed_certificate(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSqlSslCertsServiceRestTransport._BaseDeleteCustomerManagedCertificate,
+                    "_BaseDeleteCustomerManagedCertificate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.sql_v1beta4.SqlSslCertsServiceClient.DeleteCustomerManagedCertificate",
+                    extra={
+                        "serviceName": "google.cloud.sql.v1beta4.SqlSslCertsService",
+                        "rpcName": "DeleteCustomerManagedCertificate",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = SqlSslCertsServiceRestTransport._DeleteCustomerManagedCertificate._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = cloud_sql_resources.Operation()
+            pb_resp = cloud_sql_resources.Operation.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_delete_customer_managed_certificate(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_delete_customer_managed_certificate_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = cloud_sql_resources.Operation.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.sql_v1beta4.SqlSslCertsServiceClient.delete_customer_managed_certificate",
+                    extra={
+                        "serviceName": "google.cloud.sql.v1beta4.SqlSslCertsService",
+                        "rpcName": "DeleteCustomerManagedCertificate",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -989,6 +1324,327 @@ class SqlSslCertsServiceRestTransport(_BaseSqlSslCertsServiceRestTransport):
                 )
             return resp
 
+    class _ListCustomerManagedCertificates(
+        _BaseSqlSslCertsServiceRestTransport._BaseListCustomerManagedCertificates,
+        SqlSslCertsServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "SqlSslCertsServiceRestTransport.ListCustomerManagedCertificates"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: cloud_sql.ListCustomerManagedCertificatesRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> cloud_sql.ListCustomerManagedCertificatesResponse:
+            r"""Call the list customer managed
+            certificates method over HTTP.
+
+                Args:
+                    request (~.cloud_sql.ListCustomerManagedCertificatesRequest):
+                        The request object. Request message for
+                    SqlSslCertsService.ListCustomerManagedCertificates.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.cloud_sql.ListCustomerManagedCertificatesResponse:
+                        Response message for
+                    SqlSslCertsService.ListCustomerManagedCertificates.
+
+            """
+
+            http_options = _BaseSqlSslCertsServiceRestTransport._BaseListCustomerManagedCertificates._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_list_customer_managed_certificates(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSqlSslCertsServiceRestTransport._BaseListCustomerManagedCertificates,
+                    "_BaseListCustomerManagedCertificates__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.sql_v1beta4.SqlSslCertsServiceClient.ListCustomerManagedCertificates",
+                    extra={
+                        "serviceName": "google.cloud.sql.v1beta4.SqlSslCertsService",
+                        "rpcName": "ListCustomerManagedCertificates",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = SqlSslCertsServiceRestTransport._ListCustomerManagedCertificates._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = cloud_sql.ListCustomerManagedCertificatesResponse()
+            pb_resp = cloud_sql.ListCustomerManagedCertificatesResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_customer_managed_certificates(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_list_customer_managed_certificates_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        cloud_sql.ListCustomerManagedCertificatesResponse.to_json(
+                            response
+                        )
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.sql_v1beta4.SqlSslCertsServiceClient.list_customer_managed_certificates",
+                    extra={
+                        "serviceName": "google.cloud.sql.v1beta4.SqlSslCertsService",
+                        "rpcName": "ListCustomerManagedCertificates",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _UpdateCustomerManagedCertificate(
+        _BaseSqlSslCertsServiceRestTransport._BaseUpdateCustomerManagedCertificate,
+        SqlSslCertsServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "SqlSslCertsServiceRestTransport.UpdateCustomerManagedCertificate"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: cloud_sql.UpdateCustomerManagedCertificateRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> cloud_sql_resources.Operation:
+            r"""Call the update customer managed
+            certificate method over HTTP.
+
+                Args:
+                    request (~.cloud_sql.UpdateCustomerManagedCertificateRequest):
+                        The request object. Request message for
+                    SqlSslCertsService.UpdateCustomerManagedCertificate.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.cloud_sql_resources.Operation:
+                        An Operation resource.&nbsp;For
+                    successful operations that return an
+                    Operation resource, only the fields
+                    relevant to the operation are populated
+                    in the resource.
+
+            """
+
+            http_options = _BaseSqlSslCertsServiceRestTransport._BaseUpdateCustomerManagedCertificate._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_update_customer_managed_certificate(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSqlSslCertsServiceRestTransport._BaseUpdateCustomerManagedCertificate,
+                    "_BaseUpdateCustomerManagedCertificate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.sql_v1beta4.SqlSslCertsServiceClient.UpdateCustomerManagedCertificate",
+                    extra={
+                        "serviceName": "google.cloud.sql.v1beta4.SqlSslCertsService",
+                        "rpcName": "UpdateCustomerManagedCertificate",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = SqlSslCertsServiceRestTransport._UpdateCustomerManagedCertificate._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = cloud_sql_resources.Operation()
+            pb_resp = cloud_sql_resources.Operation.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_customer_managed_certificate(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_update_customer_managed_certificate_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = cloud_sql_resources.Operation.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.sql_v1beta4.SqlSslCertsServiceClient.update_customer_managed_certificate",
+                    extra={
+                        "serviceName": "google.cloud.sql.v1beta4.SqlSslCertsService",
+                        "rpcName": "UpdateCustomerManagedCertificate",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     @property
     def delete(
         self,
@@ -996,6 +1652,19 @@ class SqlSslCertsServiceRestTransport(_BaseSqlSslCertsServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._Delete(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def delete_customer_managed_certificate(
+        self,
+    ) -> Callable[
+        [cloud_sql.DeleteCustomerManagedCertificateRequest],
+        cloud_sql_resources.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._DeleteCustomerManagedCertificate(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
 
     @property
     def get(
@@ -1024,6 +1693,32 @@ class SqlSslCertsServiceRestTransport(_BaseSqlSslCertsServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._List(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def list_customer_managed_certificates(
+        self,
+    ) -> Callable[
+        [cloud_sql.ListCustomerManagedCertificatesRequest],
+        cloud_sql.ListCustomerManagedCertificatesResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListCustomerManagedCertificates(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def update_customer_managed_certificate(
+        self,
+    ) -> Callable[
+        [cloud_sql.UpdateCustomerManagedCertificateRequest],
+        cloud_sql_resources.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateCustomerManagedCertificate(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
 
     @property
     def kind(self) -> str:

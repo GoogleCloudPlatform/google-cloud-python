@@ -46,7 +46,6 @@ def sample_create_job():
     request = run_v2.CreateJobRequest(
         parent="parent_value",
         job=job,
-        job_id="job_id_value",
     )
 
     # Make the request

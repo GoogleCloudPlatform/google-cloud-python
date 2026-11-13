@@ -116,7 +116,7 @@ class SqlUsersServiceClientMeta(type):
 
 
 class SqlUsersServiceClient(metaclass=SqlUsersServiceClientMeta):
-    """"""
+    """Cloud SQL users service."""
 
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
     DEFAULT_ENDPOINT = "sqladmin.googleapis.com"

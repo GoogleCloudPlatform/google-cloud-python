@@ -39,7 +39,10 @@ DEFAULT_CLIENT_INFO.protobuf_runtime_version = google.protobuf.__version__
 class BuildsTransport(abc.ABC):
     """Abstract transport class for Builds."""
 
-    AUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
+    AUTH_SCOPES = (
+        "https://www.googleapis.com/auth/cloud-platform",
+        "https://www.googleapis.com/auth/run",
+    )
 
     DEFAULT_HOST: str = "run.googleapis.com"
 

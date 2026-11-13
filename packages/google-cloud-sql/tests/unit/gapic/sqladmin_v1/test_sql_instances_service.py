@@ -7492,6 +7492,569 @@ async def test_restart_field_headers_async():
 @pytest.mark.parametrize(
     "request_type",
     [
+        cloud_sql_instances.SqlInstancesStartRequest(),
+        {},
+    ],
+)
+def test_start(request_type, transport: str = "grpc"):
+    client = SqlInstancesServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.start), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = cloud_sql_resources.Operation(
+            kind="kind_value",
+            target_link="target_link_value",
+            status=cloud_sql_resources.Operation.SqlOperationStatus.PENDING,
+            user="user_value",
+            operation_type=cloud_sql_resources.Operation.SqlOperationType.IMPORT,
+            name="name_value",
+            target_id="target_id_value",
+            self_link="self_link_value",
+            target_project="target_project_value",
+        )
+        response = client.start(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = cloud_sql_instances.SqlInstancesStartRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, cloud_sql_resources.Operation)
+    assert response.kind == "kind_value"
+    assert response.target_link == "target_link_value"
+    assert response.status == cloud_sql_resources.Operation.SqlOperationStatus.PENDING
+    assert response.user == "user_value"
+    assert (
+        response.operation_type == cloud_sql_resources.Operation.SqlOperationType.IMPORT
+    )
+    assert response.name == "name_value"
+    assert response.target_id == "target_id_value"
+    assert response.self_link == "self_link_value"
+    assert response.target_project == "target_project_value"
+
+
+def test_start_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = SqlInstancesServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = cloud_sql_instances.SqlInstancesStartRequest(
+        instance="instance_value",
+        project="project_value",
+        location="location_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.start), "__call__") as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.start(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql_instances.SqlInstancesStartRequest(
+            instance="instance_value",
+            project="project_value",
+            location="location_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_start_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = SqlInstancesServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.start in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.start] = mock_rpc
+        request = {}
+        client.start(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.start(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_start_async_use_cached_wrapped_rpc(transport: str = "grpc_asyncio"):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = SqlInstancesServiceAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.start
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[client._client._transport.start] = (
+            mock_rpc
+        )
+
+        request = {}
+        await client.start(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.start(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        cloud_sql_instances.SqlInstancesStartRequest(),
+        {},
+    ],
+)
+async def test_start_async(request_type, transport: str = "grpc_asyncio"):
+    client = SqlInstancesServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.start), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_resources.Operation(
+                kind="kind_value",
+                target_link="target_link_value",
+                status=cloud_sql_resources.Operation.SqlOperationStatus.PENDING,
+                user="user_value",
+                operation_type=cloud_sql_resources.Operation.SqlOperationType.IMPORT,
+                name="name_value",
+                target_id="target_id_value",
+                self_link="self_link_value",
+                target_project="target_project_value",
+            )
+        )
+        response = await client.start(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = cloud_sql_instances.SqlInstancesStartRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, cloud_sql_resources.Operation)
+    assert response.kind == "kind_value"
+    assert response.target_link == "target_link_value"
+    assert response.status == cloud_sql_resources.Operation.SqlOperationStatus.PENDING
+    assert response.user == "user_value"
+    assert (
+        response.operation_type == cloud_sql_resources.Operation.SqlOperationType.IMPORT
+    )
+    assert response.name == "name_value"
+    assert response.target_id == "target_id_value"
+    assert response.self_link == "self_link_value"
+    assert response.target_project == "target_project_value"
+
+
+def test_start_field_headers():
+    client = SqlInstancesServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = cloud_sql_instances.SqlInstancesStartRequest()
+
+    request.project = "project_value"
+    request.instance = "instance_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.start), "__call__") as call:
+        call.return_value = cloud_sql_resources.Operation()
+        client.start(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "project=project_value&instance=instance_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_start_field_headers_async():
+    client = SqlInstancesServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = cloud_sql_instances.SqlInstancesStartRequest()
+
+    request.project = "project_value"
+    request.instance = "instance_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.start), "__call__") as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_resources.Operation()
+        )
+        await client.start(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "project=project_value&instance=instance_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        cloud_sql_instances.SqlInstancesStopRequest(),
+        {},
+    ],
+)
+def test_stop(request_type, transport: str = "grpc"):
+    client = SqlInstancesServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.stop), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = cloud_sql_resources.Operation(
+            kind="kind_value",
+            target_link="target_link_value",
+            status=cloud_sql_resources.Operation.SqlOperationStatus.PENDING,
+            user="user_value",
+            operation_type=cloud_sql_resources.Operation.SqlOperationType.IMPORT,
+            name="name_value",
+            target_id="target_id_value",
+            self_link="self_link_value",
+            target_project="target_project_value",
+        )
+        response = client.stop(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = cloud_sql_instances.SqlInstancesStopRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, cloud_sql_resources.Operation)
+    assert response.kind == "kind_value"
+    assert response.target_link == "target_link_value"
+    assert response.status == cloud_sql_resources.Operation.SqlOperationStatus.PENDING
+    assert response.user == "user_value"
+    assert (
+        response.operation_type == cloud_sql_resources.Operation.SqlOperationType.IMPORT
+    )
+    assert response.name == "name_value"
+    assert response.target_id == "target_id_value"
+    assert response.self_link == "self_link_value"
+    assert response.target_project == "target_project_value"
+
+
+def test_stop_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = SqlInstancesServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = cloud_sql_instances.SqlInstancesStopRequest(
+        instance="instance_value",
+        project="project_value",
+        location="location_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.stop), "__call__") as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.stop(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql_instances.SqlInstancesStopRequest(
+            instance="instance_value",
+            project="project_value",
+            location="location_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_stop_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = SqlInstancesServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.stop in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.stop] = mock_rpc
+        request = {}
+        client.stop(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.stop(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_stop_async_use_cached_wrapped_rpc(transport: str = "grpc_asyncio"):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = SqlInstancesServiceAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.stop in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[client._client._transport.stop] = (
+            mock_rpc
+        )
+
+        request = {}
+        await client.stop(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.stop(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        cloud_sql_instances.SqlInstancesStopRequest(),
+        {},
+    ],
+)
+async def test_stop_async(request_type, transport: str = "grpc_asyncio"):
+    client = SqlInstancesServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.stop), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_resources.Operation(
+                kind="kind_value",
+                target_link="target_link_value",
+                status=cloud_sql_resources.Operation.SqlOperationStatus.PENDING,
+                user="user_value",
+                operation_type=cloud_sql_resources.Operation.SqlOperationType.IMPORT,
+                name="name_value",
+                target_id="target_id_value",
+                self_link="self_link_value",
+                target_project="target_project_value",
+            )
+        )
+        response = await client.stop(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = cloud_sql_instances.SqlInstancesStopRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, cloud_sql_resources.Operation)
+    assert response.kind == "kind_value"
+    assert response.target_link == "target_link_value"
+    assert response.status == cloud_sql_resources.Operation.SqlOperationStatus.PENDING
+    assert response.user == "user_value"
+    assert (
+        response.operation_type == cloud_sql_resources.Operation.SqlOperationType.IMPORT
+    )
+    assert response.name == "name_value"
+    assert response.target_id == "target_id_value"
+    assert response.self_link == "self_link_value"
+    assert response.target_project == "target_project_value"
+
+
+def test_stop_field_headers():
+    client = SqlInstancesServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = cloud_sql_instances.SqlInstancesStopRequest()
+
+    request.project = "project_value"
+    request.instance = "instance_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.stop), "__call__") as call:
+        call.return_value = cloud_sql_resources.Operation()
+        client.stop(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "project=project_value&instance=instance_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_stop_field_headers_async():
+    client = SqlInstancesServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = cloud_sql_instances.SqlInstancesStopRequest()
+
+    request.project = "project_value"
+    request.instance = "instance_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.stop), "__call__") as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_resources.Operation()
+        )
+        await client.stop(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "project=project_value&instance=instance_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
         cloud_sql_instances.SqlInstancesRestoreBackupRequest(),
         {},
     ],
@@ -12092,6 +12655,269 @@ async def test_get_latest_recovery_time_field_headers_async():
 @pytest.mark.parametrize(
     "request_type",
     [
+        cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyRequest(),
+        {},
+    ],
+)
+def test_execute_sql_read_only(request_type, transport: str = "grpc"):
+    client = SqlInstancesServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.execute_sql_read_only), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyResponse()
+        response = client.execute_sql_read_only(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyResponse
+    )
+
+
+def test_execute_sql_read_only_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = SqlInstancesServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyRequest(
+        instance="instance_value",
+        project="project_value",
+        location="location_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.execute_sql_read_only), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.execute_sql_read_only(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyRequest(
+            instance="instance_value",
+            project="project_value",
+            location="location_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_execute_sql_read_only_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = SqlInstancesServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.execute_sql_read_only
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.execute_sql_read_only] = (
+            mock_rpc
+        )
+        request = {}
+        client.execute_sql_read_only(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.execute_sql_read_only(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_execute_sql_read_only_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = SqlInstancesServiceAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.execute_sql_read_only
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.execute_sql_read_only
+        ] = mock_rpc
+
+        request = {}
+        await client.execute_sql_read_only(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.execute_sql_read_only(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyRequest(),
+        {},
+    ],
+)
+async def test_execute_sql_read_only_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = SqlInstancesServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.execute_sql_read_only), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyResponse()
+        )
+        response = await client.execute_sql_read_only(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyResponse
+    )
+
+
+def test_execute_sql_read_only_field_headers():
+    client = SqlInstancesServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyRequest()
+
+    request.project = "project_value"
+    request.instance = "instance_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.execute_sql_read_only), "__call__"
+    ) as call:
+        call.return_value = cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyResponse()
+        client.execute_sql_read_only(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "project=project_value&instance=instance_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_execute_sql_read_only_field_headers_async():
+    client = SqlInstancesServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyRequest()
+
+    request.project = "project_value"
+    request.instance = "instance_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.execute_sql_read_only), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyResponse()
+        )
+        await client.execute_sql_read_only(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "project=project_value&instance=instance_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
         cloud_sql_instances.SqlInstancesExecuteSqlRequest(),
         {},
     ],
@@ -13461,6 +14287,306 @@ async def test_point_in_time_restore_field_headers_async():
     ) in kw["metadata"]
 
 
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        cloud_sql_instances.SqlInstancesReconcileNetworkingRequest(),
+        {},
+    ],
+)
+def test_reconcile_networking(request_type, transport: str = "grpc"):
+    client = SqlInstancesServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.reconcile_networking), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = cloud_sql_resources.Operation(
+            kind="kind_value",
+            target_link="target_link_value",
+            status=cloud_sql_resources.Operation.SqlOperationStatus.PENDING,
+            user="user_value",
+            operation_type=cloud_sql_resources.Operation.SqlOperationType.IMPORT,
+            name="name_value",
+            target_id="target_id_value",
+            self_link="self_link_value",
+            target_project="target_project_value",
+        )
+        response = client.reconcile_networking(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = cloud_sql_instances.SqlInstancesReconcileNetworkingRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, cloud_sql_resources.Operation)
+    assert response.kind == "kind_value"
+    assert response.target_link == "target_link_value"
+    assert response.status == cloud_sql_resources.Operation.SqlOperationStatus.PENDING
+    assert response.user == "user_value"
+    assert (
+        response.operation_type == cloud_sql_resources.Operation.SqlOperationType.IMPORT
+    )
+    assert response.name == "name_value"
+    assert response.target_id == "target_id_value"
+    assert response.self_link == "self_link_value"
+    assert response.target_project == "target_project_value"
+
+
+def test_reconcile_networking_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = SqlInstancesServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = cloud_sql_instances.SqlInstancesReconcileNetworkingRequest(
+        instance="instance_value",
+        project="project_value",
+        location="location_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.reconcile_networking), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.reconcile_networking(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql_instances.SqlInstancesReconcileNetworkingRequest(
+            instance="instance_value",
+            project="project_value",
+            location="location_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_reconcile_networking_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = SqlInstancesServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.reconcile_networking in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.reconcile_networking] = (
+            mock_rpc
+        )
+        request = {}
+        client.reconcile_networking(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.reconcile_networking(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_reconcile_networking_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = SqlInstancesServiceAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.reconcile_networking
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.reconcile_networking
+        ] = mock_rpc
+
+        request = {}
+        await client.reconcile_networking(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.reconcile_networking(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        cloud_sql_instances.SqlInstancesReconcileNetworkingRequest(),
+        {},
+    ],
+)
+async def test_reconcile_networking_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = SqlInstancesServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.reconcile_networking), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_resources.Operation(
+                kind="kind_value",
+                target_link="target_link_value",
+                status=cloud_sql_resources.Operation.SqlOperationStatus.PENDING,
+                user="user_value",
+                operation_type=cloud_sql_resources.Operation.SqlOperationType.IMPORT,
+                name="name_value",
+                target_id="target_id_value",
+                self_link="self_link_value",
+                target_project="target_project_value",
+            )
+        )
+        response = await client.reconcile_networking(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = cloud_sql_instances.SqlInstancesReconcileNetworkingRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, cloud_sql_resources.Operation)
+    assert response.kind == "kind_value"
+    assert response.target_link == "target_link_value"
+    assert response.status == cloud_sql_resources.Operation.SqlOperationStatus.PENDING
+    assert response.user == "user_value"
+    assert (
+        response.operation_type == cloud_sql_resources.Operation.SqlOperationType.IMPORT
+    )
+    assert response.name == "name_value"
+    assert response.target_id == "target_id_value"
+    assert response.self_link == "self_link_value"
+    assert response.target_project == "target_project_value"
+
+
+def test_reconcile_networking_field_headers():
+    client = SqlInstancesServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = cloud_sql_instances.SqlInstancesReconcileNetworkingRequest()
+
+    request.project = "project_value"
+    request.instance = "instance_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.reconcile_networking), "__call__"
+    ) as call:
+        call.return_value = cloud_sql_resources.Operation()
+        client.reconcile_networking(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "project=project_value&instance=instance_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_reconcile_networking_field_headers_async():
+    client = SqlInstancesServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = cloud_sql_instances.SqlInstancesReconcileNetworkingRequest()
+
+    request.project = "project_value"
+    request.instance = "instance_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.reconcile_networking), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_resources.Operation()
+        )
+        await client.reconcile_networking(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "project=project_value&instance=instance_value",
+    ) in kw["metadata"]
+
+
 def test_credentials_transport_error():
     # It is an error to provide credentials and a transport instance.
     transport = transports.SqlInstancesServiceGrpcTransport(
@@ -14020,6 +15146,46 @@ def test_restart_empty_call_grpc():
 
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
+def test_start_empty_call_grpc():
+    client = SqlInstancesServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.start), "__call__") as call:
+        call.return_value = cloud_sql_resources.Operation()
+        client.start(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql_instances.SqlInstancesStartRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_stop_empty_call_grpc():
+    client = SqlInstancesServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.stop), "__call__") as call:
+        call.return_value = cloud_sql_resources.Operation()
+        client.stop(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql_instances.SqlInstancesStopRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
 def test_restore_backup_empty_call_grpc():
     client = SqlInstancesServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -14366,6 +15532,28 @@ def test_get_latest_recovery_time_empty_call_grpc():
 
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
+def test_execute_sql_read_only_empty_call_grpc():
+    client = SqlInstancesServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.execute_sql_read_only), "__call__"
+    ) as call:
+        call.return_value = cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyResponse()
+        client.execute_sql_read_only(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
 def test_execute_sql_empty_call_grpc():
     client = SqlInstancesServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -14471,6 +15659,28 @@ def test_point_in_time_restore_empty_call_grpc():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = cloud_sql_instances.SqlInstancesPointInTimeRestoreRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_reconcile_networking_empty_call_grpc():
+    client = SqlInstancesServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.reconcile_networking), "__call__"
+    ) as call:
+        call.return_value = cloud_sql_resources.Operation()
+        client.reconcile_networking(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql_instances.SqlInstancesReconcileNetworkingRequest()
         assert args[0] == request_msg
 
 
@@ -15291,6 +16501,74 @@ async def test_restart_empty_call_grpc_asyncio():
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
 @pytest.mark.asyncio
+async def test_start_empty_call_grpc_asyncio():
+    client = SqlInstancesServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.start), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_resources.Operation(
+                kind="kind_value",
+                target_link="target_link_value",
+                status=cloud_sql_resources.Operation.SqlOperationStatus.PENDING,
+                user="user_value",
+                operation_type=cloud_sql_resources.Operation.SqlOperationType.IMPORT,
+                name="name_value",
+                target_id="target_id_value",
+                self_link="self_link_value",
+                target_project="target_project_value",
+            )
+        )
+        await client.start(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql_instances.SqlInstancesStartRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_stop_empty_call_grpc_asyncio():
+    client = SqlInstancesServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.stop), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_resources.Operation(
+                kind="kind_value",
+                target_link="target_link_value",
+                status=cloud_sql_resources.Operation.SqlOperationStatus.PENDING,
+                user="user_value",
+                operation_type=cloud_sql_resources.Operation.SqlOperationType.IMPORT,
+                name="name_value",
+                target_id="target_id_value",
+                self_link="self_link_value",
+                target_project="target_project_value",
+            )
+        )
+        await client.stop(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql_instances.SqlInstancesStopRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
 async def test_restore_backup_empty_call_grpc_asyncio():
     client = SqlInstancesServiceAsyncClient(
         credentials=async_anonymous_credentials(),
@@ -15831,6 +17109,32 @@ async def test_get_latest_recovery_time_empty_call_grpc_asyncio():
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
 @pytest.mark.asyncio
+async def test_execute_sql_read_only_empty_call_grpc_asyncio():
+    client = SqlInstancesServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.execute_sql_read_only), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyResponse()
+        )
+        await client.execute_sql_read_only(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
 async def test_execute_sql_empty_call_grpc_asyncio():
     client = SqlInstancesServiceAsyncClient(
         credentials=async_anonymous_credentials(),
@@ -15982,6 +17286,42 @@ async def test_point_in_time_restore_empty_call_grpc_asyncio():
         assert args[0] == request_msg
 
 
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_reconcile_networking_empty_call_grpc_asyncio():
+    client = SqlInstancesServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.reconcile_networking), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            cloud_sql_resources.Operation(
+                kind="kind_value",
+                target_link="target_link_value",
+                status=cloud_sql_resources.Operation.SqlOperationStatus.PENDING,
+                user="user_value",
+                operation_type=cloud_sql_resources.Operation.SqlOperationType.IMPORT,
+                name="name_value",
+                target_id="target_id_value",
+                self_link="self_link_value",
+                target_project="target_project_value",
+            )
+        )
+        await client.reconcile_networking(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = cloud_sql_instances.SqlInstancesReconcileNetworkingRequest()
+        assert args[0] == request_msg
+
+
 @pytest.mark.asyncio
 async def test_insert_routing_parameters_request_1_grpc_asyncio():
     client = SqlInstancesServiceAsyncClient(
@@ -16115,6 +17455,8 @@ def test_sql_instances_service_base_transport():
         "switchover",
         "reset_ssl_config",
         "restart",
+        "start",
+        "stop",
         "restore_backup",
         "rotate_server_ca",
         "rotate_server_certificate",
@@ -16131,11 +17473,13 @@ def test_sql_instances_service_base_transport():
         "get_disk_shrink_config",
         "reset_replica_size",
         "get_latest_recovery_time",
+        "execute_sql_read_only",
         "execute_sql",
         "acquire_ssrs_lease",
         "release_ssrs_lease",
         "pre_check_major_version_upgrade",
         "point_in_time_restore",
+        "reconcile_networking",
     )
     for method in methods:
         with pytest.raises(NotImplementedError):
@@ -16625,9 +17969,32 @@ def test_parse_crypto_key_version_path():
     assert expected == actual
 
 
-def test_network_path():
+def test_instance_path():
     project = "winkle"
-    network = "nautilus"
+    instance = "nautilus"
+    expected = "projects/{project}/instances/{instance}".format(
+        project=project,
+        instance=instance,
+    )
+    actual = SqlInstancesServiceClient.instance_path(project, instance)
+    assert expected == actual
+
+
+def test_parse_instance_path():
+    expected = {
+        "project": "scallop",
+        "instance": "abalone",
+    }
+    path = SqlInstancesServiceClient.instance_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = SqlInstancesServiceClient.parse_instance_path(path)
+    assert expected == actual
+
+
+def test_network_path():
+    project = "squid"
+    network = "clam"
     expected = "projects/{project}/global/networks/{network}".format(
         project=project,
         network=network,
@@ -16638,8 +18005,8 @@ def test_network_path():
 
 def test_parse_network_path():
     expected = {
-        "project": "scallop",
-        "network": "abalone",
+        "project": "whelk",
+        "network": "octopus",
     }
     path = SqlInstancesServiceClient.network_path(**expected)
 
@@ -16649,9 +18016,9 @@ def test_parse_network_path():
 
 
 def test_network_attachment_path():
-    project = "squid"
-    region = "clam"
-    network_attachment = "whelk"
+    project = "oyster"
+    region = "nudibranch"
+    network_attachment = "cuttlefish"
     expected = "projects/{project}/regions/{region}/networkAttachments/{network_attachment}".format(
         project=project,
         region=region,
@@ -16665,9 +18032,9 @@ def test_network_attachment_path():
 
 def test_parse_network_attachment_path():
     expected = {
-        "project": "octopus",
-        "region": "oyster",
-        "network_attachment": "nudibranch",
+        "project": "mussel",
+        "region": "winkle",
+        "network_attachment": "nautilus",
     }
     path = SqlInstancesServiceClient.network_attachment_path(**expected)
 
@@ -16677,9 +18044,9 @@ def test_parse_network_attachment_path():
 
 
 def test_secret_version_path():
-    project = "cuttlefish"
-    secret = "mussel"
-    secret_version = "winkle"
+    project = "scallop"
+    secret = "abalone"
+    secret_version = "squid"
     expected = "projects/{project}/secrets/{secret}/versions/{secret_version}".format(
         project=project,
         secret=secret,
@@ -16693,9 +18060,9 @@ def test_secret_version_path():
 
 def test_parse_secret_version_path():
     expected = {
-        "project": "nautilus",
-        "secret": "scallop",
-        "secret_version": "abalone",
+        "project": "clam",
+        "secret": "whelk",
+        "secret_version": "octopus",
     }
     path = SqlInstancesServiceClient.secret_version_path(**expected)
 
@@ -16705,9 +18072,9 @@ def test_parse_secret_version_path():
 
 
 def test_service_connection_policy_path():
-    project = "squid"
-    region = "clam"
-    service_connection_policy = "whelk"
+    project = "oyster"
+    region = "nudibranch"
+    service_connection_policy = "cuttlefish"
     expected = "projects/{project}/regions/{region}/serviceConnectionPolicies/{service_connection_policy}".format(
         project=project,
         region=region,
@@ -16721,9 +18088,9 @@ def test_service_connection_policy_path():
 
 def test_parse_service_connection_policy_path():
     expected = {
-        "project": "octopus",
-        "region": "oyster",
-        "service_connection_policy": "nudibranch",
+        "project": "mussel",
+        "region": "winkle",
+        "service_connection_policy": "nautilus",
     }
     path = SqlInstancesServiceClient.service_connection_policy_path(**expected)
 
@@ -16733,7 +18100,7 @@ def test_parse_service_connection_policy_path():
 
 
 def test_common_billing_account_path():
-    billing_account = "cuttlefish"
+    billing_account = "scallop"
     expected = "billingAccounts/{billing_account}".format(
         billing_account=billing_account,
     )
@@ -16743,7 +18110,7 @@ def test_common_billing_account_path():
 
 def test_parse_common_billing_account_path():
     expected = {
-        "billing_account": "mussel",
+        "billing_account": "abalone",
     }
     path = SqlInstancesServiceClient.common_billing_account_path(**expected)
 
@@ -16753,7 +18120,7 @@ def test_parse_common_billing_account_path():
 
 
 def test_common_folder_path():
-    folder = "winkle"
+    folder = "squid"
     expected = "folders/{folder}".format(
         folder=folder,
     )
@@ -16763,7 +18130,7 @@ def test_common_folder_path():
 
 def test_parse_common_folder_path():
     expected = {
-        "folder": "nautilus",
+        "folder": "clam",
     }
     path = SqlInstancesServiceClient.common_folder_path(**expected)
 
@@ -16773,7 +18140,7 @@ def test_parse_common_folder_path():
 
 
 def test_common_organization_path():
-    organization = "scallop"
+    organization = "whelk"
     expected = "organizations/{organization}".format(
         organization=organization,
     )
@@ -16783,7 +18150,7 @@ def test_common_organization_path():
 
 def test_parse_common_organization_path():
     expected = {
-        "organization": "abalone",
+        "organization": "octopus",
     }
     path = SqlInstancesServiceClient.common_organization_path(**expected)
 
@@ -16793,7 +18160,7 @@ def test_parse_common_organization_path():
 
 
 def test_common_project_path():
-    project = "squid"
+    project = "oyster"
     expected = "projects/{project}".format(
         project=project,
     )
@@ -16803,7 +18170,7 @@ def test_common_project_path():
 
 def test_parse_common_project_path():
     expected = {
-        "project": "clam",
+        "project": "nudibranch",
     }
     path = SqlInstancesServiceClient.common_project_path(**expected)
 
@@ -16813,8 +18180,8 @@ def test_parse_common_project_path():
 
 
 def test_common_location_path():
-    project = "whelk"
-    location = "octopus"
+    project = "cuttlefish"
+    location = "mussel"
     expected = "projects/{project}/locations/{location}".format(
         project=project,
         location=location,
@@ -16825,8 +18192,8 @@ def test_common_location_path():
 
 def test_parse_common_location_path():
     expected = {
-        "project": "oyster",
-        "location": "nudibranch",
+        "project": "winkle",
+        "location": "nautilus",
     }
     path = SqlInstancesServiceClient.common_location_path(**expected)
 

@@ -73,6 +73,7 @@ import google.api_core.operation_async as operation_async  # type: ignore
 import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
+import google.protobuf.struct_pb2 as struct_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import google.protobuf.wrappers_pb2 as wrappers_pb2  # type: ignore
 from google.cloud.location import locations_pb2  # type: ignore
@@ -98,6 +99,18 @@ from google.cloud.backupdr_v1beta.types import (
     backupvault_gce,
     bindingmatchingresource,
     datasourcereference,
+    restore_template,
+    restore_template_common,
+    restore_template_execution,
+    restore_verification_plan,
+    restore_verification_plan_association,
+)
+from google.cloud.backupdr_v1beta.types import restore_template as gcb_restore_template
+from google.cloud.backupdr_v1beta.types import (
+    restore_verification_plan as gcb_restore_verification_plan,
+)
+from google.cloud.backupdr_v1beta.types import (
+    restore_verification_plan_association as gcb_restore_verification_plan_association,
 )
 
 from .transports.base import DEFAULT_CLIENT_INFO, BackupDRTransport
@@ -531,6 +544,30 @@ class BackupDRClient(metaclass=BackupDRClientMeta):
         return m.groupdict() if m else {}
 
     @staticmethod
+    def execution_path(
+        project: str,
+        location: str,
+        job: str,
+        execution: str,
+    ) -> str:
+        """Returns a fully-qualified execution string."""
+        return "projects/{project}/locations/{location}/jobs/{job}/executions/{execution}".format(
+            project=project,
+            location=location,
+            job=job,
+            execution=execution,
+        )
+
+    @staticmethod
+    def parse_execution_path(path: str) -> Dict[str, str]:
+        """Parses a execution path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/jobs/(?P<job>.+?)/executions/(?P<execution>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
     def instance_path(
         project: str,
         instance: str,
@@ -545,6 +582,28 @@ class BackupDRClient(metaclass=BackupDRClientMeta):
     def parse_instance_path(path: str) -> Dict[str, str]:
         """Parses a instance path into its component segments."""
         m = re.match(r"^projects/(?P<project>.+?)/instances/(?P<instance>.+?)$", path)
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def job_path(
+        project: str,
+        location: str,
+        job: str,
+    ) -> str:
+        """Returns a fully-qualified job string."""
+        return "projects/{project}/locations/{location}/jobs/{job}".format(
+            project=project,
+            location=location,
+            job=job,
+        )
+
+    @staticmethod
+    def parse_job_path(path: str) -> Dict[str, str]:
+        """Parses a job path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/jobs/(?P<job>.+?)$",
+            path,
+        )
         return m.groupdict() if m else {}
 
     @staticmethod
@@ -565,6 +624,98 @@ class BackupDRClient(metaclass=BackupDRClientMeta):
         """Parses a management_server path into its component segments."""
         m = re.match(
             r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/managementServers/(?P<managementserver>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def restore_template_path(
+        project: str,
+        location: str,
+        restore_template: str,
+    ) -> str:
+        """Returns a fully-qualified restore_template string."""
+        return "projects/{project}/locations/{location}/restoreTemplates/{restore_template}".format(
+            project=project,
+            location=location,
+            restore_template=restore_template,
+        )
+
+    @staticmethod
+    def parse_restore_template_path(path: str) -> Dict[str, str]:
+        """Parses a restore_template path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/restoreTemplates/(?P<restore_template>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def restore_template_execution_path(
+        project: str,
+        location: str,
+        restore_template: str,
+        execution: str,
+    ) -> str:
+        """Returns a fully-qualified restore_template_execution string."""
+        return "projects/{project}/locations/{location}/restoreTemplates/{restore_template}/executions/{execution}".format(
+            project=project,
+            location=location,
+            restore_template=restore_template,
+            execution=execution,
+        )
+
+    @staticmethod
+    def parse_restore_template_execution_path(path: str) -> Dict[str, str]:
+        """Parses a restore_template_execution path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/restoreTemplates/(?P<restore_template>.+?)/executions/(?P<execution>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def restore_verification_plan_path(
+        project: str,
+        location: str,
+        restoreVerificationPlan: str,
+    ) -> str:
+        """Returns a fully-qualified restore_verification_plan string."""
+        return "projects/{project}/locations/{location}/restoreVerificationPlans/{restoreVerificationPlan}".format(
+            project=project,
+            location=location,
+            restoreVerificationPlan=restoreVerificationPlan,
+        )
+
+    @staticmethod
+    def parse_restore_verification_plan_path(path: str) -> Dict[str, str]:
+        """Parses a restore_verification_plan path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/restoreVerificationPlans/(?P<restoreVerificationPlan>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def restore_verification_plan_association_path(
+        project: str,
+        location: str,
+        restore_verification_plan: str,
+        association: str,
+    ) -> str:
+        """Returns a fully-qualified restore_verification_plan_association string."""
+        return "projects/{project}/locations/{location}/restoreVerificationPlans/{restore_verification_plan}/associations/{association}".format(
+            project=project,
+            location=location,
+            restore_verification_plan=restore_verification_plan,
+            association=association,
+        )
+
+    @staticmethod
+    def parse_restore_verification_plan_association_path(path: str) -> Dict[str, str]:
+        """Parses a restore_verification_plan_association path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/restoreVerificationPlans/(?P<restore_verification_plan>.+?)/associations/(?P<association>.+?)$",
             path,
         )
         return m.groupdict() if m else {}
@@ -1477,6 +1628,2475 @@ class BackupDRClient(metaclass=BackupDRClientMeta):
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
         rpc = self._transport._wrapped_methods[self._transport.delete_management_server]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            empty_pb2.Empty,
+            metadata_type=backupdr.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def create_restore_template(
+        self,
+        request: Optional[
+            Union[gcb_restore_template.CreateRestoreTemplateRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        restore_template: Optional[gcb_restore_template.RestoreTemplate] = None,
+        restore_template_id: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Creates a new RestoreTemplate in a given project and
+        location.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_create_restore_template():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                restore_template = backupdr_v1beta.RestoreTemplate()
+                restore_template.resource_type = "resource_type_value"
+                restore_template.backup_selection_config.data_source = "data_source_value"
+
+                request = backupdr_v1beta.CreateRestoreTemplateRequest(
+                    parent="parent_value",
+                    restore_template_id="restore_template_id_value",
+                    restore_template=restore_template,
+                )
+
+                # Make the request
+                operation = client.create_restore_template(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.CreateRestoreTemplateRequest, dict]):
+                The request object. Request message for creating a
+                RestoreTemplate instance.
+            parent (str):
+                Required. The restore template project and location in
+                the format 'projects/{project_id}/locations/{location}'.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            restore_template (google.cloud.backupdr_v1beta.types.RestoreTemplate):
+                Required. A RestoreTemplate resource.
+                This corresponds to the ``restore_template`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            restore_template_id (str):
+                Required. The ID of the restore
+                template to create. The ID must be
+                unique for the specified project and
+                location.
+
+                This corresponds to the ``restore_template_id`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.cloud.backupdr_v1beta.types.RestoreTemplate` A RestoreTemplate encapsulates DR readiness configurations for validating
+                   backups.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent, restore_template, restore_template_id]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, gcb_restore_template.CreateRestoreTemplateRequest):
+            request = gcb_restore_template.CreateRestoreTemplateRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+            if restore_template is not None:
+                request.restore_template = restore_template
+            if restore_template_id is not None:
+                request.restore_template_id = restore_template_id
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.create_restore_template]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            gcb_restore_template.RestoreTemplate,
+            metadata_type=backupdr.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def get_restore_template(
+        self,
+        request: Optional[
+            Union[restore_template.GetRestoreTemplateRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> restore_template.RestoreTemplate:
+        r"""Gets details of a RestoreTemplate.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_get_restore_template():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                request = backupdr_v1beta.GetRestoreTemplateRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.get_restore_template(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.GetRestoreTemplateRequest, dict]):
+                The request object. Request message for getting a
+                RestoreTemplate instance.
+            name (str):
+                Required. The name of the restore template to retrieve.
+                Format:
+                'projects/{project_id}/locations/{location}/restoreTemplates/{restore_template_id}'
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.backupdr_v1beta.types.RestoreTemplate:
+                A RestoreTemplate encapsulates DR readiness configurations for validating
+                   backups.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, restore_template.GetRestoreTemplateRequest):
+            request = restore_template.GetRestoreTemplateRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.get_restore_template]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def list_restore_templates(
+        self,
+        request: Optional[
+            Union[restore_template.ListRestoreTemplatesRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListRestoreTemplatesPager:
+        r"""Lists RestoreTemplates in a given project and
+        location.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_list_restore_templates():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                request = backupdr_v1beta.ListRestoreTemplatesRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_restore_templates(request=request)
+
+                # Handle the response
+                for response in page_result:
+                    print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.ListRestoreTemplatesRequest, dict]):
+                The request object. Request message for listing
+                RestoreTemplates.
+            parent (str):
+                Required. The project and location from which to list
+                the restore templates. Format:
+                ``projects/{project}/locations/{location}``.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.backupdr_v1beta.services.backup_dr.pagers.ListRestoreTemplatesPager:
+                Response message for listing
+                RestoreTemplates.
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, restore_template.ListRestoreTemplatesRequest):
+            request = restore_template.ListRestoreTemplatesRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.list_restore_templates]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__iter__` convenience method.
+        response = pagers.ListRestoreTemplatesPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def update_restore_template(
+        self,
+        request: Optional[
+            Union[gcb_restore_template.UpdateRestoreTemplateRequest, dict]
+        ] = None,
+        *,
+        restore_template: Optional[gcb_restore_template.RestoreTemplate] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Updates the settings of a RestoreTemplate.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_update_restore_template():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                restore_template = backupdr_v1beta.RestoreTemplate()
+                restore_template.resource_type = "resource_type_value"
+                restore_template.backup_selection_config.data_source = "data_source_value"
+
+                request = backupdr_v1beta.UpdateRestoreTemplateRequest(
+                    restore_template=restore_template,
+                )
+
+                # Make the request
+                operation = client.update_restore_template(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.UpdateRestoreTemplateRequest, dict]):
+                The request object. Request message for updating a
+                RestoreTemplate instance.
+            restore_template (google.cloud.backupdr_v1beta.types.RestoreTemplate):
+                Required. The restore template to
+                update.
+
+                This corresponds to the ``restore_template`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (google.protobuf.field_mask_pb2.FieldMask):
+                Optional. The list of fields to update. Field mask is
+                used to specify the fields to be overwritten in the
+                RestoreTemplate resource by the update. The fields
+                specified in the update_mask are relative to the
+                resource, not the full request. A field will be
+                overwritten if it is in the mask.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.cloud.backupdr_v1beta.types.RestoreTemplate` A RestoreTemplate encapsulates DR readiness configurations for validating
+                   backups.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [restore_template, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, gcb_restore_template.UpdateRestoreTemplateRequest):
+            request = gcb_restore_template.UpdateRestoreTemplateRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if restore_template is not None:
+                request.restore_template = restore_template
+            if update_mask is not None:
+                request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.update_restore_template]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("restore_template.name", request.restore_template.name),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            gcb_restore_template.RestoreTemplate,
+            metadata_type=backupdr.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def delete_restore_template(
+        self,
+        request: Optional[
+            Union[restore_template.DeleteRestoreTemplateRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Deletes a RestoreTemplate.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_delete_restore_template():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                request = backupdr_v1beta.DeleteRestoreTemplateRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = client.delete_restore_template(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.DeleteRestoreTemplateRequest, dict]):
+                The request object. Request message for deleting a
+                RestoreTemplate instance.
+            name (str):
+                Required. The name of the restore template to delete.
+                Format:
+                'projects/{project_id}/locations/{location}/restoreTemplates/{restore_template_id}'
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.protobuf.empty_pb2.Empty` A generic empty message that you can re-use to avoid defining duplicated
+                   empty messages in your APIs. A typical example is to
+                   use it as the request or the response type of an API
+                   method. For instance:
+
+                      service Foo {
+                         rpc Bar(google.protobuf.Empty) returns
+                         (google.protobuf.Empty);
+
+                      }
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, restore_template.DeleteRestoreTemplateRequest):
+            request = restore_template.DeleteRestoreTemplateRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.delete_restore_template]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            empty_pb2.Empty,
+            metadata_type=backupdr.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def run_restore_template(
+        self,
+        request: Optional[
+            Union[restore_template.RunRestoreTemplateRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Runs a RestoreTemplate.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_run_restore_template():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                request = backupdr_v1beta.RunRestoreTemplateRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = client.run_restore_template(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.RunRestoreTemplateRequest, dict]):
+                The request object. Request message for running a
+                RestoreTemplate.
+            name (str):
+                Required. The name of the restore template to run.
+                Format:
+                'projects/{project_id}/locations/{location}/restoreTemplates/{restore_template_id}'
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.backupdr_v1beta.types.RunRestoreTemplateResponse`
+                Response message for RunRestoreTemplate.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, restore_template.RunRestoreTemplateRequest):
+            request = restore_template.RunRestoreTemplateRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.run_restore_template]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            restore_template.RunRestoreTemplateResponse,
+            metadata_type=backupdr.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def get_restore_template_execution(
+        self,
+        request: Optional[
+            Union[restore_template_execution.GetRestoreTemplateExecutionRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> restore_template_execution.RestoreTemplateExecution:
+        r"""Gets details of a RestoreTemplateExecution.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_get_restore_template_execution():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                request = backupdr_v1beta.GetRestoreTemplateExecutionRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.get_restore_template_execution(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.GetRestoreTemplateExecutionRequest, dict]):
+                The request object. Request message for getting a
+                RestoreTemplateExecution instance.
+            name (str):
+                Required. The name of the restore template execution to
+                retrieve. Format:
+                'projects/{project_id}/locations/{location}/restoreTemplates/{restore_template_id}/executions/{execution_id}'
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.backupdr_v1beta.types.RestoreTemplateExecution:
+                A RestoreTemplateExecution represents a single historical or active
+                   execution run.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, restore_template_execution.GetRestoreTemplateExecutionRequest
+        ):
+            request = restore_template_execution.GetRestoreTemplateExecutionRequest(
+                request
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.get_restore_template_execution
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def list_restore_template_executions(
+        self,
+        request: Optional[
+            Union[restore_template_execution.ListRestoreTemplateExecutionsRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListRestoreTemplateExecutionsPager:
+        r"""Lists RestoreTemplateExecutions in a given project,
+        location and restore template.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_list_restore_template_executions():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                request = backupdr_v1beta.ListRestoreTemplateExecutionsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_restore_template_executions(request=request)
+
+                # Handle the response
+                for response in page_result:
+                    print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.ListRestoreTemplateExecutionsRequest, dict]):
+                The request object. Request message for listing
+                RestoreTemplateExecutions.
+            parent (str):
+                Required. The project, location, and restore template
+                for which to retrieve executions information. Format:
+                ``projects/{project}/locations/{location}/restoreTemplates/{restore_template}``.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.backupdr_v1beta.services.backup_dr.pagers.ListRestoreTemplateExecutionsPager:
+                Response message for listing
+                RestoreTemplateExecutions.
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, restore_template_execution.ListRestoreTemplateExecutionsRequest
+        ):
+            request = restore_template_execution.ListRestoreTemplateExecutionsRequest(
+                request
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.list_restore_template_executions
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__iter__` convenience method.
+        response = pagers.ListRestoreTemplateExecutionsPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def trigger_restore_cleanup(
+        self,
+        request: Optional[
+            Union[restore_template_execution.TriggerRestoreCleanupRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Triggers cleanup of restored resources created during
+        execution.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_trigger_restore_cleanup():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                request = backupdr_v1beta.TriggerRestoreCleanupRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = client.trigger_restore_cleanup(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.TriggerRestoreCleanupRequest, dict]):
+                The request object. Request message for triggering a
+                restore cleanup.
+            name (str):
+                Required. Name of the restore template execution.
+                Format:
+                'projects/{project_id}/locations/{location}/restoreTemplates/{restore_template_id}/executions/{execution_id}'
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.cloud.backupdr_v1beta.types.RestoreTemplateExecution` A RestoreTemplateExecution represents a single historical or active
+                   execution run.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, restore_template_execution.TriggerRestoreCleanupRequest
+        ):
+            request = restore_template_execution.TriggerRestoreCleanupRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.trigger_restore_cleanup]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            restore_template_execution.RestoreTemplateExecution,
+            metadata_type=backupdr.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def create_restore_verification_plan(
+        self,
+        request: Optional[
+            Union[
+                gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest, dict
+            ]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        restore_verification_plan: Optional[
+            gcb_restore_verification_plan.RestoreVerificationPlan
+        ] = None,
+        restore_verification_plan_id: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Creates a new RestoreVerificationPlan in a given
+        project and location.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_create_restore_verification_plan():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                restore_verification_plan = backupdr_v1beta.RestoreVerificationPlan()
+                restore_verification_plan.schedule = "schedule_value"
+
+                request = backupdr_v1beta.CreateRestoreVerificationPlanRequest(
+                    parent="parent_value",
+                    restore_verification_plan_id="restore_verification_plan_id_value",
+                    restore_verification_plan=restore_verification_plan,
+                )
+
+                # Make the request
+                operation = client.create_restore_verification_plan(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.CreateRestoreVerificationPlanRequest, dict]):
+                The request object. The request message for creating a
+                ``RestoreVerificationPlan``.
+            parent (str):
+                Required. The ``RestoreVerificationPlan`` project and
+                location in the format
+                ``projects/{project}/locations/{location}``. In Google
+                Cloud Backup and DR locations map to Google Cloud
+                regions, for example **us-central1**.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            restore_verification_plan (google.cloud.backupdr_v1beta.types.RestoreVerificationPlan):
+                Required. The ``RestoreVerificationPlan`` resource
+                object to create.
+
+                This corresponds to the ``restore_verification_plan`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            restore_verification_plan_id (str):
+                Required. The name of the ``RestoreVerificationPlan`` to
+                create. The name must be unique for the specified
+                project and location. The name must start with a
+                lowercase letter followed by up to 62 lowercase letters,
+                numbers, or hyphens. Pattern,
+                ``^[a-z]([-a-z0-9]*[a-z0-9])?$``.
+
+                This corresponds to the ``restore_verification_plan_id`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.cloud.backupdr_v1beta.types.RestoreVerificationPlan` A RestoreVerificationPlan specifies the scheduling and clean-up template
+                   for automated restore verification. It contains a
+                   schedule to dictate when the verifications should
+                   run, and a RestoreVerificationCleanupRule for
+                   post-verification resource deletion.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [
+            parent,
+            restore_verification_plan,
+            restore_verification_plan_id,
+        ]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest
+        ):
+            request = (
+                gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest(
+                    request
+                )
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+            if restore_verification_plan is not None:
+                request.restore_verification_plan = restore_verification_plan
+            if restore_verification_plan_id is not None:
+                request.restore_verification_plan_id = restore_verification_plan_id
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.create_restore_verification_plan
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            gcb_restore_verification_plan.RestoreVerificationPlan,
+            metadata_type=backupdr.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def create_restore_verification_plan_association(
+        self,
+        request: Optional[
+            Union[
+                gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest,
+                dict,
+            ]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        restore_verification_plan_association: Optional[
+            gcb_restore_verification_plan_association.RestoreVerificationPlanAssociation
+        ] = None,
+        restore_verification_plan_association_id: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Creates a new RestoreVerificationPlanAssociation in a
+        given RestoreVerificationPlan.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_create_restore_verification_plan_association():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                restore_verification_plan_association = backupdr_v1beta.RestoreVerificationPlanAssociation()
+                restore_verification_plan_association.restore_template = "restore_template_value"
+                restore_verification_plan_association.resource_type = "resource_type_value"
+
+                request = backupdr_v1beta.CreateRestoreVerificationPlanAssociationRequest(
+                    parent="parent_value",
+                    restore_verification_plan_association_id="restore_verification_plan_association_id_value",
+                    restore_verification_plan_association=restore_verification_plan_association,
+                )
+
+                # Make the request
+                operation = client.create_restore_verification_plan_association(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.CreateRestoreVerificationPlanAssociationRequest, dict]):
+                The request object. Request message for
+                CreateRestoreVerificationPlanAssociation.
+            parent (str):
+                Required. The parent resource where this association
+                will be created. Format:
+                ``projects/{project}/locations/{location}/restoreVerificationPlans/{restore_verification_plan}``
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            restore_verification_plan_association (google.cloud.backupdr_v1beta.types.RestoreVerificationPlanAssociation):
+                Required. The
+                RestoreVerificationPlanAssociation
+                resource to create.
+
+                This corresponds to the ``restore_verification_plan_association`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            restore_verification_plan_association_id (str):
+                Required. The ID to use for the association, which will
+                become the final component of the association's resource
+                name.
+
+                This value should be 1-63 characters, and valid
+                characters are /[a-z0-9\_-]/.
+
+                This corresponds to the ``restore_verification_plan_association_id`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.cloud.backupdr_v1beta.types.RestoreVerificationPlanAssociation` A RestoreVerificationPlanAssociation binds a specific workload to a
+                   RestoreVerificationPlan.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [
+            parent,
+            restore_verification_plan_association,
+            restore_verification_plan_association_id,
+        ]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request,
+            gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest,
+        ):
+            request = gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest(
+                request
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+            if restore_verification_plan_association is not None:
+                request.restore_verification_plan_association = (
+                    restore_verification_plan_association
+                )
+            if restore_verification_plan_association_id is not None:
+                request.restore_verification_plan_association_id = (
+                    restore_verification_plan_association_id
+                )
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.create_restore_verification_plan_association
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            gcb_restore_verification_plan_association.RestoreVerificationPlanAssociation,
+            metadata_type=backupdr.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def get_restore_verification_plan_association(
+        self,
+        request: Optional[
+            Union[
+                restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest,
+                dict,
+            ]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> restore_verification_plan_association.RestoreVerificationPlanAssociation:
+        r"""Gets details of a single
+        RestoreVerificationPlanAssociation in a given
+        RestoreVerificationPlan.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_get_restore_verification_plan_association():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                request = backupdr_v1beta.GetRestoreVerificationPlanAssociationRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.get_restore_verification_plan_association(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.GetRestoreVerificationPlanAssociationRequest, dict]):
+                The request object. Request message for
+                GetRestoreVerificationPlanAssociation.
+            name (str):
+                Required. The resource name of the
+                RestoreVerificationPlanAssociation to retrieve. Format:
+                ``projects/{project}/locations/{location}/restoreVerificationPlans/{restore_verification_plan}/associations/{association}``
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.backupdr_v1beta.types.RestoreVerificationPlanAssociation:
+                A RestoreVerificationPlanAssociation binds a specific workload to a
+                   RestoreVerificationPlan.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request,
+            restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest,
+        ):
+            request = restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest(
+                request
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.get_restore_verification_plan_association
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def list_restore_verification_plan_associations(
+        self,
+        request: Optional[
+            Union[
+                restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest,
+                dict,
+            ]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListRestoreVerificationPlanAssociationsPager:
+        r"""Lists RestoreVerificationPlanAssociations in a given
+        RestoreVerificationPlan.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_list_restore_verification_plan_associations():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                request = backupdr_v1beta.ListRestoreVerificationPlanAssociationsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_restore_verification_plan_associations(request=request)
+
+                # Handle the response
+                for response in page_result:
+                    print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.ListRestoreVerificationPlanAssociationsRequest, dict]):
+                The request object. Request message for
+                ListRestoreVerificationPlanAssociations.
+            parent (str):
+                Required. The parent RestoreVerificationPlan name.
+                Format:
+                ``projects/{project}/locations/{location}/restoreVerificationPlans/{restore_verification_plan}``
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.backupdr_v1beta.services.backup_dr.pagers.ListRestoreVerificationPlanAssociationsPager:
+                Response message for
+                ListRestoreVerificationPlanAssociations.
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request,
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest,
+        ):
+            request = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest(
+                request
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.list_restore_verification_plan_associations
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__iter__` convenience method.
+        response = pagers.ListRestoreVerificationPlanAssociationsPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def delete_restore_verification_plan_association(
+        self,
+        request: Optional[
+            Union[
+                restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest,
+                dict,
+            ]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Deletes a single RestoreVerificationPlanAssociation
+        in a given RestoreVerificationPlan.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_delete_restore_verification_plan_association():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                request = backupdr_v1beta.DeleteRestoreVerificationPlanAssociationRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = client.delete_restore_verification_plan_association(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.DeleteRestoreVerificationPlanAssociationRequest, dict]):
+                The request object. Request message for
+                DeleteRestoreVerificationPlanAssociation.
+            name (str):
+                Required. The resource name of the
+                RestoreVerificationPlanAssociation to delete. Format:
+                ``projects/{project}/locations/{location}/restoreVerificationPlans/{restore_verification_plan}/associations/{association}``
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.protobuf.empty_pb2.Empty` A generic empty message that you can re-use to avoid defining duplicated
+                   empty messages in your APIs. A typical example is to
+                   use it as the request or the response type of an API
+                   method. For instance:
+
+                      service Foo {
+                         rpc Bar(google.protobuf.Empty) returns
+                         (google.protobuf.Empty);
+
+                      }
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request,
+            restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest,
+        ):
+            request = restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest(
+                request
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.delete_restore_verification_plan_association
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            empty_pb2.Empty,
+            metadata_type=backupdr.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def trigger_restore_verification(
+        self,
+        request: Optional[
+            Union[
+                restore_verification_plan_association.TriggerRestoreVerificationRequest,
+                dict,
+            ]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Triggers a new Restore Verification for the
+        association in a given RestoreVerificationPlan.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_trigger_restore_verification():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                request = backupdr_v1beta.TriggerRestoreVerificationRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = client.trigger_restore_verification(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.TriggerRestoreVerificationRequest, dict]):
+                The request object. Request message for
+                TriggerRestoreVerification.
+            name (str):
+                Required. The resource name of the
+                RestoreVerificationPlanAssociation to trigger. Format:
+                ``projects/{project}/locations/{location}/restoreVerificationPlans/{restore_verification_plan}/associations/{association}``
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.backupdr_v1beta.types.TriggerRestoreVerificationResponse`
+                Response message for TriggerRestoreVerification.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request,
+            restore_verification_plan_association.TriggerRestoreVerificationRequest,
+        ):
+            request = (
+                restore_verification_plan_association.TriggerRestoreVerificationRequest(
+                    request
+                )
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.trigger_restore_verification
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            restore_verification_plan_association.TriggerRestoreVerificationResponse,
+            metadata_type=backupdr.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def get_restore_verification_plan(
+        self,
+        request: Optional[
+            Union[restore_verification_plan.GetRestoreVerificationPlanRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> restore_verification_plan.RestoreVerificationPlan:
+        r"""Gets details of a single RestoreVerificationPlan.
+        Returns the requested RestoreVerificationPlan.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_get_restore_verification_plan():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                request = backupdr_v1beta.GetRestoreVerificationPlanRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.get_restore_verification_plan(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.GetRestoreVerificationPlanRequest, dict]):
+                The request object. The request message for getting a
+                ``RestoreVerificationPlan``.
+            name (str):
+                Required. The resource name of the
+                ``RestoreVerificationPlan`` to retrieve.
+
+                Format:
+                ``projects/{project}/locations/{location}/restoreVerificationPlans/{restoreVerificationPlan}``
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.backupdr_v1beta.types.RestoreVerificationPlan:
+                A RestoreVerificationPlan specifies the scheduling and clean-up template
+                   for automated restore verification. It contains a
+                   schedule to dictate when the verifications should
+                   run, and a RestoreVerificationCleanupRule for
+                   post-verification resource deletion.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, restore_verification_plan.GetRestoreVerificationPlanRequest
+        ):
+            request = restore_verification_plan.GetRestoreVerificationPlanRequest(
+                request
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.get_restore_verification_plan
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def list_restore_verification_plans(
+        self,
+        request: Optional[
+            Union[restore_verification_plan.ListRestoreVerificationPlansRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListRestoreVerificationPlansPager:
+        r"""Lists RestoreVerificationPlans in a given project and
+        location.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_list_restore_verification_plans():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                request = backupdr_v1beta.ListRestoreVerificationPlansRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_restore_verification_plans(request=request)
+
+                # Handle the response
+                for response in page_result:
+                    print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.ListRestoreVerificationPlansRequest, dict]):
+                The request object. The request message for getting a list of
+                ``RestoreVerificationPlans``.
+            parent (str):
+                Required. The project and location for which to retrieve
+                ``RestoreVerificationPlans`` information. Format:
+                ``projects/{project}/locations/{location}``. In Google
+                Cloud Backup and DR, locations map to Google Cloud
+                regions, for example **us-central1**. To retrieve
+                restore verification plans for all locations, use "-"
+                for the ``{location}`` value.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.backupdr_v1beta.services.backup_dr.pagers.ListRestoreVerificationPlansPager:
+                The response message for getting a list of
+                RestoreVerificationPlans.
+
+                Iterating over this object will yield results and
+                resolve additional pages automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, restore_verification_plan.ListRestoreVerificationPlansRequest
+        ):
+            request = restore_verification_plan.ListRestoreVerificationPlansRequest(
+                request
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.list_restore_verification_plans
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__iter__` convenience method.
+        response = pagers.ListRestoreVerificationPlansPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def delete_restore_verification_plan(
+        self,
+        request: Optional[
+            Union[restore_verification_plan.DeleteRestoreVerificationPlanRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Deletes a single RestoreVerificationPlan. If the ``force`` flag
+        is set to ``true``, any RestoreVerificationPlanAssociations
+        linked to this RestoreVerificationPlan will also be deleted.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import backupdr_v1beta
+
+            def sample_delete_restore_verification_plan():
+                # Create a client
+                client = backupdr_v1beta.BackupDRClient()
+
+                # Initialize request argument(s)
+                request = backupdr_v1beta.DeleteRestoreVerificationPlanRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = client.delete_restore_verification_plan(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.backupdr_v1beta.types.DeleteRestoreVerificationPlanRequest, dict]):
+                The request object. The request message for deleting a
+                ``RestoreVerificationPlan``.
+            name (str):
+                Required. The resource name of the
+                ``RestoreVerificationPlan`` to delete.
+
+                Format:
+                ``projects/{project}/locations/{location}/restoreVerificationPlans/{restoreVerificationPlan}``
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.protobuf.empty_pb2.Empty` A generic empty message that you can re-use to avoid defining duplicated
+                   empty messages in your APIs. A typical example is to
+                   use it as the request or the response type of an API
+                   method. For instance:
+
+                      service Foo {
+                         rpc Bar(google.protobuf.Empty) returns
+                         (google.protobuf.Empty);
+
+                      }
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, restore_verification_plan.DeleteRestoreVerificationPlanRequest
+        ):
+            request = restore_verification_plan.DeleteRestoreVerificationPlanRequest(
+                request
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.delete_restore_verification_plan
+        ]
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -5895,6 +8515,11 @@ class BackupDRClient(metaclass=BackupDRClientMeta):
                 policy. This will become the final
                 component of the policy's resource name.
 
+                This value must start with a lowercase
+                letter followed by up to 62 lowercase
+                letters, numbers, or hyphens, and cannot
+                end with a hyphen.
+
                 This corresponds to the ``auto_protection_policy_id`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
@@ -6293,7 +8918,7 @@ class BackupDRClient(metaclass=BackupDRClientMeta):
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             update_mask (google.protobuf.field_mask_pb2.FieldMask):
-                Required. Field mask is used to specify the fields to be
+                Optional. Field mask is used to specify the fields to be
                 overwritten in the AutoProtectionPolicy resource by the
                 update. The fields specified in the update_mask are
                 relative to the resource, not the full request. A field
@@ -6603,6 +9228,11 @@ class BackupDRClient(metaclass=BackupDRClientMeta):
                 binding. This will become the final
                 component of the binding's resource
                 name.
+
+                This value must start with a lowercase
+                letter followed by up to 62 lowercase
+                letters, numbers, or hyphens, and cannot
+                end with a hyphen.
 
                 This corresponds to the ``auto_protection_policy_binding_id`` field
                 on the ``request`` instance; if ``request`` is provided, this

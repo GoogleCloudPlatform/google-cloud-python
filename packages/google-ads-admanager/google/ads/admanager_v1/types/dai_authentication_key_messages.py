@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
 from google.ads.admanager_v1.types import dai_authentication_key_enums
@@ -41,6 +42,13 @@ class DaiAuthenticationKey(proto.Message):
             Identifier. The resource name of the
             ``DaiAuthenticationKey``. Format:
             ``networks/{network_code}/daiAuthenticationKeys/{dai_authentication_key}``
+        key (str):
+            Output only. The value of the secure key.
+
+            This field is a member of `oneof`_ ``_key``.
+        create_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The date and time this
+            DaiAuthenticationKey was created.
         status (google.ads.admanager_v1.types.DaiAuthenticationKeyStatusEnum.DaiAuthenticationKeyStatus):
             Output only. The status of this DaiAuthenticationKey.
 
@@ -68,6 +76,16 @@ class DaiAuthenticationKey(proto.Message):
     name: str = proto.Field(
         proto.STRING,
         number=1,
+    )
+    key: str = proto.Field(
+        proto.STRING,
+        number=2,
+        optional=True,
+    )
+    create_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=timestamp_pb2.Timestamp,
     )
     status: dai_authentication_key_enums.DaiAuthenticationKeyStatusEnum.DaiAuthenticationKeyStatus = proto.Field(
         proto.ENUM,

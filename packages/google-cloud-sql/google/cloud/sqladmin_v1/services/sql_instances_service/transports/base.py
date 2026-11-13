@@ -255,6 +255,16 @@ class SqlInstancesServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.start: gapic_v1.method.wrap_method(
+                self.start,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.stop: gapic_v1.method.wrap_method(
+                self.stop,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.restore_backup: gapic_v1.method.wrap_method(
                 self.restore_backup,
                 default_timeout=None,
@@ -335,6 +345,11 @@ class SqlInstancesServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.execute_sql_read_only: gapic_v1.method.wrap_method(
+                self.execute_sql_read_only,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.execute_sql: gapic_v1.method.wrap_method(
                 self.execute_sql,
                 default_timeout=None,
@@ -357,6 +372,11 @@ class SqlInstancesServiceTransport(abc.ABC):
             ),
             self.point_in_time_restore: gapic_v1.method.wrap_method(
                 self.point_in_time_restore,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.reconcile_networking: gapic_v1.method.wrap_method(
+                self.reconcile_networking,
                 default_timeout=None,
                 client_info=client_info,
             ),
@@ -585,6 +605,24 @@ class SqlInstancesServiceTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def start(
+        self,
+    ) -> Callable[
+        [cloud_sql_instances.SqlInstancesStartRequest],
+        Union[cloud_sql_resources.Operation, Awaitable[cloud_sql_resources.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def stop(
+        self,
+    ) -> Callable[
+        [cloud_sql_instances.SqlInstancesStopRequest],
+        Union[cloud_sql_resources.Operation, Awaitable[cloud_sql_resources.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def restore_backup(
         self,
     ) -> Callable[
@@ -740,6 +778,18 @@ class SqlInstancesServiceTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def execute_sql_read_only(
+        self,
+    ) -> Callable[
+        [cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyRequest],
+        Union[
+            cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyResponse,
+            Awaitable[cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def execute_sql(
         self,
     ) -> Callable[
@@ -789,6 +839,15 @@ class SqlInstancesServiceTransport(abc.ABC):
         self,
     ) -> Callable[
         [cloud_sql_instances.SqlInstancesPointInTimeRestoreRequest],
+        Union[cloud_sql_resources.Operation, Awaitable[cloud_sql_resources.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def reconcile_networking(
+        self,
+    ) -> Callable[
+        [cloud_sql_instances.SqlInstancesReconcileNetworkingRequest],
         Union[cloud_sql_resources.Operation, Awaitable[cloud_sql_resources.Operation]],
     ]:
         raise NotImplementedError()

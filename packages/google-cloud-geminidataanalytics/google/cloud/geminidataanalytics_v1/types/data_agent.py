@@ -97,52 +97,77 @@ class DataAgent(proto.Message):
             Optional. Controls whether BigQuery Agent Analytics trace
             logging is enabled for the agent.
 
-            BigQuery Agent Analytics is in Preview and is delivered to
-            enrolled projects only. In a project that is not enrolled
-            this field is accepted and stored, but no trace rows are
-            written and no error is returned.
-
-            Trace logging is additionally suppressed for the entire
-            turn, without error, when any table in the agent's
-            datasource carries row-level security, column-level security
-            or policy tags. It is also suppressed when that
-            determination cannot be made, for example when the caller
-            lacks permission to list a table's row access policies.
+            Trace logging is suppressed for the entire turn, without
+            error, when any table in the agent's data source carries
+            row-level security, column-level security, policy tags, or
+            data masking. It is also suppressed when that determination
+            cannot be made, for example when the caller lacks permission
+            to inspect a table's security policies.
 
             Trace rows are written only when this is ``true`` and
             ``bigquery_agent_analytics_table`` is set. On a BigQuery
             agent, enabling this without a table has no effect: no table
             is created for the agent and no rows are written. On an
-            agent whose datasource is not BigQuery, ``CreateDataAgent``
-            rejects either field with ``INVALID_ARGUMENT``.
+            agent whose data source is not BigQuery, ``CreateDataAgent``
+            and ``UpdateDataAgent`` reject setting this field to
+            ``true`` or setting ``bigquery_agent_analytics_table`` with
+            ``INVALID_ARGUMENT``. See ``bigquery_agent_analytics_table``
+            for when this is checked.
 
             This setting is independent of the project-level BigQuery
             Agent Analytics setting configured through
-            ``SetAgentOpsObservability``. An agent does not inherit that
+            ``setAgentOpsObservability``. An agent does not inherit that
             setting.
+
+            On read, this field reflects the setting that applies to
+            conversations served from ``published_context``, or from
+            ``staging_context`` while the agent is unpublished. An
+            update that changes this field or
+            ``bigquery_agent_analytics_table`` applies both fields to
+            conversations served from ``staging_context`` and, once the
+            agent has been published, from ``published_context``.
 
             This field is a member of `oneof`_ ``_bigquery_agent_analytics_enabled``.
         bigquery_agent_analytics_table (google.cloud.geminidataanalytics_v1.types.BigQueryTableReference):
             Optional. The BigQuery table that BigQuery Agent Analytics
             trace rows are written to. Has no effect unless
-            ``bigquery_agent_analytics_enabled`` is ``true``. The
-            Preview enrollment described on that field applies here too.
+            ``bigquery_agent_analytics_enabled`` is ``true``.
 
             The trace table is validated when it is set on
-            ``CreateDataAgent``, or when it is included in the
-            ``update_mask`` of an ``UpdateDataAgent`` call. The
-            following are rejected with ``INVALID_ARGUMENT``:
+            ``CreateDataAgent``, and on ``UpdateDataAgent`` as described
+            below. A call to ``UpdateDataAgent`` writes a field if the
+            field is in ``update_mask`` or, when ``update_mask`` is
+            omitted, if the field is present in the request, even if its
+            value is unchanged. The following are rejected with
+            ``INVALID_ARGUMENT``:
 
             - The table must belong to the same project as the agent.
-            - The agent's datasource must be BigQuery. BigQuery Agent
+            - The agent's data source must be BigQuery. BigQuery Agent
               Analytics is not supported for Looker, Looker Studio or
               AlloyDB agents.
 
-            These are validated against the agent as sent in the
-            request. An agent that carries no datasource is not
-            validated, and an agent switched to a non-BigQuery
-            datasource is not re-validated; in the latter case no trace
-            rows are written.
+            On ``UpdateDataAgent``, the table's project is checked
+            whenever the call writes a table to this field, or turns
+            ``bigquery_agent_analytics_enabled`` on over a stored table.
+            An update that only clears this field is not checked.
+
+            On ``CreateDataAgent``, the data source is validated against
+            the agent in the request. On ``UpdateDataAgent``, it is
+            validated against the stored agent after applying the update
+            whenever the update changes the data source of
+            ``staging_context`` or ``published_context``, turns
+            ``bigquery_agent_analytics_enabled`` on, or sets a different
+            table in this field. For example, switching an agent that
+            turns logging on or names a trace table to a non-BigQuery
+            data source is rejected, unless the same update turns
+            logging off and clears this field. An unrelated edit,
+            including a call to ``UpdateDataAgent`` without
+            ``update_mask`` that carries an unchanged
+            ``bigquery_agent_analytics_enabled = true`` or the stored
+            table, is not rejected, and neither is an update that only
+            turns ``bigquery_agent_analytics_enabled`` off or clears
+            this field. A context that carries no data source is not
+            validated.
 
             The destination dataset must already exist and must grant
             write access to the project's Gemini Data Analytics service
@@ -154,6 +179,14 @@ class DataAgent(proto.Message):
             Changing the table on an existing agent affects subsequent
             turns only. Rows already written to the previous table are
             left in place.
+
+            On read, this field reflects the table that applies to
+            conversations served from ``published_context``, or from
+            ``staging_context`` while the agent is unpublished. An
+            update that changes this field or
+            ``bigquery_agent_analytics_enabled`` applies both fields to
+            conversations served from ``staging_context`` and, once the
+            agent has been published, from ``published_context``.
     """
 
     data_analytics_agent: gcg_data_analytics_agent.DataAnalyticsAgent = proto.Field(

@@ -34,8 +34,12 @@ __lazy_modules__ = {
     "google.apps.chat_v1.types.audience",
     "google.apps.chat_v1.types.availability",
     "google.apps.chat_v1.types.chat_service",
+    "google.apps.chat_v1.types.citation",
+    "google.apps.chat_v1.types.cited_source",
     "google.apps.chat_v1.types.contextual_addon",
     "google.apps.chat_v1.types.deletion_metadata",
+    "google.apps.chat_v1.types.elements",
+    "google.apps.chat_v1.types.elements_common",
     "google.apps.chat_v1.types.event_payload",
     "google.apps.chat_v1.types.group",
     "google.apps.chat_v1.types.history_state",
@@ -92,8 +96,12 @@ from .types.availability import (
     MarkAsDoNotDisturbRequest,
     UpdateAvailabilityRequest,
 )
+from .types.citation import Citation
+from .types.cited_source import CitedSource
 from .types.contextual_addon import ContextualAddOnMarkup
 from .types.deletion_metadata import DeletionMetadata
+from .types.elements import Elements
+from .types.elements_common import ElementsImage
 from .types.event_payload import (
     MembershipBatchCreatedEventData,
     MembershipBatchDeletedEventData,
@@ -144,6 +152,8 @@ from .types.message import (
     Message,
     QuotedMessageMetadata,
     QuotedMessageSnapshot,
+    ReplaceMessageCardsRequest,
+    ReplaceMessageCardsResponse,
     SearchMessageResult,
     SearchMessagesRequest,
     SearchMessagesResponse,
@@ -243,6 +253,8 @@ __all__ = (
     "CardWithId",
     "ChatServiceClient",
     "ChatSpaceLinkData",
+    "Citation",
+    "CitedSource",
     "CompleteImportSpaceRequest",
     "CompleteImportSpaceResponse",
     "ContextualAddOnMarkup",
@@ -270,6 +282,8 @@ __all__ = (
     "DoNotDisturbMetadata",
     "DriveDataRef",
     "DriveLinkData",
+    "Elements",
+    "ElementsImage",
     "Emoji",
     "EmojiReactionSummary",
     "FindDirectMessageRequest",
@@ -338,6 +352,8 @@ __all__ = (
     "ReactionBatchDeletedEventData",
     "ReactionCreatedEventData",
     "ReactionDeletedEventData",
+    "ReplaceMessageCardsRequest",
+    "ReplaceMessageCardsResponse",
     "RichLinkMetadata",
     "SearchMessageResult",
     "SearchMessagesRequest",

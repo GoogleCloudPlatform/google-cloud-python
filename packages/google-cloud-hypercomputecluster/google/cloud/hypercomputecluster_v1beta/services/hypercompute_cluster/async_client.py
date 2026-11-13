@@ -94,21 +94,55 @@ class HypercomputeClusterAsyncClient:
     parse_compute_instance_path = staticmethod(
         HypercomputeClusterClient.parse_compute_instance_path
     )
+    disk_path = staticmethod(HypercomputeClusterClient.disk_path)
+    parse_disk_path = staticmethod(HypercomputeClusterClient.parse_disk_path)
     disk_type_path = staticmethod(HypercomputeClusterClient.disk_type_path)
     parse_disk_type_path = staticmethod(HypercomputeClusterClient.parse_disk_type_path)
     file_instance_path = staticmethod(HypercomputeClusterClient.file_instance_path)
     parse_file_instance_path = staticmethod(
         HypercomputeClusterClient.parse_file_instance_path
     )
-    lustre_instance_path = staticmethod(HypercomputeClusterClient.lustre_instance_path)
-    parse_lustre_instance_path = staticmethod(
-        HypercomputeClusterClient.parse_lustre_instance_path
+    image_path = staticmethod(HypercomputeClusterClient.image_path)
+    parse_image_path = staticmethod(HypercomputeClusterClient.parse_image_path)
+    instance_path = staticmethod(HypercomputeClusterClient.instance_path)
+    parse_instance_path = staticmethod(HypercomputeClusterClient.parse_instance_path)
+    instance_group_manager_path = staticmethod(
+        HypercomputeClusterClient.instance_group_manager_path
+    )
+    parse_instance_group_manager_path = staticmethod(
+        HypercomputeClusterClient.parse_instance_group_manager_path
+    )
+    instance_template_path = staticmethod(
+        HypercomputeClusterClient.instance_template_path
+    )
+    parse_instance_template_path = staticmethod(
+        HypercomputeClusterClient.parse_instance_template_path
     )
     network_path = staticmethod(HypercomputeClusterClient.network_path)
     parse_network_path = staticmethod(HypercomputeClusterClient.parse_network_path)
+    node_path = staticmethod(HypercomputeClusterClient.node_path)
+    parse_node_path = staticmethod(HypercomputeClusterClient.parse_node_path)
     reservation_path = staticmethod(HypercomputeClusterClient.reservation_path)
     parse_reservation_path = staticmethod(
         HypercomputeClusterClient.parse_reservation_path
+    )
+    reservation_block_path = staticmethod(
+        HypercomputeClusterClient.reservation_block_path
+    )
+    parse_reservation_block_path = staticmethod(
+        HypercomputeClusterClient.parse_reservation_block_path
+    )
+    reservation_sub_block_path = staticmethod(
+        HypercomputeClusterClient.reservation_sub_block_path
+    )
+    parse_reservation_sub_block_path = staticmethod(
+        HypercomputeClusterClient.parse_reservation_sub_block_path
+    )
+    snapshot_path = staticmethod(HypercomputeClusterClient.snapshot_path)
+    parse_snapshot_path = staticmethod(HypercomputeClusterClient.parse_snapshot_path)
+    storage_pool_path = staticmethod(HypercomputeClusterClient.storage_pool_path)
+    parse_storage_pool_path = staticmethod(
+        HypercomputeClusterClient.parse_storage_pool_path
     )
     subnetwork_path = staticmethod(HypercomputeClusterClient.subnetwork_path)
     parse_subnetwork_path = staticmethod(
@@ -650,9 +684,10 @@ class HypercomputeClusterAsyncClient:
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             cluster_id (:class:`str`):
-                Required. ID of the cluster to create. Must conform to
-                `RFC-1034 <https://datatracker.ietf.org/doc/html/rfc1034>`__
-                (lower-case, alphanumeric, and at most 63 characters).
+                Required. The ID of the cluster to create. The cluster
+                ID must start with a lowercase letter (``a``-``z``), use
+                only lowercase letters or numbers, and contain up to 10
+                characters. For example, specify ``cluster001``.
 
                 This corresponds to the ``cluster_id`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -1017,6 +1052,133 @@ class HypercomputeClusterAsyncClient:
             self._client._transport.operations_client,
             empty_pb2.Empty,
             metadata_type=operation_metadata.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def list_nodes(
+        self,
+        request: Optional[Union[hypercompute_cluster.ListNodesRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListNodesAsyncPager:
+        r"""Lists Nodes in a given cluster.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import hypercomputecluster_v1beta
+
+            async def sample_list_nodes():
+                # Create a client
+                client = hypercomputecluster_v1beta.HypercomputeClusterAsyncClient()
+
+                # Initialize request argument(s)
+                request = hypercomputecluster_v1beta.ListNodesRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_nodes(request=request)
+
+                # Handle the response
+                async for response in page_result:
+                    print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.hypercomputecluster_v1beta.types.ListNodesRequest, dict]]):
+                The request object. Request message for
+                [ListNodes][google.cloud.hypercomputecluster.v1beta.HypercomputeCluster.ListNodes].
+            parent (:class:`str`):
+                Required. Parent cluster of the nodes to list, in the
+                format
+                ``projects/{project}/locations/{location}/clusters/{cluster}``.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.hypercomputecluster_v1beta.services.hypercompute_cluster.pagers.ListNodesAsyncPager:
+                Response message for
+                   [ListNodes][google.cloud.hypercomputecluster.v1beta.HypercomputeCluster.ListNodes].
+
+                Iterating over this object will yield results and
+                resolve additional pages automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, hypercompute_cluster.ListNodesRequest):
+            request = hypercompute_cluster.ListNodesRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.list_nodes
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__aiter__` convenience method.
+        response = pagers.ListNodesAsyncPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
         # Done; return the response.

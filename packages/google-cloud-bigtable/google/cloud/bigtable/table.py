@@ -181,6 +181,11 @@ class Table(object):
     def get_iam_policy(self):
         """Gets the IAM access control policy for this table.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_iam_policy`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -198,6 +203,11 @@ class Table(object):
     def set_iam_policy(self, policy):
         """Sets the IAM access control policy for this table. Replaces any
         existing policy.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.set_iam_policy`
+            instead.
 
         For more information about policy, please see documentation of
         class `google.cloud.bigtable.policy.Policy`
@@ -226,6 +236,11 @@ class Table(object):
         """Tests whether the caller has the given permissions for this table.
         Returns the permissions that the caller has.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.test_iam_permissions`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -253,6 +268,10 @@ class Table(object):
 
     def column_family(self, column_family_id, gc_rule=None):
         """Factory to create a column family associated with this table.
+
+        .. deprecated:: 2.30.0
+            Use :class:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient`
+            instead.
 
         For example:
 
@@ -390,6 +409,11 @@ class Table(object):
     def create(self, initial_split_keys=[], column_families={}):
         """Creates this table.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.create_table`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -437,6 +461,11 @@ class Table(object):
     def exists(self):
         """Check whether the table exists.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_table`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -457,6 +486,11 @@ class Table(object):
     def delete(self):
         """Delete this table.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.delete_table`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -469,6 +503,11 @@ class Table(object):
 
     def list_column_families(self):
         """List the column families owned by this table.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_table`
+            instead.
 
         For example:
 
@@ -498,6 +537,11 @@ class Table(object):
     def get_cluster_states(self):
         """List the cluster states owned by this table.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_table`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -524,6 +568,11 @@ class Table(object):
 
     def get_encryption_info(self):
         """List the encryption info for each cluster owned by this table.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_table`
+            instead.
 
         Gets the current encryption info for the table across all of the clusters.  The
         returned dict will be keyed by cluster id and contain a status for all of the
@@ -783,6 +832,9 @@ class Table(object):
             operation_timeout = retry.deadline
 
         attempt_timeout = timeout
+        # ``rows`` may be any iterable, so keep a reference to each one to
+        # clear the succeeded rows once the statuses are known.
+        row_list = []
         mutation_entries = []
         for row in rows:
             if not isinstance(row, DirectRow):
@@ -794,6 +846,7 @@ class Table(object):
                     "Row %s is a part of %s table. Current table: %s"
                     % (row.row_key, row.table.name, self.name)
                 )
+            row_list.append(row)
             mutation_entries.append(RowMutationEntry(row.row_key, row._get_mutations()))
 
         try:
@@ -812,6 +865,12 @@ class Table(object):
                 status_pb2.Status(code=code_pb2.OK)
                 for _ in range(len(mutation_entries))
             ]
+
+        # Drop the mutations that were applied. Rows that failed keep theirs so
+        # that they can be applied again separately.
+        for row, status in zip(row_list, return_statuses):
+            if status.code == code_pb2.OK:
+                row.clear()
 
         return return_statuses
 
@@ -863,6 +922,11 @@ class Table(object):
     def truncate(self, timeout=None):
         """Truncate the table
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.drop_row_range`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -894,6 +958,11 @@ class Table(object):
 
     def drop_by_prefix(self, row_key_prefix, timeout=None):
         """
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.drop_row_range`
+            instead.
 
         For example:
 
@@ -967,6 +1036,10 @@ class Table(object):
     def backup(self, backup_id, cluster_id=None, expire_time=None):
         """Factory to create a Backup linked to this Table.
 
+        .. deprecated:: 2.30.0
+            Use :class:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient`
+            instead.
+
         :type backup_id: str
         :param backup_id: The ID of the Backup to be created.
 
@@ -990,6 +1063,11 @@ class Table(object):
 
     def list_backups(self, cluster_id=None, filter_=None, order_by=None, page_size=0):
         """List Backups for this Table.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.list_backups`
+            instead.
 
         :type cluster_id: str
         :param cluster_id: (Optional) Specifies a single cluster to list
@@ -1100,6 +1178,11 @@ class Table(object):
         `backup_id` or `backup_name`. The returned ``long-running operation``
         can be used to track the progress of the operation and to cancel it.
         The ``response`` type is ``Table``, if successful.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.restore_table`
+            instead.
 
         :type new_table_id: str
         :param new_table_id: The ID of the Table to create and restore to.

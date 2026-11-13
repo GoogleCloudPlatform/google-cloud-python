@@ -117,7 +117,7 @@ class SqlInstancesServiceClientMeta(type):
 
 
 class SqlInstancesServiceClient(metaclass=SqlInstancesServiceClientMeta):
-    """"""
+    """Service to manage Cloud SQL instances."""
 
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
     DEFAULT_ENDPOINT = "sqladmin.googleapis.com"
@@ -264,6 +264,23 @@ class SqlInstancesServiceClient(metaclass=SqlInstancesServiceClientMeta):
             r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/keyRings/(?P<key_ring>.+?)/cryptoKeys/(?P<crypto_key>.+?)/cryptoKeyVersions/(?P<crypto_key_version>.+?)$",
             path,
         )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def instance_path(
+        project: str,
+        instance: str,
+    ) -> str:
+        """Returns a fully-qualified instance string."""
+        return "projects/{project}/instances/{instance}".format(
+            project=project,
+            instance=instance,
+        )
+
+    @staticmethod
+    def parse_instance_path(path: str) -> Dict[str, str]:
+        """Parses a instance path into its component segments."""
+        m = re.match(r"^projects/(?P<project>.+?)/instances/(?P<instance>.+?)$", path)
         return m.groupdict() if m else {}
 
     @staticmethod
@@ -2882,6 +2899,194 @@ class SqlInstancesServiceClient(metaclass=SqlInstancesServiceClientMeta):
         # Done; return the response.
         return response
 
+    def start(
+        self,
+        request: Optional[
+            Union[cloud_sql_instances.SqlInstancesStartRequest, dict]
+        ] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> cloud_sql_resources.Operation:
+        r"""Starts a Cloud SQL instance.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import sqladmin_v1
+
+            def sample_start():
+                # Create a client
+                client = sqladmin_v1.SqlInstancesServiceClient()
+
+                # Initialize request argument(s)
+                request = sqladmin_v1.SqlInstancesStartRequest(
+                    instance="instance_value",
+                    project="project_value",
+                )
+
+                # Make the request
+                response = client.start(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.sqladmin_v1.types.SqlInstancesStartRequest, dict]):
+                The request object. Instance start request.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.sqladmin_v1.types.Operation:
+                An Operation resource.&nbsp;For
+                successful operations that return an
+                Operation resource, only the fields
+                relevant to the operation are populated
+                in the resource.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_sql_instances.SqlInstancesStartRequest):
+            request = cloud_sql_instances.SqlInstancesStartRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.start]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (
+                    ("project", request.project),
+                    ("instance", request.instance),
+                )
+            ),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def stop(
+        self,
+        request: Optional[
+            Union[cloud_sql_instances.SqlInstancesStopRequest, dict]
+        ] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> cloud_sql_resources.Operation:
+        r"""Stops a Cloud SQL instance.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import sqladmin_v1
+
+            def sample_stop():
+                # Create a client
+                client = sqladmin_v1.SqlInstancesServiceClient()
+
+                # Initialize request argument(s)
+                request = sqladmin_v1.SqlInstancesStopRequest(
+                    instance="instance_value",
+                    project="project_value",
+                )
+
+                # Make the request
+                response = client.stop(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.sqladmin_v1.types.SqlInstancesStopRequest, dict]):
+                The request object. Instance stop request.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.sqladmin_v1.types.Operation:
+                An Operation resource.&nbsp;For
+                successful operations that return an
+                Operation resource, only the fields
+                relevant to the operation are populated
+                in the resource.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_sql_instances.SqlInstancesStopRequest):
+            request = cloud_sql_instances.SqlInstancesStopRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.stop]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (
+                    ("project", request.project),
+                    ("instance", request.instance),
+                )
+            ),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
     def restore_backup(
         self,
         request: Optional[
@@ -4414,6 +4619,107 @@ class SqlInstancesServiceClient(metaclass=SqlInstancesServiceClientMeta):
         # Done; return the response.
         return response
 
+    def execute_sql_read_only(
+        self,
+        request: Optional[
+            Union[cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyRequest, dict]
+        ] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyResponse:
+        r"""Execute SQL statements in read-only mode.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import sqladmin_v1
+
+            def sample_execute_sql_read_only():
+                # Create a client
+                client = sqladmin_v1.SqlInstancesServiceClient()
+
+                # Initialize request argument(s)
+                body = sqladmin_v1.ExecuteSqlReadOnlyPayload()
+                body.password_secret_version = "password_secret_version_value"
+                body.sql_statement = "sql_statement_value"
+
+                request = sqladmin_v1.SqlInstancesExecuteSqlReadOnlyRequest(
+                    instance="instance_value",
+                    project="project_value",
+                    body=body,
+                )
+
+                # Make the request
+                response = client.execute_sql_read_only(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.sqladmin_v1.types.SqlInstancesExecuteSqlReadOnlyRequest, dict]):
+                The request object. Execute SQL statements request.
+                Execute SQL statements in read-only mode
+                request.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.sqladmin_v1.types.SqlInstancesExecuteSqlReadOnlyResponse:
+                Execute SQL statements response.
+                Execute SQL statements in read-only mode
+                response.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyRequest
+        ):
+            request = cloud_sql_instances.SqlInstancesExecuteSqlReadOnlyRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.execute_sql_read_only]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (
+                    ("project", request.project),
+                    ("instance", request.instance),
+                )
+            ),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
     def execute_sql(
         self,
         request: Optional[
@@ -4876,6 +5182,109 @@ class SqlInstancesServiceClient(metaclass=SqlInstancesServiceClientMeta):
         # add these here.
         metadata = tuple(metadata) + (
             gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def reconcile_networking(
+        self,
+        request: Optional[
+            Union[cloud_sql_instances.SqlInstancesReconcileNetworkingRequest, dict]
+        ] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> cloud_sql_resources.Operation:
+        r"""Repairs and recreates networking resources for a
+        Cloud SQL instance. For Private Service Connect (PSC),
+        this operation recreates PSC DNS write endpoints on
+        specified VPC networks and reconciles Private Service
+        Connect connectivity infrastructure for the instance.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import sqladmin_v1
+
+            def sample_reconcile_networking():
+                # Create a client
+                client = sqladmin_v1.SqlInstancesServiceClient()
+
+                # Initialize request argument(s)
+                request = sqladmin_v1.SqlInstancesReconcileNetworkingRequest(
+                    instance="instance_value",
+                    project="project_value",
+                )
+
+                # Make the request
+                response = client.reconcile_networking(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.sqladmin_v1.types.SqlInstancesReconcileNetworkingRequest, dict]):
+                The request object. Request message for
+                SqlInstancesService.ReconcileNetworking.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.sqladmin_v1.types.Operation:
+                An Operation resource.&nbsp;For
+                successful operations that return an
+                Operation resource, only the fields
+                relevant to the operation are populated
+                in the resource.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, cloud_sql_instances.SqlInstancesReconcileNetworkingRequest
+        ):
+            request = cloud_sql_instances.SqlInstancesReconcileNetworkingRequest(
+                request
+            )
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.reconcile_networking]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (
+                    ("project", request.project),
+                    ("instance", request.instance),
+                )
+            ),
         )
 
         # Validate the universe domain.

@@ -2,9 +2,6 @@
 
 .. include:: multiprocessing.rst
 
-This package includes clients for multiple versions of Shopping Merchant Products.
-By default, you will get version ``merchant_products_v1``.
-
 
 API Reference
 -------------
@@ -13,14 +10,6 @@ API Reference
 
     merchant_products_v1/services_
     merchant_products_v1/types_
-
-API Reference
--------------
-.. toctree::
-    :maxdepth: 2
-
-    merchant_products_v1beta/services_
-    merchant_products_v1beta/types_
 
 
 Changelog

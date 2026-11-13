@@ -361,6 +361,64 @@ def test_decode_missing_crytography_alg(monkeypatch):
     assert excinfo.match(r"cryptography")
 
 
+@pytest.mark.parametrize(
+    "token_kwargs,certs,expected_alg",
+    [
+        ({"use_es256_signer": True}, PUBLIC_CERT_BYTES, "ES256"),
+        ({"use_es256_signer": True}, {"1": PUBLIC_CERT_BYTES}, "ES256"),
+        ({"use_es384_signer": True}, PUBLIC_CERT_BYTES, "ES384"),
+        ({"use_es384_signer": True}, {"1": PUBLIC_CERT_BYTES}, "ES384"),
+        ({}, EC_PUBLIC_CERT_BYTES, "RS256"),
+        ({}, {"1": EC_PUBLIC_CERT_BYTES}, "RS256"),
+    ],
+)
+def test_decode_mismatched_cert_key_type(
+    token_factory, token_kwargs, certs, expected_alg
+):
+    token = token_factory(**token_kwargs)
+
+    with pytest.raises(exceptions.InvalidValue) as excinfo:
+        jwt.decode(token, certs=certs)
+    assert excinfo.match(
+        r"Certificate key type does not match signature algorithm {}".format(
+            expected_alg
+        )
+    )
+
+
+def test_decode_missing_certs(token_factory):
+    with pytest.raises(TypeError):
+        jwt.decode(token_factory())
+
+
+@pytest.mark.parametrize("certs", [None, object()])
+def test_decode_non_iterable_certs(token_factory, certs):
+    with pytest.raises(TypeError):
+        jwt.decode(token_factory(), certs=certs)
+
+
+def test_decode_unhashable_alg():
+    headers = json.dumps({"kid": "1", "alg": ["RS256"]})
+    token = b".".join(
+        map(lambda seg: base64.b64encode(seg.encode("utf-8")), [headers, "{}", "sig"])
+    )
+
+    with pytest.raises(exceptions.InvalidValue) as excinfo:
+        jwt.decode(token, PUBLIC_CERT_BYTES)
+    assert excinfo.match(r"Unsupported signature algorithm")
+
+
+def test_decode_unhashable_kid():
+    headers = json.dumps({"kid": ["1"], "alg": "RS256"})
+    token = b".".join(
+        map(lambda seg: base64.b64encode(seg.encode("utf-8")), [headers, "{}", "sig"])
+    )
+
+    with pytest.raises(exceptions.MalformedError) as excinfo:
+        jwt.decode(token, {"1": PUBLIC_CERT_BYTES})
+    assert excinfo.match(r"Certificate for key id .* not found")
+
+
 def test_roundtrip_explicit_key_id(token_factory):
     token = token_factory(key_id="3")
     certs = {"2": OTHER_CERT_BYTES, "3": PUBLIC_CERT_BYTES}

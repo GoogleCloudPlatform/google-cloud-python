@@ -19,6 +19,7 @@ from typing import MutableMapping, MutableSequence
 
 import google.api.launch_stage_pb2 as launch_stage_pb2  # type: ignore
 import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
@@ -26,6 +27,7 @@ from google.cloud.run_v2.types import (
     condition,
     container_status,
     k8s_min,
+    sandbox,
     vendor_settings,
 )
 
@@ -33,6 +35,7 @@ __protobuf__ = proto.module(
     package="google.cloud.run.v2",
     manifest={
         "CreateInstanceRequest",
+        "UpdateInstanceRequest",
         "GetInstanceRequest",
         "DeleteInstanceRequest",
         "ListInstancesRequest",
@@ -49,14 +52,16 @@ class CreateInstanceRequest(proto.Message):
 
     Attributes:
         parent (str):
-
+            Required. The location and project in which
+            this Instance should be created.
         instance (google.cloud.run_v2.types.Instance):
 
         instance_id (str):
-            Required. The unique identifier for the Instance. It must
+            Optional. The unique identifier for the Instance. It must
             begin with letter, and cannot end with hyphen; must contain
             fewer than 50 characters. The name of the instance becomes
-            {parent}/instances/{instance_id}.
+            {parent}/instances/{instance_id}. If not provided, the
+            server will generate a unique ``instance_id``.
         validate_only (bool):
             Optional. Indicates that the request should
             be validated and default values populated,
@@ -83,12 +88,53 @@ class CreateInstanceRequest(proto.Message):
     )
 
 
+class UpdateInstanceRequest(proto.Message):
+    r"""Request message for updating an Instance.
+
+    Attributes:
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. The list of fields to be updated.
+        instance (google.cloud.run_v2.types.Instance):
+            Required. The Instance to be updated.
+        validate_only (bool):
+            Optional. Indicates that the request should
+            be validated and default values populated,
+            without persisting the request or updating any
+            resources.
+        allow_missing (bool):
+            Optional. If set to ``true``, and if the Instance does not
+            exist, it will create a new one. The caller must have
+            ``run.instances.create`` permissions if this is set to
+            ``true`` and the Instance does not exist.
+    """
+
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=field_mask_pb2.FieldMask,
+    )
+    instance: "Instance" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="Instance",
+    )
+    validate_only: bool = proto.Field(
+        proto.BOOL,
+        number=3,
+    )
+    allow_missing: bool = proto.Field(
+        proto.BOOL,
+        number=4,
+    )
+
+
 class GetInstanceRequest(proto.Message):
     r"""
 
     Attributes:
         name (str):
-
+            Required. The name of the Instance to
+            retrieve.
     """
 
     name: str = proto.Field(
@@ -102,7 +148,7 @@ class DeleteInstanceRequest(proto.Message):
 
     Attributes:
         name (str):
-
+            Required. The name of the Instance to delete.
         validate_only (bool):
             Optional. Indicates that the request should
             be validated without actually deleting any
@@ -133,9 +179,7 @@ class ListInstancesRequest(proto.Message):
     Attributes:
         parent (str):
             Required. The location and project to list
-            resources on. Format:
-            projects/{project}/locations/{location}, where
-            {project} can be project id or number.
+            resources on.
         page_size (int):
             Optional. Maximum number of Instances to
             return in this call.
@@ -197,9 +241,7 @@ class StopInstanceRequest(proto.Message):
 
     Attributes:
         name (str):
-            Required. The name of the Instance to stop. Format:
-            ``projects/{project}/locations/{location}/instances/{instance}``,
-            where ``{project}`` can be project id or number.
+            Required. The name of the Instance to stop.
         validate_only (bool):
             Optional. Indicates that the request should
             be validated without actually stopping any
@@ -229,9 +271,7 @@ class StartInstanceRequest(proto.Message):
 
     Attributes:
         name (str):
-            Required. The name of the Instance to stop. Format:
-            ``projects/{project}/locations/{location}/instances/{instance}``,
-            where ``{project}`` can be project id or number.
+            Required. The name of the Instance to start.
         validate_only (bool):
             Optional. Indicates that the request should
             be validated without actually stopping any
@@ -266,12 +306,9 @@ class Instance(proto.Message):
     Attributes:
         name (str):
             The fully qualified name of this Instance. In
-            CreateInstanceRequest, this field is ignored, and instead
-            composed from CreateInstanceRequest.parent and
-            CreateInstanceRequest.instance_id.
-
-            Format:
-            projects/{project}/locations/{location}/instances/{instance_id}
+            ``CreateInstanceRequest``, this field is ignored, and
+            instead composed from ``CreateInstanceRequest.parent`` and
+            ``CreateInstanceRequest.instance_id``.
         description (str):
             User-provided description of the Instance.
             This field currently has a 512-character limit.
@@ -283,9 +320,9 @@ class Instance(proto.Message):
         generation (int):
             Output only. A number that monotonically increases every
             time the user modifies the desired state. Please note that
-            unlike v1, this is an int64 value. As with most Google APIs,
-            its JSON representation will be a ``string`` instead of an
-            ``integer``.
+            unlike v1, this is an ``int64`` value. As with most Google
+            APIs, its JSON representation will be a ``string`` instead
+            of an ``integer``.
         labels (MutableMapping[str, str]):
 
         annotations (MutableMapping[str, str]):
@@ -314,16 +351,14 @@ class Instance(proto.Message):
             The launch stage as defined by `Google Cloud Platform Launch
             Stages <https://cloud.google.com/terms/launch-stages>`__.
             Cloud Run supports ``ALPHA``, ``BETA``, and ``GA``. If no
-            value is specified, GA is assumed. Set the launch stage to a
-            preview stage on input to allow use of preview features in
-            that stage. On read (or output), describes whether the
+            value is specified, ``GA`` is assumed. Set the launch stage
+            to a preview stage on input to allow use of preview features
+            in that stage. On read (or output), describes whether the
             resource uses preview features.
 
-            .. raw:: html
-
-                <p>
-                 For example, if ALPHA is provided as input, but only BETA and GA-level
-                 features are used, this field will be BETA on output.
+            For example, if ``ALPHA`` is provided as input, but only
+            ``BETA`` and ``GA``-level features are used, this field will
+            be ``BETA`` on output.
         binary_authorization (google.cloud.run_v2.types.BinaryAuthorization):
             Settings for the Binary Authorization
             feature.
@@ -336,6 +371,8 @@ class Instance(proto.Message):
         containers (MutableSequence[google.cloud.run_v2.types.Container]):
             Required. Holds the single container that
             defines the unit of execution for this Instance.
+        sandboxes (google.cloud.run_v2.types.SandboxConfiguration):
+            Optional. Configuration for sandboxes.
         volumes (MutableSequence[google.cloud.run_v2.types.Volume]):
             A list of Volumes to make available to
             containers.
@@ -348,7 +385,7 @@ class Instance(proto.Message):
             The action to take if the encryption key is
             revoked.
         encryption_key_shutdown_duration (google.protobuf.duration_pb2.Duration):
-            If encryption_key_revocation_action is SHUTDOWN, the
+            If ``encryption_key_revocation_action`` is ``SHUTDOWN``, the
             duration before shutting down all instances. The minimum
             increment is 1 hour.
         node_selector (google.cloud.run_v2.types.NodeSelector):
@@ -361,20 +398,29 @@ class Instance(proto.Message):
         ingress (google.cloud.run_v2.types.IngressTraffic):
             Optional. Provides the ingress settings for this Instance.
             On output, returns the currently observed ingress settings,
-            or INGRESS_TRAFFIC_UNSPECIFIED if no revision is active.
+            or ``INGRESS_TRAFFIC_UNSPECIFIED`` if no revision is active.
         invoker_iam_disabled (bool):
             Optional. Disables IAM permission check for
-            run.routes.invoke for callers of this Instance. For more
+            ``run.routes.invoke`` for callers of this Instance. For more
             information, visit
             https://cloud.google.com/run/docs/securing/managing-access#invoker_check.
+        default_uri_disabled (bool):
+            Optional. Disables public resolution of the
+            default URI of this Instance.
         iap_enabled (bool):
             Optional. IAP settings on the Instance.
+        ssh_enabled (bool):
+            Optional. Enables SSH access to the Instance.
+
+            This field is a member of `oneof`_ ``_ssh_enabled``.
+        restart_policy (google.cloud.run_v2.types.Instance.RestartPolicy):
+            Optional. Restart policy for the Instance.
         observed_generation (int):
             Output only. The generation of this Instance currently
             serving traffic. See comments in ``reconciling`` for
             additional information on reconciliation process in Cloud
-            Run. Please note that unlike v1, this is an int64 value. As
-            with most Google APIs, its JSON representation will be a
+            Run. Please note that unlike v1, this is an ``int64`` value.
+            As with most Google APIs, its JSON representation will be a
             ``string`` instead of an ``integer``.
         log_uri (str):
             Output only. The Google Console URI to obtain
@@ -401,8 +447,9 @@ class Instance(proto.Message):
             Output only. All URLs serving traffic for
             this Instance.
         reconciling (bool):
-            Output only. Returns true if the Instance is currently being
-            acted upon by the system to bring it into the desired state.
+            Output only. Returns ``true`` if the Instance is currently
+            being acted upon by the system to bring it into the desired
+            state.
 
             When a new Instance is created, or an existing one is
             updated, Cloud Run will asynchronously perform all necessary
@@ -410,8 +457,8 @@ class Instance(proto.Message):
             This process is called reconciliation. While reconciliation
             is in process, ``observed_generation`` will have a transient
             value that might mismatch the intended state. Once
-            reconciliation is over (and this field is false), there are
-            two possible outcomes: reconciliation succeeded and the
+            reconciliation is over (and this field is ``false``), there
+            are two possible outcomes: reconciliation succeeded and the
             serving state matches the Instance, or there was an error,
             and reconciliation failed. This state can be found in
             ``terminal_condition.state``.
@@ -420,6 +467,27 @@ class Instance(proto.Message):
             this version of the resource. May be used to
             detect modification conflict during updates.
     """
+
+    class RestartPolicy(proto.Enum):
+        r"""Restart policy options for the instance. If not provided, the
+        default is ``ON_FAILURE``.
+
+        Values:
+            RESTART_POLICY_UNSPECIFIED (0):
+                Unspecified restart policy.
+            ALWAYS (1):
+                Always restart the instance.
+            ON_FAILURE (2):
+                Restart if the instance terminates with
+                non-zero exit code.
+            NEVER (3):
+                Never restart the instance.
+        """
+
+        RESTART_POLICY_UNSPECIFIED = 0
+        ALWAYS = 1
+        ON_FAILURE = 2
+        NEVER = 3
 
     name: str = proto.Field(
         proto.STRING,
@@ -507,6 +575,11 @@ class Instance(proto.Message):
         number=20,
         message=k8s_min.Container,
     )
+    sandboxes: sandbox.SandboxConfiguration = proto.Field(
+        proto.MESSAGE,
+        number=34,
+        message=sandbox.SandboxConfiguration,
+    )
     volumes: MutableSequence[k8s_min.Volume] = proto.RepeatedField(
         proto.MESSAGE,
         number=21,
@@ -547,9 +620,23 @@ class Instance(proto.Message):
         proto.BOOL,
         number=29,
     )
+    default_uri_disabled: bool = proto.Field(
+        proto.BOOL,
+        number=33,
+    )
     iap_enabled: bool = proto.Field(
         proto.BOOL,
         number=30,
+    )
+    ssh_enabled: bool = proto.Field(
+        proto.BOOL,
+        number=32,
+        optional=True,
+    )
+    restart_policy: RestartPolicy = proto.Field(
+        proto.ENUM,
+        number=35,
+        enum=RestartPolicy,
     )
     observed_generation: int = proto.Field(
         proto.INT64,

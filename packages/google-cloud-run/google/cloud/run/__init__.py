@@ -30,6 +30,10 @@ from google.cloud.run_v2.services.revisions.async_client import RevisionsAsyncCl
 from google.cloud.run_v2.services.revisions.client import RevisionsClient
 from google.cloud.run_v2.services.services.async_client import ServicesAsyncClient
 from google.cloud.run_v2.services.services.client import ServicesClient
+from google.cloud.run_v2.services.source_upload.async_client import (
+    SourceUploadAsyncClient,
+)
+from google.cloud.run_v2.services.source_upload.client import SourceUploadClient
 from google.cloud.run_v2.services.tasks.async_client import TasksAsyncClient
 from google.cloud.run_v2.services.tasks.client import TasksClient
 from google.cloud.run_v2.services.worker_pools.async_client import (
@@ -61,6 +65,7 @@ from google.cloud.run_v2.types.instance import (
     ListInstancesResponse,
     StartInstanceRequest,
     StopInstanceRequest,
+    UpdateInstanceRequest,
 )
 from google.cloud.run_v2.types.instance_split import (
     InstanceSplit,
@@ -109,6 +114,7 @@ from google.cloud.run_v2.types.revision import (
     Revision,
 )
 from google.cloud.run_v2.types.revision_template import RevisionTemplate
+from google.cloud.run_v2.types.sandbox import SandboxConfiguration, SandboxTemplate
 from google.cloud.run_v2.types.service import (
     CreateServiceRequest,
     DeleteServiceRequest,
@@ -117,6 +123,10 @@ from google.cloud.run_v2.types.service import (
     ListServicesResponse,
     Service,
     UpdateServiceRequest,
+)
+from google.cloud.run_v2.types.source_upload import (
+    UploadSourceRequest,
+    UploadSourceResponse,
 )
 from google.cloud.run_v2.types.status import RevisionScalingStatus
 from google.cloud.run_v2.types.task import (
@@ -133,10 +143,14 @@ from google.cloud.run_v2.types.traffic_target import (
     TrafficTargetStatus,
 )
 from google.cloud.run_v2.types.vendor_settings import (
+    AmbientNetworking,
+    AmbientScope,
     BinaryAuthorization,
     BuildConfig,
     EncryptionKeyRevocationAction,
     ExecutionEnvironment,
+    FunctionalType,
+    IdentityType,
     IngressTraffic,
     NodeSelector,
     RevisionScaling,
@@ -144,6 +158,7 @@ from google.cloud.run_v2.types.vendor_settings import (
     ServiceScaling,
     VpcAccess,
     WorkerPoolScaling,
+    WorkloadIdentityConfig,
 )
 from google.cloud.run_v2.types.worker_pool import (
     CreateWorkerPoolRequest,
@@ -171,6 +186,8 @@ __all__ = (
     "RevisionsAsyncClient",
     "ServicesClient",
     "ServicesAsyncClient",
+    "SourceUploadClient",
+    "SourceUploadAsyncClient",
     "TasksClient",
     "TasksAsyncClient",
     "WorkerPoolsClient",
@@ -195,6 +212,7 @@ __all__ = (
     "ListInstancesResponse",
     "StartInstanceRequest",
     "StopInstanceRequest",
+    "UpdateInstanceRequest",
     "InstanceSplit",
     "InstanceSplitStatus",
     "InstanceSplitAllocationType",
@@ -234,6 +252,8 @@ __all__ = (
     "ListRevisionsResponse",
     "Revision",
     "RevisionTemplate",
+    "SandboxConfiguration",
+    "SandboxTemplate",
     "CreateServiceRequest",
     "DeleteServiceRequest",
     "GetServiceRequest",
@@ -241,6 +261,8 @@ __all__ = (
     "ListServicesResponse",
     "Service",
     "UpdateServiceRequest",
+    "UploadSourceRequest",
+    "UploadSourceResponse",
     "RevisionScalingStatus",
     "GetTaskRequest",
     "ListTasksRequest",
@@ -251,6 +273,7 @@ __all__ = (
     "TrafficTarget",
     "TrafficTargetStatus",
     "TrafficTargetAllocationType",
+    "AmbientNetworking",
     "BinaryAuthorization",
     "BuildConfig",
     "NodeSelector",
@@ -259,8 +282,12 @@ __all__ = (
     "ServiceScaling",
     "VpcAccess",
     "WorkerPoolScaling",
+    "WorkloadIdentityConfig",
+    "AmbientScope",
     "EncryptionKeyRevocationAction",
     "ExecutionEnvironment",
+    "FunctionalType",
+    "IdentityType",
     "IngressTraffic",
     "CreateWorkerPoolRequest",
     "DeleteWorkerPoolRequest",

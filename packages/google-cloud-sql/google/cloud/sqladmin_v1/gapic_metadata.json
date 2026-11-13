@@ -434,6 +434,11 @@
                 "execute_sql"
               ]
             },
+            "ExecuteSqlReadOnly": {
+              "methods": [
+                "execute_sql_read_only"
+              ]
+            },
             "Export": {
               "methods": [
                 "export"
@@ -514,6 +519,11 @@
                 "promote_replica"
               ]
             },
+            "ReconcileNetworking": {
+              "methods": [
+                "reconcile_networking"
+              ]
+            },
             "Reencrypt": {
               "methods": [
                 "reencrypt"
@@ -564,6 +574,11 @@
                 "rotate_server_certificate"
               ]
             },
+            "Start": {
+              "methods": [
+                "start"
+              ]
+            },
             "StartExternalSync": {
               "methods": [
                 "start_external_sync"
@@ -572,6 +587,11 @@
             "StartReplica": {
               "methods": [
                 "start_replica"
+              ]
+            },
+            "Stop": {
+              "methods": [
+                "stop"
               ]
             },
             "StopReplica": {
@@ -654,6 +674,11 @@
                 "execute_sql"
               ]
             },
+            "ExecuteSqlReadOnly": {
+              "methods": [
+                "execute_sql_read_only"
+              ]
+            },
             "Export": {
               "methods": [
                 "export"
@@ -734,6 +759,11 @@
                 "promote_replica"
               ]
             },
+            "ReconcileNetworking": {
+              "methods": [
+                "reconcile_networking"
+              ]
+            },
             "Reencrypt": {
               "methods": [
                 "reencrypt"
@@ -784,6 +814,11 @@
                 "rotate_server_certificate"
               ]
             },
+            "Start": {
+              "methods": [
+                "start"
+              ]
+            },
             "StartExternalSync": {
               "methods": [
                 "start_external_sync"
@@ -792,6 +827,11 @@
             "StartReplica": {
               "methods": [
                 "start_replica"
+              ]
+            },
+            "Stop": {
+              "methods": [
+                "stop"
               ]
             },
             "StopReplica": {
@@ -887,6 +927,11 @@
                 "delete"
               ]
             },
+            "DeleteCustomerManagedCertificate": {
+              "methods": [
+                "delete_customer_managed_certificate"
+              ]
+            },
             "Get": {
               "methods": [
                 "get"
@@ -900,6 +945,16 @@
             "List": {
               "methods": [
                 "list"
+              ]
+            },
+            "ListCustomerManagedCertificates": {
+              "methods": [
+                "list_customer_managed_certificates"
+              ]
+            },
+            "UpdateCustomerManagedCertificate": {
+              "methods": [
+                "update_customer_managed_certificate"
               ]
             }
           }
@@ -912,6 +967,11 @@
                 "delete"
               ]
             },
+            "DeleteCustomerManagedCertificate": {
+              "methods": [
+                "delete_customer_managed_certificate"
+              ]
+            },
             "Get": {
               "methods": [
                 "get"
@@ -925,6 +985,16 @@
             "List": {
               "methods": [
                 "list"
+              ]
+            },
+            "ListCustomerManagedCertificates": {
+              "methods": [
+                "list_customer_managed_certificates"
+              ]
+            },
+            "UpdateCustomerManagedCertificate": {
+              "methods": [
+                "update_customer_managed_certificate"
               ]
             }
           }

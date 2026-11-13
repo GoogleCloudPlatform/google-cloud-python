@@ -1229,6 +1229,16 @@ class AllocationPolicy(proto.Message):
                 have the same preference.
 
                 This field is a member of `oneof`_ ``_rank``.
+            disks (MutableSequence[google.cloud.batch_v1alpha.types.AllocationPolicy.AttachedDisk]):
+                Optional. List of disks to be attached to
+                instances created from this selection. They
+                override the disks specified in the instance
+                properties.
+            boot_disk (google.cloud.batch_v1alpha.types.AllocationPolicy.Disk):
+                Optional. Boot disk to be created and attached to instances
+                created from this selection. It overrides the boot disk
+                specified in the instance properties. (e.g., overriding
+                ``boot`` disk type to Hyperdisk for 4th-gen machine types)
         """
 
         machine_types: MutableSequence[str] = proto.RepeatedField(
@@ -1239,6 +1249,16 @@ class AllocationPolicy(proto.Message):
             proto.INT32,
             number=2,
             optional=True,
+        )
+        disks: MutableSequence["AllocationPolicy.AttachedDisk"] = proto.RepeatedField(
+            proto.MESSAGE,
+            number=3,
+            message="AllocationPolicy.AttachedDisk",
+        )
+        boot_disk: "AllocationPolicy.Disk" = proto.Field(
+            proto.MESSAGE,
+            number=4,
+            message="AllocationPolicy.Disk",
         )
 
     location: LocationPolicy = proto.Field(

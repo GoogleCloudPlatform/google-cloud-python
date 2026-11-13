@@ -57,7 +57,7 @@ class BackupPlanAssociation(proto.Message):
     Attributes:
         name (str):
             Output only. Identifier. The resource name of
-            BackupPlanAssociation in below format Format :
+            BackupPlanAssociation in below format Format:
 
             projects/{project}/locations/{location}/backupPlanAssociations/{backupPlanAssociationId}
         resource_type (str):
@@ -115,6 +115,11 @@ class BackupPlanAssociation(proto.Message):
 
             Format:
             ``projects/{project}/locations/{location}/backupPlans/{backup_plan}/revisions/{revision_id}``
+        auto_protection_policy_binding (str):
+            Output only. The resource name of the
+            ``AutoProtectionPolicyBinding`` that manages this
+            association, if any. Format:
+            ``projects/{project}/locations/{location}/autoProtectionPolicies/{policy}/bindings/{binding}``.
     """
 
     class State(proto.Enum):
@@ -203,6 +208,10 @@ class BackupPlanAssociation(proto.Message):
     backup_plan_revision_name: str = proto.Field(
         proto.STRING,
         number=12,
+    )
+    auto_protection_policy_binding: str = proto.Field(
+        proto.STRING,
+        number=16,
     )
 
 
@@ -555,6 +564,12 @@ class DeleteBackupPlanAssociationRequest(proto.Message):
             The request ID must be a valid UUID with the
             exception that zero UUID is not supported
             (00000000-0000-0000-0000-000000000000).
+        auto_protection_policy_binding (str):
+            Optional. This field is exclusively used by Backup and DR's
+            auto-protection feature. The resource name of the
+            ``AutoProtectionPolicyBinding`` that triggered the deletion
+            of this association. Format:
+            ``projects/{project}/locations/{location}/autoProtectionPolicies/{policy}/bindings/{binding}``.
     """
 
     name: str = proto.Field(
@@ -564,6 +579,10 @@ class DeleteBackupPlanAssociationRequest(proto.Message):
     request_id: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+    auto_protection_policy_binding: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 
