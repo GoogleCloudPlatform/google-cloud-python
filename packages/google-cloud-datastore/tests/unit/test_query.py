@@ -359,6 +359,35 @@ def test_query_add_property_filter___key__valid_key(database_id):
     assert query.filters == [property_filter]
 
 
+@pytest.mark.parametrize("operator", ["IN", "NOT_IN"])
+@pytest.mark.parametrize("database_id", [None, "somedb"])
+def test_query_add_filter___key__list_of_keys(database_id, operator):
+    from google.cloud.datastore.key import Key
+
+    query = _make_query(_make_client(database=database_id))
+    keys = [
+        Key("Foo", 1, project=_PROJECT, database=database_id),
+        Key("Foo", 2, project=_PROJECT, database=database_id),
+    ]
+    query.add_filter("__key__", operator, keys)
+    assert query.filters == [("__key__", operator, keys)]
+
+
+@pytest.mark.parametrize("operator", ["IN", "NOT_IN"])
+@pytest.mark.parametrize("database_id", [None, "somedb"])
+def test_query_add_property_filter___key__list_of_keys(database_id, operator):
+    from google.cloud.datastore.key import Key
+
+    query = _make_query(_make_client(database=database_id))
+    keys = [
+        Key("Foo", 1, project=_PROJECT, database=database_id),
+        Key("Foo", 2, project=_PROJECT, database=database_id),
+    ]
+    property_filter = PropertyFilter("__key__", operator, keys)
+    query.add_filter(filter=property_filter)
+    assert query.filters == [property_filter]
+
+
 @pytest.mark.parametrize("database_id", [None, "somedb"])
 def test_query_add_filter_return_query_obj(database_id):
     from google.cloud.datastore.query import Query
@@ -482,6 +511,39 @@ def test_query_property_filter___key__invalid_value(database_id):
     assert "Invalid key:" in str(exc.value)
 
 
+@pytest.mark.parametrize("operator", ["=", "<", "<=", ">", ">=", "!="])
+@pytest.mark.parametrize("database_id", [None, "somedb"])
+def test_query_filter___key__list_with_non_in_operator(database_id, operator):
+    from google.cloud.datastore.key import Key
+
+    key = Key("Foo", 1, project=_PROJECT, database=database_id)
+    query = _make_query(_make_client(database=database_id))
+    with pytest.raises(ValueError) as exc:
+        query.add_filter("__key__", operator, [key])
+    assert "Invalid key:" in str(exc.value)
+
+    with pytest.raises(ValueError) as exc:
+        PropertyFilter("__key__", operator, [key])
+    assert "Invalid key:" in str(exc.value)
+
+
+@pytest.mark.parametrize("operator", ["IN", "NOT_IN"])
+@pytest.mark.parametrize("database_id", [None, "somedb"])
+def test_query_filter___key__in_invalid_value(database_id, operator):
+    from google.cloud.datastore.key import Key
+
+    key = Key("Foo", 1, project=_PROJECT, database=database_id)
+    query = _make_query(_make_client(database=database_id))
+    for bad_value in (None, key, "not-a-list", (key,), [key, None]):
+        with pytest.raises(ValueError) as exc:
+            query.add_filter("__key__", operator, bad_value)
+        assert "Invalid key:" in str(exc.value)
+
+        with pytest.raises(ValueError) as exc:
+            PropertyFilter("__key__", operator, bad_value)
+        assert "Invalid key:" in str(exc.value)
+
+
 @pytest.mark.parametrize("database_id", [None, "somedb"])
 def test_query_projection_setter_empty(database_id):
     query = _make_query(_make_client(database=database_id))
@@ -543,6 +605,21 @@ def test_query_key_filter_explicit(database_id):
     key = Key("Kind", 1234, project="project", database=database_id)
     query.key_filter(key, operator=">")
     assert query.filters == [("__key__", ">", key)]
+
+
+@pytest.mark.parametrize("operator", ["IN", "NOT_IN"])
+@pytest.mark.parametrize("database_id", [None, "somedb"])
+def test_query_key_filter_list_of_keys(database_id, operator):
+    from google.cloud.datastore.key import Key
+
+    client = _make_client(database=database_id)
+    query = _make_query(client)
+    keys = [
+        Key("Kind", 1234, project="project", database=database_id),
+        Key("Kind", 5678, project="project", database=database_id),
+    ]
+    query.key_filter(keys, operator=operator)
+    assert query.filters == [("__key__", operator, keys)]
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -1320,6 +1397,81 @@ def test_pb_from_query_filter_key(database_id):
     assert pfilter.property.name == "__key__"
     key_pb = key.to_protobuf()
     assert pfilter.value.key_value == key_pb
+
+
+@pytest.mark.parametrize("use_property_filter", [False, True])
+@pytest.mark.parametrize(
+    "operator,expected_op",
+    [
+        ("IN", "IN"),
+        ("NOT_IN", "NOT_IN"),
+    ],
+)
+@pytest.mark.parametrize("database_id", [None, "somedb"])
+def test_pb_from_query_filter_key_list(
+    database_id, operator, expected_op, use_property_filter
+):
+    from google.cloud.datastore.key import Key
+    from google.cloud.datastore.query import _pb_from_query
+    from google.cloud.datastore_v1.types import query as query_pb2
+
+    keys = [
+        Key("Kind", 123, project="PROJECT", database=database_id),
+        Key("Kind", 456, project="PROJECT", database=database_id),
+    ]
+    filter_item = (
+        PropertyFilter("__key__", operator, keys)
+        if use_property_filter
+        else ("__key__", operator, keys)
+    )
+    query = _make_stub_query(filters=[filter_item])
+    pb = _pb_from_query(query)
+    cfilter = pb.filter.composite_filter
+    assert cfilter.op == query_pb2.CompositeFilter.Operator.AND
+    assert len(cfilter.filters) == 1
+    pfilter = cfilter.filters[0].property_filter
+    assert pfilter.property.name == "__key__"
+    assert pfilter.op == getattr(query_pb2.PropertyFilter.Operator, expected_op)
+    assert [v.key_value for v in pfilter.value.array_value.values] == [
+        key.to_protobuf() for key in keys
+    ]
+
+
+@pytest.mark.parametrize("database_id", [None, "somedb"])
+def test_pb_from_query_composite_filter_key_list(database_id):
+    from google.cloud.datastore.key import Key
+    from google.cloud.datastore.query import _pb_from_query
+    from google.cloud.datastore_v1.types import query as query_pb2
+
+    keys = [
+        Key("Kind", 123, project="PROJECT", database=database_id),
+        Key("Kind", 456, project="PROJECT", database=database_id),
+    ]
+    query = _make_stub_query(
+        filters=[
+            Or(
+                [
+                    PropertyFilter("__key__", "IN", keys),
+                    ("__key__", "NOT_IN", keys),
+                ]
+            )
+        ]
+    )
+    pb = _pb_from_query(query)
+    or_pb = pb.filter.composite_filter.filters[0].composite_filter
+    assert or_pb.op == query_pb2.CompositeFilter.Operator.OR
+    assert len(or_pb.filters) == 2
+    expected_keys = [key.to_protobuf() for key in keys]
+
+    first = or_pb.filters[0].property_filter
+    assert first.property.name == "__key__"
+    assert first.op == query_pb2.PropertyFilter.Operator.IN
+    assert [v.key_value for v in first.value.array_value.values] == expected_keys
+
+    second = or_pb.filters[1].property_filter
+    assert second.property.name == "__key__"
+    assert second.op == query_pb2.PropertyFilter.Operator.NOT_IN
+    assert [v.key_value for v in second.value.array_value.values] == expected_keys
 
 
 def test_pb_from_complex_filter():

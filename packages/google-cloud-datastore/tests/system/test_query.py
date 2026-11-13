@@ -154,6 +154,20 @@ def test_query_key_filter(query_client, ancestor_query, database_id):
 
 
 @pytest.mark.parametrize("database_id", [None, _helpers.TEST_DATABASE], indirect=True)
+def test_query_key_filter_in(query_client, ancestor_query, database_id):
+    query = ancestor_query
+    rickard_key = query_client.key(*populate_datastore.RICKARD)
+    eddard_key = query_client.key(*populate_datastore.EDDARD)
+    query.add_filter(filter=PropertyFilter("__key__", "IN", [rickard_key, eddard_key]))
+    expected_matches = 2
+
+    entities = _do_fetch(query, limit=expected_matches + 1)
+
+    assert len(entities) == expected_matches
+    assert {entity.key for entity in entities} == {rickard_key, eddard_key}
+
+
+@pytest.mark.parametrize("database_id", [None, _helpers.TEST_DATABASE], indirect=True)
 def test_query_w_order(ancestor_query, database_id):
     query = ancestor_query
     query.order = "appearances"
