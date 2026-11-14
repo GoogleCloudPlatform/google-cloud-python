@@ -53,7 +53,7 @@ class Test_should_retry(unittest.TestCase):
 
     def test_w_unstructured_requests_sslerror(self):
         exc = requests.exceptions.SSLError()
-        self.assertFalse(self._call_fut(exc))
+        self.assertTrue(self._call_fut(exc))
 
     def test_w_unstructured_requests_chunked_encoding_error(self):
         exc = requests.exceptions.ChunkedEncodingError()
@@ -160,3 +160,32 @@ def test_DEFAULT_JOB_RETRY_job_rate_limit_exceeded_retry_predicate():
     assert DEFAULT_JOB_RETRY._predicate(
         ClientError("fail", errors=[dict(reason="backendError")])
     )
+
+
+class Test_should_retry_insert_rows(unittest.TestCase):
+    def _call_fut(self, exc):
+        from google.cloud.bigquery.retry import _should_retry_insert_rows
+
+        return _should_retry_insert_rows(exc)
+
+    def test_w_unstructured_requests_sslerror(self):
+        exc = requests.exceptions.SSLError()
+        self.assertFalse(self._call_fut(exc))
+
+    def test_w_unstructured_requests_connectionerror(self):
+        exc = requests.exceptions.ConnectionError()
+        self.assertTrue(self._call_fut(exc))
+
+    def test_w_backendError(self):
+        exc = mock.Mock(errors=[{"reason": "backendError"}], spec=["errors"])
+        self.assertTrue(self._call_fut(exc))
+
+
+def test_DEFAULT_INSERT_ROWS_RETRY_predicate():
+    from google.cloud.bigquery.retry import DEFAULT_INSERT_ROWS_RETRY
+
+    exc_ssl = requests.exceptions.SSLError()
+    assert not DEFAULT_INSERT_ROWS_RETRY._predicate(exc_ssl)
+
+    exc_conn = requests.exceptions.ConnectionError()
+    assert DEFAULT_INSERT_ROWS_RETRY._predicate(exc_conn)

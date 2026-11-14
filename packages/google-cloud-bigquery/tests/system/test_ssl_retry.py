@@ -22,8 +22,8 @@ from google.cloud import bigquery
 
 def test_insert_rows_json_ssl_error_no_retry(bigquery_client, dataset_id, project_id):
     """
-    Verify that SSLError during insert_rows_json is NOT retried and
-    propagates a descriptive error message immediately.
+    Verify that, with the default retry, an SSLError during insert_rows_json
+    is NOT retried and propagates a descriptive error message immediately.
     """
     table_id = f"{project_id}.{dataset_id}.test_ssl_retry_{int(time.time())}"
     schema = [bigquery.SchemaField("name", "STRING")]
@@ -32,7 +32,6 @@ def test_insert_rows_json_ssl_error_no_retry(bigquery_client, dataset_id, projec
     try:
         # We mock the api_request to simulate the GFE abruptly closing the connection
         # which manifests as a requests.exceptions.SSLError.
-        bigquery_client._connection.api_request
         call_count = 0
 
         def mock_api_request(*args, **kwargs):
@@ -43,19 +42,18 @@ def test_insert_rows_json_ssl_error_no_retry(bigquery_client, dataset_id, projec
         with mock.patch.object(
             bigquery_client._connection, "api_request", side_effect=mock_api_request
         ):
-            # Use a reasonably short deadline for the test, although it should fail on the first attempt anyway.
-            retry = bigquery.DEFAULT_RETRY.with_deadline(5.0)
-
+            # Intentionally do not pass ``retry`` so that the method's default
+            # (DEFAULT_INSERT_ROWS_RETRY) is exercised.
             start_time = time.time()
             with pytest.raises(requests.exceptions.SSLError) as excinfo:
-                bigquery_client.insert_rows_json(table, [{"name": "test"}], retry=retry)
+                bigquery_client.insert_rows_json(table, [{"name": "test"}])
             duration = time.time() - start_time
 
         # Verification:
         # 1. It should NOT have retried (total calls should be 1)
         assert call_count == 1
 
-        # 2. It should have failed quickly (much less than the 5s deadline)
+        # 2. It should have failed quickly (the default deadline is 10 minutes)
         assert duration < 2.0
 
         # 3. The error message should contain our descriptive wrapping

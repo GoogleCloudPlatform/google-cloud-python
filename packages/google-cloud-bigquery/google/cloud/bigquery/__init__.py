@@ -96,6 +96,7 @@ from google.cloud.bigquery.query import SqlParameterScalarTypes
 from google.cloud.bigquery.query import StructQueryParameter
 from google.cloud.bigquery.query import StructQueryParameterType
 from google.cloud.bigquery.query import UDFResource
+from google.cloud.bigquery.retry import DEFAULT_INSERT_ROWS_RETRY
 from google.cloud.bigquery.retry import DEFAULT_RETRY
 from google.cloud.bigquery.routine import DeterminismLevel
 from google.cloud.bigquery.routine import Routine
@@ -206,6 +207,7 @@ __all__ = [
     "ParquetOptions",
     "ScriptOptions",
     "TransactionInfo",
+    "DEFAULT_INSERT_ROWS_RETRY",
     "DEFAULT_RETRY",
     # Standard SQL types
     "StandardSqlDataType",
