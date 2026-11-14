@@ -54,6 +54,7 @@ SYSTEM_TEST_PYTHON_VERSIONS: List[str] = ["3.10", "3.14"]
 SYSTEM_TEST_STANDARD_DEPENDENCIES: List[str] = [
     "mock",
     "pytest",
+    "pytest-xdist",
     "google-cloud-testutils",
 ]
 SYSTEM_TEST_EXTERNAL_DEPENDENCIES: List[str] = [
@@ -378,9 +379,20 @@ def system_default(session):
             *session.posargs,
         )
     if system_test_folder_exists:
+        in_emulator = bool(
+            session.env.get("BIGTABLE_EMULATOR_HOST")
+            or os.environ.get("BIGTABLE_EMULATOR_HOST")
+        )
+        has_xdist_arg = any(
+            arg.startswith(("-n", "--numprocesses")) for arg in session.posargs
+        )
+        xdist_args = (
+            [] if (in_emulator or has_xdist_arg) else ["-n", "4", "--dist=loadfile"]
+        )
         session.run(
             "py.test",
             "--quiet",
+            *xdist_args,
             f"--junitxml=system_{session.python}_sponge_log.xml",
             system_test_folder_path,
             *session.posargs,
@@ -401,6 +413,7 @@ def samples(session):
         "mock",
         "pytest",
         "pytest-asyncio",
+        "pytest-xdist",
         *req_args,
     )
     # Install the library from this checkout last so the samples exercise the
@@ -410,9 +423,14 @@ def samples(session):
 
     has_target = any(not arg.startswith("-") for arg in session.posargs)
     target_paths = [] if has_target else [os.path.join("samples")]
+    has_xdist_arg = any(
+        arg.startswith(("-n", "--numprocesses")) for arg in session.posargs
+    )
+    xdist_args = [] if has_xdist_arg else ["-n", "4", "--dist=loadfile"]
     session.run(
         "py.test",
         "--quiet",
+        *xdist_args,
         f"--junitxml=samples_{session.python}_sponge_log.xml",
         "--ignore=samples/legacy_client/beam",
         *target_paths,

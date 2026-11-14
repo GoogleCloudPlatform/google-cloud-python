@@ -76,6 +76,11 @@ def pytest_configure(config) -> None:
     ):
         return
 
+    # Under pytest-xdist, only the controller provisions and tears down the
+    # shared sample test instance; workers inherit BIGTABLE_INSTANCE via os.environ.
+    if hasattr(config, "workerinput"):
+        return
+
     project_id = os.environ.get("GOOGLE_CLOUD_PROJECT")
     if not project_id:
         raise pytest.UsageError(
