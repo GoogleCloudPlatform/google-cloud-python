@@ -293,8 +293,8 @@ def add_resource_labels(resource: Resource, record: logging.LogRecord):
     if not resource:
         return None
 
-    # Get environmental labels from the resource type
-    labels = _get_environmental_labels(resource.type)
+    # Copy cached environmental labels before adding per-record labels.
+    labels = _get_environmental_labels(resource.type).copy()
 
     # Add labels from log record
     if resource.type == _GAE_RESOURCE_TYPE and record._trace is not None:

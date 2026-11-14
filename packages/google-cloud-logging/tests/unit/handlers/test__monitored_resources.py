@@ -386,3 +386,40 @@ def test_add_resource_labels(resource_type, os_environ, record_attrs, expected_l
     labels = add_resource_labels(resource, record)
 
     assert expected_labels == labels
+
+
+def test_app_engine_resource_labels_do_not_leak_between_records():
+    _monitored_resources._get_environmental_labels.cache_clear()
+    try:
+        resource = Resource(type="gae_app", labels={})
+        results = []
+        for trace in ("trace-1", None, "trace-2"):
+            record = logging.LogRecord("logname", None, None, None, "test", None, None)
+            record._trace = trace
+            results.append(add_resource_labels(resource, record))
+
+        assert results == [
+            {"appengine.googleapis.com/trace_id": "trace-1"},
+            {},
+            {"appengine.googleapis.com/trace_id": "trace-2"},
+        ]
+        assert _monitored_resources._get_environmental_labels("gae_app") == {}
+    finally:
+        _monitored_resources._get_environmental_labels.cache_clear()
+
+
+def test_resource_labels_do_not_mutate_cached_environment(monkeypatch):
+    monkeypatch.setenv("CLOUD_RUN_EXECUTION", "execution-1")
+    _monitored_resources._get_environmental_labels.cache_clear()
+    try:
+        resource = Resource(type="cloud_run_job", labels={})
+        record = logging.LogRecord("logname", None, None, None, "test", None, None)
+        labels = add_resource_labels(resource, record)
+        labels["run.googleapis.com/execution_name"] = "changed"
+        labels["custom"] = "per-record"
+
+        later_labels = add_resource_labels(resource, record)
+        assert later_labels["run.googleapis.com/execution_name"] == "execution-1"
+        assert "custom" not in later_labels
+    finally:
+        _monitored_resources._get_environmental_labels.cache_clear()
