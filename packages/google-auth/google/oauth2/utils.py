@@ -141,12 +141,13 @@ class OAuthClientAuthHandler(metaclass=abc.ABCMeta):
                 )
 
 
-def handle_error_response(response_body):
+def handle_error_response(response_body, retryable=False):
     """Translates an error response from an OAuth operation into an
     OAuthError exception.
 
     Args:
         response_body (str): The decoded response data.
+        retryable (bool): Whether the operation may be retried. Defaults to False.
 
     Raises:
         google.auth.exceptions.OAuthError
@@ -165,4 +166,4 @@ def handle_error_response(response_body):
     except (KeyError, ValueError):
         error_details = response_body
 
-    raise exceptions.OAuthError(error_details, response_body)
+    raise exceptions.OAuthError(error_details, response_body, retryable=retryable)

@@ -35,7 +35,8 @@ import http.client as http_client
 import json
 import urllib
 
-from google.oauth2 import utils
+from google.auth import _exponential_backoff
+from google.oauth2 import _client, utils
 
 _URLENCODED_HEADERS = {"Content-Type": "application/x-www-form-urlencoded"}
 
@@ -71,30 +72,33 @@ class Client(utils.OAuthClientAuthHandler):
         # Use default token exchange endpoint if no url is provided.
         url = url or self._token_exchange_endpoint
 
-        # Execute request.
-        response = request(
-            url=url,
-            method="POST",
-            headers=request_headers,
-            body=urllib.parse.urlencode(request_body).encode("utf-8"),
-        )
+        encoded_body = urllib.parse.urlencode(request_body).encode("utf-8")
+        for _ in _exponential_backoff.ExponentialBackoff():
+            response = request(
+                url=url,
+                method="POST",
+                headers=request_headers,
+                body=encoded_body,
+            )
+            response_body = (
+                response.data.decode("utf-8")
+                if hasattr(response.data, "decode")
+                else (response.data or "")
+            )
 
-        response_body = (
-            response.data.decode("utf-8")
-            if hasattr(response.data, "decode")
-            else response.data
-        )
+            if response.status == http_client.OK:
+                # A successful token revocation returns an empty body.
+                return json.loads(response_body) if response_body else {}
 
-        # If non-200 response received, translate to OAuthError exception.
-        if response.status != http_client.OK:
-            utils.handle_error_response(response_body)
+            try:
+                response_data = json.loads(response_body)
+            except ValueError:
+                response_data = response_body
+            retryable = _client._can_retry(response.status, response_data)
+            if not retryable:
+                break
 
-        # A successful token revocation returns an empty response body.
-        if not response_body:
-            return {}
-
-        # Other successful responses should be valid JSON.
-        return json.loads(response_body)
+        utils.handle_error_response(response_body, retryable=retryable)
 
     def exchange_token(
         self,

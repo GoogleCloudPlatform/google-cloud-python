@@ -261,3 +261,11 @@ def test__handle_error_response_non_json():
         utils.handle_error_response(response_data)
 
     assert excinfo.match(r"Oops, something wrong happened")
+
+
+@pytest.mark.parametrize("retryable", [True, False])
+def test__handle_error_response_retryable(retryable):
+    response_data = json.dumps({"error": "server_error"})
+    with pytest.raises(exceptions.OAuthError) as caught:
+        utils.handle_error_response(response_data, retryable=retryable)
+    assert caught.value.retryable is retryable

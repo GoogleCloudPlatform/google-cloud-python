@@ -547,3 +547,80 @@ class TestStsClient(object):
         response = client._make_request(request, {}, {})
 
         assert response == {}
+
+    @pytest.mark.parametrize("status,retryable", [(400, False), (503, True)])
+    @mock.patch("time.sleep", return_value=None)
+    def test_missing_response_body(self, sleep, status, retryable):
+        request = self.make_mock_request("", status, use_json=False)
+        request.return_value.data = None
+
+        with pytest.raises(exceptions.OAuthError) as caught:
+            self.make_client()._make_request(request, {}, {})
+
+        assert caught.value.args[1] == ""
+        assert caught.value.retryable is retryable
+        assert request.call_count == (3 if retryable else 1)
+        assert sleep.call_count == (2 if retryable else 0)
+
+    @pytest.mark.parametrize(
+        "status,data,use_json",
+        [
+            (500, {"error": "server_error"}, True),
+            (503, "Service unavailable", False),
+            (400, {"error": "temporarily_unavailable"}, True),
+        ],
+    )
+    @mock.patch("time.sleep", return_value=None)
+    def test_transient_response_retried(self, sleep, status, data, use_json):
+        client = self.make_client(self.CLIENT_AUTH_REQUEST_BODY)
+        request = self.make_mock_request(data, status, use_json)
+        success = self.make_mock_request(self.SUCCESS_RESPONSE).return_value
+        request.side_effect = [request.return_value, success]
+
+        assert (
+            client._make_request(request, {"a": "b"}, {"c": "d"})
+            == self.SUCCESS_RESPONSE
+        )
+        assert request.call_count == 2
+        assert request.call_args_list[0] == request.call_args_list[1]
+        assert sleep.call_count == 1
+
+    @pytest.mark.parametrize(
+        "status,data,use_json,retryable",
+        [
+            (500, {"error": "server_error"}, True, True),
+            (503, "Service unavailable", False, True),
+            (400, {"error": "temporarily_unavailable"}, True, True),
+            (400, {"error": "invalid_grant"}, True, False),
+            (401, "Unauthorized", False, False),
+        ],
+    )
+    @mock.patch("time.sleep", return_value=None)
+    def test_response_retryability(self, sleep, status, data, use_json, retryable):
+        request = self.make_mock_request(data, status, use_json)
+        with pytest.raises(exceptions.OAuthError) as caught:
+            self.make_client()._make_request(request, {}, {})
+
+        assert caught.value.retryable is retryable
+        assert caught.value.args[1] == request.return_value.data.decode("utf-8")
+        assert request.call_count == (3 if retryable else 1)
+        assert sleep.call_count == (2 if retryable else 0)
+
+    @mock.patch("time.sleep", return_value=None)
+    def test_retry_stops_on_permanent_error(self, sleep):
+        request = self.make_mock_request({"error": "server_error"}, 500)
+        permanent = self.make_mock_request(self.ERROR_RESPONSE, 400).return_value
+        request.side_effect = [request.return_value, permanent]
+        with pytest.raises(exceptions.OAuthError) as caught:
+            self.make_client()._make_request(request, {}, {})
+        assert caught.value.retryable is False
+        assert request.call_count == 2
+        assert sleep.call_count == 1
+
+    def test_transport_error_propagates_unchanged(self):
+        error = exceptions.TransportError("connection failed")
+        request = mock.Mock(side_effect=error)
+        with pytest.raises(exceptions.TransportError) as caught:
+            self.make_client()._make_request(request, {}, {})
+        assert caught.value is error
+        request.assert_called_once()
