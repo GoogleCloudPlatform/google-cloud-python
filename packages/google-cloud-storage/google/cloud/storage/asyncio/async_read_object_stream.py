@@ -14,16 +14,21 @@
 
 import asyncio
 import logging
-from typing import List, Optional, Tuple
+from typing import Any, List, Optional, Tuple
 
 from google.api_core.bidi_async import AsyncBidiRpc
 
 from google.cloud import _storage_v2
+from google.cloud.storage import _opentelemetry_metrics
 from google.cloud.storage.asyncio import _utils, _zero_copy_bidi_read
 from google.cloud.storage.asyncio.async_abstract_object_stream import (
     _AsyncAbstractObjectStream,
 )
-from google.cloud.storage.asyncio.async_grpc_client import AsyncGrpcClient
+from google.cloud.storage.asyncio.async_grpc_client import (
+    AsyncGrpcClient,
+    _mark_call_closing_cleanly,
+    _resolve_network_path,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -59,6 +64,7 @@ class _AsyncReadObjectStream(_AsyncAbstractObjectStream):
         object_name: str,
         generation_number: Optional[int] = None,
         read_handle: Optional[_storage_v2.BidiReadHandle] = None,
+        metrics_recorder: Optional[Any] = None,
     ) -> None:
         if client is None:
             raise ValueError("client must be provided")
@@ -74,6 +80,11 @@ class _AsyncReadObjectStream(_AsyncAbstractObjectStream):
         )
         self.client: AsyncGrpcClient.grpc_client = client
         self.read_handle: Optional[_storage_v2.BidiReadHandle] = read_handle
+        self._metrics_recorder = (
+            metrics_recorder
+            if metrics_recorder is not None
+            else _opentelemetry_metrics.get_active_recorder(client)
+        )
 
         self._full_bucket_name = f"projects/_/buckets/{self.bucket_name}"
 
@@ -159,10 +170,28 @@ class _AsyncReadObjectStream(_AsyncAbstractObjectStream):
             if response and response.read_handle:
                 self.read_handle = response.read_handle
 
+            if self._metrics_recorder is not None:
+                _opentelemetry_metrics.record_pending_retry(
+                    self._metrics_recorder,
+                    operation="ReadObject",
+                    network_path=self._get_network_path(received_server_response=True),
+                )
+
             self._is_stream_open = True
         except (asyncio.CancelledError, Exception):
             await self._close_socket_like_rpc()
             raise
+
+    def _get_network_path(self, received_server_response: bool = True) -> str:
+        """Resolves ``network.path`` for the active gRPC stream call."""
+        return _resolve_network_path(
+            call=getattr(self.socket_like_rpc, "call", None),
+            received_server_response=received_server_response,
+        )
+
+    def _mark_closing_cleanly(self) -> None:
+        """Marks the underlying gRPC call as closing cleanly for metrics."""
+        _mark_call_closing_cleanly(getattr(self.socket_like_rpc, "call", None))
 
     async def _close_socket_like_rpc(self) -> None:
         try:
@@ -177,6 +206,7 @@ class _AsyncReadObjectStream(_AsyncAbstractObjectStream):
         try:
             if self.socket_like_rpc.is_active:
                 await self.requests_done()
+            self._mark_closing_cleanly()
         finally:
             self._is_stream_open = False
             await self._close_socket_like_rpc()

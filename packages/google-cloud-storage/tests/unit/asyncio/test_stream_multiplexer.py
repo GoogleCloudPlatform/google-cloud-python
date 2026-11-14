@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import asyncio
-from unittest.mock import AsyncMock
+from unittest.mock import AsyncMock, MagicMock
 
 import grpc
 import pytest
@@ -399,6 +399,7 @@ class TestReopenStream:
     async def test_reopen_bumps_generation_and_replaces_stream(self):
         # Given a multiplexer with a registered queue
         old_stream = AsyncMock()
+        old_stream._mark_closing_cleanly = MagicMock()
         old_stream.recv = AsyncMock(side_effect=asyncio.Event().wait)
         mux = _StreamMultiplexer(old_stream)
         mux.register({1})
@@ -410,7 +411,8 @@ class TestReopenStream:
         # When the stream is reopened with the correct generation
         await mux.reopen_stream(0, factory)
 
-        # Then the generation is bumped and the stream is replaced
+        # Then the generation is bumped, broken stream is not marked clean, and stream is replaced
+        old_stream._mark_closing_cleanly.assert_not_called()
         assert mux.stream_generation == 1
         assert mux._stream is new_stream
         factory.assert_called_once()
@@ -560,6 +562,7 @@ class TestClose:
     async def test_close_cancels_recv_loop(self):
         # Given a multiplexer with an active receive loop
         mock_stream = AsyncMock()
+        mock_stream._mark_closing_cleanly = MagicMock()
         mock_stream.recv = AsyncMock(side_effect=asyncio.Event().wait)
         mux = _StreamMultiplexer(mock_stream)
         mux.register({1})
@@ -569,7 +572,8 @@ class TestClose:
         # When closing the multiplexer
         await mux.close()
 
-        # Then the receive loop task is cancelled
+        # Then the stream is marked clean and the receive loop task is cancelled
+        mock_stream._mark_closing_cleanly.assert_called_once()
         assert recv_task.cancelled()
 
     @pytest.mark.asyncio

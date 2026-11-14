@@ -590,3 +590,62 @@ async def test_open_unfinalized_object_skips_checksum(
 
     assert read_obj_stream.is_finalized is False
     assert read_obj_stream.full_obj_server_crc32c is None
+
+
+@mock.patch("google.cloud.storage.asyncio.async_read_object_stream.AsyncBidiRpc")
+@mock.patch(
+    "google.cloud.storage.asyncio.async_grpc_client.AsyncGrpcClient.grpc_client"
+)
+@pytest.mark.asyncio
+async def test_open_records_pending_retry_and_close_marks_clean(
+    mock_client, mock_cls_async_bidi_rpc, monkeypatch
+):
+    from google.cloud.storage import _opentelemetry_metrics
+
+    monkeypatch.setattr(_opentelemetry_metrics, "HAS_OPENTELEMETRY_METRICS", True)
+    monkeypatch.setattr(_opentelemetry_metrics, "_ENABLE_METRICS_DEV_GATE", True)
+    mock_metrics = mock.Mock()
+    mock_meter = mock.Mock()
+    mock_meter.create_histogram.side_effect = lambda *a, **kw: mock.Mock()
+    mock_meter.create_counter.side_effect = lambda *a, **kw: mock.Mock()
+    mock_metrics.get_meter.return_value = mock_meter
+    monkeypatch.setattr(_opentelemetry_metrics, "metrics", mock_metrics, raising=False)
+
+    recorder = _opentelemetry_metrics._MetricsRecorder(
+        enable_metrics=True, rpc_system="grpc"
+    )
+    socket_like_rpc = AsyncMock()
+    mock_call = mock.MagicMock(_closing_cleanly=False)
+    mock_call.peer = lambda: "ipv4:34.126.1.1:443"
+    socket_like_rpc.call = mock_call
+    mock_cls_async_bidi_rpc.return_value = socket_like_rpc
+    socket_like_rpc.open = AsyncMock()
+    recv_response = mock.MagicMock(spec=_storage_v2.BidiReadObjectResponse)
+    recv_response.metadata = None
+    recv_response.read_handle = _TEST_READ_HANDLE
+    socket_like_rpc.recv = AsyncMock(return_value=recv_response)
+
+    read_obj_stream = _AsyncReadObjectStream(
+        client=mock_client,
+        bucket_name=_TEST_BUCKET_NAME,
+        object_name=_TEST_OBJECT_NAME,
+        metrics_recorder=recorder,
+    )
+    with _opentelemetry_metrics.start_operation(
+        recorder,
+        "storage.asyncio.AsyncMultiRangeDownloader.open",
+        "ReadObject",
+        rpc_method="google.storage.v2.Storage/BidiReadObject",
+    ) as op_state:
+        op_state.mark_attempt_failed("UNAVAILABLE")
+        await read_obj_stream.open()
+
+    recorder.retries_counter.add.assert_called_once()
+    _, retry_kw = recorder.retries_counter.add.call_args
+    assert retry_kw["attributes"]["gcp.storage.operation"] == "ReadObject"
+    assert retry_kw["attributes"]["error.type"] == "UNAVAILABLE"
+    assert retry_kw["attributes"]["network.path"] == "directpath"
+
+    read_obj_stream.requests_done = AsyncMock()
+    await read_obj_stream.close()
+    assert mock_call._closing_cleanly is True

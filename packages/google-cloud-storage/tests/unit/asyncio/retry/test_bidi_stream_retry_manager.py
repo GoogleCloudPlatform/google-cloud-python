@@ -154,3 +154,81 @@ class TestBidiStreamRetryManager:
             )
 
         mock_strategy.recover_state_on_failure.assert_not_called()
+
+    @pytest.mark.asyncio
+    async def test_execute_records_retry_metrics_with_and_without_network_path_getter(
+        self, monkeypatch
+    ):
+        from google.cloud.storage import _opentelemetry_metrics
+
+        monkeypatch.setattr(_opentelemetry_metrics, "HAS_OPENTELEMETRY_METRICS", True)
+        monkeypatch.setattr(_opentelemetry_metrics, "_ENABLE_METRICS_DEV_GATE", True)
+        mock_metrics = mock.Mock()
+        mock_meter = mock.Mock()
+        mock_meter.create_histogram.side_effect = lambda *a, **kw: mock.Mock()
+        mock_meter.create_counter.side_effect = lambda *a, **kw: mock.Mock()
+        mock_metrics.get_meter.return_value = mock_meter
+        monkeypatch.setattr(
+            _opentelemetry_metrics, "metrics", mock_metrics, raising=False
+        )
+
+        recorder = _opentelemetry_metrics._MetricsRecorder(
+            enable_metrics=True, rpc_system="grpc"
+        )
+        mock_strategy = mock.AsyncMock(spec=base_strategy._BaseResumptionStrategy)
+        attempt_count = 0
+
+        async def mock_send_and_recv(*args, **kwargs):
+            nonlocal attempt_count
+            attempt_count += 1
+            if attempt_count == 1:
+                raise exceptions.ServiceUnavailable("503")
+            yield "ok"
+
+        retry_manager = manager._BidiStreamRetryManager(
+            strategy=mock_strategy,
+            send_and_recv=mock_send_and_recv,
+            recorder=recorder,
+            network_path_getter=lambda: "directpath",
+        )
+        retry_policy = AsyncRetry(predicate=_is_retriable, initial=0.001)
+        with _opentelemetry_metrics.start_operation(
+            recorder,
+            "storage.asyncio.AsyncMultiRangeDownloader.download_ranges",
+            "ReadObject",
+            rpc_method="google.storage.v2.Storage/BidiReadObject",
+        ):
+            with mock.patch("asyncio.sleep", new_callable=mock.AsyncMock):
+                await retry_manager.execute(initial_state={}, retry_policy=retry_policy)
+
+        recorder.retries_counter.add.assert_called_once()
+        _, retry_kw = recorder.retries_counter.add.call_args
+        assert retry_kw["attributes"]["gcp.storage.operation"] == "ReadObject"
+        assert retry_kw["attributes"]["error.type"] == "UNAVAILABLE"
+        assert retry_kw["attributes"]["network.path"] == "directpath"
+
+        # Without network_path_getter on non-retryable failure
+        recorder.retries_counter.add.reset_mock()
+
+        async def fail_send_and_recv(*args, **kwargs):
+            if False:
+                yield
+            raise exceptions.PermissionDenied("403")
+
+        retry_manager_no_getter = manager._BidiStreamRetryManager(
+            strategy=mock_strategy,
+            send_and_recv=fail_send_and_recv,
+            recorder=recorder,
+            network_path_getter=None,
+        )
+        with _opentelemetry_metrics.start_operation(
+            recorder,
+            "storage.asyncio.AsyncMultiRangeDownloader.download_ranges",
+            "ReadObject",
+            rpc_method="google.storage.v2.Storage/BidiReadObject",
+        ):
+            with pytest.raises(exceptions.PermissionDenied):
+                await retry_manager_no_getter.execute(
+                    initial_state={}, retry_policy=DEFAULT_TEST_RETRY
+                )
+        recorder.retries_counter.add.assert_not_called()

@@ -164,6 +164,7 @@ class TestAsyncMultiRangeDownloader:
             object_name=_TEST_OBJECT_NAME,
             generation_number=_TEST_GENERATION_NUMBER,
             read_handle=_TEST_READ_HANDLE,
+            metrics_recorder=None,
         )
 
         mrd.read_obj_str.open.assert_called_once()
@@ -2630,4 +2631,656 @@ class TestAsyncMultiRangeDownloader:
             assert ps.pending_ranges == 0
             assert ps.pending_bytes == 0
 
+        await mrd.close()
+
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader.generate_random_56_bit_integer"
+    )
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+    )
+    @pytest.mark.asyncio
+    async def test_mrd_metrics_recording(
+        self, mock_cls_async_read_object_stream, mock_random_int
+    ):
+        mock_recorder = mock.MagicMock()
+        mock_recorder.standard_enabled = True
+        mock_client = mock.MagicMock()
+        mock_client._metrics_recorder = mock_recorder
+        mock_client.grpc_client = mock.AsyncMock()
+
+        stream = mock.MagicMock()
+        stream.open = AsyncMock()
+        stream.close = AsyncMock()
+        stream.send = AsyncMock()
+        stream._mark_closing_cleanly = mock.MagicMock()
+        stream.generation_number = _TEST_GENERATION_NUMBER
+        stream.persisted_size = _TEST_OBJECT_SIZE
+        stream.read_handle = _TEST_READ_HANDLE
+        stream.is_finalized = True
+        stream.full_obj_server_crc32c = None
+        stream.is_stream_open = True
+        mock_cls_async_read_object_stream.return_value = stream
+
+        response = _storage_v2.BidiReadObjectResponse(
+            object_data_ranges=[
+                _storage_v2.ObjectRangeData(
+                    checksummed_data=_storage_v2.ChecksummedData(
+                        content=b"data", crc32c=google_crc32c.value(b"data")
+                    ),
+                    range_end=True,
+                    read_range=_storage_v2.ReadRange(
+                        read_offset=0, read_length=4, read_id=123
+                    ),
+                )
+            ]
+        )
+        stream.recv = AsyncMock(side_effect=[response])
+        mock_random_int.return_value = 123
+
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            mock_client,
+            _TEST_BUCKET_NAME,
+            _TEST_OBJECT_NAME,
+        )
+        assert (
+            mock_cls_async_read_object_stream.call_args.kwargs["metrics_recorder"]
+            is mock_recorder
+        )
+        # create_mrd suppresses nested open() so only 1 logical operation is recorded
+        mock_recorder.record_logical_operation.assert_called_once()
+        assert (
+            mock_recorder.record_logical_operation.call_args.kwargs["client_method"]
+            == "storage.asyncio.AsyncMultiRangeDownloader.create_mrd"
+        )
+
+        mock_recorder.record_logical_operation.reset_mock()
+        buf = BytesIO()
+        await mrd.download_ranges([(0, 4, buf)])
+        mock_recorder.record_response_body_size.assert_called_once_with(
+            4, operation="ReadObject"
+        )
+        mock_recorder.record_logical_operation.assert_called_once()
+        assert (
+            mock_recorder.record_logical_operation.call_args.kwargs["client_method"]
+            == "storage.asyncio.AsyncMultiRangeDownloader.download_ranges"
+        )
+        assert (
+            mock_recorder.record_logical_operation.call_args.kwargs["operation"]
+            == "ReadObject"
+        )
+        assert (
+            mock_recorder.record_logical_operation.call_args.kwargs["rpc_method"]
+            == "google.storage.v2.Storage/BidiReadObject"
+        )
+
+        # Verify download_ranges with custom metadata marks stream clean before reopen
+        chunk1 = _storage_v2.BidiReadObjectResponse(
+            object_data_ranges=[
+                _storage_v2.ObjectRangeData(
+                    checksummed_data=_storage_v2.ChecksummedData(
+                        content=b"ab", crc32c=google_crc32c.value(b"ab")
+                    ),
+                    range_end=False,
+                    read_range=_storage_v2.ReadRange(
+                        read_offset=0, read_length=2, read_id=123
+                    ),
+                )
+            ]
+        )
+        chunk2 = _storage_v2.BidiReadObjectResponse(
+            object_data_ranges=[
+                _storage_v2.ObjectRangeData(
+                    checksummed_data=_storage_v2.ChecksummedData(
+                        content=b"cd", crc32c=google_crc32c.value(b"cd")
+                    ),
+                    range_end=True,
+                    read_range=_storage_v2.ReadRange(
+                        read_offset=2, read_length=2, read_id=123
+                    ),
+                )
+            ]
+        )
+        stream.recv = AsyncMock(side_effect=[chunk1, chunk2])
+        mock_recorder.record_response_body_size.reset_mock()
+        stream._mark_closing_cleanly.reset_mock()
+        buf2 = BytesIO()
+        await mrd.download_ranges([(0, 4, buf2)], metadata=[("x-custom", "val")])
+        stream._mark_closing_cleanly.assert_called()
+        assert (
+            mock_cls_async_read_object_stream.call_args.kwargs["metrics_recorder"]
+            is mock_recorder
+        )
+        mock_recorder.record_response_body_size.assert_called_once_with(
+            4, operation="ReadObject"
+        )
+
+        # Verify DataCorruption on a mocked stream records CHECKSUM_MISMATCH before close
+        corrupt_resp = _storage_v2.BidiReadObjectResponse(
+            object_data_ranges=[
+                _storage_v2.ObjectRangeData(
+                    checksummed_data=_storage_v2.ChecksummedData(
+                        content=b"data", crc32c=google_crc32c.value(b"data") + 1
+                    ),
+                    range_end=True,
+                    read_range=_storage_v2.ReadRange(
+                        read_offset=0, read_length=4, read_id=123
+                    ),
+                )
+            ]
+        )
+        stream.recv = AsyncMock(side_effect=[corrupt_resp])
+        mock_recorder.record_rpc_attempt.reset_mock()
+        with pytest.raises(DataCorruption):
+            await mrd.download_ranges([(0, 4, BytesIO())])
+        mock_recorder.record_rpc_attempt.assert_called_once()
+        assert (
+            mock_recorder.record_rpc_attempt.call_args.kwargs["error_type"]
+            == "CHECKSUM_MISMATCH"
+        )
+        assert mrd.is_stream_open is False
+
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader.generate_random_56_bit_integer"
+    )
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+    )
+    @pytest.mark.asyncio
+    async def test_mrd_retry_metrics_accounting(
+        self, mock_cls_async_read_object_stream, mock_random_int, monkeypatch
+    ):
+        from google.api_core.retry_async import AsyncRetry
+
+        from google.cloud.storage import _opentelemetry_metrics
+
+        monkeypatch.setattr(_opentelemetry_metrics, "HAS_OPENTELEMETRY_METRICS", True)
+        monkeypatch.setattr(_opentelemetry_metrics, "_ENABLE_METRICS_DEV_GATE", True)
+        mock_metrics = mock.Mock()
+        mock_meter = mock.Mock()
+        mock_meter.create_histogram.side_effect = lambda *a, **kw: mock.Mock()
+        mock_meter.create_counter.side_effect = lambda *a, **kw: mock.Mock()
+        mock_metrics.get_meter.return_value = mock_meter
+        monkeypatch.setattr(
+            _opentelemetry_metrics, "metrics", mock_metrics, raising=False
+        )
+
+        recorder = _opentelemetry_metrics._MetricsRecorder(
+            enable_metrics=True, rpc_system="grpc"
+        )
+        mock_client = mock.MagicMock()
+        mock_client._metrics_recorder = recorder
+        mock_client.grpc_client = mock.AsyncMock()
+
+        # 1. MRD.open() retry (attempt 1 fails with 503, attempt 2 succeeds)
+        failed_open_stream = mock.MagicMock()
+        failed_open_stream.open = AsyncMock(
+            side_effect=exceptions.ServiceUnavailable("503 open failed")
+        )
+        failed_open_stream.is_stream_open = False
+
+        open_stream = mock.MagicMock()
+        open_stream.open = AsyncMock()
+        open_stream.close = AsyncMock()
+        open_stream.send = AsyncMock()
+        open_stream.generation_number = _TEST_GENERATION_NUMBER
+        open_stream.persisted_size = _TEST_OBJECT_SIZE
+        open_stream.read_handle = _TEST_READ_HANDLE
+        open_stream.is_finalized = True
+        open_stream.full_obj_server_crc32c = None
+        open_stream.is_stream_open = True
+
+        # 2. MRD.download_ranges() mid-stream retry (attempt 1 Aborted, attempt 2 succeeds)
+        open_stream.recv = AsyncMock(
+            side_effect=exceptions.Aborted("Idle stream closed")
+        )
+        recovered_stream = mock.MagicMock()
+        recovered_stream.open = AsyncMock()
+        recovered_stream.close = AsyncMock()
+        recovered_stream.send = AsyncMock()
+        recovered_stream.generation_number = _TEST_GENERATION_NUMBER
+        recovered_stream.persisted_size = _TEST_OBJECT_SIZE
+        recovered_stream.read_handle = _TEST_READ_HANDLE
+        recovered_stream.is_finalized = True
+        recovered_stream.full_obj_server_crc32c = None
+        recovered_stream.is_stream_open = True
+        recovered_stream.recv = AsyncMock(
+            side_effect=[
+                _storage_v2.BidiReadObjectResponse(
+                    object_data_ranges=[
+                        _storage_v2.ObjectRangeData(
+                            checksummed_data=_storage_v2.ChecksummedData(
+                                content=b"data", crc32c=google_crc32c.value(b"data")
+                            ),
+                            range_end=True,
+                            read_range=_storage_v2.ReadRange(
+                                read_offset=0, read_length=4, read_id=123
+                            ),
+                        )
+                    ]
+                )
+            ]
+        )
+
+        mock_cls_async_read_object_stream.side_effect = [
+            failed_open_stream,
+            open_stream,
+            recovered_stream,
+        ]
+        mock_random_int.return_value = 123
+
+        user_on_error = mock.Mock()
+        fast_retry = AsyncRetry(initial=0.001, maximum=0.001, on_error=user_on_error)
+        mrd = AsyncMultiRangeDownloader(
+            mock_client, _TEST_BUCKET_NAME, _TEST_OBJECT_NAME
+        )
+        await mrd.open(retry_policy=fast_retry)
+
+        user_on_error.assert_called_once()
+        recorder.retries_counter.add.assert_called_once()
+        _, open_retry_kw = recorder.retries_counter.add.call_args
+        assert open_retry_kw["attributes"]["gcp.storage.operation"] == "ReadObject"
+        assert open_retry_kw["attributes"]["error.type"] == "UNAVAILABLE"
+
+        recorder.retries_counter.add.reset_mock()
+        buf = BytesIO()
+        await mrd.download_ranges(
+            [(0, 4, buf)],
+            retry_policy=AsyncRetry(
+                predicate=lambda e: True, initial=0.001, maximum=0.001
+            ),
+        )
+        assert buf.getvalue() == b"data"
+        recorder.retries_counter.add.assert_called_once()
+        _, dl_retry_kw = recorder.retries_counter.add.call_args
+        assert dl_retry_kw["attributes"]["gcp.storage.operation"] == "ReadObject"
+        assert dl_retry_kw["attributes"]["error.type"] == "ABORTED"
+
+        # 3. MRD.open() failure when metrics are disabled (recorder is None)
+        disabled_client = mock.MagicMock()
+        disabled_client._metrics_recorder = None
+        disabled_client.grpc_client = mock.AsyncMock()
+        fail_stream = mock.MagicMock()
+        fail_stream.open = AsyncMock(side_effect=exceptions.NotFound("404"))
+        mock_cls_async_read_object_stream.side_effect = [fail_stream]
+        mrd_disabled = AsyncMultiRangeDownloader(
+            disabled_client, _TEST_BUCKET_NAME, _TEST_OBJECT_NAME
+        )
+        with pytest.raises(exceptions.NotFound):
+            await mrd_disabled.open()
+
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader.generate_random_56_bit_integer"
+    )
+    @pytest.mark.asyncio
+    async def test_mrd_bidi_stream_interceptor_ttfb_duration_and_reopen_metrics(
+        self, mock_random_int, monkeypatch
+    ):
+        import grpc
+        from google.api_core.retry_async import AsyncRetry
+
+        from google.cloud.storage import _opentelemetry_metrics
+        from google.cloud.storage.asyncio import async_grpc_client
+
+        monkeypatch.setattr(_opentelemetry_metrics, "HAS_OPENTELEMETRY_METRICS", True)
+        monkeypatch.setattr(_opentelemetry_metrics, "_ENABLE_METRICS_DEV_GATE", True)
+        mock_metrics = mock.Mock()
+        mock_meter = mock.Mock()
+        mock_meter.create_histogram.side_effect = lambda *a, **kw: mock.Mock()
+        mock_meter.create_counter.side_effect = lambda *a, **kw: mock.Mock()
+        mock_metrics.get_meter.return_value = mock_meter
+        monkeypatch.setattr(
+            _opentelemetry_metrics, "metrics", mock_metrics, raising=False
+        )
+
+        recorder = _opentelemetry_metrics._MetricsRecorder(
+            enable_metrics=True, rpc_system="grpc"
+        )
+        _, _, _, s_s = async_grpc_client._create_metrics_interceptors(
+            recorder, direct_path_attempted=False
+        )
+        details = mock.MagicMock(method="/google.storage.v2.Storage/BidiReadObject")
+
+        class _FakeBidiCall:
+            def __init__(self, corrupt_crc=False):
+                self._queue = asyncio.Queue()
+                self._done = False
+                self._pump_task = None
+                self._corrupt_crc = corrupt_crc
+
+            def done(self):
+                return self._done
+
+            def add_done_callback(self, callback):
+                pass
+
+            def cancel(self):
+                self._done = True
+                self._pump_task.cancel()
+                self._queue.put_nowait(grpc.aio.EOF)
+                return True
+
+            async def write(self, request):
+                if request.read_object_spec.bucket:
+                    self._queue.put_nowait(
+                        _storage_v2.BidiReadObjectResponse(
+                            metadata=_storage_v2.Object(
+                                generation=_TEST_GENERATION_NUMBER,
+                                size=_TEST_OBJECT_SIZE,
+                            ),
+                            read_handle=_storage_v2.BidiReadHandle(
+                                handle=_TEST_READ_HANDLE
+                            ),
+                        )
+                    )
+                if request.read_ranges:
+                    crc = google_crc32c.value(b"data") + (1 if self._corrupt_crc else 0)
+                    for r in request.read_ranges:
+                        self._queue.put_nowait(
+                            _storage_v2.BidiReadObjectResponse(
+                                object_data_ranges=[
+                                    _storage_v2.ObjectRangeData(
+                                        checksummed_data=_storage_v2.ChecksummedData(
+                                            content=b"data",
+                                            crc32c=crc,
+                                        ),
+                                        range_end=True,
+                                        read_range=_storage_v2.ReadRange(
+                                            read_offset=r.read_offset,
+                                            read_length=4,
+                                            read_id=r.read_id,
+                                        ),
+                                    )
+                                ]
+                            )
+                        )
+
+            async def done_writing(self):
+                self._queue.put_nowait(grpc.aio.EOF)
+
+            async def read(self):
+                return await self._queue.get()
+
+        created_tracked_calls = []
+        raw_calls = [
+            _FakeBidiCall(),
+            _FakeBidiCall(),
+            _FakeBidiCall(),
+            _FakeBidiCall(corrupt_crc=True),
+        ]
+
+        async def start_bidi_rpc(request_iterator=None, metadata=None):
+            raw = raw_calls.pop(0)
+            tracked = await s_s.intercept_stream_stream(
+                mock.AsyncMock(return_value=raw), details, request_iterator
+            )
+
+            async def _pump_requests():
+                async for req in request_iterator:
+                    await tracked.write(req)
+                await tracked.done_writing()
+
+            raw._pump_task = asyncio.create_task(_pump_requests())
+            created_tracked_calls.append(tracked)
+            return tracked
+
+        mock_client = mock.MagicMock()
+        mock_client._metrics_recorder = recorder
+        bidi_key = object()
+        mock_client.grpc_client._client._transport.bidi_read_object = bidi_key
+        mock_client.grpc_client._client._transport._wrapped_methods = {
+            bidi_key: start_bidi_rpc
+        }
+        mock_random_int.side_effect = [101, 102, 201, 202, 301]
+
+        # Scenario A: Healthy MRD lifecycle across 2 download_ranges() calls + close()
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            mock_client, _TEST_BUCKET_NAME, _TEST_OBJECT_NAME
+        )
+        created_tracked_calls[0]._start_time -= 50.0
+        assert recorder.ttfb.record.call_count == 1
+
+        b1, b2 = BytesIO(), BytesIO()
+        await mrd.download_ranges([(0, 4, b1)])
+        await mrd.download_ranges([(0, 4, b2)])
+        # Same physical stream: TTFB is still recorded only once
+        assert recorder.ttfb.record.call_count == 1
+        assert b1.getvalue() == b"data"
+        assert b2.getvalue() == b"data"
+
+        await mrd.close()
+        assert recorder.attempts_counter.add.call_count == 1
+        assert (
+            recorder.attempts_counter.add.call_args.kwargs["attributes"]["error.type"]
+            == "OK"
+        )
+        assert recorder.rpc_call_duration.record.call_args.args[0] >= 50.0
+
+        # Scenario B: Broken stream during download_ranges() triggers reopen_stream()
+        recorder.ttfb.record.reset_mock()
+        recorder.attempts_counter.add.reset_mock()
+        recorder.retries_counter.add.reset_mock()
+        recorder.rpc_call_duration.record.reset_mock()
+
+        mrd2 = await AsyncMultiRangeDownloader.create_mrd(
+            mock_client, _TEST_BUCKET_NAME, _TEST_OBJECT_NAME
+        )
+        assert recorder.ttfb.record.call_count == 1
+        mrd2.read_obj_str.send = AsyncMock(
+            side_effect=exceptions.ServiceUnavailable("send broke")
+        )
+
+        b3 = BytesIO()
+        await mrd2.download_ranges(
+            [(0, 4, b3)],
+            retry_policy=AsyncRetry(
+                predicate=lambda e: True, initial=0.001, maximum=0.001
+            ),
+        )
+        assert b3.getvalue() == b"data"
+        # Stream 1 + reopened Stream 2 => 2 TTFB points and 1 retry
+        assert recorder.ttfb.record.call_count == 2
+        assert recorder.retries_counter.add.call_count == 1
+        # Broken stream 1 was NOT falsely marked OK by reopen_stream()
+        stream1_err = recorder.attempts_counter.add.call_args_list[0].kwargs[
+            "attributes"
+        ]["error.type"]
+        assert stream1_err == "CANCELLED"
+
+        await mrd2.close()
+        assert recorder.attempts_counter.add.call_count == 2
+        stream2_err = recorder.attempts_counter.add.call_args_list[1].kwargs[
+            "attributes"
+        ]["error.type"]
+        assert stream2_err == "OK"
+
+        # Scenario C: DataCorruption records CHECKSUM_MISMATCH on tracked stream before close()
+        recorder.attempts_counter.add.reset_mock()
+        recorder.errors_counter.add.reset_mock()
+        mrd3 = await AsyncMultiRangeDownloader.create_mrd(
+            mock_client, _TEST_BUCKET_NAME, _TEST_OBJECT_NAME
+        )
+        with pytest.raises(DataCorruption):
+            await mrd3.download_ranges([(0, 4, BytesIO())])
+        assert mrd3.is_stream_open is False
+        assert recorder.attempts_counter.add.call_count == 1
+        assert (
+            recorder.attempts_counter.add.call_args.kwargs["attributes"]["error.type"]
+            == "CHECKSUM_MISMATCH"
+        )
+        assert recorder.errors_counter.add.call_count == 1
+        assert (
+            recorder.errors_counter.add.call_args.kwargs["attributes"]["error.type"]
+            == "CHECKSUM_MISMATCH"
+        )
+
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader.generate_random_56_bit_integer"
+    )
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+    )
+    @pytest.mark.asyncio
+    async def test_mrd_multi_stream_body_size_and_premature_stream_end_retry_metrics(
+        self, mock_cls_stream, mock_random_int, monkeypatch
+    ):
+        from google.api_core.retry_async import AsyncRetry
+
+        from google.cloud.storage import _opentelemetry_metrics
+        from google.cloud.storage.asyncio.async_multi_range_downloader import (
+            MultiStreamConfig,
+            _StreamEnd,
+        )
+
+        monkeypatch.setattr(_opentelemetry_metrics, "HAS_OPENTELEMETRY_METRICS", True)
+        monkeypatch.setattr(_opentelemetry_metrics, "_ENABLE_METRICS_DEV_GATE", True)
+        mock_metrics = mock.Mock()
+        mock_meter = mock.Mock()
+        mock_meter.create_histogram.side_effect = lambda *a, **kw: mock.Mock()
+        mock_meter.create_counter.side_effect = lambda *a, **kw: mock.Mock()
+        mock_metrics.get_meter.return_value = mock_meter
+        monkeypatch.setattr(
+            _opentelemetry_metrics, "metrics", mock_metrics, raising=False
+        )
+
+        recorder = _opentelemetry_metrics._MetricsRecorder(
+            enable_metrics=True, rpc_system="grpc"
+        )
+        mock_client = self._make_mock_client()
+        mock_client._metrics_recorder = recorder
+
+        s1 = self._make_mock_stream(read_handle=b"h1")
+        s2 = self._make_mock_stream(read_handle=b"h2")
+        mock_cls_stream.side_effect = [s1, s2]
+
+        config = MultiStreamConfig(
+            min_streams=2,
+            max_streams=4,
+            target_io_depth=1,
+            target_bytes=10,
+        )
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            mock_client, "b", "o", multi_stream_config=config
+        )
+
+        # 1. Multi-stream download_ranges emits record_response_body_size ONCE with aggregate total
+        recorder.response_body_size.record.reset_mock()
+        with mock.patch.object(
+            mrd,
+            "_download_ranges_on_stream",
+            new=AsyncMock(side_effect=[10, 15]),
+        ) as mock_dl:
+            await mrd.download_ranges([(0, 10, BytesIO()), (10, 15, BytesIO())])
+            assert mock_dl.call_count == 2
+
+        recorder.response_body_size.record.assert_called_once()
+        assert recorder.response_body_size.record.call_args.args[0] == 25
+
+        # 2. BufferError on short read does NOT emit record_response_body_size
+        recorder.response_body_size.record.reset_mock()
+        short_resp = _storage_v2.BidiReadObjectResponse(
+            object_data_ranges=[
+                _storage_v2.ObjectRangeData(
+                    checksummed_data=_storage_v2.ChecksummedData(
+                        content=b"ab", crc32c=google_crc32c.value(b"ab")
+                    ),
+                    range_end=True,
+                    read_range=_storage_v2.ReadRange(
+                        read_offset=0, read_length=2, read_id=555
+                    ),
+                )
+            ]
+        )
+        mock_random_int.return_value = 555
+        single_stream = self._make_mock_stream(read_handle=b"h_single")
+        mock_cls_stream.side_effect = [single_stream]
+        q_short = asyncio.Queue()
+        q_short.put_nowait(short_resp)
+        mrd_single = await AsyncMultiRangeDownloader.create_mrd(mock_client, "b", "o")
+        mrd_single._primary_stream.multiplexer.register = mock.MagicMock(
+            return_value=q_short
+        )
+        mrd_single._primary_stream.multiplexer.unregister = mock.MagicMock()
+        mrd_single._primary_stream.multiplexer.send = AsyncMock()
+        recorder.response_body_size.record.reset_mock()
+        with pytest.raises(BufferError):
+            await mrd_single.download_ranges([(0, 4, bytearray(4))])
+        recorder.response_body_size.record.assert_not_called()
+
+        # 3. Premature _StreamEnd with pending_read_ids marks attempt failed ("UNAVAILABLE")
+        #    and emits retries_counter on reopen
+        full_resp = _storage_v2.BidiReadObjectResponse(
+            object_data_ranges=[
+                _storage_v2.ObjectRangeData(
+                    checksummed_data=_storage_v2.ChecksummedData(
+                        content=b"data", crc32c=google_crc32c.value(b"data")
+                    ),
+                    range_end=True,
+                    read_range=_storage_v2.ReadRange(
+                        read_offset=0, read_length=4, read_id=777
+                    ),
+                )
+            ]
+        )
+        mock_random_int.return_value = 777
+        q1 = asyncio.Queue()
+        q1.put_nowait(_StreamEnd())
+        q1.put_nowait(full_resp)
+
+        mrd_single._primary_stream.multiplexer.register = mock.MagicMock(
+            return_value=q1
+        )
+        mrd_single._primary_stream.multiplexer.unregister = mock.MagicMock()
+        mrd_single._primary_stream.multiplexer.send = AsyncMock()
+        mrd_single._primary_stream.multiplexer.reopen_stream = AsyncMock()
+
+        recorder.retries_counter.add.reset_mock()
+        out_buf = BytesIO()
+        await mrd_single.download_ranges(
+            [(0, 4, out_buf)],
+            retry_policy=AsyncRetry(
+                predicate=lambda e: True, initial=0.001, maximum=0.001
+            ),
+        )
+        assert out_buf.getvalue() == b"data"
+        recorder.retries_counter.add.assert_called_once()
+        assert (
+            recorder.retries_counter.add.call_args.kwargs["attributes"]["error.type"]
+            == "UNAVAILABLE"
+        )
+
+        # Also cover the branch where read() already incremented current_op.recorded_attempts before _StreamEnd
+        q3 = asyncio.Queue()
+        q3.put_nowait(_StreamEnd())
+        q3.put_nowait(full_resp)
+        send_calls = 0
+
+        async def send_and_bump_attempts(_req):
+            nonlocal send_calls
+            send_calls += 1
+            if send_calls == 1:
+                op = _opentelemetry_metrics.get_current_operation()
+                if op is not None:
+                    op.recorded_attempts += 1
+
+        mrd_single._primary_stream.multiplexer.register = mock.MagicMock(
+            return_value=q3
+        )
+        mrd_single._primary_stream.multiplexer.send = AsyncMock(
+            side_effect=send_and_bump_attempts
+        )
+        recorder.retries_counter.add.reset_mock()
+        out_buf2 = BytesIO()
+        await mrd_single.download_ranges(
+            [(0, 4, out_buf2)],
+            retry_policy=AsyncRetry(
+                predicate=lambda e: True, initial=0.001, maximum=0.001
+            ),
+        )
+        assert out_buf2.getvalue() == b"data"
+        recorder.retries_counter.add.assert_called_once()
+        assert (
+            recorder.retries_counter.add.call_args.kwargs["attributes"]["error.type"]
+            == "UNAVAILABLE"
+        )
         await mrd.close()

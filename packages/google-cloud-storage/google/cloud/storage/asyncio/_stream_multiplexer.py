@@ -15,6 +15,7 @@
 from __future__ import annotations
 
 import asyncio
+import inspect
 import logging
 from typing import Awaitable, Callable, Dict, Optional, Set
 
@@ -211,6 +212,9 @@ class _StreamMultiplexer:
             self._ensure_recv_loop()
 
     async def close(self) -> None:
+        mark_clean = getattr(self._stream, "_mark_closing_cleanly", None)
+        if callable(mark_clean) and not inspect.iscoroutinefunction(mark_clean):
+            mark_clean()
         self._stop_recv_loop()
         if self._recv_task:
             try:

@@ -1666,3 +1666,43 @@ def test_operation_state_and_retry_helpers(monkeypatch):
     # Once start_operation exits, state.finished is True even in copied contexts
     assert op_state.finished is True
     assert copied_ctx.run(_opentelemetry_metrics.get_current_operation) is None
+
+    # suppress_metrics() suppresses all logical and transport metrics recording
+    recorder.client_request_duration.record.reset_mock()
+    recorder.operations_counter.add.reset_mock()
+    recorder.retries_counter.add.reset_mock()
+    recorder.http_request_duration.record.reset_mock()
+    recorder.rpc_call_duration.record.reset_mock()
+    recorder.attempts_counter.add.reset_mock()
+    recorder.request_body_size.record.reset_mock()
+    recorder.response_body_size.record.reset_mock()
+    recorder.ttfb.record.reset_mock()
+    recorder.server_unreached_counter.add.reset_mock()
+
+    assert _opentelemetry_metrics.is_metrics_suppressed() is False
+    with _opentelemetry_metrics.suppress_metrics():
+        assert _opentelemetry_metrics.is_metrics_suppressed() is True
+        with _opentelemetry_metrics.start_operation(
+            recorder, "storage.Client.get_bucket", "GetBucket"
+        ) as sup_op:
+            assert sup_op is None
+            recorder.record_logical_operation(0.01, "m", "GetBucket")
+            recorder.record_retry("GetBucket", "UNAVAILABLE", "cloudpath")
+            recorder.record_http_attempt(0.01, "GET", "/storage/v1/b/{bucket}", 200)
+            recorder.record_rpc_attempt(0.01, "GetBucket", "OK", "OK")
+            recorder.record_request_body_size(128)
+            recorder.record_response_body_size(256)
+            recorder.record_ttfb(0.005)
+            recorder.record_server_unreached("UNAVAILABLE")
+    assert _opentelemetry_metrics.is_metrics_suppressed() is False
+
+    recorder.client_request_duration.record.assert_not_called()
+    recorder.operations_counter.add.assert_not_called()
+    recorder.retries_counter.add.assert_not_called()
+    recorder.http_request_duration.record.assert_not_called()
+    recorder.rpc_call_duration.record.assert_not_called()
+    recorder.attempts_counter.add.assert_not_called()
+    recorder.request_body_size.record.assert_not_called()
+    recorder.response_body_size.record.assert_not_called()
+    recorder.ttfb.record.assert_not_called()
+    recorder.server_unreached_counter.add.assert_not_called()
