@@ -130,9 +130,9 @@ def test_get_indexes(faux_conn):
 
 
 def test_no_table_pk_constraint(faux_conn):
-    # BigQuery doesn't do that.
+    # Primary key reflection is not implemented.
     assert faux_conn.dialect.get_pk_constraint(faux_conn, "foo") == (
-        dict(constrained_columns=[])
+        dict(name=None, constrained_columns=[])
     )
 
 

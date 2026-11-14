@@ -35,3 +35,22 @@ def test_alter_column_new_type_bigquery(ddl_compiler):
     column = ColumnType(name="t", column_name="a", type_=Integer())
     res = visit_column_type(element=column, compiler=ddl_compiler)
     assert res == "ALTER TABLE `t` ALTER COLUMN `a` SET DATA TYPE INT64"
+
+
+def test_autogenerate_without_primary_key(faux_conn):
+    from alembic.autogenerate import compare_metadata
+    from alembic.migration import MigrationContext
+    from sqlalchemy import Column, MetaData, Table
+
+    faux_conn.ex("create table foo (id INT64)")
+    metadata = MetaData()
+    Table("foo", metadata, Column("id", Integer))
+    context = MigrationContext.configure(
+        faux_conn,
+        opts={
+            "include_object": lambda obj, name, type_, reflected, compare_to: name
+            != "comments"
+        },
+    )
+
+    assert compare_metadata(context, metadata) == []
