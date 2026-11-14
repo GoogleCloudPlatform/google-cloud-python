@@ -147,6 +147,12 @@ class Test_get_request_data_from_django(unittest.TestCase):
         from django.conf import settings
         from django.test.utils import setup_test_environment
 
+        from google.cloud.logging_v2.handlers.middleware import request
+
+        patch = mock.patch.object(request, "_thread_locals", request.Local())
+        patch.start()
+        self.addCleanup(patch.stop)
+
         if not settings.configured:
             settings.configure()
         setup_test_environment()
@@ -154,10 +160,7 @@ class Test_get_request_data_from_django(unittest.TestCase):
     def tearDown(self):
         from django.test.utils import teardown_test_environment
 
-        from google.cloud.logging_v2.handlers.middleware import request
-
         teardown_test_environment()
-        request._thread_locals.__dict__.clear()
 
     def test_no_context_header(self):
         from django.test import RequestFactory

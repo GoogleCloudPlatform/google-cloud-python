@@ -12,7 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import asyncio
+import importlib.util
+import sys
+import threading
 import unittest
+from concurrent.futures import ThreadPoolExecutor
 
 import mock
 
@@ -35,6 +40,13 @@ class DjangoBase(unittest.TestCase):
 
 
 class TestRequestMiddleware(DjangoBase):
+    def setUp(self):
+        from google.cloud.logging_v2.handlers.middleware import request
+
+        patch = mock.patch.object(request, "_thread_locals", request.Local())
+        patch.start()
+        self.addCleanup(patch.stop)
+
     def _get_target_class(self):
         from google.cloud.logging_v2.handlers.middleware import request
 
@@ -70,6 +82,87 @@ class TestRequestMiddleware(DjangoBase):
         middleware = self._make_one(get_response=self._mock_get_response)
         mock_request = "test_req"
         self.assertEqual(middleware(mock_request), mock_request)
+
+    def test_concurrent_async_requests(self):
+        from google.cloud.logging_v2.handlers.middleware import request
+
+        middleware = self._make_one()
+        requests = [object(), object()]
+
+        async def handle_requests():
+            ready = [asyncio.Event(), asyncio.Event()]
+
+            async def handle_request(index):
+                middleware(requests[index])
+                ready[index].set()
+                await ready[1 - index].wait()
+                return request._get_django_request()
+
+            return await asyncio.gather(handle_request(0), handle_request(1))
+
+        self.assertEqual(asyncio.run(handle_requests()), requests)
+        self.assertIsNone(request._get_django_request())
+
+    def test_async_view(self):
+        from asgiref.sync import async_to_sync
+
+        from google.cloud.logging_v2.handlers.middleware import request
+
+        async def get_response(req):
+            return request._get_django_request()
+
+        middleware = self._make_one(async_to_sync(get_response))
+        mock_request = object()
+        self.assertIs(middleware(mock_request), mock_request)
+
+    def test_sync_middleware_in_async_context(self):
+        from asgiref.sync import sync_to_async
+
+        from google.cloud.logging_v2.handlers.middleware import request
+
+        middleware = self._make_one()
+        mock_request = object()
+
+        async def handle_request():
+            await sync_to_async(middleware)(mock_request)
+            return request._get_django_request()
+
+        self.assertIs(asyncio.run(handle_request()), mock_request)
+
+    def test_requests_are_thread_local(self):
+        from google.cloud.logging_v2.handlers.middleware import request
+
+        middleware = self._make_one()
+        main_request = object()
+        worker_request = object()
+        middleware(main_request)
+
+        def worker():
+            self.assertIsNone(request._get_django_request())
+            middleware(worker_request)
+            self.assertIs(request._get_django_request(), worker_request)
+
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            executor.submit(worker).result()
+
+        self.assertIs(request._get_django_request(), main_request)
+
+
+class TestRequestStorage(unittest.TestCase):
+    def test_without_asgiref(self):
+        from google.cloud.logging_v2.handlers.middleware import request
+
+        spec = importlib.util.spec_from_file_location("request", request.__file__)
+        module = importlib.util.module_from_spec(spec)
+        with mock.patch.dict(sys.modules, {"asgiref.local": None}):
+            spec.loader.exec_module(module)
+
+        self.assertIsInstance(module._thread_locals, threading.local)
+        self.assertIsNone(module._get_django_request())
+        mock_request = object()
+        middleware = module.RequestMiddleware(None)
+        middleware(mock_request)
+        self.assertIs(module._get_django_request(), mock_request)
 
 
 class Test__get_django_request(DjangoBase):

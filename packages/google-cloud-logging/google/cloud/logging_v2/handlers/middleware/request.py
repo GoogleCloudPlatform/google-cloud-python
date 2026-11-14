@@ -14,17 +14,21 @@
 
 """Django middleware helper to capture a request.
 
-The request is stored on a thread-local so that it can be
+The request is stored in local context so that it can be
 inspected by other helpers.
 """
 
-import threading
+try:
+    from asgiref.local import Local
+except ImportError:
+    # Django is optional, so do not require asgiref for other integrations.
+    from threading import local as Local
 
-_thread_locals = threading.local()
+_thread_locals = Local()
 
 
 def _get_django_request():
-    """Get Django request from thread local.
+    """Get Django request from local context.
 
     Returns:
         str: Django request
@@ -33,7 +37,7 @@ def _get_django_request():
 
 
 def RequestMiddleware(get_response):
-    """Saves the request in thread local"""
+    """Saves the request in thread- and async-local context."""
 
     def middleware(request):
         """Called on each request, before Django decides which view to execute.
