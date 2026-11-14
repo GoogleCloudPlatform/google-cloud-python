@@ -350,6 +350,49 @@ class Test_DateTimeWithNanos(object):
         assert stamp.timestamp_pb() == timestamp
 
     @staticmethod
+    @pytest.mark.parametrize(
+        "value",
+        [
+            "1969-12-31T23:59:59.123456789Z",
+            "1965-01-02T03:04:05.123456789Z",
+            "1969-12-31T23:59:59.000000001Z",
+            "1969-12-31T23:59:59Z",
+            "1970-01-01T00:00:00.123456789Z",
+            "2026-10-04T12:34:56.123456789Z",
+            "9999-12-31T23:59:59.999999999Z",
+        ],
+    )
+    def test_timestamp_pb_preserves_whole_seconds(value):
+        stamp = datetime_helpers.DatetimeWithNanoseconds.from_rfc3339(value)
+        expected = timestamp_pb2.Timestamp()
+        expected.FromJsonString(value)
+
+        assert stamp.timestamp_pb() == expected
+
+    @staticmethod
+    @pytest.mark.parametrize(
+        "tzinfo",
+        [
+            None,
+            datetime.timezone.utc,
+            datetime.timezone(datetime.timedelta(hours=5, minutes=30)),
+            datetime.timezone(datetime.timedelta(hours=-4)),
+        ],
+    )
+    @pytest.mark.parametrize(
+        "fraction", [{"microsecond": 123456}, {"nanosecond": 123456789}]
+    )
+    def test_timestamp_pb_fractional_seconds_with_timezone(tzinfo, fraction):
+        stamp = datetime_helpers.DatetimeWithNanoseconds(
+            1969, 12, 31, 23, 59, 59, tzinfo=tzinfo, **fraction
+        )
+        expected = timestamp_pb2.Timestamp()
+        expected.FromDatetime(stamp)
+        expected.nanos = fraction.get("nanosecond", stamp.microsecond * 1000)
+
+        assert stamp.timestamp_pb() == expected
+
+    @staticmethod
     def test_from_timestamp_pb_wo_nanos():
         when = datetime.datetime(
             2016, 12, 20, 21, 13, 47, 123456, tzinfo=datetime.timezone.utc

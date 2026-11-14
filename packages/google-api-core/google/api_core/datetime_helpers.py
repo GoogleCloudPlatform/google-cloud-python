@@ -268,7 +268,7 @@ class DatetimeWithNanoseconds(datetime.datetime):
             else self.replace(tzinfo=datetime.timezone.utc)
         )
         delta = inst - _UTC_EPOCH
-        seconds = int(delta.total_seconds())
+        seconds = delta.days * 86400 + delta.seconds
         nanos = self._nanosecond or self.microsecond * 1000
         return timestamp_pb2.Timestamp(seconds=seconds, nanos=nanos)
 
