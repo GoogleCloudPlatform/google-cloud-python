@@ -105,9 +105,9 @@ class DatabaseWrapper(BaseDatabaseWrapper):
     }
 
     data_type_check_constraints = {
-        "PositiveBigIntegerField": "%(column)s >= 0",
-        "PositiveIntegerField": "%(column)s >= 0",
-        "PositiveSmallIntegerField": "%(column)s >= 0",
+        "PositiveBigIntegerField": "%(qn_column)s >= 0",
+        "PositiveIntegerField": "%(qn_column)s >= 0",
+        "PositiveSmallIntegerField": "%(qn_column)s >= 0",
     }
 
     Database = spanner_dbapi
