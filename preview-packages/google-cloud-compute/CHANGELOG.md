@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.56.0-preview.3](https://github.com/googleapis/google-cloud-python/compare/google-cloud-compute-v1.56.0-preview.2...google-cloud-compute-v1.56.0-preview.3) (2026-11-14)
+
+
+### Features
+
+* update API sources and regenerate ([#18986](https://github.com/googleapis/google-cloud-python/issues/18986)) ([8c0f333](https://github.com/googleapis/google-cloud-python/commit/8c0f3331260667eb64c70db80a7ab5c52b8ccf36))
+
 ## [1.56.0-preview.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-compute-v1.56.0-preview.1...google-cloud-compute-v1.56.0-preview.2) (2026-10-29)
 
 
