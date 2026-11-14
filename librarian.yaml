@@ -2021,7 +2021,7 @@ libraries:
       metadata_name_override: spanner
       default_version: v1
   - name: google-cloud-spanner-dbapi-driver
-    version: 0.0.0
+    version: 0.1.0
     python:
       library_type: INTEGRATION
   - name: google-cloud-speech
