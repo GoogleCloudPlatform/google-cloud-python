@@ -488,8 +488,16 @@ class AggregationResultIterator(page_iterator.Iterator):
                 )  # copy for testability
                 request["aggregation_query"] = new_query_pb
 
+            is_transaction = (
+                transaction_id is not None or new_transaction_options is not None
+            )
+            metadata = (
+                self.client._transaction_rpc_metadata
+                if is_transaction
+                else self.client._rpc_metadata
+            )
             response_pb = self.client._datastore_api.run_aggregation_query(
-                request=request.copy(), **kwargs
+                request=request.copy(), metadata=metadata, **kwargs
             )
             # capture explain metrics if present in response
             # should only be present in last response, and only if explain_options was set

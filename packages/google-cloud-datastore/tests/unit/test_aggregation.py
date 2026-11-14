@@ -694,6 +694,7 @@ def _next_page_helper(txn_id=None, retry=None, timeout=None, database_id=None):
     set_database_id_to_request(expected_request, database_id)
     expected_call = mock.call(
         request=expected_request,
+        metadata=(("x-goog-is-transaction", "true" if txn_id else "false"),),
         **kwargs,
     )
     assert ds_api.run_aggregation_query.call_args_list == (
@@ -794,6 +795,7 @@ def test_transaction_id_populated(database_id, aggregation_type, aggregation_arg
     read_options = request["read_options"]
     # ensure transaction ID is populated
     assert read_options.transaction == client.current_transaction.id
+    assert mock_gapic.call_args[1]["metadata"] == (("x-goog-is-transaction", "true"),)
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"], indirect=True)
@@ -846,6 +848,34 @@ def test_transaction_begin_later(database_id, aggregation_type, aggregation_args
     # ensure new_transaction is populated
     assert not read_options.transaction
     assert read_options.new_transaction == transaction._options
+    assert mock_gapic.call_args[1]["metadata"] == (("x-goog-is-transaction", "true"),)
+
+
+@pytest.mark.parametrize("database_id", [None, "somedb"], indirect=True)
+def test_transaction_unstarted(database_id):
+    import mock
+
+    transaction = mock.Mock(id=None, _begin_later=False, spec=["id", "_begin_later"])
+    mock_datastore_api = mock.Mock()
+    mock_gapic = mock_datastore_api.run_aggregation_query
+    mock_gapic.return_value = _make_aggregation_query_response([])
+    client = _Client(
+        None,
+        datastore_api=mock_datastore_api,
+        database=database_id,
+        transaction=transaction,
+    )
+
+    query = _make_query(client)
+    aggregation_query = _make_aggregation_query(client=client, query=query)
+    aggregation_query.count()
+    list(aggregation_query.fetch())
+    assert mock_gapic.call_count == 1
+    request = mock_gapic.call_args[1]["request"]
+    read_options = request["read_options"]
+    assert not read_options.transaction
+    assert not read_options._pb.HasField("new_transaction")
+    assert mock_gapic.call_args[1]["metadata"] == (("x-goog-is-transaction", "false"),)
 
 
 class _Client(object):
@@ -862,6 +892,8 @@ class _Client(object):
         self.database = database
         self._datastore_api = datastore_api
         self.namespace = namespace
+        self._rpc_metadata = (("x-goog-is-transaction", "false"),)
+        self._transaction_rpc_metadata = (("x-goog-is-transaction", "true"),)
         self._transaction = transaction
 
     @property

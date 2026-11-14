@@ -61,6 +61,7 @@ def _request(
     database,
     retry=None,
     timeout=None,
+    metadata=None,
 ):
     """Make a request over the Http transport to the Cloud Datastore API.
 
@@ -104,6 +105,8 @@ def _request(
         "User-Agent": user_agent,
         connection_module.CLIENT_INFO_HEADER: user_agent,
     }
+    if metadata:
+        headers.update(metadata)
     _update_headers(headers, project, database)
     api_url = build_api_url(project, method, base_url)
 
@@ -143,6 +146,7 @@ def _rpc(
     database,
     retry=None,
     timeout=None,
+    metadata=None,
 ):
     """Make a protobuf RPC request.
 
@@ -185,7 +189,15 @@ def _rpc(
     req_data = request_pb._pb.SerializeToString()
     kwargs = _make_retry_timeout_kwargs(retry, timeout)
     response = _request(
-        http, project, method, req_data, base_url, client_info, database, **kwargs
+        http,
+        project,
+        method,
+        req_data,
+        base_url,
+        client_info,
+        database,
+        metadata=metadata,
+        **kwargs,
     )
     return response_pb_cls.deserialize(response)
 
@@ -226,7 +238,7 @@ class HTTPDatastoreAPI(object):
     def __init__(self, client):
         self.client = client
 
-    def lookup(self, request, retry=None, timeout=None):
+    def lookup(self, request, retry=None, timeout=None, metadata=None):
         """Perform a ``lookup`` request.
 
         :type request: :class:`_datastore_pb2.LookupRequest` or dict
@@ -257,9 +269,10 @@ class HTTPDatastoreAPI(object):
             database_id,
             retry=retry,
             timeout=timeout,
+            metadata=metadata,
         )
 
-    def run_query(self, request, retry=None, timeout=None):
+    def run_query(self, request, retry=None, timeout=None, metadata=None):
         """Perform a ``runQuery`` request.
 
         :type request: :class:`_datastore_pb2.BeginTransactionRequest` or dict
@@ -290,9 +303,10 @@ class HTTPDatastoreAPI(object):
             database_id,
             retry=retry,
             timeout=timeout,
+            metadata=metadata,
         )
 
-    def run_aggregation_query(self, request, retry=None, timeout=None):
+    def run_aggregation_query(self, request, retry=None, timeout=None, metadata=None):
         """Perform a ``runAggregationQuery`` request.
 
         :type request: :class:`_datastore_pb2.BeginTransactionRequest` or dict
@@ -325,9 +339,10 @@ class HTTPDatastoreAPI(object):
             database_id,
             retry=retry,
             timeout=timeout,
+            metadata=metadata,
         )
 
-    def begin_transaction(self, request, retry=None, timeout=None):
+    def begin_transaction(self, request, retry=None, timeout=None, metadata=None):
         """Perform a ``beginTransaction`` request.
 
         :type request: :class:`_datastore_pb2.BeginTransactionRequest` or dict
@@ -358,9 +373,10 @@ class HTTPDatastoreAPI(object):
             database_id,
             retry=retry,
             timeout=timeout,
+            metadata=metadata,
         )
 
-    def commit(self, request, retry=None, timeout=None):
+    def commit(self, request, retry=None, timeout=None, metadata=None):
         """Perform a ``commit`` request.
 
         :type request: :class:`_datastore_pb2.CommitRequest` or dict
@@ -391,9 +407,10 @@ class HTTPDatastoreAPI(object):
             database_id,
             retry=retry,
             timeout=timeout,
+            metadata=metadata,
         )
 
-    def rollback(self, request, retry=None, timeout=None):
+    def rollback(self, request, retry=None, timeout=None, metadata=None):
         """Perform a ``rollback`` request.
 
         :type request: :class:`_datastore_pb2.RollbackRequest` or dict
@@ -424,9 +441,10 @@ class HTTPDatastoreAPI(object):
             database_id,
             retry=retry,
             timeout=timeout,
+            metadata=metadata,
         )
 
-    def allocate_ids(self, request, retry=None, timeout=None):
+    def allocate_ids(self, request, retry=None, timeout=None, metadata=None):
         """Perform an ``allocateIds`` request.
 
         :type request: :class:`_datastore_pb2.AllocateIdsRequest` or dict
@@ -457,9 +475,10 @@ class HTTPDatastoreAPI(object):
             database_id,
             retry=retry,
             timeout=timeout,
+            metadata=metadata,
         )
 
-    def reserve_ids(self, request, retry=None, timeout=None):
+    def reserve_ids(self, request, retry=None, timeout=None, metadata=None):
         """Perform an ``reserveIds`` request.
 
         :type request: :class:`_datastore_pb2.ReserveIdsRequest` or dict
@@ -490,6 +509,7 @@ class HTTPDatastoreAPI(object):
             database_id,
             retry=retry,
             timeout=timeout,
+            metadata=metadata,
         )
 
 

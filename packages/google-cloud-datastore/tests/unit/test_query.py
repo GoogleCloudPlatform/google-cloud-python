@@ -972,6 +972,7 @@ def _next_page_helper(
     set_database_id_to_request(expected_request, database)
     ds_api.run_query.assert_called_once_with(
         request=expected_request,
+        metadata=(("x-goog-is-transaction", "true" if txn_id else "false"),),
         **kwargs,
     )
 
@@ -995,6 +996,87 @@ def test_iterator__next_page_w_timeout(database_id):
 def test_iterator__next_page_in_transaction(database_id):
     txn_id = b"1xo1md\xe2\x98\x83"
     _next_page_helper(txn_id, database=database_id)
+
+
+@pytest.mark.parametrize("database_id", [None, "somedb"])
+def test_iterator__next_page_in_transaction_begin_later(database_id):
+    from google.cloud.datastore.query import Query
+    from google.cloud.datastore_v1.types import TransactionOptions
+    from google.cloud.datastore_v1.types import datastore as datastore_pb2
+    from google.cloud.datastore_v1.types import entity as entity_pb2
+    from google.cloud.datastore_v1.types import query as query_pb2
+
+    more_enum = query_pb2.QueryResultBatch.MoreResultsType.NOT_FINISHED
+    result = _make_query_response([], b"", more_enum, 0)
+    project = "prujekt"
+    ds_api = _make_datastore_api(result)
+    options = TransactionOptions(read_only=TransactionOptions.ReadOnly())
+    transaction = mock.Mock(
+        id=None,
+        _begin_later=True,
+        _status=0,
+        _INITIAL=0,
+        _options=options,
+        spec=["id", "_begin_later", "_status", "_INITIAL", "_options"],
+    )
+    client = _Client(
+        project, database=database_id, datastore_api=ds_api, transaction=transaction
+    )
+    query = Query(client)
+    iterator = _make_iterator(query, client)
+    iterator._next_page()
+
+    partition_id = entity_pb2.PartitionId(project_id=project, database_id=database_id)
+    read_options = datastore_pb2.ReadOptions(new_transaction=options)
+    expected_request = {
+        "project_id": project,
+        "partition_id": partition_id,
+        "read_options": read_options,
+        "query": query_pb2.Query(),
+    }
+    set_database_id_to_request(expected_request, database_id)
+    ds_api.run_query.assert_called_once_with(
+        request=expected_request,
+        metadata=(("x-goog-is-transaction", "true"),),
+    )
+
+
+@pytest.mark.parametrize("database_id", [None, "somedb"])
+def test_iterator__next_page_in_unstarted_transaction(database_id):
+    from google.cloud.datastore.query import Query
+    from google.cloud.datastore_v1.types import datastore as datastore_pb2
+    from google.cloud.datastore_v1.types import entity as entity_pb2
+    from google.cloud.datastore_v1.types import query as query_pb2
+
+    more_enum = query_pb2.QueryResultBatch.MoreResultsType.NOT_FINISHED
+    result = _make_query_response([], b"", more_enum, 0)
+    project = "prujekt"
+    ds_api = _make_datastore_api(result)
+    transaction = mock.Mock(
+        id=None,
+        _begin_later=False,
+        spec=["id", "_begin_later"],
+    )
+    client = _Client(
+        project, database=database_id, datastore_api=ds_api, transaction=transaction
+    )
+    query = Query(client)
+    iterator = _make_iterator(query, client)
+    iterator._next_page()
+
+    partition_id = entity_pb2.PartitionId(project_id=project, database_id=database_id)
+    read_options = datastore_pb2.ReadOptions()
+    expected_request = {
+        "project_id": project,
+        "partition_id": partition_id,
+        "read_options": read_options,
+        "query": query_pb2.Query(),
+    }
+    set_database_id_to_request(expected_request, database_id)
+    ds_api.run_query.assert_called_once_with(
+        request=expected_request,
+        metadata=(("x-goog-is-transaction", "false"),),
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -1068,7 +1150,12 @@ def test_iterator__next_page_w_skipped_lt_offset(skipped_cursor_1, database_id):
             "query": query,
         }
         set_database_id_to_request(expected_request, database_id)
-        expected_calls.append(mock.call(request=expected_request))
+        expected_calls.append(
+            mock.call(
+                metadata=(("x-goog-is-transaction", "false"),),
+                request=expected_request,
+            )
+        )
 
     assert ds_api.run_query.call_args_list == expected_calls
 
@@ -1483,6 +1570,8 @@ class _Client(object):
         self._datastore_api = datastore_api
         self.database = database
         self.namespace = namespace
+        self._rpc_metadata = (("x-goog-is-transaction", "false"),)
+        self._transaction_rpc_metadata = (("x-goog-is-transaction", "true"),)
         self._transaction = transaction
 
     @property

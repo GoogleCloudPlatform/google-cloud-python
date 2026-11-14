@@ -79,7 +79,9 @@ def test_batch_current(database_id):
         "transaction": None,
     }
     set_database_id_to_request(expected_request, database_id)
-    commit_method.assert_called_with(request=expected_request)
+    commit_method.assert_called_with(
+        metadata=(("x-goog-is-transaction", "false"),), request=expected_request
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -334,7 +336,11 @@ def _batch_commit_helper(timeout=None, retry=None, database=None):
         "transaction": None,
     }
     set_database_id_to_request(expected_request, database)
-    commit_method.assert_called_with(request=expected_request, **kwargs)
+    commit_method.assert_called_with(
+        metadata=(("x-goog-is-transaction", "false"),),
+        request=expected_request,
+        **kwargs,
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -383,7 +389,9 @@ def test_batch_commit_w_partial_key_entity(database_id):
         "transaction": None,
     }
     set_database_id_to_request(expected_request, database_id)
-    ds_api.commit.assert_called_once_with(request=expected_request)
+    ds_api.commit.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "false"),)
+    )
 
     assert not entity.key.is_partial
     assert entity.key._id == new_id
@@ -419,7 +427,9 @@ def test_batch_as_context_mgr_wo_error(database_id):
         "transaction": None,
     }
     set_database_id_to_request(expected_request, database_id)
-    commit_method.assert_called_with(request=expected_request)
+    commit_method.assert_called_with(
+        metadata=(("x-goog-is-transaction", "false"),), request=expected_request
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -473,8 +483,12 @@ def test_batch_as_context_mgr_nested(database_id):
     set_database_id_to_request(expected_request_1, database_id)
     set_database_id_to_request(expected_request_2, database_id)
 
-    commit_method.assert_called_with(request=expected_request_1)
-    commit_method.assert_called_with(request=expected_request_2)
+    commit_method.assert_called_with(
+        metadata=(("x-goog-is-transaction", "false"),), request=expected_request_1
+    )
+    commit_method.assert_called_with(
+        metadata=(("x-goog-is-transaction", "false"),), request=expected_request_2
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -596,6 +610,8 @@ class _Client(object):
             datastore_api = _make_datastore_api()
         self._datastore_api = datastore_api
         self.namespace = namespace
+        self._rpc_metadata = (("x-goog-is-transaction", "false"),)
+        self._transaction_rpc_metadata = (("x-goog-is-transaction", "true"),)
         self.database = database
         self._batches = []
 

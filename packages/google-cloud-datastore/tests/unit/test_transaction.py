@@ -140,7 +140,9 @@ def test_transaction_current(database_id):
     begin_txn = ds_api.begin_transaction
     assert begin_txn.call_count == 2
     expected_request = _make_begin_request(project, database=database_id)
-    begin_txn.assert_called_with(request=expected_request)
+    begin_txn.assert_called_with(
+        metadata=(("x-goog-is-transaction", "true"),), request=expected_request
+    )
 
     commit_method = ds_api.commit
     assert commit_method.call_count == 2
@@ -153,7 +155,9 @@ def test_transaction_current(database_id):
     }
     set_database_id_to_request(expected_request, database_id)
 
-    commit_method.assert_called_with(request=expected_request)
+    commit_method.assert_called_with(
+        metadata=(("x-goog-is-transaction", "true"),), request=expected_request
+    )
 
     ds_api.rollback.assert_not_called()
 
@@ -172,7 +176,9 @@ def test_transaction_begin(database_id):
 
     expected_request = _make_begin_request(project, database=database_id)
 
-    ds_api.begin_transaction.assert_called_once_with(request=expected_request)
+    ds_api.begin_transaction.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "true"),)
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -190,7 +196,9 @@ def test_transaction_begin_w_readonly(database_id):
     expected_request = _make_begin_request(
         project, read_only=True, database=database_id
     )
-    ds_api.begin_transaction.assert_called_once_with(request=expected_request)
+    ds_api.begin_transaction.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "true"),)
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -211,7 +219,9 @@ def test_transaction_begin_w_read_time(database_id):
     expected_request = _make_begin_request(
         project, read_only=True, read_time=read_time, database=database_id
     )
-    ds_api.begin_transaction.assert_called_once_with(request=expected_request)
+    ds_api.begin_transaction.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "true"),)
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -232,6 +242,7 @@ def test_transaction_begin_w_retry_w_timeout(database_id):
     expected_request = _make_begin_request(project, database=database_id)
     ds_api.begin_transaction.assert_called_once_with(
         request=expected_request,
+        metadata=(("x-goog-is-transaction", "true"),),
         retry=retry,
         timeout=timeout,
     )
@@ -250,12 +261,16 @@ def test_transaction_begin_tombstoned(database_id):
     assert xact.id == id_
 
     expected_request = _make_begin_request(project, database=database_id)
-    ds_api.begin_transaction.assert_called_once_with(request=expected_request)
+    ds_api.begin_transaction.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "true"),)
+    )
 
     xact.rollback()
     expected_request = {"project_id": project, "transaction": id_}
     set_database_id_to_request(expected_request, database_id)
-    client._datastore_api.rollback.assert_called_once_with(request=expected_request)
+    client._datastore_api.rollback.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "true"),)
+    )
     assert xact.id is None
 
     with pytest.raises(ValueError):
@@ -277,7 +292,9 @@ def test_transaction_begin_w_begin_transaction_failure(database_id):
     assert xact.id is None
 
     expected_request = _make_begin_request(project, database=database_id)
-    ds_api.begin_transaction.assert_called_once_with(request=expected_request)
+    ds_api.begin_transaction.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "true"),)
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -294,7 +311,9 @@ def test_transaction_rollback(database_id):
     assert xact.id is None
     expected_request = {"project_id": project, "transaction": id_}
     set_database_id_to_request(expected_request, database_id)
-    ds_api.rollback.assert_called_once_with(request=expected_request)
+    ds_api.rollback.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "true"),)
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -317,6 +336,7 @@ def test_transaction_rollback_w_retry_w_timeout(database_id):
 
     ds_api.rollback.assert_called_once_with(
         request=expected_request,
+        metadata=(("x-goog-is-transaction", "true"),),
         retry=retry,
         timeout=timeout,
     )
@@ -343,7 +363,9 @@ def test_transaction_commit_no_partial_keys(database_id):
         "transaction": id_,
     }
     set_database_id_to_request(expected_request, database_id)
-    ds_api.commit.assert_called_once_with(request=expected_request)
+    ds_api.commit.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "true"),)
+    )
     assert xact.id is None
 
 
@@ -378,6 +400,7 @@ def test_transaction_commit_w_partial_keys_w_retry_w_timeout(database_id):
 
     ds_api.commit.assert_called_once_with(
         request=expected_request,
+        metadata=(("x-goog-is-transaction", "true"),),
         retry=retry,
         timeout=timeout,
     )
@@ -403,7 +426,9 @@ def test_transaction_context_manager_no_raise(database_id):
     assert xact.id is None
 
     expected_request = _make_begin_request(project, database=database_id)
-    ds_api.begin_transaction.assert_called_once_with(request=expected_request)
+    ds_api.begin_transaction.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "true"),)
+    )
 
     mode = datastore_pb2.CommitRequest.Mode.TRANSACTIONAL
     expected_request = {
@@ -416,6 +441,7 @@ def test_transaction_context_manager_no_raise(database_id):
 
     client._datastore_api.commit.assert_called_once_with(
         request=expected_request,
+        metadata=(("x-goog-is-transaction", "true"),),
     )
 
 
@@ -441,12 +467,16 @@ def test_transaction_context_manager_w_raise(database_id):
 
     expected_request = _make_begin_request(project, database=database_id)
     set_database_id_to_request(expected_request, database_id)
-    ds_api.begin_transaction.assert_called_once_with(request=expected_request)
+    ds_api.begin_transaction.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "true"),)
+    )
 
     client._datastore_api.commit.assert_not_called()
     expected_request = {"project_id": project, "transaction": id_}
     set_database_id_to_request(expected_request, database_id)
-    client._datastore_api.rollback.assert_called_once_with(request=expected_request)
+    client._datastore_api.rollback.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "true"),)
+    )
 
 
 @pytest.mark.parametrize("with_exception", [False, True])
@@ -636,6 +666,8 @@ class _Client(object):
             datastore_api = _make_datastore_api()
         self._datastore_api = datastore_api
         self.namespace = namespace
+        self._rpc_metadata = (("x-goog-is-transaction", "false"),)
+        self._transaction_rpc_metadata = (("x-goog-is-transaction", "true"),)
         self.database = database
         self._batches = []
 

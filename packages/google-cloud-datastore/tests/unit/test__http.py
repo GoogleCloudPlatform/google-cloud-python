@@ -99,7 +99,7 @@ def test__make_request_pb_w_instance():
     assert foo is passed
 
 
-def _request_helper(retry=None, timeout=None, database=None):
+def _request_helper(retry=None, timeout=None, database=None, metadata=None):
     from google.cloud import _http as connection_module
     from google.cloud.datastore._http import _request, _update_headers
 
@@ -116,7 +116,15 @@ def _request_helper(retry=None, timeout=None, database=None):
     kwargs = _retry_timeout_kw(retry, timeout, http)
 
     response = _request(
-        http, project, method, data, base_url, client_info, database=database, **kwargs
+        http,
+        project,
+        method,
+        data,
+        base_url,
+        client_info,
+        database=database,
+        metadata=metadata,
+        **kwargs,
     )
     assert response == response_data
 
@@ -128,6 +136,8 @@ def _request_helper(retry=None, timeout=None, database=None):
         connection_module.CLIENT_INFO_HEADER: user_agent,
         "x-goog-request-params": f"project_id={project}",
     }
+    if metadata:
+        expected_headers.update(metadata)
     _update_headers(expected_headers, project, database_id=database)
     if retry is not None:
         retry.assert_called_once_with(http.request)
@@ -141,6 +151,17 @@ def _request_helper(retry=None, timeout=None, database=None):
 @pytest.mark.parametrize("database_id", [None, "somedb"])
 def test__request_defaults(database_id):
     _request_helper(database=database_id)
+
+
+@pytest.mark.parametrize(
+    "metadata",
+    [
+        (("x-goog-is-transaction", "true"),),
+        {"x-goog-is-transaction": "false"},
+    ],
+)
+def test__request_w_metadata(metadata):
+    _request_helper(metadata=metadata)
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -212,6 +233,7 @@ def _rpc_helper(retry=None, timeout=None, database=None):
             request_pb,
             datastore_pb2.BeginTransactionResponse,
             database,
+            metadata=None,
             **kwargs,
         )
 
@@ -225,6 +247,7 @@ def _rpc_helper(retry=None, timeout=None, database=None):
         base_url,
         client_info,
         database,
+        metadata=None,
         **kwargs,
     )
 

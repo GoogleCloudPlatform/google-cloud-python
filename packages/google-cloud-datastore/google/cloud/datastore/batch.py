@@ -300,8 +300,10 @@ class Batch(object):
         """
         if self._id is None:
             mode = _datastore_pb2.CommitRequest.Mode.NON_TRANSACTIONAL
+            metadata = self._client._rpc_metadata
         else:
             mode = _datastore_pb2.CommitRequest.Mode.TRANSACTIONAL
+            metadata = self._client._transaction_rpc_metadata
 
         kwargs = {}
 
@@ -322,6 +324,7 @@ class Batch(object):
 
         commit_response_pb = self._client._datastore_api.commit(
             request=request,
+            metadata=metadata,
             **kwargs,
         )
 

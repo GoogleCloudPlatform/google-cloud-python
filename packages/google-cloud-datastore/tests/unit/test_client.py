@@ -452,7 +452,9 @@ def test_client_get_multi_miss(database_id):
         "read_options": read_options,
     }
     set_database_id_to_request(expected_request, database_id)
-    ds_api.lookup.assert_called_once_with(request=expected_request)
+    ds_api.lookup.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "false"),)
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -493,7 +495,9 @@ def test_client_get_multi_miss_w_missing(database_id):
         "read_options": read_options,
     }
     set_database_id_to_request(expected_request, database_id)
-    ds_api.lookup.assert_called_once_with(request=expected_request)
+    ds_api.lookup.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "false"),)
+    )
 
 
 def test_client_get_multi_w_missing_non_empty():
@@ -547,7 +551,9 @@ def test_client_get_multi_miss_w_deferred(database_id):
     }
     set_database_id_to_request(expected_request, database_id)
 
-    ds_api.lookup.assert_called_once_with(request=expected_request)
+    ds_api.lookup.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "false"),)
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -603,6 +609,7 @@ def test_client_get_multi_w_deferred_from_backend_but_not_passed(database_id):
     }
     set_database_id_to_request(expected_request_1, database_id)
     ds_api.lookup.assert_any_call(
+        metadata=(("x-goog-is-transaction", "false"),),
         request=expected_request_1,
     )
 
@@ -613,6 +620,7 @@ def test_client_get_multi_w_deferred_from_backend_but_not_passed(database_id):
     }
     set_database_id_to_request(expected_request_2, database_id)
     ds_api.lookup.assert_any_call(
+        metadata=(("x-goog-is-transaction", "false"),),
         request=expected_request_2,
     )
 
@@ -652,6 +660,7 @@ def test_client_get_multi_hit_w_retry_w_timeout(database_id):
     read_options = datastore_pb2.ReadOptions()
 
     ds_api.lookup.assert_called_once_with(
+        metadata=(("x-goog-is-transaction", "false"),),
         request={
             "project_id": PROJECT,
             "database_id": "",
@@ -703,7 +712,9 @@ def test_client_get_multi_hit_w_transaction(database_id):
         "read_options": read_options,
     }
     set_database_id_to_request(expected_request, database_id)
-    ds_api.lookup.assert_called_once_with(request=expected_request)
+    ds_api.lookup.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "true"),)
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -749,7 +760,42 @@ def test_client_get_multi_hit_w_transaction_begin_later(database_id):
         "read_options": expected_read_options,
     }
     set_database_id_to_request(expected_request, database_id)
-    ds_api.lookup.assert_called_once_with(request=expected_request)
+    ds_api.lookup.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "true"),)
+    )
+
+
+@pytest.mark.parametrize("database_id", [None, "somedb"])
+def test_client_get_multi_w_unstarted_transaction(database_id):
+    from google.cloud.datastore.key import Key
+    from google.cloud.datastore_v1.types import datastore as datastore_pb2
+
+    kind = "Kind"
+    id_ = 1234
+    entity_pb = _make_entity_pb(PROJECT, kind, id_, "foo", "Foo", database=database_id)
+
+    creds = _make_credentials()
+    client = _make_client(credentials=creds, database=database_id)
+    lookup_response = _make_lookup_response(results=[entity_pb])
+    ds_api = _make_datastore_api(lookup_response=lookup_response)
+    client._datastore_api_internal = ds_api
+
+    key = Key(kind, id_, project=PROJECT, database=database_id)
+    txn = client.transaction(begin_later=False)
+    assert txn._id is None
+    client.get_multi([key], transaction=txn)
+
+    expected_read_options = datastore_pb2.ReadOptions()
+    expected_request = {
+        "project_id": PROJECT,
+        "keys": [key.to_protobuf()],
+        "read_options": expected_read_options,
+    }
+    set_database_id_to_request(expected_request, database_id)
+    ds_api.lookup.assert_called_once_with(
+        request=expected_request,
+        metadata=(("x-goog-is-transaction", "false"),),
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -795,7 +841,9 @@ def test_client_get_multi_hit_w_read_time(database_id):
         "read_options": read_options,
     }
     set_database_id_to_request(expected_request, database_id)
-    ds_api.lookup.assert_called_once_with(request=expected_request)
+    ds_api.lookup.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "false"),)
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -835,7 +883,9 @@ def test_client_get_multi_hit_multiple_keys_same_project(database_id):
         "read_options": read_options,
     }
     set_database_id_to_request(expected_request, database_id)
-    ds_api.lookup.assert_called_once_with(request=expected_request)
+    ds_api.lookup.assert_called_once_with(
+        request=expected_request, metadata=(("x-goog-is-transaction", "false"),)
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -958,6 +1008,7 @@ def test_client_put_multi_no_batch_w_partial_key_w_retry_w_timeout(database_id):
     }
     set_database_id_to_request(expected_request, database_id)
     ds_api.commit.assert_called_once_with(
+        metadata=(("x-goog-is-transaction", "false"),),
         request=expected_request,
         retry=retry,
         timeout=timeout,
@@ -1054,6 +1105,7 @@ def test_client_delete_multi_no_batch_w_retry_w_timeout(database_id):
     }
     set_database_id_to_request(expected_request, database_id)
     ds_api.commit.assert_called_once_with(
+        metadata=(("x-goog-is-transaction", "false"),),
         request=expected_request,
         retry=retry,
         timeout=timeout,
@@ -1149,7 +1201,9 @@ def test_client_allocate_ids_w_partial_key(database_id):
     expected_keys = [incomplete_key.to_protobuf()] * num_ids
     expected_request = {"project_id": PROJECT, "keys": expected_keys}
     set_database_id_to_request(expected_request, database_id)
-    alloc_ids.assert_called_once_with(request=expected_request)
+    alloc_ids.assert_called_once_with(
+        metadata=(("x-goog-is-transaction", "false"),), request=expected_request
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -1176,6 +1230,7 @@ def test_client_allocate_ids_w_partial_key_w_retry_w_timeout(database_id):
     expected_request = {"project_id": PROJECT, "keys": expected_keys}
     set_database_id_to_request(expected_request, database_id)
     alloc_ids.assert_called_once_with(
+        metadata=(("x-goog-is-transaction", "false"),),
         request=expected_request,
         retry=retry,
         timeout=timeout,
@@ -1201,7 +1256,9 @@ def test_client_reserve_ids_sequential_w_completed_key(database_id):
     expected_keys = [key.to_protobuf() for key in reserved_keys]
     expected_request = {"project_id": PROJECT, "keys": expected_keys}
     set_database_id_to_request(expected_request, database_id)
-    reserve_ids.assert_called_once_with(request=expected_request)
+    reserve_ids.assert_called_once_with(
+        metadata=(("x-goog-is-transaction", "false"),), request=expected_request
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -1227,6 +1284,7 @@ def test_client_reserve_ids_sequential_w_completed_key_w_retry_w_timeout(databas
     expected_request = {"project_id": PROJECT, "keys": expected_keys}
     set_database_id_to_request(expected_request, database_id)
     reserve_ids.assert_called_once_with(
+        metadata=(("x-goog-is-transaction", "false"),),
         request=expected_request,
         retry=retry,
         timeout=timeout,
@@ -1253,7 +1311,9 @@ def test_client_reserve_ids_sequential_w_completed_key_w_ancestor(database_id):
     expected_keys = [key.to_protobuf() for key in reserved_keys]
     expected_request = {"project_id": PROJECT, "keys": expected_keys}
     set_database_id_to_request(expected_request, database_id)
-    reserve_ids.assert_called_once_with(request=expected_request)
+    reserve_ids.assert_called_once_with(
+        metadata=(("x-goog-is-transaction", "false"),), request=expected_request
+    )
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
@@ -1359,7 +1419,9 @@ def test_client_reserve_ids_w_completed_key(database_id):
     expected_keys = [key.to_protobuf() for key in reserved_keys]
     expected_request = {"project_id": PROJECT, "keys": expected_keys}
     set_database_id_to_request(expected_request, database_id)
-    reserve_ids.assert_called_once_with(request=expected_request)
+    reserve_ids.assert_called_once_with(
+        metadata=(("x-goog-is-transaction", "false"),), request=expected_request
+    )
     _assert_reserve_ids_warning(warned)
 
 
@@ -1390,6 +1452,7 @@ def test_client_reserve_ids_w_completed_key_w_retry_w_timeout(database_id):
     expected_request = {"project_id": PROJECT, "keys": expected_keys}
     set_database_id_to_request(expected_request, database_id)
     reserve_ids.assert_called_once_with(
+        metadata=(("x-goog-is-transaction", "false"),),
         request=expected_request,
         retry=retry,
         timeout=timeout,
@@ -1421,7 +1484,9 @@ def test_client_reserve_ids_w_completed_key_w_ancestor(database_id):
     expected_request = {"project_id": PROJECT, "keys": expected_keys}
     set_database_id_to_request(expected_request, database_id)
 
-    reserve_ids.assert_called_once_with(request=expected_request)
+    reserve_ids.assert_called_once_with(
+        metadata=(("x-goog-is-transaction", "false"),), request=expected_request
+    )
 
     _assert_reserve_ids_warning(warned)
 
@@ -1752,7 +1817,9 @@ def test_client_reserve_ids_multi(database_id):
     expected_keys = [key1.to_protobuf(), key2.to_protobuf()]
     expected_request = {"project_id": PROJECT, "keys": expected_keys}
     set_database_id_to_request(expected_request, database_id)
-    reserve_ids.assert_called_once_with(request=expected_request)
+    reserve_ids.assert_called_once_with(
+        metadata=(("x-goog-is-transaction", "false"),), request=expected_request
+    )
 
 
 class _NoCommitBatch(object):

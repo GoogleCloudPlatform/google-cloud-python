@@ -243,7 +243,9 @@ class Transaction(Batch):
 
         try:
             response_pb = self._client._datastore_api.begin_transaction(
-                request=request, **kwargs
+                request=request,
+                metadata=self._client._transaction_rpc_metadata,
+                **kwargs,
             )
             self._id = response_pb.transaction
         except:  # noqa: E722 do not use bare except, specify exception instead
@@ -299,7 +301,11 @@ class Transaction(Batch):
             }
 
             set_database_id_to_request(request, self._client.database)
-            self._client._datastore_api.rollback(request=request, **kwargs)
+            self._client._datastore_api.rollback(
+                request=request,
+                metadata=self._client._transaction_rpc_metadata,
+                **kwargs,
+            )
         finally:
             super(Transaction, self).rollback()
             # Clear our own ID in case this gets accidentally reused.

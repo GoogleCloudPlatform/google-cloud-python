@@ -115,6 +115,10 @@ def _make_retry_timeout_kwargs(retry, timeout):
     return kwargs
 
 
+_RPC_METADATA = (("x-goog-is-transaction", "false"),)
+_TRANSACTION_RPC_METADATA = (("x-goog-is-transaction", "true"),)
+
+
 def _extended_lookup(
     datastore_api,
     project,
@@ -127,6 +131,7 @@ def _extended_lookup(
     timeout=None,
     read_time=None,
     database=None,
+    metadata=None,
 ):
     """Repeat lookup until all keys found (unless stop requested).
 
@@ -206,6 +211,13 @@ def _extended_lookup(
     read_options = helpers.get_read_options(
         eventual, transaction_id, read_time, new_transaction_options
     )
+    if metadata is None:
+        is_transaction = (
+            transaction_id is not None or new_transaction_options is not None
+        )
+        metadata = (
+            _TRANSACTION_RPC_METADATA if is_transaction else _RPC_METADATA
+        )
     loop_num = 0
     while loop_num < _MAX_LOOPS:  # loop against possible deferred.
         loop_num += 1
@@ -217,6 +229,7 @@ def _extended_lookup(
         helpers.set_database_id_to_request(request, database)
         lookup_response = datastore_api.lookup(
             request=request,
+            metadata=metadata,
             **kwargs,
         )
 
@@ -351,6 +364,9 @@ class Client(ClientWithProject):
                 if client_options.api_endpoint:
                     api_endpoint = client_options.api_endpoint
             self._base_url = api_endpoint
+
+        self._rpc_metadata = _RPC_METADATA
+        self._transaction_rpc_metadata = _TRANSACTION_RPC_METADATA
 
     @staticmethod
     def _determine_default(project):
@@ -775,6 +791,7 @@ class Client(ClientWithProject):
         helpers.set_database_id_to_request(request, self.database)
         response_pb = self._datastore_api.allocate_ids(
             request=request,
+            metadata=self._rpc_metadata,
             **kwargs,
         )
         allocated_ids = [
@@ -1020,6 +1037,7 @@ class Client(ClientWithProject):
         helpers.set_database_id_to_request(request, self.database)
         self._datastore_api.reserve_ids(
             request=request,
+            metadata=self._rpc_metadata,
             **kwargs,
         )
         return None
@@ -1074,6 +1092,7 @@ class Client(ClientWithProject):
 
         self._datastore_api.reserve_ids(
             request=request,
+            metadata=self._rpc_metadata,
             **kwargs,
         )
 
