@@ -47,7 +47,7 @@ async def table_id() -> AsyncGenerator[str, None]:
         PROJECT,
         BIGTABLE_INSTANCE,
         TABLE_ID,
-        {"cf": None},
+        {"stats_summary": None},
         verbose=False,
     ):
         yield TABLE_ID
@@ -58,10 +58,11 @@ async def authorized_view_id(table_id: str) -> AsyncGenerator[str, None]:
     async with bigtable_admin_v2.BigtableTableAdminAsyncClient() as admin_client:
         table_path = admin_client.table_path(PROJECT, BIGTABLE_INSTANCE, table_id)
         subset_view = bigtable_admin_v2.AuthorizedView.SubsetView(
-            row_prefixes=[b""],
+            row_prefixes=[b"phone#"],
             family_subsets={
-                "cf": bigtable_admin_v2.AuthorizedView.FamilySubsets(
-                    qualifier_prefixes=[b""]
+                "stats_summary": bigtable_admin_v2.AuthorizedView.FamilySubsets(
+                    qualifiers=[b"os_build"],
+                    qualifier_prefixes=[b"connected_"],
                 )
             },
         )
@@ -74,12 +75,13 @@ async def authorized_view_id(table_id: str) -> AsyncGenerator[str, None]:
 
     async with BigtableDataClientAsync(project=PROJECT) as client:
         async with client.get_table(BIGTABLE_INSTANCE, table_id) as table:
-            for i, name in enumerate(["World", "Bigtable", "Python"]):
+            for row_key in [b"phone#4c410523#20190501", b"phone#4c410523#20190502"]:
                 await table.mutate_row(
-                    f"rowKey{i}",
+                    row_key,
                     [
-                        SetCell("cf", "name", name),
-                        SetCell("cf", "greeting", f"Hello {name}!"),
+                        SetCell("stats_summary", b"connected_cell", 1),
+                        SetCell("stats_summary", b"connected_wifi", 1),
+                        SetCell("stats_summary", b"os_build", b"PQ2A.190405.003"),
                     ],
                 )
 
@@ -108,22 +110,14 @@ async def test_create_authorized_view(capsys, table_id):
 
 
 @pytest.mark.asyncio
-async def test_update_authorized_view(capsys, table_id, authorized_view_id):
-    await authorized_views_snippets_async.update_authorized_view(
-        PROJECT, BIGTABLE_INSTANCE, table_id, authorized_view_id
-    )
-    out, _ = capsys.readouterr()
-    assert f"authorizedViews/{authorized_view_id} updated successfully" in out
-
-
-@pytest.mark.asyncio
 async def test_get_authorized_view(capsys, table_id, authorized_view_id):
     await authorized_views_snippets_async.get_authorized_view(
         PROJECT, BIGTABLE_INSTANCE, table_id, authorized_view_id
     )
     out, _ = capsys.readouterr()
-    assert "Row Prefix: " in out
-    assert "Column Family: cf, Qualifier Prefix: " in out
+    assert "Row Prefix: phone#" in out
+    assert "Column Family: stats_summary, Qualifier Prefix: connected_" in out
+    assert "Column Family: stats_summary, Qualifier: os_build" in out
 
 
 @pytest.mark.asyncio
@@ -136,11 +130,77 @@ async def test_list_authorized_views(capsys, table_id, authorized_view_id):
 
 
 @pytest.mark.asyncio
+async def test_write_to_authorized_view(capsys, table_id, authorized_view_id):
+    await authorized_views_snippets_async.write_to_authorized_view(
+        PROJECT, BIGTABLE_INSTANCE, table_id, authorized_view_id
+    )
+    out, _ = capsys.readouterr()
+    assert "Successfully wrote row phone#4c410523#20190501 to authorized view" in out
+
+
+@pytest.mark.asyncio
+async def test_read_single_row_from_authorized_view(
+    capsys, table_id, authorized_view_id
+):
+    await authorized_views_snippets_async.read_single_row_from_authorized_view(
+        PROJECT, BIGTABLE_INSTANCE, table_id, authorized_view_id
+    )
+    out, _ = capsys.readouterr()
+    assert "phone#4c410523#20190501" in out
+    assert "PQ2A.190405.003" in out
+
+
+@pytest.mark.asyncio
+async def test_read_rows_with_filter_from_authorized_view(
+    capsys, table_id, authorized_view_id
+):
+    await authorized_views_snippets_async.read_rows_with_filter_from_authorized_view(
+        PROJECT, BIGTABLE_INSTANCE, table_id, authorized_view_id
+    )
+    out, _ = capsys.readouterr()
+    assert "phone#4c410523#20190501" in out
+    assert "phone#4c410523#20190502" in out
+
+
+@pytest.mark.asyncio
+async def test_update_authorized_view(capsys, table_id):
+    view_id = f"view-update-{str(uuid.uuid4())[:12]}"
+    async with bigtable_admin_v2.BigtableTableAdminAsyncClient() as admin_client:
+        table_path = admin_client.table_path(PROJECT, BIGTABLE_INSTANCE, table_id)
+        subset_view = bigtable_admin_v2.AuthorizedView.SubsetView(
+            row_prefixes=[b"phone#"]
+        )
+        operation = await admin_client.create_authorized_view(
+            parent=table_path,
+            authorized_view_id=view_id,
+            authorized_view=bigtable_admin_v2.AuthorizedView(subset_view=subset_view),
+        )
+        await operation.result()
+        try:
+            await authorized_views_snippets_async.update_authorized_view(
+                PROJECT, BIGTABLE_INSTANCE, table_id, view_id
+            )
+            out, _ = capsys.readouterr()
+            assert f"authorizedViews/{view_id} updated successfully" in out
+        finally:
+            try:
+                await admin_client.delete_authorized_view(
+                    name=admin_client.authorized_view_path(
+                        PROJECT, BIGTABLE_INSTANCE, table_id, view_id
+                    )
+                )
+            except NotFound:
+                pass
+
+
+@pytest.mark.asyncio
 async def test_delete_authorized_view(capsys, table_id):
     view_id = f"view-delete-{str(uuid.uuid4())[:12]}"
     async with bigtable_admin_v2.BigtableTableAdminAsyncClient() as admin_client:
         table_path = admin_client.table_path(PROJECT, BIGTABLE_INSTANCE, table_id)
-        subset_view = bigtable_admin_v2.AuthorizedView.SubsetView(row_prefixes=[b""])
+        subset_view = bigtable_admin_v2.AuthorizedView.SubsetView(
+            row_prefixes=[b"phone#"]
+        )
         operation = await admin_client.create_authorized_view(
             parent=table_path,
             authorized_view_id=view_id,
@@ -153,38 +213,3 @@ async def test_delete_authorized_view(capsys, table_id):
     )
     out, _ = capsys.readouterr()
     assert f"AuthorizedView: {view_id} deleted successfully" in out
-
-
-@pytest.mark.asyncio
-async def test_write_to_authorized_view(capsys, table_id, authorized_view_id):
-    await authorized_views_snippets_async.write_to_authorized_view(
-        PROJECT, BIGTABLE_INSTANCE, table_id, authorized_view_id
-    )
-    out, _ = capsys.readouterr()
-    assert "Hello World!" in out
-    assert "Hello Bigtable!" in out
-    assert "Hello Python!" in out
-
-
-@pytest.mark.asyncio
-async def test_read_single_row_from_authorized_view(
-    capsys, table_id, authorized_view_id
-):
-    await authorized_views_snippets_async.read_single_row_from_authorized_view(
-        PROJECT, BIGTABLE_INSTANCE, table_id, authorized_view_id
-    )
-    out, _ = capsys.readouterr()
-    assert "Row: rowKey0" in out
-    assert "Family: cf    Qualifier: greeting    Value: Hello World!" in out
-
-
-@pytest.mark.asyncio
-async def test_read_rows_with_filter_from_authorized_view(
-    capsys, table_id, authorized_view_id
-):
-    await authorized_views_snippets_async.read_rows_with_filter_from_authorized_view(
-        PROJECT, BIGTABLE_INSTANCE, table_id, authorized_view_id
-    )
-    out, _ = capsys.readouterr()
-    assert "Row Key: rowKey0" in out
-    assert "Row Key: rowKey2" in out

@@ -22,14 +22,19 @@ async def create_authorized_view(project_id, instance_id, table_id, authorized_v
     async with bigtable_admin_v2.BigtableTableAdminAsyncClient() as admin_client:
         table_path = admin_client.table_path(project_id, instance_id, table_id)
 
-        # Permit every row, but only the "name" column of the column family.
+        column_family_id = "stats_summary"
+        # Include only rows with the "phone#" prefix. Use b"" to include all rows.
+        row_prefixes = [b"phone#"]
+
+        # Include only "os_build" and columns starting with "connected_".
+        family_subset = bigtable_admin_v2.AuthorizedView.FamilySubsets(
+            qualifiers=[b"os_build"],
+            qualifier_prefixes=[b"connected_"],
+        )
+
         subset_view = bigtable_admin_v2.AuthorizedView.SubsetView(
-            row_prefixes=[b""],
-            family_subsets={
-                "cf": bigtable_admin_v2.AuthorizedView.FamilySubsets(
-                    qualifier_prefixes=[b"name"]
-                )
-            },
+            row_prefixes=row_prefixes,
+            family_subsets={column_family_id: family_subset},
         )
         operation = await admin_client.create_authorized_view(
             parent=table_path,
@@ -54,20 +59,25 @@ async def update_authorized_view(project_id, instance_id, table_id, authorized_v
             project_id, instance_id, table_id, authorized_view_id
         )
 
-        # Update to an authorized view permitting everything in the column family.
-        subset_view = bigtable_admin_v2.AuthorizedView.SubsetView(
-            row_prefixes=[b""],
-            family_subsets={
-                "cf": bigtable_admin_v2.AuthorizedView.FamilySubsets(
-                    qualifier_prefixes=[b""]
-                )
-            },
+        column_family_id = "stats_summary"
+        row_prefixes = [b"phone#", b"tablet#"]
+        # An empty prefix includes all columns in the family.
+        family_subset = bigtable_admin_v2.AuthorizedView.FamilySubsets(
+            qualifier_prefixes=[b""],
         )
+        subset_view = bigtable_admin_v2.AuthorizedView.SubsetView(
+            row_prefixes=row_prefixes,
+            family_subsets={column_family_id: family_subset},
+        )
+
+        # Only update the subset_view field.
+        update_mask = field_mask_pb2.FieldMask(paths=["subset_view"])
+
         operation = await admin_client.update_authorized_view(
             authorized_view=bigtable_admin_v2.AuthorizedView(
                 name=authorized_view_path, subset_view=subset_view
             ),
-            update_mask=field_mask_pb2.FieldMask(paths=["subset_view"]),
+            update_mask=update_mask,
         )
         authorized_view = await operation.result()
         print(f"AuthorizedView: {authorized_view.name} updated successfully")
@@ -125,6 +135,7 @@ async def list_authorized_views(project_id, instance_id, table_id):
             async for authorized_view in await admin_client.list_authorized_views(
                 parent=table_path
             ):
+                # Extract the authorized view ID from the full resource name.
                 authorized_view_id = admin_client.parse_authorized_view_path(
                     authorized_view.name
                 )["authorized_view"]
@@ -172,23 +183,22 @@ async def write_to_authorized_view(
         async with client.get_authorized_view(
             instance_id, table_id, authorized_view_id
         ) as authorized_view:
+            column_family_id = "stats_summary"
+            # The row key and columns must be within the authorized view.
+            row_key = b"phone#4c410523#20190501"
+            mutations = [
+                SetCell(column_family_id, b"connected_cell", 1),
+                SetCell(column_family_id, b"connected_wifi", 1),
+                SetCell(column_family_id, b"os_build", b"PQ2A.190405.003"),
+            ]
             try:
-                names = ["World", "Bigtable", "Python"]
-                for i, name in enumerate(names):
-                    greeting = f"Hello {name}!"
-                    await authorized_view.mutate_row(
-                        f"rowKey{i}",
-                        [
-                            SetCell("cf", "name", name),
-                            SetCell("cf", "greeting", greeting),
-                        ],
-                    )
-                    print(greeting)
+                await authorized_view.mutate_row(row_key, mutations)
+                print(f"Successfully wrote row {row_key.decode()} to authorized view")
             except NotFound as e:
-                print(f"Failed to write to non-existent authorized view: {e.message}")
+                print(f"Authorized view does not exist: {e.message}")
             except PermissionDenied as e:
                 print(
-                    "Failed to apply mutations outside of the authorized view: "
+                    "Mutation targets rows or columns outside the authorized view: "
                     f"{e.message}"
                 )
 
@@ -200,7 +210,7 @@ async def write_to_authorized_view(
 async def read_single_row_from_authorized_view(
     project_id, instance_id, table_id, authorized_view_id
 ):
-    from google.api_core.exceptions import NotFound
+    from google.api_core.exceptions import NotFound, PermissionDenied
 
     from google.cloud.bigtable.data import BigtableDataClientAsync
 
@@ -208,19 +218,18 @@ async def read_single_row_from_authorized_view(
         async with client.get_authorized_view(
             instance_id, table_id, authorized_view_id
         ) as authorized_view:
+            row_key = b"phone#4c410523#20190501"
             try:
-                row = await authorized_view.read_row("rowKey0")
-                if row:
-                    print(f"Row: {row.row_key.decode()}")
-                    for cell in row.cells:
-                        print(
-                            f"Family: {cell.family}    "
-                            f"Qualifier: {cell.qualifier.decode()}    "
-                            f"Value: {cell.value.decode()}"
-                        )
+                row = await authorized_view.read_row(row_key)
+                if row is not None:
+                    print(f"Row key: {row.row_key.decode()}")
+                    print(row)
             except NotFound as e:
+                print(f"Authorized view does not exist: {e.message}")
+            except PermissionDenied as e:
                 print(
-                    f"Failed to read from a non-existent authorized view: {e.message}"
+                    "Row key is outside the authorized view or access was denied: "
+                    f"{e.message}"
                 )
 
 
@@ -231,11 +240,12 @@ async def read_single_row_from_authorized_view(
 async def read_rows_with_filter_from_authorized_view(
     project_id, instance_id, table_id, authorized_view_id
 ):
-    from google.api_core.exceptions import NotFound
+    from google.api_core.exceptions import NotFound, PermissionDenied
 
     from google.cloud.bigtable.data import (
         BigtableDataClientAsync,
         ReadRowsQuery,
+        RowRange,
         row_filters,
     )
 
@@ -243,20 +253,28 @@ async def read_rows_with_filter_from_authorized_view(
         async with client.get_authorized_view(
             instance_id, table_id, authorized_view_id
         ) as authorized_view:
+            # The row range must be within the authorized view.
+            row_range = RowRange(
+                start_key=b"phone#4c410523#20190501",
+                end_key=b"phone#4c410523#20190601",
+            )
+
+            # Return only the most recent cell version for each column.
+            max_cells_per_column = 1
+            row_filter = row_filters.CellsColumnLimitFilter(max_cells_per_column)
+            query = ReadRowsQuery(row_ranges=[row_range], row_filter=row_filter)
+
             try:
-                # A filter that matches only the most recent cell within each column.
-                row_filter = row_filters.CellsColumnLimitFilter(1)
-                query = ReadRowsQuery(row_filter=row_filter)
                 async for row in await authorized_view.read_rows_stream(query):
-                    print(f"Row Key: {row.row_key.decode()}")
-                    for cell in row.cells:
-                        print(
-                            f"Family: {cell.family}    "
-                            f"Qualifier: {cell.qualifier.decode()}    "
-                            f"Value: {cell.value.decode()}"
-                        )
+                    print(f"Row key: {row.row_key.decode()}")
+                    print(row)
             except NotFound as e:
-                print(f"Failed to read a non-existent authorized view: {e.message}")
+                print(f"Authorized view does not exist: {e.message}")
+            except PermissionDenied as e:
+                print(
+                    "Query targets rows or columns outside the authorized view: "
+                    f"{e.message}"
+                )
 
 
 # [END bigtable_async_authorized_view_scan_with_filter]
