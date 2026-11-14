@@ -197,7 +197,12 @@ class GbqConnector:
         }
         config = kwargs.get("configuration")
         if config is not None:
+            # Merge the "query" section instead of replacing it, so a
+            # configuration like {"query": {"useQueryCache": False}} keeps the
+            # dialect. An explicit useLegacySql in configuration still wins.
+            query_config = {**job_config_dict["query"], **config.get("query", {})}
             job_config_dict.update(config)
+            job_config_dict["query"] = query_config
 
         timeout_ms = job_config_dict.get("jobTimeoutMs") or job_config_dict[
             "query"

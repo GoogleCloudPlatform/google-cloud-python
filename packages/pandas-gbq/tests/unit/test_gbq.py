@@ -686,6 +686,76 @@ def test_read_gbq_with_configuration_duplicate_query_raises_error():
         gbq.read_gbq("SELECT 1", configuration={"query": {"query": "SELECT 2"}})
 
 
+def _sent_job_config(mock_bigquery_client):
+    if (
+        hasattr(mock_bigquery_client, "query_and_wait")
+        and mock_bigquery_client.query_and_wait.called
+    ):
+        _, kwargs = mock_bigquery_client.query_and_wait.call_args
+    else:
+        _, kwargs = mock_bigquery_client.query.call_args
+    return kwargs["job_config"]
+
+
+def test_read_gbq_with_configuration_query_section_keeps_dialect(
+    mock_bigquery_client,
+):
+    gbq.read_gbq(
+        "SELECT 1",
+        project_id="my-project",
+        dialect="legacy",
+        configuration={"query": {"useQueryCache": False}},
+    )
+
+    job_config = _sent_job_config(mock_bigquery_client)
+    assert job_config.use_legacy_sql is True
+    assert job_config.use_query_cache is False
+
+
+def test_read_gbq_with_configuration_query_section_keeps_context_dialect(
+    mock_bigquery_client, monkeypatch
+):
+    import pandas_gbq
+
+    monkeypatch.setattr(pandas_gbq.context, "dialect", "legacy")
+
+    gbq.read_gbq(
+        "SELECT 1",
+        project_id="my-project",
+        configuration={"query": {"useQueryCache": False}},
+    )
+
+    job_config = _sent_job_config(mock_bigquery_client)
+    assert job_config.use_legacy_sql is True
+    assert job_config.use_query_cache is False
+
+
+def test_read_gbq_with_query_in_configuration_keeps_dialect(mock_bigquery_client):
+    # read_gbq takes the query text out of configuration, which leaves an empty
+    # "query" section behind.
+    gbq.read_gbq(
+        None,
+        project_id="my-project",
+        dialect="legacy",
+        configuration={"query": {"query": "SELECT 1"}},
+    )
+
+    assert _sent_job_config(mock_bigquery_client).use_legacy_sql is True
+
+
+def test_read_gbq_with_configuration_use_legacy_sql_overrides_dialect(
+    mock_bigquery_client,
+):
+    gbq.read_gbq(
+        "SELECT 1",
+        project_id="my-project",
+        dialect="legacy",
+        configuration={"query": {"useLegacySql": False}},
+    )
+
+    assert _sent_job_config(mock_bigquery_client).use_legacy_sql is False
+
+
 def test_generate_bq_schema_deprecated():
     # 11121 Deprecation of generate_bq_schema
     with pytest.warns(FutureWarning):
