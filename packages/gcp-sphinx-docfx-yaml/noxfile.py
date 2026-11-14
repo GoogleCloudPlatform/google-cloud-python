@@ -176,10 +176,6 @@ def lint_setup_py(session):
 @nox.session(python=UNIT_TEST_PYTHON_VERSIONS, venv_backend="virtualenv")
 def unit(session):
     """Run unit tests."""
-    # Re-enable 3.11, 3.12, and 3.13 after environment verification.
-    # TODO(https://github.com/googleapis/google-cloud-python/issues/16176):
-    # Track 3.14 compatibility as upstream dependencies stabilize.
-    _skip_python_session(session, ["3.11", "3.12", "3.13", "3.14", "3.15"])
     session.install("-r", "requirements.txt")
     session.install("pytest", "pytest-cov")
     session.run(
@@ -194,7 +190,7 @@ def unit(session):
     )
 
 
-@nox.session(python="3.10")
+@nox.session(python="3.15")
 def docs(session):
     """Build documentation (POSTPONED)."""
     # TODO(https://github.com/googleapis/google-cloud-python/issues/16177):
@@ -205,7 +201,7 @@ def docs(session):
     )
 
 
-@nox.session(python="3.10")
+@nox.session(python="3.15")
 def docfx(session):
     """Build documentation (POSTPONED)."""
     # TODO(https://github.com/googleapis/google-cloud-python/issues/16178):

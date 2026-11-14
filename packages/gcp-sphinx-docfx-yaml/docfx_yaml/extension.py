@@ -21,6 +21,7 @@ This extension allows you to automagically generate DocFX YAML from your Python 
 
 import ast
 import copy
+import enum
 import inspect
 import json
 import logging
@@ -278,7 +279,10 @@ def build_init(app: sphinx.application.Sphinx) -> None:
     except Exception:
         app.env.docfx_root = None
 
-    patch_docfields(app)
+    # TODO(https://github.com/googleapis/google-cloud-python/issues/19085):
+    # This patch never took effect on Sphinx 3 and 4, and breaks builds and
+    # output on Sphinx 5+. Left disabled until that issue is resolved.
+    # patch_docfields(app)
 
     app.docfx_transform_node = partial(transform_node, app)
     app.docfx_transform_string = partial(transform_string, app)
@@ -1164,7 +1168,7 @@ def _create_datam(
             arg_count += len(original_args)
 
             # Retrieve the default values and convert to a list.
-            defaults = list(getattr(argspec, "defaults", []))
+            defaults = list(argspec.defaults or [])
             # Counter used to extract default values.
             default_index = -len(argspec.args) + len(defaults)
             for arg in original_args:
@@ -1589,6 +1593,11 @@ def process_signature(
         return_annotation (str): The return annotation of the object.
     """
     if signature:
+        # On Python 3.11+ autodoc no longer reports `(value)` for enum
+        # classes. It reports the functional-API signature
+        # `(value, names=None, *, module=None, ...)`, or `(*values)` on 3.14+.
+        if inspect.isclass(obj) and issubclass(obj, enum.Enum):
+            signature = "(value)"
         short_name = name.split(".")[-1]
         signature_to_use = [short_name, signature]
         if return_annotation and is_valid_python_code(return_annotation):
@@ -2766,6 +2775,8 @@ def setup(app: sphinx.application.Sphinx) -> None:
     """
 
     app.setup_extension("sphinx.ext.autodoc")
+    # Registers the config values MarkdownBuilder.init() reads.
+    app.setup_extension("sphinx_markdown_builder")
     app.connect("autodoc-process-docstring", _process_docstring)
 
     app.add_node(remarks, html=(remarks.visit_remarks, remarks.depart_remarks))

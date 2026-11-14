@@ -1,6 +1,7 @@
 """Tests for various inspect related utils."""
 
 import inspect
+import sys
 import unittest
 from typing import Any, Optional, Union
 
@@ -29,12 +30,17 @@ class TestGenerate(unittest.TestCase):
         [
             # Test for forward reference.
             Optional["ForwardClass"],
-            "typing.Optional[ForwardClass]",
+            # Python 3.14 changed how typing unions are printed.
+            "ForwardClass | None"
+            if sys.version_info >= (3, 14)
+            else "typing.Optional[ForwardClass]",
         ],
         [
             # Test for multiple forward references.
             Union["ForwardClass", "ForwardClass2"],
-            "typing.Union[ForwardClass, ForwardClass2]",
+            "ForwardClass | ForwardClass2"
+            if sys.version_info >= (3, 14)
+            else "typing.Union[ForwardClass, ForwardClass2]",
         ],
     ]
 

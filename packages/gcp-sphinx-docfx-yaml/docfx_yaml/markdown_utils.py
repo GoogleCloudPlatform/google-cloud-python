@@ -526,14 +526,13 @@ def run_sphinx_markdown(app: sphinx.application) -> None:
         return
 
     from sphinx.util.osutil import ensuredir
-    from sphinx_markdown_builder.markdown_builder import MarkdownBuilder
+    from sphinx_markdown_builder import MarkdownBuilder
 
     ensuredir(str(markdown_outdir))
     docnames = sorted(app.env.found_docs)
     orig_builder = app.builder
-    md_builder = MarkdownBuilder(app)
+    md_builder = MarkdownBuilder(app, app.env)
     md_builder.outdir = str(markdown_outdir)
-    md_builder.set_environment(app.env)
     md_builder.init()
     md_builder.prepare_writing(docnames)
     app.builder = md_builder
