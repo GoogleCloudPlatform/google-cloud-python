@@ -1439,6 +1439,41 @@ Values:
                 markdown_utils.run_sphinx_markdown(app)
                 mock_md_builder_cls.assert_not_called()
 
+    @parameterized.expand(
+        [
+            # What Sphinx 4.5.0 autodoc reports for an enum class on each Python.
+            ["(value)"],  # 3.10
+            [
+                "(value, names=None, *, module=None, qualname=None, type=None,"
+                " start=1, boundary=None)"
+            ],  # 3.11
+            [
+                "(value, names=<not given>, *values, module=None, qualname=None,"
+                " type=None, start=1, boundary=None)"
+            ],  # 3.12
+        ]
+    )
+    def test_enum_signature_and_datam(self, autodoc_signature):
+        import enum
+
+        SampleEnum = enum.Enum("SampleEnum", {"FOO": 0})
+        app = mock.MagicMock()
+        app.env.docfx_signature_funcs_methods = {}
+        app.env.docfx_xrefs = {}
+        app.env.docfx_class_paths = {}
+        app.env.docfx_root = "/nonexistent"
+        app.config.folder = ""
+        app.docfx_transform_string.side_effect = lambda s: s
+
+        extension.process_signature(
+            app, "class", "pkg.SampleEnum", SampleEnum, {}, autodoc_signature, None
+        )
+        datam = extension._create_datam(
+            app, "pkg.SampleEnum", "pkg", "pkg.SampleEnum", "class", SampleEnum, []
+        )
+        self.assertEqual(datam["syntax"]["content"], "SampleEnum(value)")
+        self.assertEqual(datam["syntax"]["parameters"], [])
+
     def test_convert_cross_references_fast_path_checks_both_ends(self):
         # All UIDs start with "google." and content has no "google." -> fast-path.
         all_google_uids = ["google.cloud.storage.Client", "google.api_core.Retry"]

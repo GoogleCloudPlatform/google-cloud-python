@@ -176,10 +176,11 @@ def lint_setup_py(session):
 @nox.session(python=UNIT_TEST_PYTHON_VERSIONS, venv_backend="virtualenv")
 def unit(session):
     """Run unit tests."""
-    # Re-enable 3.11, 3.12, and 3.13 after environment verification.
+    # Sphinx 4.5.0 imports `imghdr`, which Python 3.13 removed, so 3.13+ stays
+    # skipped until the Sphinx pin in setup.py is raised.
     # TODO(https://github.com/googleapis/google-cloud-python/issues/16176):
     # Track 3.14 compatibility as upstream dependencies stabilize.
-    _skip_python_session(session, ["3.11", "3.12", "3.13", "3.14", "3.15"])
+    _skip_python_session(session, ["3.13", "3.14", "3.15"])
     session.install("-r", "requirements.txt")
     session.install("pytest", "pytest-cov")
     session.run(
@@ -194,7 +195,7 @@ def unit(session):
     )
 
 
-@nox.session(python="3.10")
+@nox.session(python="3.12")
 def docs(session):
     """Build documentation (POSTPONED)."""
     # TODO(https://github.com/googleapis/google-cloud-python/issues/16177):
@@ -205,7 +206,7 @@ def docs(session):
     )
 
 
-@nox.session(python="3.10")
+@nox.session(python="3.12")
 def docfx(session):
     """Build documentation (POSTPONED)."""
     # TODO(https://github.com/googleapis/google-cloud-python/issues/16178):

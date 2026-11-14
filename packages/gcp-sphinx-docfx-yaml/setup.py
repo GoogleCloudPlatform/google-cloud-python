@@ -55,9 +55,14 @@ setuptools.setup(
     package_dir={"": "."},
     packages=packages,
     install_requires=dependencies,
+    # TODO(https://github.com/googleapis/google-cloud-python/issues/18972):
+    # Drop 3.10 here once every package's docfx session has moved off
+    # Python 3.10. docs.yml installs this package into those sessions.
     python_requires=">=3.10",
     classifiers=[
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
     ],
     include_package_data=True,
     zip_safe=False,

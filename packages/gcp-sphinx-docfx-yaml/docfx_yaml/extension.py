@@ -21,6 +21,7 @@ This extension allows you to automagically generate DocFX YAML from your Python 
 
 import ast
 import copy
+import enum
 import inspect
 import json
 import logging
@@ -1164,7 +1165,7 @@ def _create_datam(
             arg_count += len(original_args)
 
             # Retrieve the default values and convert to a list.
-            defaults = list(getattr(argspec, "defaults", []))
+            defaults = list(argspec.defaults or [])
             # Counter used to extract default values.
             default_index = -len(argspec.args) + len(defaults)
             for arg in original_args:
@@ -1589,6 +1590,13 @@ def process_signature(
         return_annotation (str): The return annotation of the object.
     """
     if signature:
+        # Sphinx 4.5.0 only knows to skip `enum.EnumMeta.__call__` when it
+        # looks for a class signature. Python 3.11 renamed that metaclass to
+        # `EnumType`, so on 3.11+ autodoc reports the functional-API
+        # signature `(value, names=None, *, module=None, ...)` for every enum
+        # instead of the `(value)` it reports on 3.10.
+        if inspect.isclass(obj) and issubclass(obj, enum.Enum):
+            signature = "(value)"
         short_name = name.split(".")[-1]
         signature_to_use = [short_name, signature]
         if return_annotation and is_valid_python_code(return_annotation):
