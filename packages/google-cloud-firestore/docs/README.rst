@@ -197,3 +197,18 @@ Logging details
 #. The Google-specific logging configurations (default handlers for environment-based configuration; not propagating logging events to the root logger) get
    executed the first time *any* client library is instantiated in your application, and only if the affected loggers have not been previously configured.
    (This is the reason for 2.i. above.)
+
+Mapping field values
+--------------------
+
+Document fields can contain any :class:`collections.abc.Mapping`, including
+:class:`collections.UserDict` and read-only :class:`types.MappingProxyType`
+instances. Nested mappings are handled like dictionaries when creating,
+replacing, updating, or merging documents, including field transforms and empty
+mappings. The input mappings are not modified. For example::
+
+    from types import MappingProxyType
+
+    document.set({"settings": MappingProxyType({"theme": "dark"})}, merge=True)
+
+Mapping keys must be strings, just as for dictionary field values.

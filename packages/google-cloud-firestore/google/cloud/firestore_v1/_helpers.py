@@ -19,6 +19,7 @@ from __future__ import annotations
 import datetime
 import json
 import re
+from collections.abc import Mapping
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -170,7 +171,7 @@ def encode_value(value) -> types.document.Value:
 
     Args:
         value (Union[NoneType, bool, int, float, datetime.datetime, \
-            str, bytes, dict, ~google.cloud.Firestore.GeoPoint, \
+            str, bytes, collections.abc.Mapping, ~google.cloud.Firestore.GeoPoint, \
             ~google.cloud.firestore_v1.vector.Vector, \
             ~google.cloud.firestore_v1.bson._BSONType]): A native \
             Python value or supported BSON / PyMongo-compatible value to \
@@ -233,7 +234,7 @@ def encode_value(value) -> types.document.Value:
     if isinstance(value, Vector):
         return encode_value(value.to_map_value())
 
-    if isinstance(value, dict):
+    if isinstance(value, dict) or isinstance(value, Mapping):
         value_dict = encode_dict(value)
         value_pb = document.MapValue(fields=value_dict)
         return document.Value(map_value=value_pb)
@@ -564,7 +565,7 @@ def extract_fields(
 
             field_path = FieldPath(*(prefix_path.parts + sub_key.parts))
 
-            if isinstance(value, dict):
+            if isinstance(value, dict) or isinstance(value, Mapping):
                 for s_path, s_value in extract_fields(value, field_path):
                     yield s_path, s_value
             else:

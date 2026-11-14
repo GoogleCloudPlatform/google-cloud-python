@@ -2709,3 +2709,83 @@ def _make_field_path(*fields):
     from google.cloud.firestore_v1 import field_path
 
     return field_path.FieldPath(*fields)
+
+
+@pytest.fixture(params=["user_dict", "mapping_proxy"])
+def mapping_factory(request):
+    from collections import UserDict
+    from types import MappingProxyType
+
+    return {"user_dict": UserDict, "mapping_proxy": MappingProxyType}[request.param]
+
+
+def test_encode_value_mapping(mapping_factory):
+    from google.cloud.firestore_v1._helpers import encode_value
+
+    data = mapping_factory(
+        {"nested": mapping_factory({"value": 1}), "array": [mapping_factory({})]}
+    )
+    assert encode_value(data) == encode_value({"nested": {"value": 1}, "array": [{}]})
+    assert data == {"nested": {"value": 1}, "array": [{}]}
+
+
+@pytest.mark.parametrize(
+    "operation", ["create", "set", "update", "merge", "merge_paths"]
+)
+def test_write_mapping_values(mapping_factory, operation):
+    from google.cloud.firestore_v1 import _helpers, transforms
+
+    path = "projects/project/databases/(default)/documents/collection/document"
+    nested = {
+        "value": 1,
+        "empty": {},
+        "timestamp": transforms.SERVER_TIMESTAMP,
+        "increment": transforms.Increment(2),
+        "maximum": transforms.Maximum(10),
+        "minimum": transforms.Minimum(0),
+        "union": transforms.ArrayUnion([{"value": 3}]),
+        "remove": transforms.ArrayRemove([{"value": 4}]),
+    }
+    expected = {"nested": dict(nested)}
+    nested["empty"] = mapping_factory({})
+    nested["union"] = transforms.ArrayUnion([mapping_factory({"value": 3})])
+    nested["remove"] = transforms.ArrayRemove([mapping_factory({"value": 4})])
+    inner = mapping_factory(nested)
+    data = mapping_factory({"nested": inner})
+
+    def write(document_data):
+        if operation == "create":
+            return _helpers.pbs_for_create(path, document_data)
+        if operation == "set":
+            return _helpers.pbs_for_set_no_merge(path, document_data)
+        if operation == "update":
+            return _helpers.pbs_for_update(path, document_data, None)
+        merge = True if operation == "merge" else ["nested.value", "nested.timestamp"]
+        return _helpers.pbs_for_set_with_merge(path, document_data, merge)
+
+    assert write(data) == write(expected)
+    assert data == expected
+    assert data["nested"] is inner
+    assert data["nested"]["timestamp"] is transforms.SERVER_TIMESTAMP
+
+
+@pytest.mark.parametrize("operation", ["create", "set", "merge", "merge_paths"])
+def test_write_mapping_delete_field(mapping_factory, operation):
+    from google.cloud.firestore_v1 import _helpers, transforms
+
+    path = "projects/project/databases/(default)/documents/collection/document"
+    data = {"nested": mapping_factory({"deleted": transforms.DELETE_FIELD})}
+    if operation == "create":
+        with pytest.raises(ValueError, match="Cannot apply DELETE_FIELD"):
+            _helpers.pbs_for_create(path, data)
+    elif operation == "set":
+        with pytest.raises(ValueError, match="Cannot apply DELETE_FIELD"):
+            _helpers.pbs_for_set_no_merge(path, data)
+    else:
+        merge = True if operation == "merge" else ["nested.deleted"]
+        assert _helpers.pbs_for_set_with_merge(path, data, merge) == (
+            _helpers.pbs_for_set_with_merge(
+                path, {"nested": {"deleted": transforms.DELETE_FIELD}}, merge
+            )
+        )
+    assert data["nested"]["deleted"] is transforms.DELETE_FIELD
