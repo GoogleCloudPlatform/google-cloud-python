@@ -4,6 +4,15 @@
 
 [1]: https://pypi.org/project/google-crc32c/#history
 
+## [1.9.1](https://github.com/googleapis/google-cloud-python/compare/google-crc32c-v1.9.0...google-crc32c-v1.9.1) (2026-11-14)
+
+
+### Bug Fixes
+
+* **crc32c:** accept any contiguous bytes-like object in value() and extend() ([#18626](https://github.com/googleapis/google-cloud-python/issues/18626)) ([c632e3e](https://github.com/googleapis/google-cloud-python/commit/c632e3e61289fa292492be6c30f8f944b5c0b9d3))
+* **google-crc32c:** license formatting in pyproject.toml ([#18967](https://github.com/googleapis/google-cloud-python/issues/18967)) ([6cb0223](https://github.com/googleapis/google-cloud-python/commit/6cb02238ab28c82864e729a133b1d32d59001c66))
+* repair broken and stale repository URLs in package metadata ([#18498](https://github.com/googleapis/google-cloud-python/issues/18498)) ([54dbd12](https://github.com/googleapis/google-cloud-python/commit/54dbd12056abcfc007b5b76006751c3b11bea99f)), refs [#18497](https://github.com/googleapis/google-cloud-python/issues/18497)
+
 ## [1.9.0](https://github.com/googleapis/google-cloud-python/compare/google-crc32c-v1.9.0-rc0...google-crc32c-v1.9.0) (2026-09-24)
 
 

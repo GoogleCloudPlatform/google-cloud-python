@@ -2320,7 +2320,7 @@ libraries:
       metadata_name_override: workstations
       default_version: v1
   - name: google-crc32c
-    version: 1.9.0
+    version: 1.9.1
     skip_release: true
     python:
       library_type: OTHER
