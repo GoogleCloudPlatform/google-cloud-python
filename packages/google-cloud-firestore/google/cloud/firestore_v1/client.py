@@ -330,6 +330,8 @@ class Client(BaseClient):
                 The BulkWriter used to delete all matching documents. Supply this
                 if you want to override the default throttling behavior.
 
+        Returns:
+            int: The number of documents deleted.
         """
         if bulk_writer is None:
             bulk_writer = self.bulk_writer()
