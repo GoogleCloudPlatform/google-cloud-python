@@ -261,7 +261,7 @@ class CellDataParser:
             return value
         if _not_null(value, field):
             # value will be a integer in seconds, to microsecond precision, in UTC.
-            return _datetime_from_microseconds(int(value))
+            return _datetime_from_microseconds(int(float(value)))
         return None
 
     def datetime_to_py(self, value, field):
