@@ -17,7 +17,11 @@
 import abc
 import base64
 import getpass
+import hashlib
+import json
 import sys
+from typing import Any, Mapping, Optional
+import warnings
 
 from google.auth import _helpers, exceptions
 from google.oauth2 import webauthn_handler_factory
@@ -32,6 +36,7 @@ SAML_CHALLENGE_MESSAGE = (
     "Please run `gcloud auth login` to complete reauthentication with SAML."
 )
 WEBAUTHN_TIMEOUT_MS = 120000  # Two minute timeout
+U2F_AUTHENTICATION_TYPE = "navigator.id.getAssertion"
 
 
 def get_user_password(text):
@@ -104,6 +109,9 @@ class PasswordChallenge(ReauthChallenge):
 class SecurityKeyChallenge(ReauthChallenge):
     """Challenge that asks for user's security key touch."""
 
+    class _SecurityKeyTimeout(Exception):
+        """Raised when the security key touch request times out."""
+
     @property
     def name(self):
         return "SECURITY_KEY"
@@ -114,7 +122,7 @@ class SecurityKeyChallenge(ReauthChallenge):
 
     @_helpers.copy_docstring(ReauthChallenge)
     def obtain_challenge_input(self, metadata):
-        # Check if there is an available Webauthn Handler, if not use pyu2f
+        # Check if there is an available Webauthn Handler, if not use fallbacks.
         try:
             factory = webauthn_handler_factory.WebauthnHandlerFactory()
             webauthn_handler = factory.get_handler()
@@ -122,18 +130,148 @@ class SecurityKeyChallenge(ReauthChallenge):
                 sys.stderr.write("Please insert and touch your security key\n")
                 return self._obtain_challenge_input_webauthn(metadata, webauthn_handler)
         except Exception:
-            # Attempt pyu2f if exception in webauthn flow
+            # Attempt local security key fallbacks if exception in webauthn flow.
             pass
 
+        try:
+            return self._obtain_challenge_input_fido2(metadata)
+        except ImportError:
+            return self._obtain_challenge_input_pyu2f(metadata)
+
+    def _get_fido2_classes(self) -> tuple[Any, Any, Any, Any, Any]:
+        """Return fido2 classes used by security key reauth."""
+        from fido2.ctap import CtapError  # type: ignore
+        from fido2.ctap1 import (  # type: ignore[import-not-found]
+            APDU,
+            ApduError,
+            Ctap1,
+        )
+        from fido2.hid import CtapHidDevice  # type: ignore
+
+        return CtapHidDevice, Ctap1, APDU, ApduError, CtapError
+
+    def _authenticate_device(
+        self, device: Any, client_param: bytes, app_param: bytes, key_handle: bytes
+    ) -> Optional[Any]:
+        """Authenticate one fido2 device.
+
+        Returns None when the caller should continue with another device.
+        """
+        _, Ctap1, APDU, ApduError, CtapError = self._get_fido2_classes()
+
+        try:
+            return Ctap1(device).authenticate(client_param, app_param, key_handle)
+        except ApduError as caught_exc:
+            if caught_exc.code == APDU.WRONG_DATA:
+                return None
+            if caught_exc.code == APDU.USE_NOT_SATISFIED:
+                raise self._SecurityKeyTimeout()
+            raise
+        except CtapError as caught_exc:
+            if caught_exc.code in (
+                CtapError.ERR.TIMEOUT,
+                CtapError.ERR.ACTION_TIMEOUT,
+                CtapError.ERR.KEEPALIVE_CANCEL,
+                CtapError.ERR.OPERATION_DENIED,
+            ):
+                raise self._SecurityKeyTimeout()
+            raise
+        except OSError as caught_exc:
+            sys.stderr.write(
+                f"Failed to communicate with security key: {caught_exc}.\n"
+            )
+            return None
+
+    def _get_pyu2f_module(self) -> Any:
+        """Return pyu2f module used by the legacy security key fallback."""
         try:
             import pyu2f.convenience.authenticator  # type: ignore
             import pyu2f.errors  # type: ignore
             import pyu2f.model  # type: ignore
-        except ImportError:
+        except ImportError as caught_exc:
             raise exceptions.ReauthFailError(
-                "pyu2f dependency is required to use Security key reauth feature. "
-                "It can be installed via `pip install pyu2f` or `pip install google-auth[reauth]`."
+                "fido2 dependency is required to use Security key reauth feature. "
+                "It can be installed via `pip install fido2` or `pip install google-auth[reauth]`."
+            ) from caught_exc
+        return pyu2f
+
+    def _obtain_challenge_input_fido2(
+        self, metadata: Mapping[str, Any]
+    ) -> Optional[dict]:
+        """Obtain security key challenge input using fido2."""
+        CtapHidDevice = self._get_fido2_classes()[0]
+
+        try:
+            devices = list(CtapHidDevice.list_devices())
+        except OSError as caught_exc:
+            raise exceptions.ReauthFailError(
+                "Failed to list security keys."
+            ) from caught_exc
+
+        if not devices:
+            raise exceptions.ReauthFailError("No security key found.")
+
+        sk = metadata["securityKey"]
+        challenges = sk["challenges"]
+        # Read both 'applicationId' and 'relyingPartyId', if they are the same, use
+        # applicationId, if they are different, use relyingPartyId first and retry
+        # with applicationId
+        application_id = sk["applicationId"]
+        relying_party_id = sk["relyingPartyId"]
+
+        if application_id != relying_party_id:
+            application_parameters = [relying_party_id, application_id]
+        else:
+            application_parameters = [application_id]
+
+        sys.stderr.write("Please touch your security key.\n")
+        try:
+            for app_id in application_parameters:
+                app_param = hashlib.sha256(app_id.encode("utf-8")).digest()
+                for challenge in challenges:
+                    key_handle = self._urlsafe_b64decode(challenge["keyHandle"])
+                    challenge_bytes = self._urlsafe_b64decode(challenge["challenge"])
+                    client_data = self._create_u2f_client_data(challenge_bytes)
+                    client_param = hashlib.sha256(client_data).digest()
+                    for device in devices:
+                        signature = self._authenticate_device(
+                            device, client_param, app_param, key_handle
+                        )
+                        if signature is None:
+                            continue
+                        return {
+                            "securityKey": {
+                                "clientData": self._unpadded_urlsafe_b64encode(
+                                    client_data
+                                ),
+                                "signatureData": self._unpadded_urlsafe_b64encode(
+                                    bytes(signature)
+                                ),
+                                "applicationId": app_id,
+                                "keyHandle": self._unpadded_urlsafe_b64encode(
+                                    key_handle
+                                ),
+                            }
+                        }
+        except self._SecurityKeyTimeout:
+            raise exceptions.ReauthFailError(
+                "Timed out waiting for security key touch."
             )
+
+        raise exceptions.ReauthFailError("Ineligible security key.")
+
+    def _obtain_challenge_input_pyu2f(
+        self, metadata: Mapping[str, Any]
+    ) -> Optional[dict]:
+        """Obtain security key challenge input using the legacy pyu2f fallback."""
+        pyu2f = self._get_pyu2f_module()
+        warnings.warn(
+            "Support for pyu2f is deprecated and will be removed in a future release. "
+            "Please switch to fido2 by installing `fido2` or `google-auth[reauth]`.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+
         sk = metadata["securityKey"]
         challenges = sk["challenges"]
         # Read both 'applicationId' and 'relyingPartyId', if they are the same, use
@@ -187,6 +325,8 @@ class SecurityKeyChallenge(ReauthChallenge):
             except pyu2f.errors.NoDeviceFoundError:
                 sys.stderr.write("No security key found.\n")
             return None
+
+        return None
 
     def _obtain_challenge_input_webauthn(self, metadata, webauthn_handler):
         sk = metadata.get("securityKey")
@@ -245,8 +385,23 @@ class SecurityKeyChallenge(ReauthChallenge):
     def _unpadded_urlsafe_b64recode(self, s):
         """Converts standard b64 encoded string to url safe b64 encoded string
         with no padding."""
-        b = base64.urlsafe_b64decode(s)
-        return base64.urlsafe_b64encode(b).decode().rstrip("=")
+        return self._unpadded_urlsafe_b64encode(self._urlsafe_b64decode(s))
+
+    def _create_u2f_client_data(self, challenge):
+        return json.dumps(
+            {
+                "challenge": self._unpadded_urlsafe_b64encode(challenge),
+                "origin": REAUTH_ORIGIN,
+                "typ": U2F_AUTHENTICATION_TYPE,
+            },
+            sort_keys=True,
+        ).encode()
+
+    def _unpadded_urlsafe_b64encode(self, data):
+        return base64.urlsafe_b64encode(data).decode().rstrip("=")
+
+    def _urlsafe_b64decode(self, data):
+        return base64.urlsafe_b64decode(data + "=" * (-len(data) % 4))
 
 
 class SamlChallenge(ReauthChallenge):

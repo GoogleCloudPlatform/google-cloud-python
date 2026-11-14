@@ -37,7 +37,7 @@ aiohttp_extra_require = [
 
 pyjwt_extra_require = ["pyjwt>=2.0"]
 
-reauth_extra_require = ["pyu2f>=0.1.5"]
+reauth_extra_require = ["fido2>=2.0.0,<3.0.0"]
 
 enterprise_cert_extra_require = cryptography_base_require
 

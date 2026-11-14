@@ -73,8 +73,8 @@ class Credentials(
     Reauth is disabled by default. To enable reauth, set the
     `enable_reauth_refresh` parameter to True in the constructor. Note that
     reauth feature is intended for gcloud to use only.
-    If reauth is enabled, `pyu2f` dependency has to be installed in order to use security
-    key reauth feature. Dependency can be installed via `pip install pyu2f` or `pip install
+    If reauth is enabled, `fido2` dependency has to be installed in order to use security
+    key reauth feature. Dependency can be installed via `pip install fido2` or `pip install
     google-auth[reauth]`.
     """
 
