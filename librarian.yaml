@@ -643,7 +643,7 @@ libraries:
       metadata_name_override: bigqueryreservation
       default_version: v1
   - name: google-cloud-bigquery-storage
-    version: 2.43.0
+    version: 2.44.0
     apis:
       - path: google/cloud/bigquery/storage/v1
       - path: google/cloud/bigquery/storage/v1beta2

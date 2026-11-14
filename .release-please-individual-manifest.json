@@ -4,7 +4,7 @@
   "packages/django-google-spanner": "5.2.1",
   "packages/google-auth": "2.62.2",
   "packages/google-cloud-bigquery": "3.47.0",
-  "packages/google-cloud-bigquery-storage": "2.43.0",
+  "packages/google-cloud-bigquery-storage": "2.44.0",
   "packages/google-cloud-bigtable": "2.50.2",
   "packages/google-cloud-datastore": "2.27.1",
   "packages/google-cloud-designcenter": "0.1.0",
