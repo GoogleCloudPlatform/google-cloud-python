@@ -2050,7 +2050,7 @@ libraries:
           - resource-name-alias=backupdr.googleapis.com/Backup:BackupDRBackup
       default_version: v1
   - name: google-cloud-storage
-    version: 3.17.1
+    version: 3.18.0
     apis:
       - path: google/storage/v2
     python:

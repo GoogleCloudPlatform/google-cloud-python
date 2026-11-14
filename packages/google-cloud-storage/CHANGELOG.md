@@ -4,6 +4,25 @@
 
 [1]: https://pypi.org/project/google-cloud-storage/#history
 
+## [3.18.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-storage-v3.17.1...google-cloud-storage-v3.18.0) (2026-11-14)
+
+
+### Features
+
+* declare support for Python 3.15 ([#18737](https://github.com/googleapis/google-cloud-python/issues/18737)) ([65c8767](https://github.com/googleapis/google-cloud-python/commit/65c87678e7a63aa4c8115c9273581aa5db82fbe9))
+* **storage:** add OpenTelemetry standard metrics recorder, views, and helpers ([#18753](https://github.com/googleapis/google-cloud-python/issues/18753)) ([bf0037c](https://github.com/googleapis/google-cloud-python/commit/bf0037ceebf4ea60408f8d03621c9fa362f69270))
+* **storage:** add OpenTelemetry tracing support for gRPC bidi APIs ([#18397](https://github.com/googleapis/google-cloud-python/issues/18397)) ([a24d0b5](https://github.com/googleapis/google-cloud-python/commit/a24d0b5cf3b8c49930037cc2b0620fb89cb66ed8))
+* **storage:** add Preconditions to AsyncAppendableObjectWriter ([#18641](https://github.com/googleapis/google-cloud-python/issues/18641)) ([f31d982](https://github.com/googleapis/google-cloud-python/commit/f31d982fc812f1a5eea9c7aaf711100bc1b6457b))
+* **storage:** integrate OpenTelemetry metrics gating across clients and transfer_manager ([#18577](https://github.com/googleapis/google-cloud-python/issues/18577)) ([57366ee](https://github.com/googleapis/google-cloud-python/commit/57366eef901fe2ae9383ca367ba2f9f40a09625f))
+* **storage:** multi-stream support in AsyncMultiRangeDownloader ([#18537](https://github.com/googleapis/google-cloud-python/issues/18537)) ([deb7f1e](https://github.com/googleapis/google-cloud-python/commit/deb7f1ef8faccaa8db6730a877b0d998f8e3a496))
+* **storage:** opt-in zero-copy BidiReadObjectResponse parsing for async reads ([#18627](https://github.com/googleapis/google-cloud-python/issues/18627)) ([708f98b](https://github.com/googleapis/google-cloud-python/commit/708f98b4202268ef5bbd49fe7859d8b6605ba933))
+* **storage:** support DirectPath over Interconnect in gRPC client ([#18482](https://github.com/googleapis/google-cloud-python/issues/18482)) ([6b9d7f7](https://github.com/googleapis/google-cloud-python/commit/6b9d7f7b949916c2175bca62f073e59b7677f4d7))
+
+
+### Performance Improvements
+
+* **storage:** verify CRC32C of large read chunks off the event-loop thread ([#18628](https://github.com/googleapis/google-cloud-python/issues/18628)) ([3466e70](https://github.com/googleapis/google-cloud-python/commit/3466e700470fc86e437361e6b46099a185bc4f1b))
+
 ## [3.17.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-storage-v3.17.0...google-cloud-storage-v3.17.1) (2026-10-15)
 
 
