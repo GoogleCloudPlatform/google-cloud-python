@@ -12,9 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import concurrent.futures
+import io
 import os
 import pickle
 import tempfile
+import threading
 
 import mock
 import pytest
@@ -114,6 +117,7 @@ def test_upload_many_passes_concurrency_options():
         mock.patch("concurrent.futures.ThreadPoolExecutor") as pool_patch,
         mock.patch("concurrent.futures.wait") as wait_patch,
     ):
+        wait_patch.return_value = ({pool_patch.return_value.submit.return_value}, set())
         transfer_manager.upload_many(
             FILE_BLOB_PAIRS,
             deadline=DEADLINE,
@@ -135,6 +139,7 @@ def test_threads_deprecation_with_upload():
         mock.patch("concurrent.futures.ThreadPoolExecutor") as pool_patch,
         mock.patch("concurrent.futures.wait") as wait_patch,
     ):
+        wait_patch.return_value = ({pool_patch.return_value.submit.return_value}, set())
         with pytest.warns():
             transfer_manager.upload_many(
                 FILE_BLOB_PAIRS, deadline=DEADLINE, threads=MAX_WORKERS
@@ -187,6 +192,62 @@ def test_upload_many_raises_exceptions():
         transfer_manager.upload_many(
             FILE_BLOB_PAIRS, raise_exception=True, worker_type=transfer_manager.THREAD
         )
+
+
+def test_upload_many_raises_timeout_error_when_deadline_exceeded():
+    stop = threading.Event()
+
+    # Thread-mode: A stuck upload must not make upload_many hang past the deadline.
+    def blocking_upload(*args, **kwargs):
+        stop.wait(5)
+
+    mock_blob = mock.Mock(spec=Blob)
+    mock_blob._prep_and_do_upload.side_effect = blocking_upload
+
+    try:
+        with pytest.raises(concurrent.futures.TimeoutError):
+            transfer_manager.upload_many(
+                [(io.BytesIO(b"data"), mock_blob)],
+                worker_type=transfer_manager.THREAD,
+                deadline=0.1,
+            )
+    finally:
+        stop.set()
+
+
+def test_upload_many_terminates_process_workers_on_deadline():
+    # Process-mode: A stuck upload must not make upload_many hang past the deadline.
+    # After the deadline, the worker processes should be terminated.
+    fake_processes = {1: mock.Mock(), 2: mock.Mock()}
+
+    class FakeProcessPoolExecutor(concurrent.futures.ProcessPoolExecutor):
+        def __init__(self, *args, **kwargs):
+            self._processes = fake_processes
+
+        def submit(self, *args, **kwargs):
+            return concurrent.futures.Future()
+
+        def shutdown(self, *args, **kwargs):
+            pass
+
+    with (
+        mock.patch(
+            "google.cloud.storage.transfer_manager._get_pool_class_and_requirements",
+            return_value=(FakeProcessPoolExecutor, False),
+        ),
+        mock.patch("concurrent.futures.wait") as wait_patch,
+    ):
+        # A non-empty not_done set signals the deadline was exceeded.
+        wait_patch.return_value = (set(), {concurrent.futures.Future()})
+        with pytest.raises(concurrent.futures.TimeoutError):
+            transfer_manager.upload_many(
+                [("file_a.txt", mock.Mock(spec=Blob))],
+                worker_type=transfer_manager.PROCESS,
+                deadline=0.1,
+            )
+
+    for process in fake_processes.values():
+        process.terminate.assert_called_once_with()
 
 
 def test_upload_many_suppresses_412_with_skip_if_exists():
