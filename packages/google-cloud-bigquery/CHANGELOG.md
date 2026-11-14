@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-bigquery/#history
 
+## [3.47.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-v3.47.0...google-cloud-bigquery-v3.47.1) (2026-11-14)
+
+
+### Bug Fixes
+
+* **bigquery:** read cached ARROW results that are too large to return inline ([#18958](https://github.com/googleapis/google-cloud-python/issues/18958)) ([4c0d256](https://github.com/googleapis/google-cloud-python/commit/4c0d25656c509409f6ee65d908eaa6fe593ca789))
+
 ## [3.47.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-v3.46.2...google-cloud-bigquery-v3.47.0) (2026-10-29)
 
 

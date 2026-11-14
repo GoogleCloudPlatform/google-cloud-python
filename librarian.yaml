@@ -563,7 +563,7 @@ libraries:
     python:
       default_version: v1beta
   - name: google-cloud-bigquery
-    version: 3.47.0
+    version: 3.47.1
     python:
       library_type: GAPIC_COMBO
       metadata_name_override: bigquery
