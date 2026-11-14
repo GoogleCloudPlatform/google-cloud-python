@@ -5,7 +5,7 @@
   "packages/google-auth": "2.62.2",
   "packages/google-cloud-bigquery": "3.47.0",
   "packages/google-cloud-bigquery-storage": "2.43.0",
-  "packages/google-cloud-bigtable": "2.50.2",
+  "packages/google-cloud-bigtable": "2.50.3",
   "packages/google-cloud-datastore": "2.27.1",
   "packages/google-cloud-designcenter": "0.1.0",
   "packages/google-cloud-firestore": "2.34.1",

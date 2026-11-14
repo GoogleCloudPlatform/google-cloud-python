@@ -657,7 +657,7 @@ libraries:
       metadata_name_override: bigquerystorage
       default_version: v1
   - name: google-cloud-bigtable
-    version: 2.50.2
+    version: 2.50.3
     apis:
       - path: google/bigtable/v2
       - path: google/bigtable/admin/v2
