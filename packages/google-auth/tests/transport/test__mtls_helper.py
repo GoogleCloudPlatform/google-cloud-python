@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
 import os
 import re
 import sys
@@ -23,7 +24,7 @@ import urllib3.util
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import ec
 
-from google.auth import environment_vars, exceptions
+from google.auth import _agent_identity_utils, environment_vars, exceptions
 from google.auth.transport import _mtls_helper
 
 if not hasattr(os, "MFD_CLOEXEC"):
@@ -682,6 +683,21 @@ class TestGetWorkloadCertAndKey(object):
             [mock.call(ecp_path), mock.call(home_path)]
         )
         mock_read_cert_and_key_files.assert_not_called()
+
+    def test_no_workload_fallback_to_home_without_workload(self, tmp_path, monkeypatch):
+        ecp_config = tmp_path / "ecp_config.json"
+        ecp_config.write_text('{"cert_configs": {"pkcs11": {}}}')
+        home_dir = tmp_path / "gcloud"
+        home_dir.mkdir()
+        (home_dir / "certificate_config.json").write_text('{"cert_configs": {}}')
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(ecp_config)
+        )
+        monkeypatch.setattr(
+            _mtls_helper._cloud_sdk, "get_config_path", lambda: str(home_dir)
+        )
+
+        assert _mtls_helper._get_workload_cert_and_key() == (None, None)
 
     @mock.patch("google.auth.transport._mtls_helper._load_json_file", autospec=True)  # noqa: E501
     @mock.patch(
@@ -2313,3 +2329,601 @@ class TestGkeCredentialBundleDiscovery(object):
         assert _mtls_helper._get_workload_cert_and_key() == (None, None)
         assert _mtls_helper.check_use_client_cert() is False
         mock_is_ready.assert_not_called()
+
+
+class TestSpiffeWorkloadPolling(object):
+    @pytest.fixture
+    def spiffe_dir(self, tmp_path, monkeypatch):
+        well_known_dir = tmp_path / "workload-spiffe-credentials"
+        well_known_dir.mkdir()
+        monkeypatch.setattr(
+            _agent_identity_utils,
+            "_WELL_KNOWN_CERT_PATH",
+            str(well_known_dir / "certificates.pem"),
+        )
+        home_dir = tmp_path / "gcloud_home"
+        home_dir.mkdir()
+        monkeypatch.setattr(
+            _mtls_helper._cloud_sdk, "get_config_path", lambda: str(home_dir)
+        )
+        return well_known_dir
+
+    def _write_workload_config(self, config_file, cert_path, key_path):
+        config_file.write_text(
+            json.dumps(
+                {
+                    "cert_configs": {
+                        "workload": {
+                            "cert_path": str(cert_path),
+                            "key_path": str(key_path),
+                        }
+                    }
+                }
+            )
+        )
+
+    def test_get_spiffe_polling_config_path_disabled_by_env(
+        self, spiffe_dir, monkeypatch
+    ):
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG,
+            str(spiffe_dir / "credentials.json"),
+        )
+        monkeypatch.setenv(environment_vars.GOOGLE_API_USE_CLIENT_CERTIFICATE, "false")
+        assert _mtls_helper._get_spiffe_polling_config_path() is None
+
+    def test_get_spiffe_polling_config_path_ignores_non_spiffe_and_context_aware(
+        self, spiffe_dir, tmp_path, monkeypatch
+    ):
+        monkeypatch.setenv(
+            environment_vars.CLOUDSDK_CONTEXT_AWARE_CERTIFICATE_CONFIG_FILE_PATH,
+            str(spiffe_dir / "credentials.json"),
+        )
+        assert _mtls_helper._get_spiffe_polling_config_path() is None
+        assert (
+            _mtls_helper._get_spiffe_polling_config_path(
+                str(tmp_path / "certificate_config.json")
+            )
+            is None
+        )
+
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_check_use_client_cert_spiffe_returns_true_without_polling(
+        self, mock_sleep, spiffe_dir, monkeypatch
+    ):
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG,
+            str(spiffe_dir / "missing_credentials.json"),
+        )
+
+        assert _mtls_helper.check_use_client_cert() is True
+        mock_sleep.assert_not_called()
+
+    @pytest.mark.parametrize("content", ["", "{truncated"])
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_check_use_client_cert_spiffe_config_not_fully_written(
+        self, mock_sleep, spiffe_dir, monkeypatch, content
+    ):
+        config_file = spiffe_dir / "credentials.json"
+        config_file.write_text(content)
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        assert _mtls_helper.check_use_client_cert() is True
+        mock_sleep.assert_not_called()
+
+    @pytest.mark.parametrize("content", ['{"wrong": 1}', '{"cert_configs": {}}'])
+    def test_check_use_client_cert_spiffe_config_without_workload(
+        self, spiffe_dir, monkeypatch, content
+    ):
+        config_file = spiffe_dir / "credentials.json"
+        config_file.write_text(content)
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        assert _mtls_helper.check_use_client_cert() is False
+
+    def test_check_use_client_cert_spiffe_config_with_workload(
+        self, spiffe_dir, monkeypatch
+    ):
+        config_file = spiffe_dir / "credentials.json"
+        self._write_workload_config(
+            config_file,
+            spiffe_dir / "certificates.pem",
+            spiffe_dir / "private_key.pem",
+        )
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        assert _mtls_helper.check_use_client_cert() is True
+
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_immediate_readiness_zero_sleep(self, mock_sleep, spiffe_dir, monkeypatch):
+        cert_file = spiffe_dir / "certificates.pem"
+        key_file = spiffe_dir / "private_key.pem"
+        config_file = spiffe_dir / "credentials.json"
+        cert_file.write_bytes(pytest.public_cert_bytes)
+        key_file.write_bytes(pytest.private_key_bytes)
+        self._write_workload_config(config_file, cert_file, key_file)
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        assert _mtls_helper._get_workload_cert_and_key_paths() == (
+            str(cert_file),
+            str(key_file),
+            str(config_file),
+        )
+        assert _mtls_helper._get_workload_cert_and_key() == (
+            pytest.public_cert_bytes,
+            pytest.private_key_bytes,
+        )
+        mock_sleep.assert_not_called()
+
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_polling_missing_files_retry_success(
+        self, mock_sleep, spiffe_dir, monkeypatch
+    ):
+        cert_file = spiffe_dir / "certificates.pem"
+        key_file = spiffe_dir / "private_key.pem"
+        config_file = spiffe_dir / "credentials.json"
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        def write_config(*args, **kwargs):
+            self._write_workload_config(config_file, cert_file, key_file)
+
+        cert_file.write_bytes(pytest.public_cert_bytes)
+        key_file.write_bytes(pytest.private_key_bytes)
+        mock_sleep.side_effect = write_config
+
+        assert _mtls_helper._get_workload_cert_and_key() == (
+            pytest.public_cert_bytes,
+            pytest.private_key_bytes,
+        )
+        assert mock_sleep.call_count == 1
+
+        cert_file.unlink()
+        key_file.unlink()
+        mock_sleep.reset_mock()
+
+        def write_cert_and_key(*args, **kwargs):
+            cert_file.write_bytes(pytest.public_cert_bytes)
+            key_file.write_bytes(pytest.private_key_bytes)
+
+        mock_sleep.side_effect = write_cert_and_key
+
+        assert _mtls_helper._get_workload_cert_and_key() == (
+            pytest.public_cert_bytes,
+            pytest.private_key_bytes,
+        )
+        assert mock_sleep.call_count == 1
+
+    @pytest.mark.parametrize("initial_config", ["", "{truncated"])
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_polling_config_retry_success(
+        self, mock_sleep, spiffe_dir, monkeypatch, initial_config
+    ):
+        cert_file = spiffe_dir / "certificates.pem"
+        key_file = spiffe_dir / "private_key.pem"
+        config_file = spiffe_dir / "credentials.json"
+        cert_file.write_bytes(pytest.public_cert_bytes)
+        key_file.write_bytes(pytest.private_key_bytes)
+        config_file.write_text(initial_config)
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        def write_config(*args, **kwargs):
+            self._write_workload_config(config_file, cert_file, key_file)
+
+        mock_sleep.side_effect = write_config
+
+        actual_cert, actual_key = _mtls_helper._get_workload_cert_and_key()
+        assert actual_cert == pytest.public_cert_bytes
+        assert actual_key == pytest.private_key_bytes
+        assert mock_sleep.call_count == 1
+
+    @pytest.mark.parametrize(
+        "initial_cert,initial_key",
+        [
+            (b"", b""),
+            (b"", pytest.private_key_bytes),
+            (pytest.public_cert_bytes, b""),
+        ],
+    )
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_polling_cert_and_key_retry_success(
+        self, mock_sleep, spiffe_dir, monkeypatch, initial_cert, initial_key
+    ):
+        cert_file = spiffe_dir / "certificates.pem"
+        key_file = spiffe_dir / "private_key.pem"
+        config_file = spiffe_dir / "credentials.json"
+        self._write_workload_config(config_file, cert_file, key_file)
+        cert_file.write_bytes(initial_cert)
+        key_file.write_bytes(initial_key)
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        def write_cert_and_key(*args, **kwargs):
+            cert_file.write_bytes(pytest.public_cert_bytes)
+            key_file.write_bytes(pytest.private_key_bytes)
+
+        mock_sleep.side_effect = write_cert_and_key
+
+        actual_cert, actual_key = _mtls_helper._get_workload_cert_and_key()
+        assert actual_cert == pytest.public_cert_bytes
+        assert actual_key == pytest.private_key_bytes
+        assert mock_sleep.call_count == 1
+
+    @pytest.mark.parametrize(
+        "cert_bytes,key_bytes,error_match",
+        [
+            (
+                b"-----BEGIN CERTIFICATE-----\ntruncated",
+                pytest.private_key_bytes,
+                "Certificate file .* is in an invalid format",
+            ),
+            (
+                pytest.public_cert_bytes,
+                b"-----BEGIN PRIVATE KEY-----\ntruncated",
+                "Private key file .* is in an invalid format",
+            ),
+        ],
+    )
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_truncated_pem_fails_immediately_without_polling(
+        self, mock_sleep, spiffe_dir, monkeypatch, cert_bytes, key_bytes, error_match
+    ):
+        cert_file = spiffe_dir / "certificates.pem"
+        key_file = spiffe_dir / "private_key.pem"
+        config_file = spiffe_dir / "credentials.json"
+        self._write_workload_config(config_file, cert_file, key_file)
+        cert_file.write_bytes(cert_bytes)
+        key_file.write_bytes(key_bytes)
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        with pytest.raises(exceptions.ClientCertError, match=error_match):
+            _mtls_helper._get_workload_cert_and_key()
+
+        mock_sleep.assert_not_called()
+
+    @mock.patch("google.auth.transport._mtls_helper._read_key_file", autospec=True)
+    @mock.patch("google.auth.transport._mtls_helper._read_cert_file", autospec=True)
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_get_workload_cert_and_key_paths_does_not_read_pem_files(
+        self, mock_sleep, mock_read_cert, mock_read_key, spiffe_dir, monkeypatch
+    ):
+        cert_file = spiffe_dir / "certificates.pem"
+        key_file = spiffe_dir / "private_key.pem"
+        config_file = spiffe_dir / "credentials.json"
+        cert_file.write_bytes(pytest.public_cert_bytes)
+        key_file.write_bytes(pytest.private_key_bytes)
+        self._write_workload_config(config_file, cert_file, key_file)
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        assert _mtls_helper._get_workload_cert_and_key_paths() == (
+            str(cert_file),
+            str(key_file),
+            str(config_file),
+        )
+        mock_read_cert.assert_not_called()
+        mock_read_key.assert_not_called()
+        mock_sleep.assert_not_called()
+
+    @mock.patch("google.auth.transport._mtls_helper._LOGGER.debug")
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_polling_timeout_waiting_for_config_logs_debug_once(
+        self, mock_sleep, mock_debug, spiffe_dir
+    ):
+        config_file = spiffe_dir / "credentials.json"
+
+        with pytest.raises(
+            exceptions.ClientCertError, match="not ready after 30s"
+        ) as exc_info:
+            _mtls_helper._get_workload_cert_and_key(str(config_file))
+
+        assert isinstance(exc_info.value.__cause__, FileNotFoundError)
+        assert _mtls_helper._spiffe_poll_timed_out is True
+        assert mock_sleep.call_count == len(_agent_identity_utils._POLLING_INTERVALS)
+        mock_debug.assert_called_once_with(
+            "Identity certificate files are taking longer than 5 seconds to mount at %s. Retrying...",
+            str(config_file),
+        )
+
+    @mock.patch("google.auth.transport._mtls_helper._LOGGER.debug")
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_polling_timeout_waiting_for_cert_and_key_fails_closed(
+        self, mock_sleep, mock_debug, spiffe_dir, monkeypatch
+    ):
+        config_file = spiffe_dir / "credentials.json"
+        self._write_workload_config(
+            config_file,
+            spiffe_dir / "certificates.pem",
+            spiffe_dir / "private_key.pem",
+        )
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        with pytest.raises(
+            exceptions.ClientCertError, match="not ready after 30s"
+        ) as exc_info:
+            _mtls_helper._get_workload_cert_and_key()
+
+        assert isinstance(exc_info.value.__cause__, FileNotFoundError)
+        assert _mtls_helper._spiffe_poll_timed_out is True
+
+        assert mock_sleep.call_count == len(_agent_identity_utils._POLLING_INTERVALS)
+        mock_debug.assert_called_once_with(
+            "Identity certificate files are taking longer than 5 seconds to mount at %s. Retrying...",
+            str(config_file),
+        )
+
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_polling_timeout_on_empty_cert_chains_client_cert_error(
+        self, mock_sleep, spiffe_dir, monkeypatch
+    ):
+        cert_file = spiffe_dir / "certificates.pem"
+        key_file = spiffe_dir / "private_key.pem"
+        config_file = spiffe_dir / "credentials.json"
+        cert_file.write_bytes(b"")
+        key_file.write_bytes(pytest.private_key_bytes)
+        self._write_workload_config(config_file, cert_file, key_file)
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        with pytest.raises(
+            exceptions.ClientCertError, match="not ready after 30s"
+        ) as exc_info:
+            _mtls_helper._get_workload_cert_and_key()
+
+        cause = exc_info.value.__cause__
+        assert isinstance(cause, exceptions.ClientCertError)
+        assert "is empty" in str(cause)
+        assert _mtls_helper._spiffe_poll_timed_out is True
+        assert mock_sleep.call_count == len(_agent_identity_utils._POLLING_INTERVALS)
+
+    @mock.patch("google.auth.transport._mtls_helper._LOGGER.debug")
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_poll_after_timeout_fails_immediately(
+        self, mock_sleep, mock_debug, spiffe_dir
+    ):
+        config_file = spiffe_dir / "credentials.json"
+
+        with pytest.raises(exceptions.ClientCertError, match="not ready after 30s"):
+            _mtls_helper._get_workload_cert_and_key(str(config_file))
+
+        assert mock_sleep.call_count == len(_agent_identity_utils._POLLING_INTERVALS)
+        mock_sleep.reset_mock()
+        mock_debug.reset_mock()
+
+        with pytest.raises(
+            exceptions.ClientCertError,
+            match="still not ready; an earlier 30s wait already timed out",
+        ) as exc_info:
+            _mtls_helper._get_workload_cert_and_key(str(config_file))
+
+        assert isinstance(exc_info.value.__cause__, FileNotFoundError)
+        mock_sleep.assert_not_called()
+        mock_debug.assert_not_called()
+
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_poll_after_timeout_succeeds_once_files_appear(
+        self, mock_sleep, spiffe_dir
+    ):
+        cert_file = spiffe_dir / "certificates.pem"
+        key_file = spiffe_dir / "private_key.pem"
+        config_file = spiffe_dir / "credentials.json"
+
+        with pytest.raises(exceptions.ClientCertError, match="not ready after 30s"):
+            _mtls_helper._get_workload_cert_and_key(str(config_file))
+
+        assert _mtls_helper._spiffe_poll_timed_out is True
+        mock_sleep.reset_mock()
+
+        cert_file.write_bytes(pytest.public_cert_bytes)
+        key_file.write_bytes(pytest.private_key_bytes)
+        self._write_workload_config(config_file, cert_file, key_file)
+
+        assert _mtls_helper._get_workload_cert_and_key(str(config_file)) == (
+            pytest.public_cert_bytes,
+            pytest.private_key_bytes,
+        )
+        assert _mtls_helper._spiffe_poll_timed_out is True
+        mock_sleep.assert_not_called()
+
+    @pytest.mark.parametrize(
+        "config_relpath,expected_error",
+        [
+            ("", IsADirectoryError),
+            ("certificates.pem/credentials.json", NotADirectoryError),
+        ],
+        ids=["config_is_spiffe_dir", "config_parent_is_file"],
+    )
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_permanent_config_os_error_fails_immediately_without_polling(
+        self, mock_sleep, spiffe_dir, config_relpath, expected_error
+    ):
+        (spiffe_dir / "certificates.pem").write_bytes(pytest.public_cert_bytes)
+        config_path = spiffe_dir / config_relpath if config_relpath else spiffe_dir
+
+        with pytest.raises(expected_error):
+            _mtls_helper._get_workload_cert_and_key(str(config_path))
+
+        mock_sleep.assert_not_called()
+
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_cert_path_is_directory_fails_immediately_without_polling(
+        self, mock_sleep, spiffe_dir, monkeypatch
+    ):
+        cert_dir = spiffe_dir / "certificates.pem"
+        cert_dir.mkdir()
+        key_file = spiffe_dir / "private_key.pem"
+        key_file.write_bytes(pytest.private_key_bytes)
+        config_file = spiffe_dir / "credentials.json"
+        self._write_workload_config(config_file, cert_dir, key_file)
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        with pytest.raises(IsADirectoryError):
+            _mtls_helper._get_workload_cert_and_key()
+
+        mock_sleep.assert_not_called()
+
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_config_without_workload_section_does_not_poll(
+        self, mock_sleep, spiffe_dir, monkeypatch
+    ):
+        config_file = spiffe_dir / "credentials.json"
+        config_file.write_text('{"cert_configs": {}}')
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        assert _mtls_helper._get_workload_cert_and_key() == (None, None)
+        mock_sleep.assert_not_called()
+
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_config_without_workload_falls_back_to_home_config(
+        self, mock_sleep, spiffe_dir, tmp_path, monkeypatch
+    ):
+        config_file = spiffe_dir / "credentials.json"
+        config_file.write_text('{"cert_configs": {}}')
+        home_cert = tmp_path / "home_cert.pem"
+        home_key = tmp_path / "home_key.pem"
+        home_cert.write_bytes(pytest.public_cert_bytes)
+        home_key.write_bytes(pytest.private_key_bytes)
+        home_config = tmp_path / "gcloud_home" / "certificate_config.json"
+        self._write_workload_config(home_config, home_cert, home_key)
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        assert _mtls_helper._get_workload_cert_and_key_paths() == (
+            str(home_cert),
+            str(home_key),
+            str(home_config),
+        )
+        assert _mtls_helper._get_workload_cert_and_key() == (
+            pytest.public_cert_bytes,
+            pytest.private_key_bytes,
+        )
+        mock_sleep.assert_not_called()
+
+    @pytest.mark.parametrize(
+        "invalid_config",
+        [
+            "[]",
+            "{}",
+            '{"cert_configs": []}',
+            '{"cert_configs": {"workload": []}}',
+            '{"cert_configs": {"workload": {"cert_path": "", "key_path": "/key"}}}',
+            '{"cert_configs": {"workload": {"cert_path": "/cert", "key_path": ""}}}',
+        ],
+    )
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_invalid_config_schema_fails_immediately_without_polling(
+        self, mock_sleep, spiffe_dir, monkeypatch, invalid_config
+    ):
+        config_file = spiffe_dir / "credentials.json"
+        config_file.write_text(invalid_config)
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        with pytest.raises(exceptions.ClientCertError):
+            _mtls_helper._get_workload_cert_and_key()
+
+        assert _mtls_helper._spiffe_poll_timed_out is False
+        mock_sleep.assert_not_called()
+
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_external_cert_and_key_paths_not_polled(
+        self, mock_sleep, spiffe_dir, tmp_path
+    ):
+        external_cert = tmp_path / "external_cert.pem"
+        external_key = tmp_path / "external_key.pem"
+        config_file = spiffe_dir / "credentials.json"
+        self._write_workload_config(config_file, external_cert, external_key)
+
+        with pytest.raises(FileNotFoundError):
+            _mtls_helper._get_workload_cert_and_key(str(config_file))
+        mock_sleep.assert_not_called()
+
+        external_cert.write_bytes(b"invalid pem")
+        with pytest.raises(
+            exceptions.ClientCertError,
+            match="Certificate file .* is in an invalid format",
+        ):
+            _mtls_helper._get_workload_cert_and_key(str(config_file))
+        mock_sleep.assert_not_called()
+
+        external_cert.write_bytes(pytest.public_cert_bytes)
+        spiffe_cert = spiffe_dir / "certificates.pem"
+        spiffe_cert.write_bytes(pytest.public_cert_bytes)
+        self._write_workload_config(config_file, spiffe_cert, external_key)
+        with pytest.raises(FileNotFoundError):
+            _mtls_helper._get_workload_cert_and_key(str(config_file))
+        mock_sleep.assert_not_called()
+
+        self._write_workload_config(config_file, external_cert, external_key)
+        external_key.write_bytes(pytest.private_key_bytes)
+        assert _mtls_helper._get_workload_cert_and_key(str(config_file)) == (
+            pytest.public_cert_bytes,
+            pytest.private_key_bytes,
+        )
+        mock_sleep.assert_not_called()
+
+    @mock.patch("builtins.open", side_effect=PermissionError("denied"))
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_config_permission_error_propagates(
+        self, mock_sleep, mock_open, spiffe_dir, monkeypatch
+    ):
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG,
+            str(spiffe_dir / "credentials.json"),
+        )
+
+        with pytest.raises(PermissionError):
+            _mtls_helper._get_workload_cert_and_key()
+
+        mock_sleep.assert_not_called()
+
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_cert_and_key_permission_error_propagates(
+        self, mock_sleep, spiffe_dir, monkeypatch
+    ):
+        cert_file = spiffe_dir / "certificates.pem"
+        key_file = spiffe_dir / "private_key.pem"
+        config_file = spiffe_dir / "credentials.json"
+        cert_file.write_bytes(pytest.public_cert_bytes)
+        key_file.write_bytes(pytest.private_key_bytes)
+        self._write_workload_config(config_file, cert_file, key_file)
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+        real_stat = os.stat
+
+        def stat_denying_cert(file_path, *args, **kwargs):
+            if os.fspath(file_path) == str(cert_file):
+                raise PermissionError("denied")
+            return real_stat(file_path, *args, **kwargs)
+
+        monkeypatch.setattr(os, "stat", stat_denying_cert)
+
+        with pytest.raises(PermissionError, match="denied"):
+            _mtls_helper._get_workload_cert_and_key()
+
+        mock_sleep.assert_not_called()

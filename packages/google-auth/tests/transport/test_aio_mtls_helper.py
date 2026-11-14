@@ -12,13 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
 import os
 import ssl
 from unittest import mock
 
 import pytest
 
-from google.auth import exceptions
+from google.auth import _agent_identity_utils, environment_vars, exceptions
 from google.auth.aio.transport import mtls
 
 CERT_DATA = b"client-cert"
@@ -141,6 +142,89 @@ class TestMTLS:
         with pytest.raises(exceptions.MutualTLSChannelError) as excinfo:
             await callback()
         assert "Format error" in str(excinfo.value)
+
+    @pytest.mark.asyncio
+    @mock.patch(
+        "google.auth.aio.transport.mtls.get_client_cert_and_key",
+        new_callable=mock.AsyncMock,
+    )
+    @mock.patch(
+        "google.auth.transport.mtls.has_default_client_cert_source", return_value=True
+    )
+    async def test_default_client_cert_source_callback_wraps_client_cert_error(
+        self, mock_has, mock_get
+    ):
+        mock_get.side_effect = exceptions.ClientCertError("not ready")
+        callback = mtls.default_client_cert_source()
+
+        with pytest.raises(exceptions.MutualTLSChannelError) as excinfo:
+            await callback()
+        assert isinstance(excinfo.value.__cause__, exceptions.ClientCertError)
+
+    @pytest.mark.asyncio
+    @mock.patch(
+        "google.auth.aio.transport.mtls.get_client_cert_and_key",
+        new_callable=mock.AsyncMock,
+    )
+    @mock.patch(
+        "google.auth.transport.mtls.has_default_client_cert_source", return_value=True
+    )
+    async def test_default_client_cert_source_callback_no_cert(
+        self, mock_has, mock_get
+    ):
+        mock_get.return_value = (False, None, None)
+        callback = mtls.default_client_cert_source()
+
+        with pytest.raises(
+            exceptions.MutualTLSChannelError, match="did not provide a certificate"
+        ):
+            await callback()
+
+    @pytest.mark.asyncio
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    async def test_default_client_cert_source_spiffe_mounts_during_poll(
+        self, mock_sleep, tmp_path, monkeypatch
+    ):
+        well_known_dir = tmp_path / "workload-spiffe-credentials"
+        well_known_dir.mkdir()
+        config_file = well_known_dir / "credentials.json"
+        cert_file = well_known_dir / "certificates.pem"
+        key_file = well_known_dir / "private_key.pem"
+        monkeypatch.setattr(
+            _agent_identity_utils,
+            "_WELL_KNOWN_CERT_PATH",
+            str(cert_file),
+        )
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        callback = mtls.default_client_cert_source()
+        mock_sleep.assert_not_called()
+
+        def write_spiffe_files(*args, **kwargs):
+            cert_file.write_bytes(pytest.public_cert_bytes)
+            key_file.write_bytes(pytest.private_key_bytes)
+            config_file.write_text(
+                json.dumps(
+                    {
+                        "cert_configs": {
+                            "workload": {
+                                "cert_path": str(cert_file),
+                                "key_path": str(key_file),
+                            }
+                        }
+                    }
+                )
+            )
+
+        mock_sleep.side_effect = write_spiffe_files
+
+        assert await callback() == (
+            pytest.public_cert_bytes,
+            pytest.private_key_bytes,
+        )
+        assert mock_sleep.call_count == 1
 
     @pytest.mark.asyncio
     @mock.patch("google.auth.transport._mtls_helper._get_workload_cert_and_key")

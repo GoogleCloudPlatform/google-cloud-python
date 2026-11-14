@@ -19,9 +19,11 @@ import json
 import logging
 import os
 import re
+import stat
 import subprocess
 import sys
 import tempfile
+import time
 from os import environ, getenv, path
 from typing import Generator, List, Optional, Tuple, Union, cast
 from urllib.parse import urlsplit
@@ -484,32 +486,35 @@ def _get_cert_config_path(certificate_config_path=None, include_context_aware=Tr
 
 
 def _get_workload_cert_and_key_paths(config_path=None, include_context_aware=True):
+    spiffe_config_path = _get_spiffe_polling_config_path(config_path)
+    if spiffe_config_path is not None:
+        cert_path, key_path, config_file_path = _poll_spiffe_workload_paths(
+            spiffe_config_path
+        )
+        if cert_path is not None:
+            return cert_path, key_path, config_file_path
+
+    return _get_non_spiffe_workload_cert_and_key_paths(
+        config_path, include_context_aware
+    )
+
+
+def _get_non_spiffe_workload_cert_and_key_paths(
+    config_path=None, include_context_aware=True
+):
     absolute_path = _get_cert_config_path(config_path, include_context_aware)
     if absolute_path is None:
         return None, None, None
 
     data = _load_json_file(absolute_path)
-
-    if (
-        not isinstance(data, dict)
-        or "cert_configs" not in data
-        or not isinstance(data["cert_configs"], dict)
-    ):
-        raise exceptions.ClientCertError(
-            'Certificate config file {} is in an invalid format, a "cert configs" object is expected'.format(
-                absolute_path
-            )
-        )
-    cert_configs = data["cert_configs"]
+    cert_path, key_path = _extract_workload_paths_from_config(data, absolute_path)
 
     # We return None, None if the expected workload fields are not present.
     # The certificate config might be present for other types of connections (e.g. gECC),
     # and we want to gracefully fallback to testing other mTLS configurations
     # like SecureConnect instead of throwing an exception.
 
-    if (
-        not isinstance(cert_configs, dict) or "workload" not in cert_configs
-    ) and config_path is None:
+    if cert_path is None and key_path is None and config_path is None:
         default_home_path = path.expanduser(
             os.path.join(
                 _cloud_sdk.get_config_path(),
@@ -521,19 +526,53 @@ def _get_workload_cert_and_key_paths(config_path=None, include_context_aware=Tru
         ) != os.path.normpath(absolute_path):
             try:
                 home_data = _load_json_file(default_home_path)
-                if isinstance(home_data, dict):
-                    home_cert_configs = home_data.get("cert_configs")
-                    if (
-                        isinstance(home_cert_configs, dict)
-                        and "workload" in home_cert_configs
-                    ):
-                        cert_configs = home_cert_configs
-                        absolute_path = default_home_path
             except (exceptions.ClientCertError, OSError):
-                pass
+                home_data = None
+            if (
+                isinstance(home_data, dict)
+                and isinstance(home_data.get("cert_configs"), dict)
+                and "workload" in home_data["cert_configs"]
+            ):
+                cert_path, key_path = _extract_workload_paths_from_config(
+                    home_data, default_home_path
+                )
+                return cert_path, key_path, default_home_path
 
-    if not isinstance(cert_configs, dict) or "workload" not in cert_configs:
-        return None, None, absolute_path
+    return cert_path, key_path, absolute_path
+
+
+def _get_spiffe_polling_config_path(config_path=None):
+    """Returns the expanded SPIFFE config path if startup polling applies, else None."""
+    if _check_use_client_cert_env() is False:
+        return None
+    candidate_path = (
+        config_path
+        if config_path is not None
+        else environ.get(environment_vars.GOOGLE_API_CERTIFICATE_CONFIG)
+    )
+    if not candidate_path:
+        return None
+    expanded_path = path.expanduser(candidate_path)
+    if _agent_identity_utils._is_in_well_known_dir(expanded_path):
+        return expanded_path
+    return None
+
+
+def _extract_workload_paths_from_config(data, absolute_path):
+    """Validates certificate_config.json schema and returns (cert_path, key_path)."""
+    if (
+        not isinstance(data, dict)
+        or "cert_configs" not in data
+        or not isinstance(data["cert_configs"], dict)
+    ):
+        raise exceptions.ClientCertError(
+            'Certificate config file {} is in an invalid format, a "cert configs" object is expected'.format(
+                absolute_path
+            )
+        )
+    cert_configs = data["cert_configs"]
+    if "workload" not in cert_configs:
+        return None, None
     workload = cert_configs["workload"]
 
     if (
@@ -548,10 +587,101 @@ def _get_workload_cert_and_key_paths(config_path=None, include_context_aware=Tru
                 absolute_path
             )
         )
-    cert_path = workload["cert_path"]
-    key_path = workload["key_path"]
+    return workload["cert_path"], workload["key_path"]
 
-    return cert_path, key_path, absolute_path
+
+def _check_spiffe_file_ready(file_path):
+    """Raises if file_path is missing or is an empty regular file.
+
+    A path that exists but is not a regular file is left for the caller's read
+    to report.
+    """
+    file_stat = os.stat(file_path)
+    if stat.S_ISREG(file_stat.st_mode) and file_stat.st_size == 0:
+        raise exceptions.ClientCertError("File {} is empty".format(file_path))
+
+
+# Prevents lazy callers (such as requests.Request) from blocking for 30s on
+# every subsequent request once the initial startup poll has already timed out.
+_spiffe_poll_timed_out = False
+
+
+def _poll_spiffe_workload_paths(spiffe_config_path):
+    """Polls up to 30s for the SPIFFE workload config, cert, and key to be ready.
+
+    The config is retried while it is missing, empty, or not yet valid JSON.
+    The cert and key are retried while either is missing or empty. Any other
+    error, such as a permission error or a path that is a directory, is raised
+    right away. Cert and key contents are not read here, so a non-empty but
+    invalid PEM, or a path that is not a regular file, is reported by the
+    caller's read without polling. Cert and key paths outside the well-known
+    SPIFFE directory are returned without any check. If an earlier call already
+    timed out after 30s, this makes one attempt without waiting.
+
+    Args:
+        spiffe_config_path (str): The expanded SPIFFE certificate config path.
+
+    Returns:
+        Tuple[Optional[str], Optional[str], str]: The cert path, key path, and
+            config path. The cert and key paths are None if the config has no
+            "workload" section.
+
+    Raises:
+        OSError: If the config, cert, or key cannot be accessed for a reason
+            other than not existing yet, such as PermissionError or
+            IsADirectoryError.
+        google.auth.exceptions.ClientCertError: If the config schema is
+            invalid, or the files are not ready.
+    """
+    global _spiffe_poll_timed_out
+    last_error = None
+    for attempt, interval in enumerate(_agent_identity_utils._POLLING_INTERVALS):
+        try:
+            data = _load_json_file(spiffe_config_path)
+        except (FileNotFoundError, exceptions.ClientCertError) as caught_exc:
+            last_error = caught_exc
+        else:
+            cert_path, key_path = _extract_workload_paths_from_config(
+                data, spiffe_config_path
+            )
+            if cert_path is None and key_path is None:
+                return None, None, spiffe_config_path
+
+            cert_path = path.expanduser(cert_path)
+            key_path = path.expanduser(key_path)
+            if not (
+                _agent_identity_utils._is_in_well_known_dir(cert_path)
+                and _agent_identity_utils._is_in_well_known_dir(key_path)
+            ):
+                return cert_path, key_path, spiffe_config_path
+            try:
+                _check_spiffe_file_ready(cert_path)
+                _check_spiffe_file_ready(key_path)
+                return cert_path, key_path, spiffe_config_path
+            except (FileNotFoundError, exceptions.ClientCertError) as caught_exc:
+                last_error = caught_exc
+
+        if _spiffe_poll_timed_out:
+            raise exceptions.ClientCertError(
+                "Identity certificate configuration or certificate/key files at {} are "
+                "still not ready; an earlier {}s wait already timed out".format(
+                    spiffe_config_path, _agent_identity_utils._TOTAL_TIMEOUT
+                )
+            ) from last_error
+
+        if attempt + 1 == _agent_identity_utils._FAST_POLL_CYCLES:
+            _LOGGER.debug(
+                "Identity certificate files are taking longer than 5 seconds to mount at %s. Retrying...",
+                spiffe_config_path,
+            )
+        time.sleep(interval)
+
+    _spiffe_poll_timed_out = True
+    raise exceptions.ClientCertError(
+        "Identity certificate configuration or certificate/key files at {} were not ready after {}s".format(
+            spiffe_config_path, _agent_identity_utils._TOTAL_TIMEOUT
+        )
+    ) from last_error
 
 
 def _read_credential_bundle_file(bundle_path):
@@ -839,6 +969,11 @@ def check_use_client_cert():
     containing a "workload" section, or if no certificate config file is
     configured/present and the GKE credential bundle exists at
     /var/run/secrets/workload-spiffe-credentials/x509.credential-bundle.private-key.pem.
+    When GOOGLE_API_CERTIFICATE_CONFIG points to the well-known SPIFFE
+    directory (/var/run/secrets/workload-spiffe-credentials), this returns True
+    while the file is missing, empty, or not yet valid JSON so startup polling
+    can run when credentials are loaded. Once it parses, the "workload" check
+    above applies.
     Otherwise, it returns False.
 
     Returns:
@@ -849,6 +984,11 @@ def check_use_client_cert():
         return env_override
 
     # Auto-enablement checks (when GOOGLE_API_USE_CLIENT_CERTIFICATE is not set)
+    spiffe_config_path = _get_spiffe_polling_config_path()
+    # Before the SPIFFE config is mounted, assume it will provide a cert and let
+    # the loader poll for it.
+    if spiffe_config_path is not None and not path.exists(spiffe_config_path):
+        return True
 
     # Check if a workload config file exists.
     cert_path = _get_cert_config_path(include_context_aware=True)
@@ -858,6 +998,10 @@ def check_use_client_cert():
             with open(cert_path, "r") as f:
                 content = json.load(f)
         except (FileNotFoundError, OSError, json.JSONDecodeError) as e:
+            if spiffe_config_path is not None and isinstance(e, json.JSONDecodeError):
+                # The SPIFFE config is written in place, so it can be empty or
+                # partially written at startup. Let the loader poll for it.
+                return True
             _LOGGER.debug(
                 "mTLS auto-enablement failed: Could not read/parse certificate file at %s. Error: %s",
                 cert_path,
