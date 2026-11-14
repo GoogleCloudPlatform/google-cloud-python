@@ -4,6 +4,28 @@
 
 [1]: https://pypi.org/project/google-cloud-bigtable/#history
 
+## [2.50.3](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigtable-v2.50.2...google-cloud-bigtable-v2.50.3) (2026-11-14)
+
+
+### Bug Fixes
+
+* **bigtable:** encode prefix to UTF-8 bytes before computing upper bound in RowSet.add_row_range_with_prefix ([#18954](https://github.com/googleapis/google-cloud-python/issues/18954)) ([dfd9606](https://github.com/googleapis/google-cloud-python/commit/dfd96064997346a1d1243ebada6ba6fdb4b0d5f9))
+* **bigtable:** encode str qualifier in DeleteRangeFromColumn and allow -2**63 in int mutations ([#18881](https://github.com/googleapis/google-cloud-python/issues/18881)) ([6e80b83](https://github.com/googleapis/google-cloud-python/commit/6e80b834b2420ad1a4bea49459463798ac988742))
+* **bigtable:** Log warning on background task failure instead of exception ([#18193](https://github.com/googleapis/google-cloud-python/issues/18193)) ([92a8bf4](https://github.com/googleapis/google-cloud-python/commit/92a8bf4de41ee3e17c93514aad57b7047130c020))
+* **bigtable:** pack unpacked error details in _get_status and harden batcher error handling ([#18770](https://github.com/googleapis/google-cloud-python/issues/18770)) ([525e740](https://github.com/googleapis/google-cloud-python/commit/525e7403a59bd4ac20c049b0828d744a8f535b76))
+* **bigtable:** remove unneeded status field from throttling latencies metric ([#18858](https://github.com/googleapis/google-cloud-python/issues/18858)) ([dd48193](https://github.com/googleapis/google-cloud-python/commit/dd4819312e7fa21ab1147af6b15a43d82e7fee60))
+* **bigtable:** restore the mutation lifecycle in mutate_rows and DirectRow.commit ([#18856](https://github.com/googleapis/google-cloud-python/issues/18856)) ([d0ce8e3](https://github.com/googleapis/google-cloud-python/commit/d0ce8e312a06d8075505b500cb12ec8bec511b3d))
+* **bigtable:** synchronize MutationsBatcher staging and flush scheduling ([#18827](https://github.com/googleapis/google-cloud-python/issues/18827)) ([38afa8a](https://github.com/googleapis/google-cloud-python/commit/38afa8ad35ebcfa64462dc5a8238a23f63ead4c0))
+* **bigtable:** validate DirectRow and table match in MutationsBatcher.mutate ([#18874](https://github.com/googleapis/google-cloud-python/issues/18874)) ([8aa6d4d](https://github.com/googleapis/google-cloud-python/commit/8aa6d4d704833fb1c628a2d8e30e88f32ece8062))
+* **google-cloud-bigtable:** clamp mutate_row retry attempt timeouts to remaining operation timeout ([#19017](https://github.com/googleapis/google-cloud-python/issues/19017)) ([304ffef](https://github.com/googleapis/google-cloud-python/commit/304ffef6e73abb90cac97386d8e8d64f816aeff2))
+
+
+### Documentation
+
+* **bigtable:** add async admin samples ([#18923](https://github.com/googleapis/google-cloud-python/issues/18923)) ([14fb90b](https://github.com/googleapis/google-cloud-python/commit/14fb90bb91ab14a7fe21c89c2e3c2c9b97aa3ffb))
+* **bigtable:** add samples for sync client ([#17820](https://github.com/googleapis/google-cloud-python/issues/17820)) ([72e5f48](https://github.com/googleapis/google-cloud-python/commit/72e5f48d4c55e75665e2ddd9cb1a011c50dc423d))
+* **bigtable:** clarify that MutationsBatcher.flush defers exceptions to close ([#18825](https://github.com/googleapis/google-cloud-python/issues/18825)) ([371218d](https://github.com/googleapis/google-cloud-python/commit/371218dcd26981159ae9df2962da812a3bf204f1))
+
 ## [2.50.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigtable-v2.50.1...google-cloud-bigtable-v2.50.2) (2026-10-22)
 
 
