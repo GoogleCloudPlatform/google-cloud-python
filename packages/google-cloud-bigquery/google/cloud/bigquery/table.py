@@ -755,8 +755,8 @@ class Table(_TableBase):
         """Union[str, None]: The type of the table (:data:`None` until set from
         the server).
 
-        Possible values are ``'TABLE'``, ``'VIEW'``, ``'MATERIALIZED_VIEW'`` or
-        ``'EXTERNAL'``.
+        Possible values are ``'TABLE'``, ``'VIEW'``, ``'MATERIALIZED_VIEW'``,
+        ``'SNAPSHOT'`` or ``'EXTERNAL'``.
         """
         return self._properties.get(self._PROPERTY_TO_API_FIELD["type"])
 
@@ -1509,7 +1509,8 @@ class TableListItem(_TableBase):
         """Union[str, None]: The type of the table (:data:`None` until set from
         the server).
 
-        Possible values are ``'TABLE'``, ``'VIEW'``, or ``'EXTERNAL'``.
+        Possible values are ``'TABLE'``, ``'VIEW'``, ``'MATERIALIZED_VIEW'``,
+        ``'SNAPSHOT'`` or ``'EXTERNAL'``.
         """
         return self._properties.get("type")
 
