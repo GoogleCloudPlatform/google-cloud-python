@@ -697,6 +697,19 @@ replacements:
           test_map[test_type](session)
 
 
+      def _has_xdist_arg(posargs):
+          return any(
+              arg == "-n"
+              or (
+                  arg.startswith("-n")
+                  and (arg[2:].isdigit() or arg[2:] in ("auto", "logical"))
+              )
+              or arg == "--numprocesses"
+              or arg.startswith("--numprocesses=")
+              for arg in posargs
+          )
+
+
       def system_default(session):
           """Run the system test suite."""
           constraints_path = str(
@@ -734,9 +747,7 @@ replacements:
                   session.env.get("BIGTABLE_EMULATOR_HOST")
                   or os.environ.get("BIGTABLE_EMULATOR_HOST")
               )
-              has_xdist_arg = any(
-                  arg.startswith(("-n", "--numprocesses")) for arg in session.posargs
-              )
+              has_xdist_arg = _has_xdist_arg(session.posargs)
               xdist_args = (
                   [] if (in_emulator or has_xdist_arg) else ["-n", "4", "--dist=loadfile"]
               )
@@ -774,9 +785,7 @@ replacements:
 
           has_target = any(not arg.startswith("-") for arg in session.posargs)
           target_paths = [] if has_target else [os.path.join("samples")]
-          has_xdist_arg = any(
-              arg.startswith(("-n", "--numprocesses")) for arg in session.posargs
-          )
+          has_xdist_arg = _has_xdist_arg(session.posargs)
           xdist_args = [] if has_xdist_arg else ["-n", "4", "--dist=loadfile"]
           session.run(
               "py.test",
