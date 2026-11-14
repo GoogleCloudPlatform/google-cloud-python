@@ -17,15 +17,21 @@ This file loads and executes yaml-encoded test cases from pipeline_e2e.yaml
 
 from __future__ import annotations
 
+import copy
 import datetime
 import os
 import re
+import uuid
 from typing import Any
 
 import pytest
 import yaml
 from google.protobuf.json_format import MessageToDict
-from test__helpers import FIRESTORE_EMULATOR, FIRESTORE_ENTERPRISE_DB, system_test_lock
+from test__helpers import (
+    FIRESTORE_EMULATOR,
+    FIRESTORE_ENTERPRISE_DB,
+    UNIQUE_RESOURCE_ID,
+)
 
 from google.cloud.firestore import AsyncClient, Client, GeoPoint
 from google.cloud.firestore_v1 import pipeline_expressions
@@ -45,13 +51,18 @@ test_dir_name = os.path.dirname(__file__)
 id_format = lambda x: f"{x.get('file_name', '')}: {x.get('description', '')}"  # noqa: E731
 
 
-def yaml_loader(field="tests", dir_name="pipeline_e2e", attach_file_name=True):
+def yaml_loader(
+    field="tests",
+    dir_name="pipeline_e2e",
+    attach_file_name=True,
+    exclude_files=(),
+):
     """
     Helper to load test cases or data from yaml file
     """
     combined_yaml = None
     for file_name in os.listdir(f"{test_dir_name}/{dir_name}"):
-        if not file_name.endswith(".yaml"):
+        if not file_name.endswith(".yaml") or file_name in exclude_files:
             continue
         with open(f"{test_dir_name}/{dir_name}/{file_name}") as f:
             new_yaml = yaml.safe_load(f)
@@ -101,12 +112,12 @@ def yaml_loader(field="tests", dir_name="pipeline_e2e", attach_file_name=True):
     [t for t in yaml_loader() if "assert_proto" in t],
     ids=id_format,
 )
-def test_pipeline_parse_proto(test_dict, client):
+def test_pipeline_parse_proto(test_dict, offline_client):
     """
     Finds assert_proto statements in yaml, and compares generated proto against expected value
     """
     expected_proto = test_dict.get("assert_proto", None)
-    pipeline = parse_pipeline(client, test_dict["pipeline"])
+    pipeline = parse_pipeline(offline_client, test_dict["pipeline"])
     # check if proto matches as expected
     if expected_proto:
         got_proto = MessageToDict(pipeline._to_pb()._pb)
@@ -160,6 +171,75 @@ def _assert_pipeline_results(
         assert len(got_results) == expected_count
 
 
+def _load_dml_data() -> dict[str, dict[str, Any]]:
+    with open(f"{test_dir_name}/pipeline_e2e/dml.yaml") as f:
+        return (yaml.safe_load(f) or {}).get("data") or {}
+
+
+def _prepare_dml_test(
+    test_dict: dict[str, Any],
+) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
+    """Rewrite DML collection names to unique per-test IDs for parallel safety."""
+    if test_dict.get("file_name") != "dml.yaml":
+        return test_dict, {}
+
+    dml_data = _load_dml_data()
+    suffix = f"{UNIQUE_RESOURCE_ID}-{uuid.uuid4().hex[:8]}"
+    renamed = {col: f"{col}{suffix}" for col in dml_data}
+    isolated = copy.deepcopy(test_dict)
+
+    used_cols: set[str] = set()
+    for stage in isolated.get("pipeline", []):
+        if isinstance(stage, dict) and "Collection" in stage:
+            col = stage["Collection"]
+            if col in renamed:
+                used_cols.add(col)
+                stage["Collection"] = renamed[col]
+
+    if "assert_end_state" in isolated:
+        new_end_state = {}
+        for doc_path, content in isolated["assert_end_state"].items():
+            col, rest = doc_path.split("/", 1)
+            new_col = renamed.get(col, col)
+            new_end_state[f"{new_col}/{rest}"] = content
+        isolated["assert_end_state"] = new_end_state
+
+    docs_to_seed = {renamed[col]: dml_data[col] for col in used_cols}
+    return isolated, docs_to_seed
+
+
+def _seed_dml_docs_sync(client, docs_to_seed: dict[str, dict[str, Any]]) -> list[Any]:
+    if not docs_to_seed:
+        return []
+    batch = client.batch()
+    refs = []
+    for col_name, documents in docs_to_seed.items():
+        col_ref = client.collection(col_name)
+        for doc_id, doc_data in documents.items():
+            doc_ref = col_ref.document(doc_id)
+            refs.append(doc_ref)
+            batch.set(doc_ref, _parse_yaml_types(doc_data))
+    batch.commit()
+    return refs
+
+
+async def _seed_dml_docs_async(
+    async_client, docs_to_seed: dict[str, dict[str, Any]]
+) -> list[Any]:
+    if not docs_to_seed:
+        return []
+    batch = async_client.batch()
+    refs = []
+    for col_name, documents in docs_to_seed.items():
+        col_ref = async_client.collection(col_name)
+        for doc_id, doc_data in documents.items():
+            doc_ref = col_ref.document(doc_id)
+            refs.append(doc_ref)
+            batch.set(doc_ref, _parse_yaml_types(doc_data))
+    await batch.commit()
+    return refs
+
+
 @pytest.mark.parametrize(
     "test_dict",
     [
@@ -176,31 +256,40 @@ def test_pipeline_results(test_dict, client):
     """
     Ensure pipeline returns expected results
     """
-    expected_results = _parse_yaml_types(test_dict.get("assert_results", None))
-    expected_approximate_results = _parse_yaml_types(
-        test_dict.get("assert_results_approximate", None)
-    )
-    expected_count = test_dict.get("assert_count", None)
-    expected_end_state = _parse_yaml_types(test_dict.get("assert_end_state", {}))
-    pipeline = parse_pipeline(client, test_dict["pipeline"])
-    # check if server responds as expected
-    got_results = [snapshot.data() for snapshot in pipeline.stream()]
-    _assert_pipeline_results(
-        got_results, expected_results, expected_approximate_results, expected_count
-    )
-    if expected_end_state:
-        for doc_path, expected_content in expected_end_state.items():
-            doc_ref = client.document(doc_path)
-            snapshot = doc_ref.get()
-            if expected_content is None:
-                assert not snapshot.exists, (
-                    f"Expected {doc_path} to be absent, but it exists"
-                )
-            else:
-                assert snapshot.exists, (
-                    f"Expected {doc_path} to exist, but it was absent"
-                )
-                assert snapshot.to_dict() == expected_content
+    test_dict, docs_to_seed = _prepare_dml_test(test_dict)
+    dml_refs = _seed_dml_docs_sync(client, docs_to_seed)
+    try:
+        expected_results = _parse_yaml_types(test_dict.get("assert_results", None))
+        expected_approximate_results = _parse_yaml_types(
+            test_dict.get("assert_results_approximate", None)
+        )
+        expected_count = test_dict.get("assert_count", None)
+        expected_end_state = _parse_yaml_types(test_dict.get("assert_end_state", {}))
+        pipeline = parse_pipeline(client, test_dict["pipeline"])
+        # check if server responds as expected
+        got_results = [snapshot.data() for snapshot in pipeline.stream()]
+        _assert_pipeline_results(
+            got_results, expected_results, expected_approximate_results, expected_count
+        )
+        if expected_end_state:
+            for doc_path, expected_content in expected_end_state.items():
+                doc_ref = client.document(doc_path)
+                snapshot = doc_ref.get()
+                if expected_content is None:
+                    assert not snapshot.exists, (
+                        f"Expected {doc_path} to be absent, but it exists"
+                    )
+                else:
+                    assert snapshot.exists, (
+                        f"Expected {doc_path} to exist, but it was absent"
+                    )
+                    assert snapshot.to_dict() == expected_content
+    finally:
+        if dml_refs:
+            cleanup_batch = client.batch()
+            for ref in dml_refs:
+                cleanup_batch.delete(ref)
+            cleanup_batch.commit()
 
 
 @pytest.mark.parametrize(
@@ -239,31 +328,40 @@ async def test_pipeline_results_async(test_dict, async_client):
     """
     Ensure pipeline returns expected results
     """
-    expected_results = _parse_yaml_types(test_dict.get("assert_results", None))
-    expected_approximate_results = _parse_yaml_types(
-        test_dict.get("assert_results_approximate", None)
-    )
-    expected_count = test_dict.get("assert_count", None)
-    expected_end_state = _parse_yaml_types(test_dict.get("assert_end_state", {}))
-    pipeline = parse_pipeline(async_client, test_dict["pipeline"])
-    # check if server responds as expected
-    got_results = [snapshot.data() async for snapshot in pipeline.stream()]
-    _assert_pipeline_results(
-        got_results, expected_results, expected_approximate_results, expected_count
-    )
-    if expected_end_state:
-        for doc_path, expected_content in expected_end_state.items():
-            doc_ref = async_client.document(doc_path)
-            snapshot = await doc_ref.get()
-            if expected_content is None:
-                assert not snapshot.exists, (
-                    f"Expected {doc_path} to be absent, but it exists"
-                )
-            else:
-                assert snapshot.exists, (
-                    f"Expected {doc_path} to exist, but it was absent"
-                )
-                assert snapshot.to_dict() == expected_content
+    test_dict, docs_to_seed = _prepare_dml_test(test_dict)
+    dml_refs = await _seed_dml_docs_async(async_client, docs_to_seed)
+    try:
+        expected_results = _parse_yaml_types(test_dict.get("assert_results", None))
+        expected_approximate_results = _parse_yaml_types(
+            test_dict.get("assert_results_approximate", None)
+        )
+        expected_count = test_dict.get("assert_count", None)
+        expected_end_state = _parse_yaml_types(test_dict.get("assert_end_state", {}))
+        pipeline = parse_pipeline(async_client, test_dict["pipeline"])
+        # check if server responds as expected
+        got_results = [snapshot.data() async for snapshot in pipeline.stream()]
+        _assert_pipeline_results(
+            got_results, expected_results, expected_approximate_results, expected_count
+        )
+        if expected_end_state:
+            for doc_path, expected_content in expected_end_state.items():
+                doc_ref = async_client.document(doc_path)
+                snapshot = await doc_ref.get()
+                if expected_content is None:
+                    assert not snapshot.exists, (
+                        f"Expected {doc_path} to be absent, but it exists"
+                    )
+                else:
+                    assert snapshot.exists, (
+                        f"Expected {doc_path} to exist, but it was absent"
+                    )
+                    assert snapshot.to_dict() == expected_content
+    finally:
+        if dml_refs:
+            cleanup_batch = async_client.batch()
+            for ref in dml_refs:
+                cleanup_batch.delete(ref)
+            await cleanup_batch.commit()
 
 
 #################################################################################
@@ -441,30 +539,39 @@ def _parse_yaml_types(data):
 
 
 @pytest.fixture(scope="module")
+def offline_client():
+    """
+    Build an offline client for proto serialization tests.
+    """
+    from google.auth.credentials import AnonymousCredentials
+
+    return Client(
+        project="test-project",
+        credentials=AnonymousCredentials(),
+        database=FIRESTORE_ENTERPRISE_DB,
+    )
+
+
+@pytest.fixture(scope="module")
 def client():
     """
-    Build a client to use for requests
+    Build a client to use for requests.
+
+    Read-only seed data from data.yaml is written idempotently and left in place
+    (not deleted at teardown) so parallel workers and concurrent CI runs never
+    need a distributed lock. Mutating DML tests isolate themselves per-test.
     """
     client = Client(project=FIRESTORE_PROJECT, database=FIRESTORE_ENTERPRISE_DB)
-    data = yaml_loader("data", attach_file_name=False)
-    to_delete = []
+    data = yaml_loader("data", attach_file_name=False, exclude_files=("dml.yaml",))
 
-    with system_test_lock(client, lock_name="pipeline_e2e_lock"):
-        try:
-            # setup data
-            batch = client.batch()
-            for collection_name, documents in data.items():
-                collection_ref = client.collection(collection_name)
-                for document_id, document_data in documents.items():
-                    document_ref = collection_ref.document(document_id)
-                    to_delete.append(document_ref)
-                    batch.set(document_ref, _parse_yaml_types(document_data))
-            batch.commit()
-            yield client
-        finally:
-            # clear data
-            for document_ref in to_delete:
-                document_ref.delete()
+    batch = client.batch()
+    for collection_name, documents in data.items():
+        collection_ref = client.collection(collection_name)
+        for document_id, document_data in documents.items():
+            document_ref = collection_ref.document(document_id)
+            batch.set(document_ref, _parse_yaml_types(document_data))
+    batch.commit()
+    yield client
 
 
 @pytest.fixture(scope="module")
