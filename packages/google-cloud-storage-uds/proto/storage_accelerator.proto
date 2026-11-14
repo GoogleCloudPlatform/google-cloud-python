@@ -1,0 +1,125 @@
+// Copyright 2026 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package google.cloud.storage.accelerator.v1;
+
+// Local IPC gRPC service exposed over a Unix Domain Socket (UDS) by the
+// Rust GCS Accelerator sidecar (`gcs-accelerator-server`).
+//
+// Analogous to Cloud Bigtable's v3 Service API over the Bigtable Accelerator,
+// thin language clients (Python, Ruby, PHP, Node.js, C#) call this simplified
+// surface over `unix:///...` while the Rust server executes transport-level
+// HTTP/JSON (and gRPC) operations, retries, checksum validation, and concurrent
+// Tokio multiplexing.
+service StorageAccelerator {
+  // Health check and server runtime inspection.
+  rpc Ping(PingRequest) returns (PingResponse);
+
+  // Read one or more byte ranges from a GCS object concurrently via Rust
+  // `Storage::read_object` (HTTP/JSON `GET /storage/v1/b/{b}/o/{o}?alt=media`).
+  // `Storage::read_object`. When `shm_path` is provided, writes range bytes
+  // directly into the shared-memory (`mmap`) buffer without copying payload
+  // bytes over the UDS socket.
+  rpc ReadRanges(ReadRangesRequest) returns (ReadRangesResponse);
+
+  // Stream byte ranges back as individual chunks over the UDS gRPC stream.
+  rpc ReadObjectStream(ReadRangesRequest) returns (stream ReadRangeChunk);
+
+  // Upload an object via Rust `Storage::write_object` (HTTP/JSON upload).
+  // Supports zero-copy payload transfer via `shm_path` + `shm_length`.
+  rpc WriteObject(WriteObjectRequest) returns (ObjectMetadata);
+
+  // List objects in a bucket with pagination aggregated in Rust via
+  // `StorageControl::list_objects`.
+  rpc ListObjects(ListObjectsRequest) returns (ListObjectsResponse);
+}
+
+message PingRequest {}
+
+message PingResponse {
+  uint32 pid = 1;
+  uint32 worker_threads = 2;
+  string version = 3;
+}
+
+message ByteRange {
+  uint64 offset = 1;
+  uint64 length = 2;
+}
+
+message ReadRangesRequest {
+  string bucket = 1;
+  string object = 2;
+  repeated ByteRange ranges = 3;
+  string endpoint = 4;
+  bool simulated = 5;
+  // Optional POSIX shared-memory (`/dev/shm/...`) path mapped by both client
+  // and server for zero-copy transfers.
+  string shm_path = 6;
+}
+
+message ReadRangesResponse {
+  repeated bytes chunks = 1;
+  // Populated when `shm_path` is used on `ReadRangesRequest`; records the
+  // exact byte count written for each requested range in the shared mmap.
+  repeated uint64 actual_lengths = 2;
+}
+
+message ReadRangeChunk {
+  uint32 range_index = 1;
+  bytes data = 2;
+}
+
+message WriteObjectRequest {
+  string bucket = 1;
+  string object = 2;
+  bytes data = 3;
+  string endpoint = 4;
+  bool simulated = 5;
+  // Optional POSIX shared-memory (`/dev/shm/...`) path and byte length for
+  // zero-copy object uploads.
+  string shm_path = 6;
+  uint64 shm_length = 7;
+}
+
+message ObjectMetadata {
+  string name = 1;
+  string bucket = 2;
+  int64 generation = 3;
+  int64 metageneration = 4;
+  int64 size = 5;
+  string storage_class = 6;
+  string etag = 7;
+  uint32 crc32c = 8;
+  bool has_crc32c = 9;
+}
+
+message ListObjectsRequest {
+  string bucket = 1;
+  string prefix = 2;
+  string delimiter = 3;
+  bool versions = 4;
+  bool include_folders_as_prefixes = 5;
+  uint32 max_results = 6;
+  string endpoint = 7;
+  uint32 simulated_count = 8;
+}
+
+message ListObjectsResponse {
+  repeated ObjectMetadata objects = 1;
+  repeated string prefixes = 2;
+}
+

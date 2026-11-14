@@ -1,0 +1,337 @@
+{
+  "mode": "live_json_bucket (princer-flat)",
+  "server_info": {
+    "pid": 3479886,
+    "worker_threads": 4,
+    "version": "0.1.0",
+    "python_rss_mib": 828.4,
+    "rust_server_rss_mib": 390.4
+  },
+  "results": [
+    {
+      "operation": "ReadObject",
+      "backend": "python_json",
+      "workload": "100 x 64 KiB",
+      "median_latency_ms": 138.05,
+      "p99_latency_ms": 139.29,
+      "throughput_mib_s": 45.3,
+      "cpu_s_per_gib": 29.345,
+      "python_cpu_s_per_gib": 29.345,
+      "server_cpu_s_per_gib": 0.0
+    },
+    {
+      "operation": "ReadObject",
+      "backend": "rust_uds_grpc",
+      "workload": "100 x 64 KiB",
+      "median_latency_ms": 77.07,
+      "p99_latency_ms": 78.4,
+      "throughput_mib_s": 81.1,
+      "cpu_s_per_gib": 6.672,
+      "python_cpu_s_per_gib": 2.085,
+      "server_cpu_s_per_gib": 4.588
+    },
+    {
+      "operation": "ReadObject",
+      "backend": "rust_uds_zerocopy",
+      "workload": "100 x 64 KiB",
+      "median_latency_ms": 59.86,
+      "p99_latency_ms": 62.92,
+      "throughput_mib_s": 104.4,
+      "cpu_s_per_gib": 4.056,
+      "python_cpu_s_per_gib": 0.124,
+      "server_cpu_s_per_gib": 3.932
+    },
+    {
+      "operation": "ReadObject",
+      "backend": "rust_pyo3_ffi",
+      "workload": "100 x 64 KiB",
+      "median_latency_ms": 45.68,
+      "p99_latency_ms": 50.74,
+      "throughput_mib_s": 136.8,
+      "cpu_s_per_gib": 4.724
+    },
+    {
+      "operation": "ReadObject",
+      "backend": "python_json",
+      "workload": "64 x 1024 KiB",
+      "median_latency_ms": 210.14,
+      "p99_latency_ms": 218.88,
+      "throughput_mib_s": 304.6,
+      "cpu_s_per_gib": 4.693,
+      "python_cpu_s_per_gib": 4.693,
+      "server_cpu_s_per_gib": 0.0
+    },
+    {
+      "operation": "ReadObject",
+      "backend": "rust_uds_grpc",
+      "workload": "64 x 1024 KiB",
+      "median_latency_ms": 85.48,
+      "p99_latency_ms": 95.49,
+      "throughput_mib_s": 748.7,
+      "cpu_s_per_gib": 3.215,
+      "python_cpu_s_per_gib": 1.679,
+      "server_cpu_s_per_gib": 1.536
+    },
+    {
+      "operation": "ReadObject",
+      "backend": "rust_uds_zerocopy",
+      "workload": "64 x 1024 KiB",
+      "median_latency_ms": 57.36,
+      "p99_latency_ms": 78.36,
+      "throughput_mib_s": 1115.9,
+      "cpu_s_per_gib": 1.166,
+      "python_cpu_s_per_gib": 0.014,
+      "server_cpu_s_per_gib": 1.152
+    },
+    {
+      "operation": "ReadObject",
+      "backend": "rust_pyo3_ffi",
+      "workload": "64 x 1024 KiB",
+      "median_latency_ms": 56.68,
+      "p99_latency_ms": 78.87,
+      "throughput_mib_s": 1129.1,
+      "cpu_s_per_gib": 1.428
+    },
+    {
+      "operation": "ReadObject",
+      "backend": "python_json",
+      "workload": "16 x 16384 KiB",
+      "median_latency_ms": 556.15,
+      "p99_latency_ms": 558.3,
+      "throughput_mib_s": 460.3,
+      "cpu_s_per_gib": 3.473,
+      "python_cpu_s_per_gib": 3.473,
+      "server_cpu_s_per_gib": 0.0
+    },
+    {
+      "operation": "ReadObject",
+      "backend": "rust_uds_grpc",
+      "workload": "16 x 16384 KiB",
+      "median_latency_ms": 376.72,
+      "p99_latency_ms": 399.12,
+      "throughput_mib_s": 679.5,
+      "cpu_s_per_gib": 3.471,
+      "python_cpu_s_per_gib": 1.743,
+      "server_cpu_s_per_gib": 1.728
+    },
+    {
+      "operation": "ReadObject",
+      "backend": "rust_uds_zerocopy",
+      "workload": "16 x 16384 KiB",
+      "median_latency_ms": 127.82,
+      "p99_latency_ms": 130.89,
+      "throughput_mib_s": 2002.9,
+      "cpu_s_per_gib": 1.132,
+      "python_cpu_s_per_gib": 0.004,
+      "server_cpu_s_per_gib": 1.128
+    },
+    {
+      "operation": "ReadObject",
+      "backend": "rust_pyo3_ffi",
+      "workload": "16 x 16384 KiB",
+      "median_latency_ms": 164.22,
+      "p99_latency_ms": 175.55,
+      "throughput_mib_s": 1558.9,
+      "cpu_s_per_gib": 1.306
+    },
+    {
+      "operation": "ReadObject",
+      "backend": "python_json",
+      "workload": "1 x 102400 KiB",
+      "median_latency_ms": 361.6,
+      "p99_latency_ms": 425.46,
+      "throughput_mib_s": 276.5,
+      "cpu_s_per_gib": 1.938,
+      "python_cpu_s_per_gib": 1.938,
+      "server_cpu_s_per_gib": 0.0
+    },
+    {
+      "operation": "ReadObject",
+      "backend": "rust_uds_grpc",
+      "workload": "1 x 102400 KiB",
+      "median_latency_ms": 550.16,
+      "p99_latency_ms": 571.14,
+      "throughput_mib_s": 181.8,
+      "cpu_s_per_gib": 2.856,
+      "python_cpu_s_per_gib": 1.259,
+      "server_cpu_s_per_gib": 1.597
+    },
+    {
+      "operation": "ReadObject",
+      "backend": "rust_uds_zerocopy",
+      "workload": "1 x 102400 KiB",
+      "median_latency_ms": 534.51,
+      "p99_latency_ms": 615.58,
+      "throughput_mib_s": 187.1,
+      "cpu_s_per_gib": 1.388,
+      "python_cpu_s_per_gib": 0.016,
+      "server_cpu_s_per_gib": 1.372
+    },
+    {
+      "operation": "ReadObject",
+      "backend": "rust_pyo3_ffi",
+      "workload": "1 x 102400 KiB",
+      "median_latency_ms": 337.88,
+      "p99_latency_ms": 386.7,
+      "throughput_mib_s": 296.0,
+      "cpu_s_per_gib": 1.656
+    },
+    {
+      "operation": "WriteObject (HTTP Upload)",
+      "backend": "python_json",
+      "workload": "1 x 256 KiB",
+      "median_latency_ms": 66.91,
+      "p99_latency_ms": 68.86,
+      "throughput_mib_s": 3.7,
+      "cpu_s_per_gib": 5.466,
+      "python_cpu_s_per_gib": 5.466,
+      "server_cpu_s_per_gib": 0.0
+    },
+    {
+      "operation": "WriteObject (HTTP Upload)",
+      "backend": "rust_uds_grpc",
+      "workload": "1 x 256 KiB",
+      "median_latency_ms": 68.44,
+      "p99_latency_ms": 76.06,
+      "throughput_mib_s": 3.7,
+      "cpu_s_per_gib": 5.312,
+      "python_cpu_s_per_gib": 5.312,
+      "server_cpu_s_per_gib": 0.0
+    },
+    {
+      "operation": "WriteObject (HTTP Upload)",
+      "backend": "rust_uds_zerocopy",
+      "workload": "1 x 256 KiB",
+      "median_latency_ms": 65.57,
+      "p99_latency_ms": 65.87,
+      "throughput_mib_s": 3.8,
+      "cpu_s_per_gib": 3.024,
+      "python_cpu_s_per_gib": 3.024,
+      "server_cpu_s_per_gib": 0.0
+    },
+    {
+      "operation": "WriteObject (HTTP Upload)",
+      "backend": "rust_pyo3_ffi",
+      "workload": "1 x 256 KiB",
+      "median_latency_ms": 72.62,
+      "p99_latency_ms": 74.6,
+      "throughput_mib_s": 3.4,
+      "cpu_s_per_gib": 2.231
+    },
+    {
+      "operation": "WriteObject (HTTP Upload)",
+      "backend": "python_json",
+      "workload": "1 x 16384 KiB",
+      "median_latency_ms": 188.54,
+      "p99_latency_ms": 212.09,
+      "throughput_mib_s": 84.9,
+      "cpu_s_per_gib": 0.553,
+      "python_cpu_s_per_gib": 0.553,
+      "server_cpu_s_per_gib": 0.0
+    },
+    {
+      "operation": "WriteObject (HTTP Upload)",
+      "backend": "rust_uds_grpc",
+      "workload": "1 x 16384 KiB",
+      "median_latency_ms": 230.34,
+      "p99_latency_ms": 253.9,
+      "throughput_mib_s": 69.5,
+      "cpu_s_per_gib": 1.626,
+      "python_cpu_s_per_gib": 0.986,
+      "server_cpu_s_per_gib": 0.64
+    },
+    {
+      "operation": "WriteObject (HTTP Upload)",
+      "backend": "rust_uds_zerocopy",
+      "workload": "1 x 16384 KiB",
+      "median_latency_ms": 214.79,
+      "p99_latency_ms": 216.21,
+      "throughput_mib_s": 74.5,
+      "cpu_s_per_gib": 0.395,
+      "python_cpu_s_per_gib": 0.139,
+      "server_cpu_s_per_gib": 0.256
+    },
+    {
+      "operation": "WriteObject (HTTP Upload)",
+      "backend": "rust_pyo3_ffi",
+      "workload": "1 x 16384 KiB",
+      "median_latency_ms": 207.29,
+      "p99_latency_ms": 239.69,
+      "throughput_mib_s": 77.2,
+      "cpu_s_per_gib": 0.427
+    },
+    {
+      "operation": "WriteObject (HTTP Upload)",
+      "backend": "python_json",
+      "workload": "1 x 65536 KiB",
+      "median_latency_ms": 376.62,
+      "p99_latency_ms": 406.37,
+      "throughput_mib_s": 169.9,
+      "cpu_s_per_gib": 0.441,
+      "python_cpu_s_per_gib": 0.441,
+      "server_cpu_s_per_gib": 0.0
+    },
+    {
+      "operation": "WriteObject (HTTP Upload)",
+      "backend": "rust_uds_grpc",
+      "workload": "1 x 65536 KiB",
+      "median_latency_ms": 715.32,
+      "p99_latency_ms": 780.13,
+      "throughput_mib_s": 89.5,
+      "cpu_s_per_gib": 3.327,
+      "python_cpu_s_per_gib": 2.271,
+      "server_cpu_s_per_gib": 1.056
+    },
+    {
+      "operation": "WriteObject (HTTP Upload)",
+      "backend": "rust_uds_zerocopy",
+      "workload": "1 x 65536 KiB",
+      "median_latency_ms": 459.03,
+      "p99_latency_ms": 469.6,
+      "throughput_mib_s": 139.4,
+      "cpu_s_per_gib": 0.428,
+      "python_cpu_s_per_gib": 0.108,
+      "server_cpu_s_per_gib": 0.32
+    },
+    {
+      "operation": "WriteObject (HTTP Upload)",
+      "backend": "rust_pyo3_ffi",
+      "workload": "1 x 65536 KiB",
+      "median_latency_ms": 521.7,
+      "p99_latency_ms": 563.29,
+      "throughput_mib_s": 122.7,
+      "cpu_s_per_gib": 0.812
+    },
+    {
+      "operation": "ListObjects (Paginator)",
+      "backend": "python_json",
+      "workload": "1,000 objects",
+      "median_latency_ms": 55.12,
+      "p99_latency_ms": 62.07,
+      "objects_per_sec": 18141.0,
+      "cpu_ms_per_call": 6.56,
+      "python_cpu_ms_per_call": 6.56,
+      "server_cpu_ms_per_call": 0.0
+    },
+    {
+      "operation": "ListObjects (Paginator)",
+      "backend": "rust_uds_grpc",
+      "workload": "1,000 objects",
+      "median_latency_ms": 64.7,
+      "p99_latency_ms": 76.21,
+      "objects_per_sec": 15456.0,
+      "cpu_ms_per_call": 4.15,
+      "python_cpu_ms_per_call": 2.15,
+      "server_cpu_ms_per_call": 2.0
+    },
+    {
+      "operation": "ListObjects (Paginator)",
+      "backend": "rust_pyo3_ffi",
+      "workload": "1,000 objects",
+      "median_latency_ms": 56.95,
+      "p99_latency_ms": 58.56,
+      "objects_per_sec": 17558.0,
+      "cpu_ms_per_call": 2.52
+    }
+  ]
+}

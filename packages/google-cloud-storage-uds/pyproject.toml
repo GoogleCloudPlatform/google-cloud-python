@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "google-cloud-storage-uds"
+version = "0.1.0"
+description = "Thin Python client for Google Cloud Storage backed by a standalone Rust gRPC-over-UDS sidecar server"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+dependencies = [
+    "google-cloud-storage>=3.0.0",
+    "google-api-core>=2.15.0",
+    "google-auth>=2.26.1",
+    "grpcio>=1.60.0",
+    "protobuf>=4.25.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["google*"]
+

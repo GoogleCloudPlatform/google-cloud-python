@@ -1,0 +1,26 @@
+[package]
+name = "google_cloud_storage_uds"
+version = "0.1.0"
+edition = "2021"
+description = "Rust gRPC over Unix Domain Socket (UDS) accelerator server for Google Cloud Storage Python SDK"
+license = "Apache-2.0"
+publish = false
+
+[[bin]]
+name = "gcs-accelerator-server"
+path = "src/main.rs"
+
+[dependencies]
+google-cloud-storage = "1.20"
+google-cloud-gax = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "time", "net", "signal", "fs", "io-util"] }
+tokio-stream = { version = "0.1", features = ["net"] }
+tonic = { version = "0.14.6", default-features = false, features = ["server", "codegen"] }
+tonic-prost = "0.14.6"
+prost = "0.14.4"
+http = "1"
+tower-service = "0.3"
+futures-util = { version = "0.3", default-features = false, features = ["std"] }
+bytes = "1"
+libc = "0.2"
+
