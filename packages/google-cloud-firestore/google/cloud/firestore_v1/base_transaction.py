@@ -26,6 +26,7 @@ from typing import (
     Union,
 )
 
+from google.api_core import exceptions
 from google.api_core import retry as retries
 
 from google.cloud.firestore_v1 import types
@@ -50,6 +51,23 @@ _CANT_COMMIT: str = _MISSING_ID_TEMPLATE.format("committed")
 _WRITE_READ_ONLY: str = "Cannot perform write operation in read-only transaction."
 _EXCEED_ATTEMPTS_TEMPLATE: str = "Failed to commit transaction in {:d} attempts."
 _CANT_RETRY_READ_ONLY: str = "Only read-write transactions can be retried."
+# Firestore reports an expired transaction id as InvalidArgument. That status
+# is not generally retryable; this substring is, matching the Node and Java
+# clients (error.message / getMessage() contains "transaction has expired").
+_EXPIRED_TRANSACTION_MESSAGE = "transaction has expired"
+
+
+def _is_retryable_commit_error(exc: BaseException) -> bool:
+    """Return whether a commit failure should restart the transaction.
+
+    ``Aborted`` is always retryable. ``InvalidArgument`` is retryable only
+    when the message says the transaction has expired.
+    """
+    if isinstance(exc, exceptions.Aborted):
+        return True
+    if isinstance(exc, exceptions.InvalidArgument):
+        return _EXPIRED_TRANSACTION_MESSAGE in str(exc)
+    return False
 
 
 class BaseTransaction(object):
