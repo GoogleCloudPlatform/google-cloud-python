@@ -110,6 +110,8 @@ def wait_for_query(
     while True:
         if query_job.query_plan:
             default_total = len(query_job.query_plan)
+            # The plan can have fewer stages after a reload.
+            i = min(i, default_total - 1)
             current_stage = query_job.query_plan[i]
             progress_bar.total = len(query_job.query_plan)
             progress_bar.set_description(

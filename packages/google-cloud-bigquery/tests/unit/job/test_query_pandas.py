@@ -417,6 +417,24 @@ def test_to_arrow_w_tqdm_w_pending_status(tqdm_mock):
     )
 
 
+@pytest.mark.skipif(tqdm is None, reason="Requires `tqdm`")
+@mock.patch("google.cloud.bigquery._tqdm_helpers.tqdm")
+def test_wait_for_query_w_shrinking_query_plan(tqdm_mock):
+    from google.cloud.bigquery._tqdm_helpers import wait_for_query
+
+    complete_stage = mock.Mock(status="COMPLETE")
+    pending_stage = mock.Mock(status="PENDING")
+    job = mock.Mock(query_plan=[complete_stage, pending_stage])
+    job.result.side_effect = [concurrent.futures.TimeoutError, mock.sentinel.rows]
+
+    def shrink_query_plan():
+        job.query_plan = [complete_stage]
+
+    job.reload.side_effect = shrink_query_plan
+
+    assert wait_for_query(job, progress_bar_type="tqdm") is mock.sentinel.rows
+
+
 @pytest.mark.skipif(pyarrow is None, reason="Requires `pyarrow`")
 @pytest.mark.skipif(tqdm is None, reason="Requires `tqdm`")
 @mock.patch("google.cloud.bigquery._tqdm_helpers.tqdm")
