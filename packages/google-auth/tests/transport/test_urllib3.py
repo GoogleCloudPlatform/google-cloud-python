@@ -114,6 +114,36 @@ class TestMakeMutualTlsHttp(object):
         assert "Failed to configure client certificate" in str(exc_info.value)
         assert isinstance(exc_info.value.__cause__, OSError)
 
+    def test_success_with_pool_kwargs(self):
+        retries = urllib3.util.Retry(total=3)
+        http = google.auth.transport.urllib3._make_mutual_tls_http(
+            pytest.public_cert_bytes,
+            pytest.private_key_bytes,
+            retries=retries,
+            maxsize=7,
+        )
+        assert isinstance(http, urllib3.PoolManager)
+        assert http.connection_pool_kw["ssl_context"] is not None
+        assert http.connection_pool_kw["retries"] is retries
+        assert http.connection_pool_kw["maxsize"] == 7
+
+
+def _custom_pool_manager():
+    return urllib3.PoolManager(
+        num_pools=3,
+        retries=urllib3.util.Retry(total=3),
+        timeout=urllib3.util.Timeout(connect=5.0),
+        maxsize=7,
+        block=True,
+    )
+
+
+def _assert_same_pool_settings(new_http, old_http):
+    for name in ("retries", "timeout", "maxsize", "block"):
+        assert new_http.connection_pool_kw[name] is old_http.connection_pool_kw[name]
+    assert new_http.headers == {"x-custom": "value"}
+    assert new_http.pools._maxsize == 3
+
 
 class TestAuthorizedHttp(object):
     TEST_URL = "http://example.com"
@@ -223,6 +253,50 @@ class TestAuthorizedHttp(object):
         mock_make_mutual_tls_http.assert_called_once_with(
             cert=pytest.public_cert_bytes, key=pytest.private_key_bytes
         )
+
+    def test_configure_mtls_channel_preserves_pool_settings(self):
+        callback = mock.Mock()
+        callback.return_value = (pytest.public_cert_bytes, pytest.private_key_bytes)
+        old_http = _custom_pool_manager()
+        authed_http = google.auth.transport.urllib3.AuthorizedHttp(
+            credentials=mock.Mock(), http=old_http
+        )
+        authed_http.headers = {"x-custom": "value"}
+
+        with pytest.warns(UserWarning):
+            with mock.patch.dict(
+                os.environ, {environment_vars.GOOGLE_API_USE_CLIENT_CERTIFICATE: "true"}
+            ):
+                is_mtls = authed_http.configure_mtls_channel(callback)
+
+        assert is_mtls
+        assert authed_http.http is not old_http
+        assert authed_http.http.connection_pool_kw["ssl_context"] is not None
+        _assert_same_pool_settings(authed_http.http, old_http)
+        assert authed_http.headers == {"x-custom": "value"}
+
+    @mock.patch(
+        "google.auth.transport._mtls_helper.get_client_cert_and_key", autospec=True
+    )
+    def test_configure_mtls_channel_non_mtls_preserves_pool_settings(
+        self, mock_get_client_cert_and_key
+    ):
+        mock_get_client_cert_and_key.return_value = (False, None, None)
+        old_http = _custom_pool_manager()
+        authed_http = google.auth.transport.urllib3.AuthorizedHttp(
+            credentials=mock.Mock(), http=old_http
+        )
+        authed_http.headers = {"x-custom": "value"}
+
+        with pytest.warns(UserWarning):
+            with mock.patch.dict(
+                os.environ, {environment_vars.GOOGLE_API_USE_CLIENT_CERTIFICATE: "true"}
+            ):
+                is_mtls = authed_http.configure_mtls_channel()
+
+        assert not is_mtls
+        assert authed_http.http is not old_http
+        _assert_same_pool_settings(authed_http.http, old_http)
 
     @mock.patch("google.auth.transport.urllib3._make_mutual_tls_http", autospec=True)
     @mock.patch(

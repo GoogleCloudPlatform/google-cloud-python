@@ -20,6 +20,7 @@ import http.client as http_client
 import logging
 import threading
 import warnings
+from collections.abc import Mapping
 
 # Certifi is Mozilla's certificate bundle. Urllib3 needs a certificate bundle
 # to verify HTTPS requests, and certifi is the recommended and most reliable
@@ -154,20 +155,61 @@ class Request(transport.Request):
             raise new_exc from caught_exc
 
 
-def _make_default_http():
+# Connection pool settings unrelated to TLS that are carried over when
+# ``AuthorizedHttp.configure_mtls_channel`` replaces the ``urllib3.PoolManager``.
+_CARRIED_OVER_POOL_SETTINGS = ("retries", "timeout", "maxsize", "block")
+_DEFAULT_NUM_POOLS = 10
+
+
+def _pool_manager_settings(http):
+    """Get the non-TLS settings of a ``urllib3.PoolManager``.
+
+    Args:
+        http (Any): The HTTP object to read the settings from.
+
+    Returns:
+        Mapping[str, Any]: The ``urllib3.PoolManager`` keyword arguments for the
+            settings that were set on ``http``. Empty if ``http`` is not a
+            ``urllib3.PoolManager``.
+    """
+    if not isinstance(http, urllib3.PoolManager):
+        return {}
+
+    settings = {}
+    pool_kw = getattr(http, "connection_pool_kw", None)
+    if isinstance(pool_kw, dict):
+        settings.update(
+            (name, pool_kw[name])
+            for name in _CARRIED_OVER_POOL_SETTINGS
+            if name in pool_kw
+        )
+    headers = getattr(http, "headers", None)
+    if isinstance(headers, Mapping) and headers:
+        settings["headers"] = headers
+    num_pools = getattr(getattr(http, "pools", None), "_maxsize", None)
+    if isinstance(num_pools, int) and num_pools != _DEFAULT_NUM_POOLS:
+        settings["num_pools"] = num_pools
+    return settings
+
+
+def _make_default_http(**pool_kwargs):
     if certifi is not None:
-        return urllib3.PoolManager(cert_reqs="CERT_REQUIRED", ca_certs=certifi.where())
+        return urllib3.PoolManager(
+            cert_reqs="CERT_REQUIRED", ca_certs=certifi.where(), **pool_kwargs
+        )
     else:
-        return urllib3.PoolManager()
+        return urllib3.PoolManager(**pool_kwargs)
 
 
-def _make_mutual_tls_http(cert, key):
+def _make_mutual_tls_http(cert, key, **pool_kwargs):
     """Create a mutual TLS HTTP connection with the given client cert and key.
     See https://github.com/urllib3/urllib3/issues/474#issuecomment-253168415
 
     Args:
         cert (bytes): client certificate in PEM format
         key (bytes): client private key in PEM format
+        pool_kwargs: Additional keyword arguments, such as ``retries`` or
+            ``maxsize``, passed to the ``urllib3.PoolManager``.
 
     Returns:
         urllib3.PoolManager: Mutual TLS HTTP connection.
@@ -199,7 +241,7 @@ def _make_mutual_tls_http(cert, key):
             "Failed to configure client certificate and key for mTLS."
         ) from exc
 
-    http = urllib3.PoolManager(ssl_context=ctx)
+    http = urllib3.PoolManager(ssl_context=ctx, **pool_kwargs)
     return http
 
 
@@ -341,6 +383,10 @@ class AuthorizedHttp(RequestMethods):  # type: ignore
                 If the callback is None, application default SSL credentials
                 will be used.
 
+        The new `urllib3.PoolManager` keeps the ``retries``, ``timeout``,
+        ``maxsize``, ``block``, ``headers`` and ``num_pools`` settings of the
+        current one.
+
         .. warning::
             Calling this method mutates the underlying `urllib3.PoolManager`.
             It is not thread-safe to call this explicitly while other
@@ -358,16 +404,17 @@ class AuthorizedHttp(RequestMethods):  # type: ignore
         if not use_client_cert:
             return False
 
+        pool_settings = _pool_manager_settings(self.http)
         try:
             found_cert_key, cert, key = transport._mtls_helper.get_client_cert_and_key(
                 client_cert_callback
             )
 
             if found_cert_key:
-                new_http = _make_mutual_tls_http(cert, key)
+                new_http = _make_mutual_tls_http(cert, key, **pool_settings)
                 new_is_mtls = True
             else:
-                new_http = _make_default_http()
+                new_http = _make_default_http(**pool_settings)
                 new_is_mtls = False
         except (
             exceptions.ClientCertError,
