@@ -4,6 +4,14 @@
 
 [1]: https://pypi.org/project/django-google-spanner/#history
 
+## [5.2.2](https://github.com/googleapis/google-cloud-python/compare/django-google-spanner-v5.2.1...django-google-spanner-v5.2.2) (2026-11-14)
+
+
+### Bug Fixes
+
+* **django-google-spanner:** harden identifier quoting ([#19069](https://github.com/googleapis/google-cloud-python/issues/19069)) ([f896935](https://github.com/googleapis/google-cloud-python/commit/f896935dd61e873bef8dea02c4fd59e200a94f4d))
+* **django-google-spanner:** support JSONField read and write operations ([#19007](https://github.com/googleapis/google-cloud-python/issues/19007)) ([e92588b](https://github.com/googleapis/google-cloud-python/commit/e92588b50511c06fdb082652e70ec520822364cf))
+
 ## [5.2.1](https://github.com/googleapis/google-cloud-python/compare/django-google-spanner-v5.2.0...django-google-spanner-v5.2.1) (2026-11-12)
 
 
