@@ -398,7 +398,7 @@ def system_default(session):
         )
         has_xdist_arg = _has_xdist_arg(session.posargs)
         xdist_args = (
-            [] if (in_emulator or has_xdist_arg) else ["-n", "4", "--dist=loadfile"]
+            [] if (in_emulator or has_xdist_arg) else ["-n", "8", "--dist=loadfile"]
         )
         session.run(
             "py.test",
@@ -435,7 +435,7 @@ def samples(session):
     has_target = any(not arg.startswith("-") for arg in session.posargs)
     target_paths = [] if has_target else [os.path.join("samples")]
     has_xdist_arg = _has_xdist_arg(session.posargs)
-    xdist_args = [] if has_xdist_arg else ["-n", "4", "--dist=loadfile"]
+    xdist_args = [] if has_xdist_arg else ["-n", "8", "--dist=loadfile"]
     session.run(
         "py.test",
         "--quiet",
