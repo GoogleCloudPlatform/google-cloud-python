@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-ndb/#history
 
+## [2.7.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-ndb-v2.7.1...google-cloud-ndb-v2.7.2) (2026-11-14)
+
+
+### Bug Fixes
+
+* **ndb:** replace deprecated datetime.utcnow() and utcfromtimestamp() ([#18186](https://github.com/googleapis/google-cloud-python/issues/18186)) ([7854e05](https://github.com/googleapis/google-cloud-python/commit/7854e05ae76e8ac91830f56c0ea11d1468059e6a))
+
 ## [2.7.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-ndb-v2.7.0...google-cloud-ndb-v2.7.1) (2026-10-01)
 
 

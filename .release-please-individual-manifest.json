@@ -10,7 +10,7 @@
   "packages/google-cloud-designcenter": "0.1.0",
   "packages/google-cloud-firestore": "2.34.1",
   "packages/google-cloud-logging": "3.17.0",
-  "packages/google-cloud-ndb": "2.7.1",
+  "packages/google-cloud-ndb": "2.7.2",
   "packages/google-cloud-observability": "0.1.0",
   "packages/google-cloud-pubsub": "2.44.0",
   "packages/google-cloud-spanner": "3.72.0",
