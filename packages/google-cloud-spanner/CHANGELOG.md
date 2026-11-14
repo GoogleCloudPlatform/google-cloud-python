@@ -4,6 +4,16 @@
 
 [1]: https://pypi.org/project/google-cloud-spanner/#history
 
+## [3.72.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-spanner-v3.72.0...google-cloud-spanner-v3.72.1) (2026-11-14)
+
+
+### Bug Fixes
+
+* **spanner:** eliminate silent SQL truncation in DB-API ([#19046](https://github.com/googleapis/google-cloud-python/issues/19046)) ([0639880](https://github.com/googleapis/google-cloud-python/commit/0639880aca98f0d22b94e444082c70f35ede5a6a))
+* **spanner:** escape identifier delimiters and validate table names ([#19052](https://github.com/googleapis/google-cloud-python/issues/19052)) ([f159262](https://github.com/googleapis/google-cloud-python/commit/f15926272152f7053eb8f65d27b49c4d7309cad5))
+* **spanner:** harden identifier escaping in dbapi driver ([#19054](https://github.com/googleapis/google-cloud-python/issues/19054)) ([3952b88](https://github.com/googleapis/google-cloud-python/commit/3952b8886d0eac7ae0114b2b00318782f4b9f988))
+* **spanner:** quote database names when creating databases ([#19053](https://github.com/googleapis/google-cloud-python/issues/19053)) ([97a00d5](https://github.com/googleapis/google-cloud-python/commit/97a00d50fea2053ad685ab46edea0be67300f6f2))
+
 ## [3.72.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-spanner-v3.71.0...google-cloud-spanner-v3.72.0) (2026-11-12)
 
 
