@@ -1544,7 +1544,7 @@ libraries:
           - python-gapic-namespace=google.cloud
       default_version: v1
   - name: google-cloud-ndb
-    version: 2.7.1
+    version: 2.7.2
     python:
       library_type: GAPIC_MANUAL
       metadata_name_override: python-ndb
