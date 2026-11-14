@@ -3,6 +3,7 @@
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file or at
 # https://developers.google.com/open-source/licenses/bsd
+import datetime
 import os
 import uuid
 
@@ -455,11 +456,33 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
             super().add_index(model, index)
 
     def quote_value(self, value):
-        # A more complete implementation isn't currently required.
+        if value is None:
+            return "NULL"
         if isinstance(value, str):
-            return "'%s'" % value.replace("'", "''")
+            # GoogleSQL string literals use backslash escaping; '' quote
+            # doubling is not recognized, so escape the backslash first and
+            # then the quote (matching the db_default/generated inlining above).
+            # Literal newlines are not allowed inside the quotes either.
+            return "'%s'" % (
+                value.replace("\\", "\\\\")
+                .replace("'", "\\'")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+            )
         if isinstance(value, bool):
             return "TRUE" if value else "FALSE"
+        if isinstance(value, (bytes, bytearray, memoryview)):
+            # GoogleSQL bytes literal. The quote, the backslash and anything
+            # outside printable ASCII are emitted as \x escapes.
+            escaped = "".join(
+                chr(b) if 0x20 <= b <= 0x7E and b not in (0x27, 0x5C) else "\\x%02x" % b
+                for b in bytes(value)
+            )
+            return "b'%s'" % escaped
+        if isinstance(value, datetime.datetime):
+            return "'%s'" % value.isoformat(sep=" ")
+        if isinstance(value, datetime.date):
+            return "'%s'" % value.isoformat()
         return str(value)
 
     def prepare_default(self, value):

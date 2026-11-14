@@ -5,6 +5,7 @@
 # https://developers.google.com/open-source/licenses/bsd
 
 
+import datetime
 from unittest import mock
 
 from django.db import NotSupportedError, connection, connections
@@ -39,6 +40,63 @@ class TestUtils(SpannerSimpleTestClass):
         """
         schema_editor = DatabaseSchemaEditor(self.connection)
         self.assertEqual(schema_editor.quote_value(value=1.1), "1.1")
+
+    def test_quote_value_escapes_string(self):
+        """
+        String literals must be backslash-escaped for GoogleSQL. A quote or
+        backslash in the value must not be able to terminate the literal.
+        """
+        schema_editor = DatabaseSchemaEditor(self.connection)
+        self.assertEqual(schema_editor.quote_value(value="o'brien"), "'o\\'brien'")
+        self.assertEqual(schema_editor.quote_value(value="a\\b"), "'a\\\\b'")
+        self.assertEqual(
+            schema_editor.quote_value(value="\\'; DROP TABLE t; --"),
+            "'\\\\\\'; DROP TABLE t; --'",
+        )
+
+    def test_quote_value_escapes_newlines_and_carriage_returns(self):
+        schema_editor = DatabaseSchemaEditor(self.connection)
+        self.assertEqual(
+            schema_editor.quote_value("line1\nline2"),
+            "'line1\\nline2'",
+        )
+        self.assertEqual(
+            schema_editor.quote_value("line1\r\nline2"),
+            "'line1\\r\\nline2'",
+        )
+
+    def test_quote_value_handles_none(self):
+        schema_editor = DatabaseSchemaEditor(self.connection)
+        self.assertEqual(schema_editor.quote_value(None), "NULL")
+
+    def test_quote_value_handles_date_and_datetime(self):
+        schema_editor = DatabaseSchemaEditor(self.connection)
+        self.assertEqual(
+            schema_editor.quote_value(datetime.date(2026, 9, 4)),
+            "'2026-09-04'",
+        )
+        self.assertEqual(
+            schema_editor.quote_value(datetime.datetime(2026, 9, 4, 12, 0, 0)),
+            "'2026-09-04 12:00:00'",
+        )
+
+    def test_quote_value_handles_bytes(self):
+        schema_editor = DatabaseSchemaEditor(self.connection)
+        self.assertEqual(schema_editor.quote_value(b"abc"), "b'abc'")
+        self.assertEqual(
+            schema_editor.quote_value(b"\x00'\\\n\xff"),
+            "b'\\x00\\x27\\x5c\\x0a\\xff'",
+        )
+
+    def test_quote_value_booleans(self):
+        schema_editor = DatabaseSchemaEditor(self.connection)
+        self.assertEqual(schema_editor.quote_value(True), "TRUE")
+        self.assertEqual(schema_editor.quote_value(False), "FALSE")
+
+    def test_prepare_default_delegates_to_quote_value(self):
+        schema_editor = DatabaseSchemaEditor(self.connection)
+        self.assertEqual(schema_editor.prepare_default("o'brien"), "'o\\'brien'")
+        self.assertEqual(schema_editor.prepare_default(True), "TRUE")
 
     def test_skip_default(self):
         """
