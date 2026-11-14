@@ -159,6 +159,48 @@ Read
        for row in connection.execute(select(["*"], from_obj=table)).fetchall():
            print(row)
 
+Async Support
+~~~~~~~~~~~~~
+
+The Spanner dialect also supports asyncio when used with SQLAlchemy 2.0 or later.
+To use the async client, use the ``spanner+spanner_asyncio`` prefix:
+
+.. code:: python
+
+   spanner+spanner_asyncio:///projects/project-id/instances/instance-id/databases/database-id
+
+Example usage with ``create_async_engine``:
+
+.. code:: python
+
+   from sqlalchemy.ext.asyncio import create_async_engine
+   from sqlalchemy import text
+   import asyncio
+
+   async def main():
+       engine = create_async_engine(
+           "spanner+spanner_asyncio:///projects/project-id/instances/instance-id/databases/database-id"
+       )
+
+       async with engine.connect() as conn:
+           result = await conn.execute(text("SELECT 1"))
+           print(result.fetchone())
+
+       await engine.dispose()
+
+   if __name__ == "__main__":
+       asyncio.run(main())
+
+The Spanner DB API is synchronous, so the async dialect runs each DB API call in
+a worker thread. Two paths still block the event loop thread and are therefore
+best kept off the hot path of an asyncio application:
+
+* Schema reflection and DDL -- ``metadata.create_all()``, ``Table(...,
+  autoload_with=...)`` and Alembic -- because the dialect reads schema
+  information straight from the Spanner client rather than through the DB API.
+* Returning a connection with an open transaction to the pool, which rolls the
+  transaction back inline.
+
 Migration
 ---------
 
