@@ -1061,6 +1061,78 @@ class TestCredentials(object):
         subject_token = credentials.retrieve_subject_token(None)
         assert subject_token == json.dumps([CERT_FILE_CONTENT, OTHER_CERT_FILE_CONTENT])
 
+    @pytest.mark.parametrize(
+        "preamble",
+        [
+            b"# Generated trust chain\n",
+            b"Bag Attributes\n    friendlyName: example\n",
+            b" \t\r\n",
+        ],
+    )
+    @pytest.mark.parametrize(
+        "chain_file", [TRUST_CHAIN_WITH_LEAF_FILE, TRUST_CHAIN_WITHOUT_LEAF_FILE]
+    )
+    @mock.patch(
+        "google.auth.transport._mtls_helper._get_workload_cert_and_key_paths",
+        return_value=(CERT_FILE, KEY_FILE),
+    )
+    def test_retrieve_subject_token_certificate_trust_chain_preamble(
+        self, mock_get_workload_cert_and_key_paths, tmp_path, preamble, chain_file
+    ):
+        trust_chain_path = tmp_path / "trust_chain.pem"
+        with open(chain_file, "rb") as chain:
+            trust_chain_path.write_bytes(preamble + chain.read())
+        credentials = self.make_credentials(
+            credential_source={
+                "certificate": {
+                    "use_default_certificate_config": "true",
+                    "trust_chain_path": str(trust_chain_path),
+                }
+            }
+        )
+
+        subject_token = credentials.retrieve_subject_token(None)
+
+        assert subject_token == json.dumps([CERT_FILE_CONTENT, OTHER_CERT_FILE_CONTENT])
+
+    @pytest.mark.parametrize(
+        "trust_chain_data",
+        [
+            b"# No certificates in this file\n",
+            b"# Generated trust chain\n-----BEGIN CERTIFICATE-----\ninvalid\n-----END CERTIFICATE-----\n",
+        ],
+    )
+    @mock.patch(
+        "google.auth.transport._mtls_helper._get_workload_cert_and_key_paths",
+        return_value=(CERT_FILE, KEY_FILE),
+    )
+    def test_retrieve_subject_token_certificate_invalid_trust_chain_preamble(
+        self, mock_get_workload_cert_and_key_paths, tmp_path, trust_chain_data
+    ):
+        trust_chain_path = tmp_path / "trust_chain.pem"
+        trust_chain_path.write_bytes(trust_chain_data)
+        credentials = self.make_credentials(
+            credential_source={
+                "certificate": {
+                    "use_default_certificate_config": "true",
+                    "trust_chain_path": str(trust_chain_path),
+                }
+            }
+        )
+
+        with pytest.raises(
+            exceptions.RefreshError,
+            match="Error loading PEM certificates from the trust chain file",
+        ):
+            credentials.retrieve_subject_token(None)
+
+    @pytest.mark.parametrize("trust_chain_data", [b"", b" \t\r\n"])
+    def test_read_empty_trust_chain(self, trust_chain_data):
+        supplier = identity_pool._X509Supplier("trust_chain.pem", None)
+
+        with mock.patch("builtins.open", mock.mock_open(read_data=trust_chain_data)):
+            assert supplier._read_trust_chain() == []
+
     @mock.patch(
         "google.auth.transport._mtls_helper._get_workload_cert_and_key_paths",
         return_value=(CERT_FILE, KEY_FILE, None),

@@ -200,6 +200,9 @@ class _X509Supplier(SubjectTokenSupplier):
                 trust_chain_data = f.read()
                 # Split PEM data into individual certificates.
                 cert_blocks = trust_chain_data.split(b"-----BEGIN CERTIFICATE-----")
+                if len(cert_blocks) > 1:
+                    # Text before the first PEM header is not a certificate.
+                    cert_blocks = cert_blocks[1:]
                 for cert_block in cert_blocks:
                     # Skip empty blocks.
                     if cert_block.strip():
