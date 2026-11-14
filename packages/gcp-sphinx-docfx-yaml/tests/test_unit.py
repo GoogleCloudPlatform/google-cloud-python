@@ -1409,7 +1409,7 @@ Values:
             with (
                 mock.patch("os.getcwd", return_value="/tmp/work"),
                 mock.patch(
-                    "sphinx_markdown_builder.markdown_builder.MarkdownBuilder"
+                    "sphinx_markdown_builder.MarkdownBuilder"
                 ) as mock_md_builder_cls,
             ):
                 mock_md_builder = mock_md_builder_cls.return_value
@@ -1417,9 +1417,8 @@ Values:
 
                 markdown_utils.run_sphinx_markdown(app)
 
-                mock_md_builder_cls.assert_called_once_with(app)
+                mock_md_builder_cls.assert_called_once_with(app, app.env)
                 self.assertEqual(mock_md_builder.outdir, str(markdown_outdir))
-                mock_md_builder.set_environment.assert_called_once_with(app.env)
                 mock_md_builder.init.assert_called_once_with()
                 mock_md_builder.prepare_writing.assert_called_once_with(
                     ["a_doc", "b_doc"]

@@ -66,7 +66,9 @@ dump = partial(yaml.dump, Dumper=SafeDumper)
 from docfx_yaml import markdown_utils
 
 from .directives import RemarksDirective, TodoDirective
-from .monkeypatch import patch_docfields
+
+# Disabled, see https://github.com/googleapis/google-cloud-python/issues/19085
+# from .monkeypatch import patch_docfields
 from .nodes import remarks
 from .settings import API_ROOT
 from .utils import transform_node, transform_string
@@ -279,7 +281,10 @@ def build_init(app: sphinx.application.Sphinx) -> None:
     except Exception:
         app.env.docfx_root = None
 
-    patch_docfields(app)
+    # TODO(https://github.com/googleapis/google-cloud-python/issues/19085):
+    # This patch never took effect on Sphinx 3 and 4, and breaks builds and
+    # output on Sphinx 5+. Left disabled until that issue is resolved.
+    # patch_docfields(app)
 
     app.docfx_transform_node = partial(transform_node, app)
     app.docfx_transform_string = partial(transform_string, app)
@@ -2774,6 +2779,8 @@ def setup(app: sphinx.application.Sphinx) -> None:
     """
 
     app.setup_extension("sphinx.ext.autodoc")
+    # Registers the config values MarkdownBuilder.init() reads.
+    app.setup_extension("sphinx_markdown_builder")
     app.connect("autodoc-process-docstring", _process_docstring)
 
     app.add_node(remarks, html=(remarks.visit_remarks, remarks.depart_remarks))
