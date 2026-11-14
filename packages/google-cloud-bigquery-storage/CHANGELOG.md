@@ -4,6 +4,20 @@
 
 [1]: https://pypi.org/project/google-cloud-bigquery-storage/#history
 
+## [2.44.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-storage-v2.43.0...google-cloud-bigquery-storage-v2.44.0) (2026-11-14)
+
+
+### Features
+
+* **bigquery-storage:** add context manager to ReadRowsStream ([#18781](https://github.com/googleapis/google-cloud-python/issues/18781)) ([6eab34e](https://github.com/googleapis/google-cloud-python/commit/6eab34e399c4003527623ba1962b4b2f0bab2365))
+* **bigquery-storage:** send gRPC keepalive pings by default ([#18792](https://github.com/googleapis/google-cloud-python/issues/18792)) ([31d9365](https://github.com/googleapis/google-cloud-python/commit/31d936555b4028e4f7ea26d7256fb6214db7c903)), refs [#18784](https://github.com/googleapis/google-cloud-python/issues/18784)
+* support Python 3.15 ([8fceef4](https://github.com/googleapis/google-cloud-python/commit/8fceef49c523bcc8989abf3b6b82bcf143332d50))
+
+
+### Documentation
+
+* **bigquery-storage:** mark ReadRows arrow serialization as beta ([#18802](https://github.com/googleapis/google-cloud-python/issues/18802)) ([b14c2e5](https://github.com/googleapis/google-cloud-python/commit/b14c2e57ec00a346052eb1db5a891b9ea8629a2d))
+
 ## [2.43.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-storage-v2.42.0...google-cloud-bigquery-storage-v2.43.0) (2026-10-15)
 
 
