@@ -106,6 +106,10 @@ class _ErrorInjectorInterceptor(
                     if not self._raised:
                         self._raised = True
                         if self._exc:
+                            if callable(getattr(self._call, "cancel", None)):
+                                self._call.cancel()
+                            elif callable(getattr(self._call, "close", None)):
+                                self._call.close()
                             raise self._exc
                     return self._call.__next__()
 
