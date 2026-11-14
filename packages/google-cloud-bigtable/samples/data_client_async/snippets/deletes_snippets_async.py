@@ -122,3 +122,40 @@ async def check_and_mutate(project_id, instance_id, table_id):
 
 
 # [END bigtable_check_and_mutate_asyncio]
+
+
+# [START bigtable_drop_row_range_asyncio]
+async def drop_row_range(project_id, instance_id, table_id):
+    from google.cloud import bigtable_admin_v2
+
+    async with bigtable_admin_v2.BigtableTableAdminAsyncClient() as client:
+        table_path = client.table_path(project_id, instance_id, table_id)
+        row_key_prefix = b"phone#4c410523"
+        await client.drop_row_range(
+            request={
+                "name": table_path,
+                "row_key_prefix": row_key_prefix,
+            },
+            timeout=200,
+        )
+
+
+# [END bigtable_drop_row_range_asyncio]
+
+
+# [START bigtable_delete_column_family_asyncio]
+async def delete_column_family(project_id, instance_id, table_id):
+    from google.cloud import bigtable_admin_v2
+
+    async with bigtable_admin_v2.BigtableTableAdminAsyncClient() as client:
+        table_path = client.table_path(project_id, instance_id, table_id)
+        column_family_id = "stats_summary"
+        modification = bigtable_admin_v2.ModifyColumnFamiliesRequest.Modification(
+            id=column_family_id, drop=True
+        )
+        await client.modify_column_families(
+            name=table_path, modifications=[modification]
+        )
+
+
+# [END bigtable_delete_column_family_asyncio]

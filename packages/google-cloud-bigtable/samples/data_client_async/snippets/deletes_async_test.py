@@ -279,3 +279,17 @@ async def test_streaming_and_batching(capsys, table_id):
 async def test_check_and_mutate(capsys, table_id):
     await deletes_snippets_async.check_and_mutate(PROJECT, BIGTABLE_INSTANCE, table_id)
     assert_output_match(capsys, "")
+
+
+@pytest.mark.asyncio
+async def test_drop_row_range(capsys, table_id):
+    await deletes_snippets_async.drop_row_range(PROJECT, BIGTABLE_INSTANCE, table_id)
+    assert_output_match(capsys, "")
+
+
+@pytest.mark.asyncio
+async def test_delete_column_family(capsys, table_id):
+    await deletes_snippets_async.delete_column_family(
+        PROJECT, BIGTABLE_INSTANCE, table_id
+    )
+    assert_output_match(capsys, "")
