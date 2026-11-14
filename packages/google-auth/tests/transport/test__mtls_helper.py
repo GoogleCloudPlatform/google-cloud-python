@@ -1027,6 +1027,65 @@ class TestGetClientCertAndKey(object):
         assert cert == pytest.public_cert_bytes
         assert key == pytest.private_key_bytes
 
+    @mock.patch(
+        "google.auth.transport._mtls_helper.get_client_ssl_credentials", autospec=True
+    )
+    def test_callback_without_cert_falls_back_to_default(
+        self, mock_get_client_ssl_credentials
+    ):
+        callback = mock.Mock()
+        callback.return_value = (None, None)
+        mock_get_client_ssl_credentials.return_value = (
+            True,
+            pytest.public_cert_bytes,
+            pytest.private_key_bytes,
+            None,
+        )
+
+        found_cert_key, cert, key = _mtls_helper.get_client_cert_and_key(callback)
+
+        mock_get_client_ssl_credentials.assert_called_once_with(
+            generate_encrypted_key=False
+        )
+        assert found_cert_key
+        assert cert == pytest.public_cert_bytes
+        assert key == pytest.private_key_bytes
+
+    @mock.patch(
+        "google.auth.transport._mtls_helper.get_client_ssl_credentials", autospec=True
+    )
+    def test_callback_without_cert_no_default_available(
+        self, mock_get_client_ssl_credentials
+    ):
+        callback = mock.Mock()
+        callback.return_value = (b"", b"")
+        mock_get_client_ssl_credentials.return_value = (False, None, None, None)
+
+        found_cert_key, cert, key = _mtls_helper.get_client_cert_and_key(callback)
+
+        mock_get_client_ssl_credentials.assert_called_once_with(
+            generate_encrypted_key=False
+        )
+        assert not found_cert_key
+        assert cert is None
+        assert key is None
+
+    @mock.patch(
+        "google.auth.transport._mtls_helper.get_client_ssl_credentials", autospec=True
+    )
+    def test_callback_with_cert_only_is_used(self, mock_get_client_ssl_credentials):
+        # A single PEM file may hold both the certificate and the private key, in
+        # which case the callback returns no separate key and must not be ignored.
+        callback = mock.Mock()
+        callback.return_value = (pytest.public_cert_bytes, None)
+
+        found_cert_key, cert, key = _mtls_helper.get_client_cert_and_key(callback)
+
+        mock_get_client_ssl_credentials.assert_not_called()
+        assert found_cert_key
+        assert cert == pytest.public_cert_bytes
+        assert key is None
+
 
 class TestDecryptPrivateKey(object):
     def test_success(self):

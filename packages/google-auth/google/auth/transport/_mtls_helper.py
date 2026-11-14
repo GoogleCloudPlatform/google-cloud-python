@@ -890,7 +890,9 @@ def get_client_cert_and_key(client_cert_callback=None):
     """
     if client_cert_callback:
         cert, key = client_cert_callback()
-        return True, cert, key
+        # key may be None when the private key is stored in the certificate file.
+        if cert:
+            return True, cert, key
 
     has_cert, cert, key, _ = get_client_ssl_credentials(generate_encrypted_key=False)
     return has_cert, cert, key
