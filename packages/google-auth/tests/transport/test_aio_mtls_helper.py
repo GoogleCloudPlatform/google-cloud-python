@@ -301,3 +301,25 @@ class TestMTLS:
 
         assert "Failed to load client certificate" in str(exc_info.value)
         assert isinstance(exc_info.value.__cause__, OSError)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "callback_result", [(None, None), (b"", b""), (b"cert", None), (None, b"key")]
+)
+@pytest.mark.parametrize(
+    "default_result",
+    [(True, b"default-cert", b"default-key", None), (False, None, None, None)],
+)
+@pytest.mark.parametrize("async_callback", [False, True])
+async def test_empty_client_cert_callback_uses_default(
+    callback_result, default_result, async_callback
+):
+    callback_type = mock.AsyncMock if async_callback else mock.Mock
+    callback = callback_type(return_value=callback_result)
+    with mock.patch.object(
+        mtls, "get_client_ssl_credentials", return_value=default_result
+    ) as get_default:
+        assert await mtls.get_client_cert_and_key(callback) == default_result[:3]
+    callback.assert_called_once_with()
+    get_default.assert_awaited_once_with()
