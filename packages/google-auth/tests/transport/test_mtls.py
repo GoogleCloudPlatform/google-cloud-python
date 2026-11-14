@@ -197,6 +197,17 @@ def test_default_client_encrypted_cert_source(
     with pytest.raises(exceptions.MutualTLSChannelError):
         callback()
 
+    # Test callback when no cert is found.
+    get_client_ssl_credentials.side_effect = None
+    get_client_ssl_credentials.return_value = (False, None, None, None)
+    callback = mtls.default_client_encrypted_cert_source("cert_path", "key_path")
+    with mock.patch("google.auth.transport.mtls.open", mock.mock_open()) as mock_file:
+        with pytest.raises(
+            exceptions.MutualTLSChannelError, match="did not provide a certificate"
+        ):
+            callback()
+        mock_file.assert_not_called()
+
 
 @mock.patch("google.auth.transport._mtls_helper.check_use_client_cert", autospec=True)
 def test_should_use_client_cert(check_use_client_cert):
@@ -652,6 +663,39 @@ def test_has_default_client_cert_source_spiffe_config_without_workload(
 
 
 @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+def test_default_client_cert_source_spiffe_mounts_during_poll(
+    mock_sleep, spiffe_config_file
+):
+    well_known_dir = spiffe_config_file.parent
+    cert_file = well_known_dir / "certificates.pem"
+    key_file = well_known_dir / "private_key.pem"
+
+    callback = mtls.default_client_cert_source()
+    mock_sleep.assert_not_called()
+
+    def write_spiffe_files(*args, **kwargs):
+        cert_file.write_bytes(pytest.public_cert_bytes)
+        key_file.write_bytes(pytest.private_key_bytes)
+        spiffe_config_file.write_text(
+            json.dumps(
+                {
+                    "cert_configs": {
+                        "workload": {
+                            "cert_path": str(cert_file),
+                            "key_path": str(key_file),
+                        }
+                    }
+                }
+            )
+        )
+
+    mock_sleep.side_effect = write_spiffe_files
+
+    assert callback() == (pytest.public_cert_bytes, pytest.private_key_bytes)
+    assert mock_sleep.call_count == 1
+
+
+@mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
 def test_default_client_cert_source_spiffe_poll_timeout_raises_mtls_channel_error(
     mock_sleep, spiffe_config_file
 ):
@@ -665,6 +709,16 @@ def test_default_client_cert_source_spiffe_poll_timeout_raises_mtls_channel_erro
     assert mock_sleep.call_count == len(_agent_identity_utils._POLLING_INTERVALS)
 
 
+@pytest.mark.parametrize(
+    "make_callback",
+    [
+        lambda tmp_path: mtls.default_client_cert_source(),
+        lambda tmp_path: mtls.default_client_encrypted_cert_source(
+            str(tmp_path / "out_cert.pem"), str(tmp_path / "out_key.pem")
+        ),
+    ],
+    ids=["default_client_cert_source", "default_client_encrypted_cert_source"],
+)
 @mock.patch(
     "google.auth.transport._mtls_helper._check_config_path",
     return_value=None,
@@ -672,9 +726,9 @@ def test_default_client_cert_source_spiffe_poll_timeout_raises_mtls_channel_erro
 )
 @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
 def test_default_client_cert_source_spiffe_config_without_workload_mounts_during_poll(
-    mock_sleep, mock_check_config_path, spiffe_config_file
+    mock_sleep, mock_check_config_path, make_callback, spiffe_config_file, tmp_path
 ):
-    callback = mtls.default_client_cert_source()
+    callback = make_callback(tmp_path)
 
     def write_config_without_workload(*args, **kwargs):
         spiffe_config_file.write_text('{"cert_configs": {}}')
@@ -687,3 +741,5 @@ def test_default_client_cert_source_spiffe_config_without_workload_mounts_during
         callback()
 
     assert mock_sleep.call_count == 1
+    assert not (tmp_path / "out_cert.pem").exists()
+    assert not (tmp_path / "out_key.pem").exists()
