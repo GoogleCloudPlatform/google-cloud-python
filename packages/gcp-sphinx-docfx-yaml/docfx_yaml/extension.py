@@ -66,9 +66,7 @@ dump = partial(yaml.dump, Dumper=SafeDumper)
 from docfx_yaml import markdown_utils
 
 from .directives import RemarksDirective, TodoDirective
-
-# Disabled, see https://github.com/googleapis/google-cloud-python/issues/19085
-# from .monkeypatch import patch_docfields
+from .monkeypatch import patch_docfields
 from .nodes import remarks
 from .settings import API_ROOT
 from .utils import transform_node, transform_string
@@ -1595,11 +1593,9 @@ def process_signature(
         return_annotation (str): The return annotation of the object.
     """
     if signature:
-        # Sphinx 4.5.0 only knows to skip `enum.EnumMeta.__call__` when it
-        # looks for a class signature. Python 3.11 renamed that metaclass to
-        # `EnumType`, so on 3.11+ autodoc reports the functional-API
-        # signature `(value, names=None, *, module=None, ...)` for every enum
-        # instead of the `(value)` it reports on 3.10.
+        # On Python 3.11+ autodoc no longer reports `(value)` for enum
+        # classes. It reports the functional-API signature
+        # `(value, names=None, *, module=None, ...)`, or `(*values)` on 3.14+.
         if inspect.isclass(obj) and issubclass(obj, enum.Enum):
             signature = "(value)"
         short_name = name.split(".")[-1]

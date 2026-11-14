@@ -190,7 +190,7 @@ def unit(session):
     )
 
 
-@nox.session(python="3.12")
+@nox.session(python="3.15")
 def docs(session):
     """Build documentation (POSTPONED)."""
     # TODO(https://github.com/googleapis/google-cloud-python/issues/16177):
@@ -201,7 +201,7 @@ def docs(session):
     )
 
 
-@nox.session(python="3.12")
+@nox.session(python="3.15")
 def docfx(session):
     """Build documentation (POSTPONED)."""
     # TODO(https://github.com/googleapis/google-cloud-python/issues/16178):
