@@ -201,11 +201,13 @@ def cover(session):
     session.run("coverage", "erase")
 
 
+@nox.session(python=ALL_INTERPRETERS)
 def old_emulator_system(session):
     emulator_args = ["gcloud", "beta", "emulators", "datastore", "start"]
     _run_emulator(session, emulator_args)
 
 
+@nox.session(python=ALL_INTERPRETERS)
 def emulator_system(session):
     emulator_args = [
         "gcloud",
