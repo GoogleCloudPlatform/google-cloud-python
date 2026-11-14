@@ -412,7 +412,11 @@ class DocumentReference(BaseDocumentReference):
 
         response_iter = self._client._firestore_api.batch_get_documents(
             request=request,
-            metadata=self._client._rpc_metadata,
+            metadata=(
+                self._client._transaction_rpc_metadata
+                if transaction is not None
+                else self._client._rpc_metadata
+            ),
             **kwargs,
         )
 

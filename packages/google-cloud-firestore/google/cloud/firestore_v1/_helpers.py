@@ -1114,16 +1114,23 @@ def get_transaction_id(transaction, read_operation=True) -> Union[bytes, None]:
         return transaction.id
 
 
-def metadata_with_prefix(prefix: str, **kw) -> List[Tuple[str, str]]:
-    """Create RPC metadata containing a prefix.
+def metadata_with_prefix(
+    prefix: str, is_transaction: bool = False, **kw
+) -> List[Tuple[str, str]]:
+    """Create RPC metadata containing a prefix and transaction routing header.
 
     Args:
         prefix (str): appropriate resource path.
+        is_transaction (bool): Optional. Whether the RPC is part of a
+            transaction. Defaults to False.
 
     Returns:
         List[Tuple[str, str]]: RPC metadata with supplied prefix
     """
-    return [("google-cloud-resource-prefix", prefix)]
+    return [
+        ("google-cloud-resource-prefix", prefix),
+        ("x-goog-is-transaction", "true" if is_transaction else "false"),
+    ]
 
 
 class WriteOption(object):

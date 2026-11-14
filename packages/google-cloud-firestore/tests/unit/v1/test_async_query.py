@@ -499,7 +499,7 @@ async def test_asyncquery_stream_with_transaction():
             "structured_query": query._to_protobuf(),
             "transaction": txn_id,
         },
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
     )
 
 
@@ -550,7 +550,7 @@ async def test_asyncquery_stream_with_transaction_and_read_time():
             "transaction": txn_id,
             "read_time": read_time,
         },
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
     )
 
 

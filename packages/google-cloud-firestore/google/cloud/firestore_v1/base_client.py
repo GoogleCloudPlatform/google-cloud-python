@@ -124,6 +124,7 @@ class BaseClient(ClientWithProject):
     _firestore_api_internal = None
     _database_string_internal = None
     _rpc_metadata_internal = None
+    _transaction_rpc_metadata_internal = None
 
     def __init__(
         self,
@@ -291,6 +292,28 @@ class BaseClient(ClientWithProject):
                 self._rpc_metadata_internal.append(("authorization", "Bearer owner"))
 
         return self._rpc_metadata_internal
+
+    @property
+    def _transaction_rpc_metadata(self):
+        """The transactional RPC metadata for this client's associated database.
+
+        Returns:
+            Sequence[Tuple(str, str)]: Transactional RPC metadata with resource
+            prefix for the database associated with this client.
+        """
+        if self._transaction_rpc_metadata_internal is None:
+            self._transaction_rpc_metadata_internal = _helpers.metadata_with_prefix(
+                self._database_string,
+                is_transaction=True,
+            )
+
+            if self._emulator_host is not None:
+                # The emulator requires additional metadata to be set.
+                self._transaction_rpc_metadata_internal.append(
+                    ("authorization", "Bearer owner")
+                )
+
+        return self._transaction_rpc_metadata_internal
 
     def collection(self, *collection_path) -> BaseCollectionReference:
         raise NotImplementedError

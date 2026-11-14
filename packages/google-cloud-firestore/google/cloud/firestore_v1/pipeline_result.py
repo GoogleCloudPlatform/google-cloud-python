@@ -278,7 +278,15 @@ class PipelineStream(_PipelineResultContainer[T], Iterable[T]):
             raise RuntimeError(f"{self.__class__.__name__} can only be iterated once")
         self._started = True
         request = self._build_request()
-        stream = self._client._firestore_api.execute_pipeline(request)
+        metadata = (
+            self._client._transaction_rpc_metadata
+            if self.transaction is not None
+            else self._client._rpc_metadata
+        )
+        stream = self._client._firestore_api.execute_pipeline(
+            request,
+            metadata=metadata,
+        )
         for response in stream:
             yield from self._process_response(response)
 
@@ -293,7 +301,15 @@ class AsyncPipelineStream(_PipelineResultContainer[T], AsyncIterable[T]):
             raise RuntimeError(f"{self.__class__.__name__} can only be iterated once")
         self._started = True
         request = self._build_request()
-        stream = await self._client._firestore_api.execute_pipeline(request)
+        metadata = (
+            self._client._transaction_rpc_metadata
+            if self.transaction is not None
+            else self._client._rpc_metadata
+        )
+        stream = await self._client._firestore_api.execute_pipeline(
+            request,
+            metadata=metadata,
+        )
         async for response in stream:
             for result in self._process_response(response):
                 yield result

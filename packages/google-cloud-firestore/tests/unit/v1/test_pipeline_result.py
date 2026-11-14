@@ -427,7 +427,37 @@ class TestPipelineStream(SharedStreamTests):
         got_stats = instance.explain_stats.get_raw().data
         assert got_stats.value == b""
 
-        instance._client._firestore_api.execute_pipeline.assert_called_once()
+        instance._client._firestore_api.execute_pipeline.assert_called_once_with(
+            instance._build_request(),
+            metadata=instance._client._rpc_metadata,
+        )
+
+    def test_iter_with_transaction(self):
+        from google.cloud.firestore_v1.transaction import Transaction
+
+        pipeline = mock.Mock()
+        pipeline._client.project = "project-id"
+        pipeline._client._database = "database-id"
+        pipeline._client.document.side_effect = lambda path: mock.Mock(
+            id=path.split("/")[-1]
+        )
+        pipeline._to_pb.return_value = {}
+
+        transaction = Transaction(mock.Mock())
+        transaction._id = b"txn-id"
+        instance = self._make_one(pipeline=pipeline, transaction=transaction)
+
+        instance._client._firestore_api.execute_pipeline.return_value = (
+            _mock_stream_responses
+        )
+
+        results = list(instance)
+
+        assert len(results) == 2
+        instance._client._firestore_api.execute_pipeline.assert_called_once_with(
+            instance._build_request(),
+            metadata=instance._client._transaction_rpc_metadata,
+        )
 
     def test_double_iterate(self):
         instance = self._make_one()
@@ -479,7 +509,42 @@ class TestAsyncPipelineStream(SharedStreamTests):
         got_stats = instance.explain_stats.get_raw().data
         assert got_stats.value == b""
 
-        instance._client._firestore_api.execute_pipeline.assert_called_once()
+        instance._client._firestore_api.execute_pipeline.assert_called_once_with(
+            instance._build_request(),
+            metadata=instance._client._rpc_metadata,
+        )
+
+    @pytest.mark.asyncio
+    async def test_aiter_with_transaction(self):
+        from google.cloud.firestore_v1.transaction import Transaction
+
+        pipeline = mock.Mock()
+        pipeline._client.project = "project-id"
+        pipeline._client._database = "database-id"
+        pipeline._client.document.side_effect = lambda path: mock.Mock(
+            id=path.split("/")[-1]
+        )
+        pipeline._to_pb.return_value = {}
+
+        transaction = Transaction(mock.Mock())
+        transaction._id = b"txn-id"
+        instance = self._make_one(pipeline=pipeline, transaction=transaction)
+
+        async def async_gen(items):
+            for item in items:
+                yield item
+
+        instance._client._firestore_api.execute_pipeline = mock.AsyncMock(
+            return_value=async_gen(_mock_stream_responses)
+        )
+
+        results = [item async for item in instance]
+
+        assert len(results) == 2
+        instance._client._firestore_api.execute_pipeline.assert_called_once_with(
+            instance._build_request(),
+            metadata=instance._client._transaction_rpc_metadata,
+        )
 
     @pytest.mark.asyncio
     async def test_double_iterate(self):

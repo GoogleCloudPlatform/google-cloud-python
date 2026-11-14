@@ -495,7 +495,7 @@ def test_query_stream_with_transaction(database):
             "structured_query": query._to_protobuf(),
             "transaction": txn_id,
         },
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
     )
 
 
@@ -546,7 +546,7 @@ def test_query_stream_with_transaction_and_read_time(database):
             "transaction": txn_id,
             "read_time": read_time,
         },
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
     )
 
 
@@ -848,7 +848,11 @@ def _query_stream_w_retriable_exc_helper(
 
     assert calls[0] == mock.call(
         request=expected_request,
-        metadata=client._rpc_metadata,
+        metadata=(
+            client._transaction_rpc_metadata
+            if transaction is not None
+            else client._rpc_metadata
+        ),
         **kwargs,
     )
 

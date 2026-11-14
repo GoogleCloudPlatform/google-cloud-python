@@ -691,7 +691,7 @@ def test_aggregation_query_get_transaction():
             "structured_aggregation_query": aggregation_query._to_protobuf(),
             "transaction": txn_id,
         },
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
         **kwargs,
     )
 
@@ -797,7 +797,11 @@ def _aggregation_query_stream_w_retriable_exc_helper(
 
     assert calls[0] == mock.call(
         request=expected_request,
-        metadata=client._rpc_metadata,
+        metadata=(
+            client._transaction_rpc_metadata
+            if transaction is not None
+            else client._rpc_metadata
+        ),
         **kwargs,
     )
 
@@ -1017,7 +1021,7 @@ def test_aggregation_from_query():
                 "structured_aggregation_query": aggregation_query._to_protobuf(),
                 "transaction": txn_id,
             },
-            metadata=client._rpc_metadata,
+            metadata=client._transaction_rpc_metadata,
             **kwargs,
         )
 

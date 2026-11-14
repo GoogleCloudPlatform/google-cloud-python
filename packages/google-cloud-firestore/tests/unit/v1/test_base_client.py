@@ -217,6 +217,7 @@ def test_baseclient___rpc_metadata_property():
 
     assert client._rpc_metadata == [
         ("google-cloud-resource-prefix", client._database_string),
+        ("x-goog-is-transaction", "false"),
     ]
 
 
@@ -233,6 +234,38 @@ def test_baseclient__rpc_metadata_property_with_emulator():
 
     assert client._rpc_metadata == [
         ("google-cloud-resource-prefix", client._database_string),
+        ("x-goog-is-transaction", "false"),
+        ("authorization", "Bearer owner"),
+    ]
+
+
+def test_baseclient___transaction_rpc_metadata_property():
+    credentials = _make_credentials()
+    database = "quanta"
+    client = _make_base_client(
+        project=PROJECT, credentials=credentials, database=database
+    )
+
+    assert client._transaction_rpc_metadata == [
+        ("google-cloud-resource-prefix", client._database_string),
+        ("x-goog-is-transaction", "true"),
+    ]
+
+
+def test_baseclient__transaction_rpc_metadata_property_with_emulator():
+    emulator_host = "localhost:8081"
+    with mock.patch("os.getenv") as getenv:
+        getenv.return_value = emulator_host
+
+        credentials = _make_credentials()
+        database = "quanta"
+        client = _make_base_client(
+            project=PROJECT, credentials=credentials, database=database
+        )
+
+    assert client._transaction_rpc_metadata == [
+        ("google-cloud-resource-prefix", client._database_string),
+        ("x-goog-is-transaction", "true"),
         ("authorization", "Bearer owner"),
     ]
 

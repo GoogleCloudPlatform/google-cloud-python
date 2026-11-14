@@ -485,7 +485,11 @@ def _get_helper(
 
     firestore_api.batch_get_documents.assert_called_once_with(
         request=expected_request,
-        metadata=client._rpc_metadata,
+        metadata=(
+            client._transaction_rpc_metadata
+            if use_transaction
+            else client._rpc_metadata
+        ),
         **kwargs,
     )
 

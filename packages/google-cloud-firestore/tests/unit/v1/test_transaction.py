@@ -109,7 +109,7 @@ def test_transaction__begin(database):
     # Verify the called mock.
     firestore_api.begin_transaction.assert_called_once_with(
         request={"database": client._database_string, "options": None},
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
     )
 
 
@@ -155,7 +155,7 @@ def test_transaction__rollback(database):
     # Verify the called mock.
     firestore_api.rollback.assert_called_once_with(
         request={"database": client._database_string, "transaction": txn_id},
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
     )
 
 
@@ -205,7 +205,7 @@ def test_transaction__rollback_failure(database):
     # Verify the called mock.
     firestore_api.rollback.assert_called_once_with(
         request={"database": client._database_string, "transaction": txn_id},
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
     )
 
 
@@ -258,7 +258,7 @@ def test_transaction__commit(database):
             "writes": write_pbs,
             "transaction": txn_id,
         },
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
     )
 
 
@@ -312,7 +312,7 @@ def test_transaction__commit_failure(database):
             "writes": write_pbs,
             "transaction": txn_id,
         },
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
     )
 
 
@@ -490,7 +490,7 @@ def _transaction_get_w_query_helper(
     # Verify the mock call.
     firestore_api.run_query.assert_called_once_with(
         request=request,
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
         **kwargs,
     )
 
@@ -559,7 +559,7 @@ def test__transactional__pre_commit_success(database):
     firestore_api = transaction._client._firestore_api
     firestore_api.begin_transaction.assert_called_once_with(
         request={"database": transaction._client._database_string, "options": None},
-        metadata=transaction._client._rpc_metadata,
+        metadata=transaction._client._transaction_rpc_metadata,
     )
     firestore_api.rollback.assert_not_called()
     firestore_api.commit.assert_not_called()
@@ -594,7 +594,7 @@ def test__transactional__pre_commit_retry_id_already_set_success(database):
             "database": transaction._client._database_string,
             "options": options_,
         },
-        metadata=transaction._client._rpc_metadata,
+        metadata=transaction._client._transaction_rpc_metadata,
     )
     firestore_api.rollback.assert_not_called()
     firestore_api.commit.assert_not_called()
@@ -619,7 +619,7 @@ def test__transactional___call__success_first_attempt(database):
     firestore_api = transaction._client._firestore_api
     firestore_api.begin_transaction.assert_called_once_with(
         request={"database": transaction._client._database_string, "options": None},
-        metadata=transaction._client._rpc_metadata,
+        metadata=transaction._client._transaction_rpc_metadata,
     )
     firestore_api.rollback.assert_not_called()
     firestore_api.commit.assert_called_once_with(
@@ -628,7 +628,7 @@ def test__transactional___call__success_first_attempt(database):
             "writes": [],
             "transaction": txn_id,
         },
-        metadata=transaction._client._rpc_metadata,
+        metadata=transaction._client._transaction_rpc_metadata,
     )
 
 
@@ -671,18 +671,18 @@ def test__transactional___call__success_second_attempt(database):
     expected_calls = [
         mock.call(
             request={"database": db_str, "options": None},
-            metadata=transaction._client._rpc_metadata,
+            metadata=transaction._client._transaction_rpc_metadata,
         ),
         mock.call(
             request={"database": db_str, "options": options_},
-            metadata=transaction._client._rpc_metadata,
+            metadata=transaction._client._transaction_rpc_metadata,
         ),
     ]
     assert firestore_api.begin_transaction.mock_calls == expected_calls
     firestore_api.rollback.assert_not_called()
     commit_call = mock.call(
         request={"database": db_str, "writes": [], "transaction": txn_id},
-        metadata=transaction._client._rpc_metadata,
+        metadata=transaction._client._transaction_rpc_metadata,
     )
     assert firestore_api.commit.mock_calls == [commit_call, commit_call]
 
@@ -737,7 +737,7 @@ def test_transactional___call__failure_max_attempts(database, max_attempts):
                 "database": transaction._client._database_string,
                 "options": None if i == 0 else options_,
             },
-            metadata=transaction._client._rpc_metadata,
+            metadata=transaction._client._transaction_rpc_metadata,
         )
         for i in range(max_attempts)
     ]
@@ -749,14 +749,14 @@ def test_transactional___call__failure_max_attempts(database, max_attempts):
             "writes": [],
             "transaction": txn_id,
         },
-        metadata=transaction._client._rpc_metadata,
+        metadata=transaction._client._transaction_rpc_metadata,
     )
     firestore_api.rollback.assert_called_once_with(
         request={
             "database": transaction._client._database_string,
             "transaction": txn_id,
         },
-        metadata=transaction._client._rpc_metadata,
+        metadata=transaction._client._transaction_rpc_metadata,
     )
 
 
@@ -802,14 +802,14 @@ def test_transactional___call__failure_readonly(database, max_attempts):
                 read_only=common.TransactionOptions.ReadOnly()
             ),
         },
-        metadata=transaction._client._rpc_metadata,
+        metadata=transaction._client._transaction_rpc_metadata,
     )
     firestore_api.rollback.assert_called_once_with(
         request={
             "database": transaction._client._database_string,
             "transaction": txn_id,
         },
-        metadata=transaction._client._rpc_metadata,
+        metadata=transaction._client._transaction_rpc_metadata,
     )
     firestore_api.commit.assert_called_once_with(
         request={
@@ -817,7 +817,7 @@ def test_transactional___call__failure_readonly(database, max_attempts):
             "writes": [],
             "transaction": txn_id,
         },
-        metadata=transaction._client._rpc_metadata,
+        metadata=transaction._client._transaction_rpc_metadata,
     )
 
 
@@ -859,14 +859,14 @@ def test_transactional___call__failure_with_non_retryable(database, max_attempts
             "database": transaction._client._database_string,
             "options": None,
         },
-        metadata=transaction._client._rpc_metadata,
+        metadata=transaction._client._transaction_rpc_metadata,
     )
     firestore_api.rollback.assert_called_once_with(
         request={
             "database": transaction._client._database_string,
             "transaction": txn_id,
         },
-        metadata=transaction._client._rpc_metadata,
+        metadata=transaction._client._transaction_rpc_metadata,
     )
     firestore_api.commit.assert_called_once_with(
         request={
@@ -874,7 +874,7 @@ def test_transactional___call__failure_with_non_retryable(database, max_attempts
             "writes": [],
             "transaction": txn_id,
         },
-        metadata=transaction._client._rpc_metadata,
+        metadata=transaction._client._transaction_rpc_metadata,
     )
 
 
@@ -918,14 +918,14 @@ def test_transactional___call__failure_with_rollback_failure(database):
             "database": transaction._client._database_string,
             "options": None,
         },
-        metadata=transaction._client._rpc_metadata,
+        metadata=transaction._client._transaction_rpc_metadata,
     )
     firestore_api.rollback.assert_called_once_with(
         request={
             "database": transaction._client._database_string,
             "transaction": txn_id,
         },
-        metadata=transaction._client._rpc_metadata,
+        metadata=transaction._client._transaction_rpc_metadata,
     )
     firestore_api.commit.assert_called_once_with(
         request={
@@ -933,7 +933,7 @@ def test_transactional___call__failure_with_rollback_failure(database):
             "writes": [],
             "transaction": txn_id,
         },
-        metadata=transaction._client._rpc_metadata,
+        metadata=transaction._client._transaction_rpc_metadata,
     )
 
 

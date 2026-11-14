@@ -296,7 +296,11 @@ class AsyncClient(BaseClient):
 
         response_iterator = await self._firestore_api.batch_get_documents(
             request=request,
-            metadata=self._rpc_metadata,
+            metadata=(
+                self._transaction_rpc_metadata
+                if transaction is not None
+                else self._rpc_metadata
+            ),
             **kwargs,
         )
 

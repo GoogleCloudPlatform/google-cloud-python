@@ -518,7 +518,7 @@ async def test_async_aggregation_query_get_transaction():
             "structured_aggregation_query": aggregation_query._to_protobuf(),
             "transaction": txn_id,
         },
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
         **kwargs,
     )
 
@@ -579,7 +579,7 @@ async def test_async_aggregation_from_query():
                 "structured_aggregation_query": aggregation_query._to_protobuf(),
                 "transaction": txn_id,
             },
-            metadata=client._rpc_metadata,
+            metadata=client._transaction_rpc_metadata,
             **kwargs,
         )
 

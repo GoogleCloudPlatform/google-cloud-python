@@ -137,7 +137,7 @@ async def _async_vector_query_get_helper(
 
     firestore_api.run_query.assert_called_once_with(
         request=request,
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
         **kwargs,
     )
 
@@ -285,7 +285,7 @@ async def test_async_vector_query_with_filter(distance_measure, expected_distanc
             "structured_query": expected_pb,
             "transaction": _TXN_ID,
         },
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
         **kwargs,
     )
 
@@ -359,7 +359,7 @@ async def test_async_vector_query_with_distance_result_field(
             "structured_query": expected_pb,
             "transaction": _TXN_ID,
         },
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
         **kwargs,
     )
 
@@ -433,7 +433,7 @@ async def test_async_vector_query_with_distance_threshold(
             "structured_query": expected_pb,
             "transaction": _TXN_ID,
         },
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
         **kwargs,
     )
 
@@ -509,7 +509,7 @@ async def test_vector_query_collection_group(distance_measure, expected_distance
             "structured_query": expected_pb,
             "transaction": _TXN_ID,
         },
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
         **kwargs,
     )
 
@@ -625,7 +625,7 @@ async def _async_vector_query_stream_helper(
 
     firestore_api.run_query.assert_called_once_with(
         request=request,
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
         **kwargs,
     )
 

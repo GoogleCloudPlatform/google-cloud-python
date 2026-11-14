@@ -96,7 +96,7 @@ class Transaction(batch.WriteBatch, BaseTransaction):
                 "database": self._client._database_string,
                 "options": self._options_protobuf(retry_id),
             },
-            metadata=self._client._rpc_metadata,
+            metadata=self._client._transaction_rpc_metadata,
         )
         self._id = transaction_response.transaction
 
@@ -117,7 +117,7 @@ class Transaction(batch.WriteBatch, BaseTransaction):
                     "database": self._client._database_string,
                     "transaction": self._id,
                 },
-                metadata=self._client._rpc_metadata,
+                metadata=self._client._transaction_rpc_metadata,
             )
         finally:
             # clean up, even if rollback fails
@@ -144,7 +144,7 @@ class Transaction(batch.WriteBatch, BaseTransaction):
                 "writes": self._write_pbs,
                 "transaction": self._id,
             },
-            metadata=self._client._rpc_metadata,
+            metadata=self._client._transaction_rpc_metadata,
         )
 
         self._clean_up()

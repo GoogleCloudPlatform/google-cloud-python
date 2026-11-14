@@ -2505,7 +2505,22 @@ def test_metadata_with_prefix():
     database_string = "projects/prahj/databases/dee-bee"
     metadata = metadata_with_prefix(database_string)
 
-    assert metadata == [("google-cloud-resource-prefix", database_string)]
+    assert metadata == [
+        ("google-cloud-resource-prefix", database_string),
+        ("x-goog-is-transaction", "false"),
+    ]
+
+
+def test_metadata_with_prefix_is_transaction():
+    from google.cloud.firestore_v1._helpers import metadata_with_prefix
+
+    database_string = "projects/prahj/databases/dee-bee"
+    metadata = metadata_with_prefix(database_string, is_transaction=True)
+
+    assert metadata == [
+        ("google-cloud-resource-prefix", database_string),
+        ("x-goog-is-transaction", "true"),
+    ]
 
 
 def test_writeoption_modify_write():

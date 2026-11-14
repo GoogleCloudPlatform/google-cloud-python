@@ -147,6 +147,7 @@ def test_pipeline_stream_empty():
     assert isinstance(request, ExecutePipelineRequest)
     assert request.structured_pipeline == ppl_1._to_pb()
     assert request.database == "projects/A/databases/B"
+    assert mock_rpc.call_args[1]["metadata"] == client._rpc_metadata
 
 
 def test_pipeline_stream_no_doc_ref():
@@ -320,6 +321,7 @@ def test_pipeline_stream_with_transaction():
     assert request.structured_pipeline == ppl_1._to_pb()
     assert request.database == "projects/A/databases/B"
     assert request.transaction == b"123"
+    assert mock_rpc.call_args[1]["metadata"] == client._transaction_rpc_metadata
 
 
 def test_pipeline_stream_with_read_time():

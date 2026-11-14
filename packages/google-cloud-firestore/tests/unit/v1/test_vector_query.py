@@ -216,7 +216,7 @@ def _vector_query_get_helper(distance_measure, expected_distance, explain_option
         expected_request["explain_options"] = explain_options._to_dict()
     firestore_api.run_query.assert_called_once_with(
         request=expected_request,
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
         **kwargs,
     )
 
@@ -311,7 +311,7 @@ def test_vector_query_with_distance_result_field(distance_measure, expected_dist
             "structured_query": expected_pb,
             "transaction": _TXN_ID,
         },
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
         **kwargs,
     )
 
@@ -377,7 +377,7 @@ def test_vector_query_with_distance_threshold(distance_measure, expected_distanc
             "structured_query": expected_pb,
             "transaction": _TXN_ID,
         },
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
         **kwargs,
     )
 
@@ -453,7 +453,7 @@ def test_vector_query_with_filter(distance_measure, expected_distance):
             "structured_query": expected_pb,
             "transaction": _TXN_ID,
         },
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
         **kwargs,
     )
 
@@ -528,7 +528,7 @@ def test_vector_query_collection_group(distance_measure, expected_distance):
             "structured_query": expected_pb,
             "transaction": _TXN_ID,
         },
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
         **kwargs,
     )
 
@@ -590,7 +590,7 @@ def test_vector_query_list_as_query_vector():
             "structured_query": expected_pb,
             "transaction": _TXN_ID,
         },
-        metadata=client._rpc_metadata,
+        metadata=client._transaction_rpc_metadata,
         **kwargs,
     )
 

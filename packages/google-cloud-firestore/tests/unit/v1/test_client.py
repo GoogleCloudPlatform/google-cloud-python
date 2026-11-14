@@ -430,7 +430,11 @@ def _get_all_helper(
 
     client._firestore_api.batch_get_documents.assert_called_once_with(
         request=expected_request,
-        metadata=client._rpc_metadata,
+        metadata=(
+            client._transaction_rpc_metadata
+            if txn_id is not None
+            else client._rpc_metadata
+        ),
         **kwargs,
     )
 

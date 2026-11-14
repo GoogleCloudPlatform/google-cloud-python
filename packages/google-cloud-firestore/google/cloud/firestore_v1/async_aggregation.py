@@ -159,7 +159,11 @@ class AsyncAggregationQuery(BaseAggregationQuery):
 
         response_iterator = await self._client._firestore_api.run_aggregation_query(
             request=request,
-            metadata=self._client._rpc_metadata,
+            metadata=(
+                self._client._transaction_rpc_metadata
+                if transaction is not None
+                else self._client._rpc_metadata
+            ),
             **kwargs,
         )
 
