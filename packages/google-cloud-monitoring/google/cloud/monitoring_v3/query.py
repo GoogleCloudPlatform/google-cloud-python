@@ -276,7 +276,7 @@ class Query(object):
 
         ``<label>_notequal=<value>`` generates::
 
-            metric.label.<label> != <value>
+            metric.label.<label> != "<value>"
 
         By adding ``"_prefix"`` or ``"_suffix"`` to the keyword, you can specify
         a partial match.
@@ -573,13 +573,19 @@ class _Filter(object):
         self.metric_label_filter = _build_label_filter("metric", *args, **kwargs)
 
     def __str__(self):
-        filters = ['metric.type = "{type}"'.format(type=self.metric_type)]
+        filters = [
+            'metric.type = "{type}"'.format(type=_escape_filter_value(self.metric_type))
+        ]
         if self.group_id is not None:
-            filters.append('group.id = "{id}"'.format(id=self.group_id))
+            filters.append(
+                'group.id = "{id}"'.format(id=_escape_filter_value(self.group_id))
+            )
         if self.projects:
             filters.append(
                 " OR ".join(
-                    'project = "{project}"'.format(project=project)
+                    'project = "{project}"'.format(
+                        project=_escape_filter_value(project)
+                    )
                     for project in self.projects
                 )
             )
@@ -591,6 +597,32 @@ class _Filter(object):
         # Parentheses are never actually required, because OR binds more
         # tightly than AND in the Monitoring API's filter syntax.
         return " AND ".join(filters)
+
+
+def _escape_filter_value(value):
+    """Escape a value for a double-quoted Monitoring filter string literal.
+
+    Backslashes and double quotes are escaped so a value cannot terminate the
+    quoted string literal and inject additional filter syntax. See the filter
+    syntax reference at https://cloud.google.com/monitoring/api/v3/filters.
+    """
+    return str(value).replace("\\", "\\\\").replace('"', '\\"')
+
+
+def _numeric_filter_value(value):
+    """Validate a value used in an unquoted numeric filter comparison.
+
+    The comparison operators (``<``, ``<=``, ``>``, ``>=``) apply to INT64
+    labels and are emitted without quotes, so a non-numeric value could inject
+    additional filter syntax. Reject anything that is not a number.
+    """
+    try:
+        float(value)
+    except (TypeError, ValueError):
+        raise ValueError(
+            "filter comparison value must be numeric, got {!r}".format(value)
+        )
+    return value
 
 
 def _build_label_filter(category, *args, **kwargs):
@@ -621,20 +653,28 @@ def _build_label_filter(category, *args, **kwargs):
 
         if suffix == "prefix":
             term = '{key} = starts_with("{value}")'
+            value = _escape_filter_value(value)
         elif suffix == "suffix":
             term = '{key} = ends_with("{value}")'
+            value = _escape_filter_value(value)
         elif suffix == "greater":
             term = "{key} > {value}"
+            value = _numeric_filter_value(value)
         elif suffix == "greaterequal":
             term = "{key} >= {value}"
+            value = _numeric_filter_value(value)
         elif suffix == "less":
             term = "{key} < {value}"
+            value = _numeric_filter_value(value)
         elif suffix == "lessequal":
             term = "{key} <= {value}"
+            value = _numeric_filter_value(value)
         elif suffix == "notequal":
-            term = "{key} != {value}"
+            term = '{key} != "{value}"'
+            value = _escape_filter_value(value)
         else:
             term = '{key} = "{value}"'
+            value = _escape_filter_value(value)
 
         terms.append(term.format(key=key, value=value))
 

@@ -299,6 +299,35 @@ class TestQuery(unittest.TestCase):
         ).format(type=METRIC_TYPE, instance=INSTANCE)
         self.assertEqual(query.filter, expected)
 
+    def test_filter_escapes_metric_label_value(self):
+        client = self._create_client()
+        query = self._make_one(client, PROJECT, METRIC_TYPE)
+        query = query.select_metrics(instance_name='a" OR metric.label.x = "b')
+        expected = (
+            'metric.type = "{type}"'
+            ' AND metric.label.instance_name = "a\\" OR metric.label.x = \\"b"'
+        ).format(type=METRIC_TYPE)
+        self.assertEqual(query.filter, expected)
+
+    def test_filter_escapes_resource_label_prefix_value(self):
+        client = self._create_client()
+        query = self._make_one(client, PROJECT, METRIC_TYPE)
+        query = query.select_resources(zone_prefix='europe-" OR zone = "asia')
+        expected = (
+            'metric.type = "{type}"'
+            ' AND resource.label.zone = starts_with("europe-\\" OR zone = \\"asia")'
+        ).format(type=METRIC_TYPE)
+        self.assertEqual(query.filter, expected)
+
+    def test_filter_escapes_backslash_in_label_value(self):
+        client = self._create_client()
+        query = self._make_one(client, PROJECT, METRIC_TYPE)
+        query = query.select_metrics(instance_name="a\\b")
+        expected = (
+            'metric.type = "{type}" AND metric.label.instance_name = "a\\\\b"'
+        ).format(type=METRIC_TYPE)
+        self.assertEqual(query.filter, expected)
+
     def test_request_parameters_minimal(self):
         T1 = datetime.datetime(2016, 4, 7, 2, 30, 0)
 
@@ -553,8 +582,17 @@ class Test__build_label_filter(unittest.TestCase):
 
     def test_metric_label_response_code_not_equal(self):
         actual = self._call_fut("metric", response_code_notequal=200)
-        expected = "metric.label.response_code != 200"
+        expected = 'metric.label.response_code != "200"'
         self.assertEqual(actual, expected)
+
+    def test_notequal_escapes_value(self):
+        actual = self._call_fut("metric", instance_name_notequal='a" OR x = "b')
+        expected = 'metric.label.instance_name != "a\\" OR x = \\"b"'
+        self.assertEqual(actual, expected)
+
+    def test_numeric_comparison_rejects_non_numeric_value(self):
+        with self.assertRaises(ValueError):
+            self._call_fut("metric", response_code_greater='500 OR x = "y"')
 
     def test_metric_label_response_code_greater_less(self):
         actual = self._call_fut(
