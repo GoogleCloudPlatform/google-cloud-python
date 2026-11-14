@@ -215,6 +215,34 @@ class Test__add_defaults_to_filter(unittest.TestCase):
         out_filter = self._add_defaults_to_filter(in_filter)
         self.assertEqual(in_filter, out_filter)
 
+    def test_filter_defaults_user_time_restriction(self):
+        """Any comparison on timestamp or receiveTimestamp skips the default"""
+        test_inputs = [
+            'timestamp >= "2020-10-13T21:00:00Z"',
+            'severity>=ERROR AND timestamp<"2020-10-13"',
+            'NOT timestamp:"2020-10-13"',
+            'receiveTimestamp>"2020-10-13"',
+        ]
+        for in_filter in test_inputs:
+            out_filter = self._add_defaults_to_filter(in_filter)
+            self.assertEqual(in_filter, out_filter)
+
+    def test_filter_defaults_timestamp_substring(self):
+        """Mentioning timestamp elsewhere should still add the default"""
+        test_inputs = [
+            "jsonPayload.timestamp_ms>0",
+            'jsonPayload.timestamp>="2020-10-13"',
+            'textPayload:"timestamp"',
+            'labels.event_timestamp="x"',
+        ]
+        for in_filter in test_inputs:
+            out_filter = self._add_defaults_to_filter(in_filter)
+            timestamp = datetime.strptime(
+                out_filter, in_filter + ' AND timestamp>="' + self._time_format() + '"'
+            )
+            yesterday = datetime.now(timezone.utc) - timedelta(days=1)
+            self.assertLess(yesterday - timestamp, timedelta(minutes=1))
+
 
 class EntryMock(object):
     def __init__(self):

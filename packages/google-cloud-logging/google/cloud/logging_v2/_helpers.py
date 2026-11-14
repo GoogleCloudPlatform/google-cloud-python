@@ -15,6 +15,7 @@
 """Common logging helpers."""
 
 import logging
+import re
 from datetime import datetime, timedelta, timezone
 
 import requests
@@ -55,6 +56,12 @@ _NORMALIZED_SEVERITIES = {
 
 _TIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%f%z"
 """Time format for timestamps used in API"""
+
+_TIME_RESTRICTION_RE = re.compile(
+    r"(?<![\w.])(?:receive)?timestamp\s*[<>=!:]", re.IGNORECASE
+)
+"""Matches a comparison on the top-level ``timestamp`` or ``receiveTimestamp``
+field, but not on fields like ``jsonPayload.timestamp`` or ``timestamp_ms``."""
 
 METADATA_URL = "http://metadata.google.internal./computeMetadata/v1/"
 METADATA_HEADERS = {"Metadata-Flavor": "Google"}
@@ -146,6 +153,6 @@ def _add_defaults_to_filter(filter_):
     time_filter = f'timestamp>="{yesterday.strftime(_TIME_FORMAT)}"'
     if filter_ is None:
         filter_ = time_filter
-    elif "timestamp" not in filter_.lower():
+    elif not _TIME_RESTRICTION_RE.search(filter_):
         filter_ = f"{filter_} AND {time_filter}"
     return filter_
