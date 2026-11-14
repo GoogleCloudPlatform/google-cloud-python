@@ -346,6 +346,12 @@ class Test_Blob(unittest.TestCase):
         blob = self._make_one("", bucket=bucket)
         self.assertRaises(ValueError, getattr, blob, "path")
 
+    def test_path_dot_segment_name(self):
+        bucket = _Bucket()
+        for name in (".", ".."):
+            blob = self._make_one(name, bucket=bucket)
+            self.assertRaises(ValueError, getattr, blob, "path")
+
     def test_path_normal(self):
         BLOB_NAME = "blob-name"
         bucket = _Bucket()
@@ -6690,6 +6696,17 @@ class Test__quote(unittest.TestCase):
         with_tilde = "bam~qux"
         quoted = self._call_fut(with_tilde, safe=b"~")
         self.assertEqual(quoted, with_tilde)
+
+    def test_w_dot_segment(self):
+        for name in (".", "..", b".", b".."):
+            with self.assertRaises(ValueError):
+                self._call_fut(name)
+
+    def test_w_dots_in_name(self):
+        quoted = self._call_fut("...")
+        self.assertEqual(quoted, "...")
+        quoted = self._call_fut("../foo")
+        self.assertEqual(quoted, "..%2Ffoo")
 
 
 class Test__maybe_rewind(unittest.TestCase):

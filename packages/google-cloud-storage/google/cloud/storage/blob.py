@@ -5198,8 +5198,14 @@ def _quote(value, safe=b"~"):
 
     :rtype: str
     :returns: The encoded value (bytes in Python 2, unicode in Python 3).
+
+    :raises ValueError: if ``value`` is ``.`` or ``..``. Those are not valid
+        object names, and HTTP clients collapse them as dot segments, which
+        would point the request at the enclosing bucket resource.
     """
     value = _to_bytes(value, encoding="utf-8")
+    if value in (b".", b".."):
+        raise ValueError(f"Invalid object name: {value.decode()!r}")
     return quote(value, safe=safe)
 
 
