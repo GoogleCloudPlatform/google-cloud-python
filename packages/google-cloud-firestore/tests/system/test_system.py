@@ -387,6 +387,9 @@ def test_create_document_w_vector(client, cleanup, database):
     document1 = client.document(collection_id, "doc1")
     document2 = client.document(collection_id, "doc2")
     document3 = client.document(collection_id, "doc3")
+    cleanup(document1.delete)
+    cleanup(document2.delete)
+    cleanup(document3.delete)
     data1 = {"embedding": Vector([1.0, 2.0, 3.0])}
     data2 = {"embedding": Vector([2, 2, 3.0])}
     data3 = {"embedding": Vector([2.0, 2.0])}
@@ -408,10 +411,14 @@ def test_create_document_w_vector(client, cleanup, database):
             vector_query_future.set_result(True)
 
     on_snapshot.results = []
-    client.collection(collection_id).order_by("embedding").on_snapshot(on_snapshot)
-
-    vector_query_future.result(timeout=60.0)
-    assert [v.to_dict() for v in on_snapshot.results[:3]] == [data3, data1, data2]
+    watch = (
+        client.collection(collection_id).order_by("embedding").on_snapshot(on_snapshot)
+    )
+    try:
+        vector_query_future.result(timeout=60.0)
+        assert [v.to_dict() for v in on_snapshot.results[:3]] == [data3, data1, data2]
+    finally:
+        watch.unsubscribe()
 
 
 @pytest.mark.skipif(FIRESTORE_EMULATOR, reason="Require index and seed data")
@@ -2588,9 +2595,9 @@ def _persist_documents(
         col_ref = client.collection(collection_name)
         document_id: str = block["data"]["name"]
         doc_ref = col_ref.document(document_id)
-        doc_ref.set(block["data"])
         if cleanup is not None:
             cleanup(doc_ref.delete)
+        doc_ref.set(block["data"])
 
         if "subcollections" in block:
             for subcollection_name, inner_blocks in block["subcollections"].items():
@@ -2598,6 +2605,7 @@ def _persist_documents(
                     client,
                     f"{collection_name}/{document_id}/{subcollection_name}",
                     inner_blocks,
+                    cleanup=cleanup,
                 )
 
 
@@ -2954,9 +2962,10 @@ def test_repro_391(client, cleanup, database):
 
     document_ids = [f"doc-{doc_id:02d}" for doc_id in range(30)]
 
-    for document_id in [f"doc-{doc_id:02d}" for doc_id in range(30)]:
+    for document_id in document_ids:
         data = {"now": now}
         _, document = collection.add(data, document_id)
+        cleanup(document.delete)
 
     assert len(set(collection.stream())) == len(document_ids)
 
