@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-auth/#history
 
+## [2.62.3](https://github.com/googleapis/google-cloud-python/compare/google-auth-v2.62.2...google-auth-v2.62.3) (2026-11-14)
+
+
+### Bug Fixes
+
+* **auth:** add startup polling for Cloud Run SPIFFE mTLS certificates ([#18924](https://github.com/googleapis/google-cloud-python/issues/18924)) ([900ba57](https://github.com/googleapis/google-cloud-python/commit/900ba57cf4142a045d75634c837727052e9839eb))
+
 ## [2.62.2](https://github.com/googleapis/google-cloud-python/compare/google-auth-v2.62.1...google-auth-v2.62.2) (2026-11-10)
 
 
