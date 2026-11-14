@@ -117,7 +117,8 @@ def test_get_config_path_env_var(monkeypatch):
 
 
 @mock.patch("os.path.expanduser")
-def test_get_config_path_unix(expanduser):
+def test_get_config_path_unix(expanduser, monkeypatch):
+    monkeypatch.delenv(environment_vars.CLOUD_SDK_CONFIG_DIR, raising=False)
     expanduser.side_effect = lambda path: path
 
     config_path = _cloud_sdk.get_config_path()
@@ -127,6 +128,7 @@ def test_get_config_path_unix(expanduser):
 
 @mock.patch("os.name", new="nt")
 def test_get_config_path_windows(monkeypatch):
+    monkeypatch.delenv(environment_vars.CLOUD_SDK_CONFIG_DIR, raising=False)
     appdata = "appdata"
     monkeypatch.setenv(_cloud_sdk._WINDOWS_CONFIG_ROOT_ENV_VAR, appdata)
 
@@ -137,6 +139,7 @@ def test_get_config_path_windows(monkeypatch):
 
 @mock.patch("os.name", new="nt")
 def test_get_config_path_no_appdata(monkeypatch):
+    monkeypatch.delenv(environment_vars.CLOUD_SDK_CONFIG_DIR, raising=False)
     monkeypatch.delenv(_cloud_sdk._WINDOWS_CONFIG_ROOT_ENV_VAR, raising=False)
     monkeypatch.setenv("SystemDrive", "G:")
 
