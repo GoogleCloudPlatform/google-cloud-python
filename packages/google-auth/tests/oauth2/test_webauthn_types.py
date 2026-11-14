@@ -69,7 +69,7 @@ def test_GetRequest(has_allow_credentials):
         challenge="fake_challenge",
         timeout_ms=123,
         allow_credentials=allow_credentials if has_allow_credentials else None,
-        user_verification="preferred",
+        user_verification="discouraged",
         extensions=webauthn_types.AuthenticationExtensionsClientInputs(
             appid="fake_appid"
         ),
@@ -85,7 +85,7 @@ def test_GetRequest(has_allow_credentials):
             "rpId": "fake_rpid",
             "timeout": 123,
             "challenge": "fake_challenge",
-            "userVerification": "preferred",
+            "userVerification": "discouraged",
             "extensions": {"appid": "fake_appid"},
         },
     }

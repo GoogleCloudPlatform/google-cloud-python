@@ -222,7 +222,7 @@ class SecurityKeyChallenge(ReauthChallenge):
             challenge=self._unpadded_urlsafe_b64recode(challenge),
             timeout_ms=WEBAUTHN_TIMEOUT_MS,
             allow_credentials=allow_credentials,
-            user_verification="preferred",
+            user_verification="discouraged",
             extensions=extension,
         )
 

@@ -235,7 +235,7 @@ def test_security_key_webauthn():
         challenge=challenge._unpadded_urlsafe_b64recode(sk_challenge["challenge"]),
         timeout_ms=challenges.WEBAUTHN_TIMEOUT_MS,
         allow_credentials=allow_credentials,
-        user_verification="preferred",
+        user_verification="discouraged",
         extensions=extension,
     )
 
