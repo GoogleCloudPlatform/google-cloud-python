@@ -356,7 +356,9 @@ def test_table_mutate_rows_retries_timeout(data_table, rows_to_delete):
         rows_to_delete.append(row_2)
         row_2.set_cell(COLUMN_FAMILY_ID1, COL_NAME1, CELL_VAL1, timestamp=timestamp)
 
-        statuses = data_table.mutate_rows([row, row_2])
+        statuses = data_table.mutate_rows(
+            [row, row_2], retry=DEFAULT_RETRY.with_deadline(2.0)
+        )
         assert statuses[0].code == Code.OK
         assert statuses[1].code == Code.DEADLINE_EXCEEDED
 
@@ -940,10 +942,10 @@ def test_table_read_rows_retry_timeout_mid_stream(
 
     # Shorten the deadline so the timeout test is shorter.
     data_table_read_rows_retry_tests._table_impl.default_read_rows_operation_timeout = (
-        10.0
+        2.0
     )
     rows_data = data_table_read_rows_retry_tests.read_rows(
-        retry=DEFAULT_RETRY_READ_ROWS.with_deadline(10.0)
+        retry=DEFAULT_RETRY_READ_ROWS.with_deadline(2.0)
     )
     with pytest.raises(exceptions.RetryError):
         rows_data.consume_all()
@@ -971,10 +973,10 @@ def test_table_read_rows_retry_timeout_establishing_stream(
 
     # Shorten the deadline so the timeout test is shorter.
     data_table_read_rows_retry_tests._table_impl.default_read_rows_operation_timeout = (
-        10.0
+        2.0
     )
     rows_data = data_table_read_rows_retry_tests.read_rows(
-        retry=DEFAULT_RETRY_READ_ROWS.with_deadline(10.0)
+        retry=DEFAULT_RETRY_READ_ROWS.with_deadline(2.0)
     )
     with pytest.raises(exceptions.RetryError):
         rows_data.consume_all()
