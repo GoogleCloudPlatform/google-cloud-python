@@ -579,6 +579,7 @@ def test__datastore_lookup(datastore_pb2, context):
             timeout=_api._DEFAULT_TIMEOUT,
             metadata=(
                 ("x-goog-request-params", "project_id=theproject&database_id=testdb"),
+                ("x-goog-is-transaction", "false"),
             ),
         )
 
@@ -1539,16 +1540,92 @@ def test__complete():
 )
 def test__add_routing_info(project_id, database_id, expected):
     expected_new_metadata = ("x-goog-request-params", expected)
+    expected_tx_metadata = ("x-goog-is-transaction", "false")
     request = datastore_pb2.LookupRequest(
         project_id=project_id, database_id=database_id
     )
-    assert _api._add_routing_info((), request) == (expected_new_metadata,)
+    assert _api._add_routing_info((), request) == (
+        expected_new_metadata,
+        expected_tx_metadata,
+    )
     assert _api._add_routing_info(("already=there",), request) == (
         "already=there",
         expected_new_metadata,
+        expected_tx_metadata,
     )
 
 
 def test__add_routing_info_no_request_info():
     request = datastore_pb2.LookupRequest()
-    assert _api._add_routing_info((), request) == ()
+    assert _api._add_routing_info((), request) == (
+        ("x-goog-is-transaction", "false"),
+    )
+
+
+@pytest.mark.parametrize(
+    "request_pb,expected_is_tx",
+    [
+        (datastore_pb2.LookupRequest(), "false"),
+        (
+            datastore_pb2.LookupRequest(
+                read_options=datastore_pb2.ReadOptions(transaction=b"tx1")
+            ),
+            "true",
+        ),
+        (
+            datastore_pb2.LookupRequest(
+                read_options=datastore_pb2.ReadOptions(
+                    new_transaction=datastore_pb2.TransactionOptions()
+                )
+            ),
+            "true",
+        ),
+        (datastore_pb2.RunQueryRequest(), "false"),
+        (
+            datastore_pb2.RunQueryRequest(
+                read_options=datastore_pb2.ReadOptions(transaction=b"tx1")
+            ),
+            "true",
+        ),
+        (datastore_pb2.RunAggregationQueryRequest(), "false"),
+        (
+            datastore_pb2.RunAggregationQueryRequest(
+                read_options=datastore_pb2.ReadOptions(transaction=b"tx1")
+            ),
+            "true",
+        ),
+        (datastore_pb2.BeginTransactionRequest(), "true"),
+        (datastore_pb2.RollbackRequest(), "true"),
+        (
+            datastore_pb2.CommitRequest(
+                mode=datastore_pb2.CommitRequest.Mode.NON_TRANSACTIONAL
+            ),
+            "false",
+        ),
+        (
+            datastore_pb2.CommitRequest(
+                mode=datastore_pb2.CommitRequest.Mode.TRANSACTIONAL,
+            ),
+            "true",
+        ),
+        (
+            datastore_pb2.CommitRequest(
+                mode=datastore_pb2.CommitRequest.Mode.TRANSACTIONAL,
+                transaction=b"tx1",
+            ),
+            "true",
+        ),
+        (
+            datastore_pb2.CommitRequest(
+                single_use_transaction=datastore_pb2.TransactionOptions()
+            ),
+            "true",
+        ),
+        (datastore_pb2.AllocateIdsRequest(), "false"),
+        (datastore_pb2.ReserveIdsRequest(), "false"),
+    ],
+)
+def test__add_routing_info_is_transaction_header(request_pb, expected_is_tx):
+    assert _api._add_routing_info((), request_pb) == (
+        ("x-goog-is-transaction", expected_is_tx),
+    )

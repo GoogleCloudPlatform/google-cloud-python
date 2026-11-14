@@ -1135,6 +1135,35 @@ def _datastore_rollback(transaction, retries=None, timeout=None, metadata=()):
     )
 
 
+def _is_read_options_transactional(read_options):
+    """Determines whether a ``ReadOptions`` message specifies a transaction."""
+    if read_options is None:
+        return False
+    return bool(read_options.transaction or "new_transaction" in read_options)
+
+
+def _is_transaction_request(request):
+    """Determines whether a Datastore RPC request is transactional."""
+    request_type = type(request).__name__
+    if request_type in ("BeginTransactionRequest", "RollbackRequest"):
+        return True
+    if request_type == "CommitRequest":
+        return bool(
+            request.transaction
+            or "single_use_transaction" in request
+            or request.mode == datastore_pb2.CommitRequest.Mode.TRANSACTIONAL
+        )
+    if request_type in (
+        "LookupRequest",
+        "RunQueryRequest",
+        "RunAggregationQueryRequest",
+    ):
+        return _is_read_options_transactional(
+            getattr(request, "read_options", None)
+        )
+    return False
+
+
 def _add_routing_info(metadata, request):
     """Adds routing header info to the given metadata.
 
@@ -1156,9 +1185,14 @@ def _add_routing_info(metadata, request):
     if request.database_id:
         header_params["database_id"] = request.database_id
 
-    if header_params:
-        return tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata(header_params),
-        )
-
-    return tuple(metadata)
+    is_transaction = "true" if _is_transaction_request(request) else "false"
+    routing_headers = (
+        (gapic_v1.routing_header.to_grpc_metadata(header_params),)
+        if header_params
+        else ()
+    )
+    return (
+        *metadata,
+        *routing_headers,
+        ("x-goog-is-transaction", is_transaction),
+    )
